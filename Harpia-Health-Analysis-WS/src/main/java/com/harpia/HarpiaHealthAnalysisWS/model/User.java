@@ -15,7 +15,7 @@ public abstract class User {
     private Long id;
 
     @Column
-    private int userRoleId;
+    private int roleId;
     @Column
     private String name;
     @Column
@@ -29,7 +29,7 @@ public abstract class User {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", userRoleId=" + userRoleId +
+                ", userRoleId=" + roleId +
                 ", name='" + name + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", username='" + username + '\'' +
