@@ -4,10 +4,9 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
-
 @Entity
 @Table(name = "patients")
 public class Patient extends User {
-    @Column
-    String patientNo;
+    @Column(name = "diabetic_type")
+    int diabeticType;
 }

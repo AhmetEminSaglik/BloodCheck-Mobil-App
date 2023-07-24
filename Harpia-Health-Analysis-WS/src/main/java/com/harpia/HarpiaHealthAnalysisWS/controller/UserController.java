@@ -14,14 +14,13 @@ import java.util.List;
 import java.util.Locale;
 
 @RestController
-@RequestMapping("/api/1.0/users")
+@RequestMapping("/users")
 @CrossOrigin
 public class UserController {
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     private UserService service;
-
 
     @PostMapping()
     public List<User> textRequestBody(@RequestBody Patient user) {
@@ -37,7 +36,7 @@ public class UserController {
         p1.setLastname("patient".toUpperCase(Locale.ROOT));
         p1.setUsername("p1p1p1");
         p1.setPassword("p1p1p1");
-        p1.setPatientNo("505-232-12-21");
+        p1.setDiabeticType(2);
         User uh1 = service.save(h1);
         User up1 = service.save(p1);
 

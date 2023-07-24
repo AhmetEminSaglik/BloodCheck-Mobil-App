@@ -6,9 +6,8 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 @Data
-
 @Entity
-@Table(name = "Healthcare_personnel")
+@Table(name = "healthcare_personnels")
 public class HealthcarePersonnel extends User {
     @Column
     int totalPatientNumber;
