@@ -24,11 +24,10 @@ public class UserRoleController {
     private UserRoleService service;
 
     @PostMapping
-    public SuccessDataResult setupStandartUserRole() {
+    public SuccessDataResult<Iterable<UserRole>> setupStandartUserRole() {
         log.info("buraya geldi");
-        List list = (List) service.saveAll(getStandartUserRole());
-        return new SuccessDataResult<>(list);
-
+        Iterable<UserRole> data = service.saveAll(getStandartUserRole());
+        return new SuccessDataResult<>(data);
     }
 
     private List<UserRole> getStandartUserRole() {
