@@ -2,9 +2,11 @@ package com.harpia.HarpiaHealthAnalysisWS.dataaccess;
 
 
 import com.harpia.HarpiaHealthAnalysisWS.model.User;
-import org.springframework.data.repository.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends Repository<User,Long> {
+import java.util.List;
+
+public interface UserRepository extends JpaRepository<User, Long> {
     User save(User u);
-
+    List<User> findAll();
 }

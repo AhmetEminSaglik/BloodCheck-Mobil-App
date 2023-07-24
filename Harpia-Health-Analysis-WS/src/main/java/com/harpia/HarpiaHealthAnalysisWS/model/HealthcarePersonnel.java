@@ -1,8 +1,7 @@
 package com.harpia.HarpiaHealthAnalysisWS.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import com.harpia.HarpiaHealthAnalysisWS.model.enums.EnumUserRole;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
@@ -11,4 +10,23 @@ import lombok.Data;
 public class HealthcarePersonnel extends User {
     @Column
     int totalPatientNumber;
+
+    @Transient
+    private final EnumUserRole enumRole = EnumUserRole.HEALTHCARE_PERSONNEL;
+
+    public HealthcarePersonnel() {
+        setUserRole(enumRole);
+    }
+
+    public HealthcarePersonnel(int totalPatientNumber) {
+        this();
+        this.totalPatientNumber = totalPatientNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "HealthcarePersonnel{" + super.toString() +
+                "totalPatientNumber=" + totalPatientNumber +
+                '}';
+    }
 }

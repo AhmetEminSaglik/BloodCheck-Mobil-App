@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@AllArgsConstructor
+@AllArgsConstructor()
 @NoArgsConstructor
 @Table(name = "user_role", uniqueConstraints = @UniqueConstraint(columnNames = "role"))
 public class UserRole {
@@ -17,4 +17,12 @@ public class UserRole {
     int id;
     @Column
     String role;
+
+    @OneToOne(mappedBy = "userRole")
+    private User user;
+
+    public UserRole(int id, String role) {
+        this.id = id;
+        this.role = role;
+    }
 }

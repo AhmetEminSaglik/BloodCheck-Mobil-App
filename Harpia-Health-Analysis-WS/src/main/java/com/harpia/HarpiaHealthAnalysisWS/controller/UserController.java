@@ -4,6 +4,8 @@ import com.harpia.HarpiaHealthAnalysisWS.model.HealthcarePersonnel;
 import com.harpia.HarpiaHealthAnalysisWS.model.Patient;
 import com.harpia.HarpiaHealthAnalysisWS.model.User;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.UserService;
+import com.harpia.HarpiaHealthAnalysisWS.utility.result.DataResult;
+import com.harpia.HarpiaHealthAnalysisWS.utility.result.SuccessDataResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,11 @@ public class UserController {
 
     @Autowired
     private UserService service;
+
+    @GetMapping()
+    public DataResult<List<User>> findAllUserList() {
+        return new SuccessDataResult<>(service.findAll(), "All users retrived successfully");
+    }
 
     @PostMapping()
     public List<User> textRequestBody(@RequestBody Patient user) {

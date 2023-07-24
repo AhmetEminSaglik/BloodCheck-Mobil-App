@@ -6,15 +6,20 @@ import com.harpia.HarpiaHealthAnalysisWS.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 
 public class UserManager implements UserService {
-
     @Autowired
     UserRepository userRepository;
 
     @Override
     public User save(User u) {
         return userRepository.save(u);
+    }
+
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 }

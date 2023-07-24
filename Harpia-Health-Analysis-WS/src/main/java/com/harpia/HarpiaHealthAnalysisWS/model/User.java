@@ -1,5 +1,6 @@
 package com.harpia.HarpiaHealthAnalysisWS.model;
 
+import com.harpia.HarpiaHealthAnalysisWS.model.enums.EnumUserRole;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,6 +13,10 @@ public abstract class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Long id;
+
+    @OneToOne
+    @PrimaryKeyJoinColumn
+    private UserRole userRole= new UserRole();
     @Column
     private String name;
     @Column
@@ -31,4 +36,11 @@ public abstract class User {
                 ", password='" + password + '\'' +
                 '}';
     }
+
+    public void setUserRole(EnumUserRole enumRole) {
+        this.userRole.setId(enumRole.getId());
+        this.userRole.setRole(enumRole.getName());
+
+    }
+
 }

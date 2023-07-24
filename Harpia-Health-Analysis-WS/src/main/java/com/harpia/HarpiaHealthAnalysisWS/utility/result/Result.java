@@ -1,6 +1,6 @@
 package com.harpia.HarpiaHealthAnalysisWS.utility.result;
 
-public class Result { // super type olarak geciyor. Tek basina da anlami olmasi yani sira interface gorevi gormektedir
+public class Result {
     private boolean success;
     private String message;
 
