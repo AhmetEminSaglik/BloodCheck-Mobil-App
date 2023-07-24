@@ -1,13 +1,24 @@
 package com.harpia.HarpiaHealthAnalysisWS.model;
 
+import jakarta.persistence.*;
 import lombok.*;
 
 @Data
-public class User {
-    private long id;
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "user_type")//@Table(name = "users")
+public abstract class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
+    private Long id;
+    @Column
     private String name;
+    @Column
     private String lastname;
+    @Column
     private String username;
+    @Column
     private String password;
 
     @Override
