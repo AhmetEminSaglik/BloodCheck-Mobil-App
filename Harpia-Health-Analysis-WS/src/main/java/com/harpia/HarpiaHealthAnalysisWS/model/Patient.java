@@ -2,24 +2,19 @@ package com.harpia.HarpiaHealthAnalysisWS.model;
 
 import com.harpia.HarpiaHealthAnalysisWS.model.enums.EnumUserRole;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @Entity
+@AllArgsConstructor
 @Table(name = "patients")
 public class Patient extends User {
     @Column(name = "diabetic_type")
     int diabeticType;
-    @Transient
-    private final EnumUserRole enumRole = EnumUserRole.PATIENT;
 
     public Patient() {
-        setUserRole(EnumUserRole.PATIENT);
-    }
-
-    public Patient(int diabeticType) {
-        this();
-        this.diabeticType = diabeticType;
+        setUserRoleId(EnumUserRole.PATIENT.getId());
     }
 
     @Override

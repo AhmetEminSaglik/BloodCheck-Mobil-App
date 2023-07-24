@@ -8,4 +8,6 @@ public interface UserRoleService {
     UserRole save(UserRole u);
 
     List<UserRole> saveAll(List<UserRole> list);
+
+    UserRole findById(int id);
 }

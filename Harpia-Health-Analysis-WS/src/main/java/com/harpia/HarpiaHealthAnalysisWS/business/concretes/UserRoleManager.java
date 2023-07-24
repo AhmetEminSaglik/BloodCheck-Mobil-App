@@ -23,4 +23,9 @@ public class UserRoleManager implements UserRoleService {
     public List<UserRole> saveAll(List<UserRole> list) {
         return repository.saveAll(list);
     }
+
+    @Override
+    public UserRole findById(int id) {
+        return repository.findById(id);
+    }
 }

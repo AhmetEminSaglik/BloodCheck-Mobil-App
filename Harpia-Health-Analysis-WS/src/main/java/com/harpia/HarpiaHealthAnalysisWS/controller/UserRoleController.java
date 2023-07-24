@@ -17,10 +17,15 @@ import java.util.List;
 public class UserRoleController {
     private static final Logger log = LoggerFactory.getLogger(UserRole.class);
 
-    @Autowired
-    private UserRoleService service;
+    //    @Autowired
+    private final UserRoleService service;
 
-    @GetMapping
+    @Autowired
+    public UserRoleController(UserRoleService service) {
+        this.service = service;
+    }
+
+    @PostMapping
     public SuccessDataResult<List<UserRole>> setupStandartUserRole() {
         List<UserRole> data = service.saveAll(getStandartUserRoleList());
         return new SuccessDataResult<>(data);
@@ -34,5 +39,7 @@ public class UserRoleController {
         return list;
     }
 
-
+    public UserRole findUserRoleById(int id) {
+        return service.findById(id);
+    }
 }

@@ -11,16 +11,9 @@ public class HealthcarePersonnel extends User {
     @Column
     int totalPatientNumber;
 
-    @Transient
-    private final EnumUserRole enumRole = EnumUserRole.HEALTHCARE_PERSONNEL;
 
     public HealthcarePersonnel() {
-        setUserRole(enumRole);
-    }
-
-    public HealthcarePersonnel(int totalPatientNumber) {
-        this();
-        this.totalPatientNumber = totalPatientNumber;
+        setUserRoleId(EnumUserRole.HEALTHCARE_PERSONNEL.getId());
     }
 
     @Override

@@ -19,6 +19,11 @@ public class UserManager implements UserService {
         return userRepository.save(u);
     }
 
+    @Override
+    public List<User> saveAll(List<User> list) {
+        return userRepository.saveAll(list);
+    }
+
     public List<User> findAll() {
         return userRepository.findAll();
     }
