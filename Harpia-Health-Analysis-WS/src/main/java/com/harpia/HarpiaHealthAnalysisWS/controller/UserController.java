@@ -19,13 +19,17 @@ import java.util.Locale;
 @RequestMapping("/users")
 @CrossOrigin
 public class UserController {
-    private static final Logger log = LoggerFactory.getLogger(UserController.class);
+    protected static final Logger log = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
-    private UserService service;
+    protected UserService service;
 
     @GetMapping()
     public DataResult<List<User>> findAllUserList() {
+        System.out.println("buraya geldi : ");
+        for(User tmp : service.findAll()){
+            System.out.println("tmp : "+tmp);
+        }
         return new SuccessDataResult<>(service.findAll(), "All users retrived successfully");
     }
 

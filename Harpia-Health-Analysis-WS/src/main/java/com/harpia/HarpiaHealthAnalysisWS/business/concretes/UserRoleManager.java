@@ -6,6 +6,8 @@ import com.harpia.HarpiaHealthAnalysisWS.model.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class UserRoleManager implements UserRoleService {
@@ -18,7 +20,7 @@ public class UserRoleManager implements UserRoleService {
     }
 
     @Override
-    public Iterable<UserRole> saveAll(Iterable<UserRole> list) {
+    public List<UserRole> saveAll(List<UserRole> list) {
         return repository.saveAll(list);
     }
 }

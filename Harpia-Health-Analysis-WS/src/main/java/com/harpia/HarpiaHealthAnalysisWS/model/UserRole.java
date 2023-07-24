@@ -1,5 +1,6 @@
 package com.harpia.HarpiaHealthAnalysisWS.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,6 +19,7 @@ public class UserRole {
     @Column
     String role;
 
+    @JsonBackReference
     @OneToOne(mappedBy = "userRole")
     private User user;
 

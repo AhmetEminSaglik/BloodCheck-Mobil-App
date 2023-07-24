@@ -7,5 +7,5 @@ import java.util.List;
 public interface UserRoleService {
     UserRole save(UserRole u);
 
-    Iterable<UserRole> saveAll(Iterable<UserRole> list);
+    List<UserRole> saveAll(List<UserRole> list);
 }
