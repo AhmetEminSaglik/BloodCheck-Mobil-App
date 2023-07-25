@@ -37,4 +37,9 @@ public class UserManager implements UserService {
     public List<User> findAllByRoleId(int id) {
         return userRepository.findAllByRoleId(id);
     }
+
+    @Override
+    public User findByUsernameAndPassword(String username, String password) {
+        return userRepository.findByUsernameAndPassword(username, password);
+    }
 }

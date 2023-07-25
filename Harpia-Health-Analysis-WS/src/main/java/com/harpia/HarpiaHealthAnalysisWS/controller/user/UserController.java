@@ -1,9 +1,14 @@
 package com.harpia.HarpiaHealthAnalysisWS.controller.user;
 
+import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.login.LoginValidationService;
+import com.harpia.HarpiaHealthAnalysisWS.business.concretes.login.LoginCredentialsValidation;
+import com.harpia.HarpiaHealthAnalysisWS.model.LoginCredentials;
 import com.harpia.HarpiaHealthAnalysisWS.model.Patient;
 import com.harpia.HarpiaHealthAnalysisWS.model.User;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.UserService;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.DataResult;
+import com.harpia.HarpiaHealthAnalysisWS.utility.result.ErrorDataResult;
+import com.harpia.HarpiaHealthAnalysisWS.utility.result.Result;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.SuccessDataResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +21,7 @@ import java.util.List;
 @RequestMapping("/users")
 @CrossOrigin
 public class UserController {
-    protected static final Logger log = LoggerFactory.getLogger(UserController.class);
+    private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     private UserService service;
@@ -38,5 +43,11 @@ public class UserController {
         return new SuccessDataResult<>(user, "Patient retrived Succesfully");
     }
 
+    @PostMapping("/login")
+    public DataResult<User> login(@RequestBody LoginCredentials loginCreds) {
+        LoginValidationService loginService = new LoginCredentialsValidation(service);
+        DataResult<User> result = loginService.validateLogin(loginCreds.getUsername(), loginCreds.getPassword());
+        return result;
+    }
 }
 
