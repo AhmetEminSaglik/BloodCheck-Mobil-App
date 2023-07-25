@@ -11,6 +11,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ResponsiveDesign(mediaQueryData: MediaQuery.of(context));
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
@@ -33,20 +34,25 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  TextEditingController usernameEditCont = TextEditingController();
+  TextEditingController passwordEditCont = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
         child: SingleChildScrollView(
           child: Column(
             children: [
               _LoginPageLogo(),
-              // SizedBox(height: ResponsiveDesign.getScreenHeight() / 15),
-              _UsernameInputTextField(),
-              SizedBox(),
-              _PasswordInputTextField(),
-              // SizedBox(height: ResponsiveDesign.getScreenHeight() / 30),
-              _LoginButton()
+              _UsernameInputTextField(controller: usernameEditCont),
+              _PasswordInputTextField(
+                controller: passwordEditCont,
+              ),
+              _LoginButton(
+                usernameEditCont: usernameEditCont,
+                passwordEditCont: passwordEditCont,
+              )
             ],
           ),
         ),
@@ -70,19 +76,6 @@ class _LoginPageLogo extends StatelessWidget {
   }
 }
 
-class _UsernameInputTextField extends StatelessWidget {
-  const _UsernameInputTextField({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const _InputTextFieldPadding(
-      widget: _InputTextField(
-        hint: "Username",
-      ),
-    );
-  }
-}
-
 class _InputTextFieldPadding extends StatelessWidget {
   final StatelessWidget widget;
 
@@ -90,7 +83,6 @@ class _InputTextFieldPadding extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ResponsiveDesign(mediaQueryData: MediaQuery.of(context));
     return Padding(
       padding: EdgeInsets.only(
           left: ResponsiveDesign.getScreenWidth() / 30,
@@ -101,36 +93,76 @@ class _InputTextFieldPadding extends StatelessWidget {
   }
 }
 
-class _PasswordInputTextField extends StatelessWidget {
-  const _PasswordInputTextField({Key? key}) : super(key: key);
+class _UsernameInputTextField extends StatelessWidget {
+  final TextEditingController controller;
+
+  _UsernameInputTextField({required this.controller});
 
   @override
   Widget build(BuildContext context) {
-    return const _InputTextFieldPadding(
-        widget: _InputTextField(hint: "Password"));
+    return _InputTextFieldPadding(
+      widget: _InputTextField(
+        hint: "Username",
+        textEditController: controller,
+        obscureText: false,
+      ),
+    );
+  }
+}
+
+class _PasswordInputTextField extends StatelessWidget {
+  final TextEditingController controller;
+
+  _PasswordInputTextField(
+      {required this.controller}); //({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return _InputTextFieldPadding(
+        widget: _InputTextField(
+      hint: "Password",
+      textEditController: controller,
+      obscureText: true,
+    ));
   }
 }
 
 class _InputTextField extends StatelessWidget {
   final String hint;
+  final TextEditingController textEditController;
+  final bool obscureText;
 
-  const _InputTextField({super.key, required this.hint});
+  const _InputTextField(
+      {required this.hint,
+      required this.textEditController,
+      required this.obscureText});
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: textEditController,
+      obscureText: obscureText,
       decoration: InputDecoration(
+          labelText: hint,
+          labelStyle: TextStyle(fontSize: ResponsiveDesign.getScreenWidth()/22),
           hintText: hint,
+          hintStyle: TextStyle(fontSize: ResponsiveDesign.getScreenWidth()/22),
           filled: true,
           fillColor: Colors.white,
           border: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(10.0)))),
+              borderRadius: BorderRadius.all(Radius.circular(10.0)))
+      ),
+      style: TextStyle(fontSize: ResponsiveDesign.getScreenWidth()/22),
     );
   }
 }
 
 class _LoginButton extends StatelessWidget {
-  const _LoginButton({super.key /*,required this.screenInfo*/});
+  final TextEditingController usernameEditCont, passwordEditCont;
+
+  _LoginButton(
+      {required this.usernameEditCont,
+      required this.passwordEditCont}); //({super.key /*,required this.screenInfo*/});
 
   @override
   Widget build(BuildContext context) {
@@ -139,7 +171,8 @@ class _LoginButton extends StatelessWidget {
       height: ResponsiveDesign.getScreenHeight() / 15,
       child: ElevatedButton(
           onPressed: () {
-            print("login is successfull");
+            print("username : ${usernameEditCont.text}");
+            print("password : ${passwordEditCont.text}");
           },
           style: ButtonStyle(
               backgroundColor:
