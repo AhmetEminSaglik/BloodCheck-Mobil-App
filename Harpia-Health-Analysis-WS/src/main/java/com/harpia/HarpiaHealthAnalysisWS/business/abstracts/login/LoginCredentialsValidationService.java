@@ -6,4 +6,5 @@ public interface LoginCredentialsValidationService {
     Result isUsernameValid(String username);
 
     Result isPasswordValid(String password);
+    Result isUsernameAndPasswordRegistered(String  username, String password);
 }

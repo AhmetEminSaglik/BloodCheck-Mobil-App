@@ -9,11 +9,14 @@ public interface UserService {
 
     List<User> saveAll(List<User> list);
 
-    List<User> findAll();
 
     User findById(long id);
 
+    User findByUsernameAndPassword(String username, String password);
+    User findByUsername(String username);
+
+    List<User> findAll();
+
     List<User> findAllByRoleId(int id);
 
-    User findByUsernameAndPassword(String username, String password);
 }

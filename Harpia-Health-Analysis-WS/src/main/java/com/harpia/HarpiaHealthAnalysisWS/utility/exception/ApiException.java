@@ -1,3 +1,4 @@
+/*
 package com.harpia.HarpiaHealthAnalysisWS.utility.exception;
 
 import org.springframework.http.HttpStatus;
@@ -21,3 +22,4 @@ public class ApiException {
     }
 
 }
+*/

@@ -24,7 +24,7 @@ public class LoginCredentialsValidation implements LoginValidationService, Login
     }
 
     @Override
-    public DataResult<User> validateLogin(String username, String password) {
+    public DataResult<User> validateLoginCredentials(String username, String password) {
         Result result = isUsernameValid(username);
         if (!result.isSuccess()) {
             return new ErrorDataResult<>(result.getMessage());
@@ -33,15 +33,8 @@ public class LoginCredentialsValidation implements LoginValidationService, Login
         if (!result.isSuccess()) {
             return new ErrorDataResult<>(result.getMessage());
         }
-        User user = userService.findByUsernameAndPassword(username, password);
-        if (user == null) {
-            String error = "Username or Password is Invalid.";
-            log.info(error);
-            return new ErrorDataResult<>(null, error);
-        }
-        log.info("User Object is retrived by username and password from Database : " + user);
+        return isUsernameAndPasswordRegistered(username, password);
 
-        return new SuccessDataResult<>(user, "Login Successfull.");
     }
 
     @Override
@@ -54,5 +47,17 @@ public class LoginCredentialsValidation implements LoginValidationService, Login
     public Result isPasswordValid(String password) {
         return LengthValidator.isLengthValid(
                 EnumInputName.PASSWORD, password, passwordMinLength, passwordMaxLength);
+    }
+
+    @Override
+    public DataResult<User> isUsernameAndPasswordRegistered(String username, String password) {
+        User user = userService.findByUsernameAndPassword(username, password);
+        if (user == null) {
+            String error = "Username or Password is Invalid.";
+            log.info(error);
+            return new ErrorDataResult<>(null, error);
+        }
+        log.info("User Object is retrived by username and password from Database : " + user);
+        return new SuccessDataResult<>(user, "Login Successfull.");
     }
 }

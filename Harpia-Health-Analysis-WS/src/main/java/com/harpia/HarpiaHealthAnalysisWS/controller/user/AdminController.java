@@ -1,15 +1,17 @@
 package com.harpia.HarpiaHealthAnalysisWS.controller.user;
 
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.UserService;
+import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.singup.SignupUser;
 import com.harpia.HarpiaHealthAnalysisWS.model.Admin;
+import com.harpia.HarpiaHealthAnalysisWS.model.User;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.DataResult;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.SuccessDataResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/admins")
@@ -21,10 +23,13 @@ public class AdminController {
     @Autowired
     private UserService service;
 
-    @PostMapping()
-    public DataResult<Admin> saveAdmin(@RequestBody Admin inputAdmin) {
-        Admin admin = (Admin) service.save(inputAdmin);
-        return new SuccessDataResult<>(admin, "All Admins retrived successfully");
+    @PostMapping("/save")
+    public ResponseEntity<DataResult<User>> saveAdmin(@RequestBody Admin inputAdmin) {
+        SignupUser signupUser = new SignupUser(service);
+        DataResult<User> dataResult = signupUser.signup(inputAdmin);
+        return ResponseEntity.status(HttpStatus.CREATED).body(dataResult);
+//        Admin admin = (Admin) service.save(inputAdmin);
+//        return new SuccessDataResult<>(admin, "Admin Saved Successfuly");
     }
 
     @GetMapping("/{id}")
