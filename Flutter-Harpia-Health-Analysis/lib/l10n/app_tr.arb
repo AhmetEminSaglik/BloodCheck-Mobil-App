@@ -1,12 +1,12 @@
 {
-  "login" : "Giriş Yap",
-  "@login" :{
-  "description": "Giris yapma butonlarinda ollur"},
-
-  "hello" : "Merhaba {kullanici_adi}",
-  "@hello" :{
-    "description": "Kullanici Selamlama"},
-
+  "login": "Giriş Yap",
+  "@login": {
+    "description": "Giris yapma butonlarinda ollur"
+  },
+  "hello": "Merhaba {kullanici_adi}",
+  "@hello": {
+    "description": "Kullanici Selamlama"
+  },
   "locale": "tr",
   "helloWorld": "Merhaba, Dünya!"
 }

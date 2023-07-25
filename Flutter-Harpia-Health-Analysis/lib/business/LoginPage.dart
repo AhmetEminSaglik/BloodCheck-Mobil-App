@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_harpia_health_analysis/httprequest/HttpRequest.dart';
 import '../core/ResponsiveDesign.dart';
 
 class LoginPage extends StatefulWidget {
@@ -108,10 +108,10 @@ class _PasswordInputTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return _InputTextFieldPadding(
         widget: _InputTextFormField(
-          hint: "Password",
-          textEditController: controller,
-          obscureText: true,
-        ));
+      hint: "Password",
+      textEditController: controller,
+      obscureText: true,
+    ));
   }
 }
 
@@ -122,8 +122,8 @@ class _InputTextFormField extends StatelessWidget {
 
   const _InputTextFormField(
       {required this.hint,
-        required this.textEditController,
-        required this.obscureText});
+      required this.textEditController,
+      required this.obscureText});
 
   @override
   Widget build(BuildContext context) {
@@ -146,10 +146,10 @@ class _InputTextFormField extends StatelessWidget {
       decoration: InputDecoration(
           labelText: hint,
           labelStyle:
-          TextStyle(fontSize: ResponsiveDesign.getScreenWidth() / 22),
+              TextStyle(fontSize: ResponsiveDesign.getScreenWidth() / 22),
           hintText: hint,
           hintStyle:
-          TextStyle(fontSize: ResponsiveDesign.getScreenWidth() / 22),
+              TextStyle(fontSize: ResponsiveDesign.getScreenWidth() / 22),
           filled: true,
           fillColor: Colors.white,
           border: const OutlineInputBorder(
@@ -165,32 +165,33 @@ class _LoginButton extends StatelessWidget {
 
   _LoginButton(
       {required this.formKey,
-        required this.tfUsername,
-        required this.tfPassword}); //({super.key /*,required this.screenInfo*/});
+      required this.tfUsername,
+      required this.tfPassword}); //({super.key /*,required this.screenInfo*/});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: ResponsiveDesign.getScreenWidth() / 1.5,
-      height: ResponsiveDesign.getScreenHeight() / 15,
-      child: ElevatedButton(
-          onPressed: () {
-            bool controlResult = formKey.currentState!.validate();
-            if (controlResult) {
-              String username = tfUsername.text;
-              String pass = tfPassword.text;
-              print("Username : $username, Password : $pass");
-            }
-          },
-          style: ButtonStyle(
-              backgroundColor:
-              MaterialStateColor.resolveWith((states) => Colors.pink),
-              foregroundColor:
-              MaterialStateColor.resolveWith((states) => Colors.white)),
-          child: Text(Intl.message("login3", name: "logi"),
-              style:
-              TextStyle(fontSize: ResponsiveDesign.getScreenWidth() / 20))),
-    );
+        width: ResponsiveDesign.getScreenWidth() / 1.5,
+        height: ResponsiveDesign.getScreenHeight() / 15,
+        child: ElevatedButton(
+            onPressed: () {
+              var request = HttpRequest();
+              request.getAllUserData();
+              bool controlResult = formKey.currentState!.validate();
+              if (controlResult) {
+                String username = tfUsername.text;
+                String pass = tfPassword.text;
+                print("Username : $username, Password : $pass");
+              }
+            },
+            style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateColor.resolveWith((states) => Colors.pink),
+                foregroundColor:
+                    MaterialStateColor.resolveWith((states) => Colors.white)),
+            child: Text("login3",
+                style: TextStyle(
+                    fontSize: ResponsiveDesign.getScreenWidth() / 20))));
   }
 }
 

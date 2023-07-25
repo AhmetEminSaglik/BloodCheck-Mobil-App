@@ -1,12 +1,5 @@
 {
-  "login" : "Login",
-  "@login" :{
-  "description": "For Login Button Text"},
-
-  "hello" : "Hello {username}",
-  "@hello" :{
-    "description": "Greetings to User"},
-
-  "locale": "en",
-  "helloWorld": "Hello World!"
+  "login": "Login",
+  "hello": "Hello {username}",
+  "locale": "en"
 }

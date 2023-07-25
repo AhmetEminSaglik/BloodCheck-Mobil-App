@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/healthcare_personnels")
-@CrossOrigin
+@CrossOrigin()
 public class HealthcarePersonnelController {
     protected static final Logger log = LoggerFactory.getLogger(HealthcarePersonnelController.class);
 
