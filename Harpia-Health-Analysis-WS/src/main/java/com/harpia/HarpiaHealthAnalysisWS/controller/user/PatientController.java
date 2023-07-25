@@ -1,6 +1,7 @@
 package com.harpia.HarpiaHealthAnalysisWS.controller.user;
 
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.UserService;
+import com.harpia.HarpiaHealthAnalysisWS.model.HealthcarePersonnel;
 import com.harpia.HarpiaHealthAnalysisWS.model.Patient;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.DataResult;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.SuccessDataResult;
@@ -23,5 +24,11 @@ public class PatientController {
         Patient p = (Patient) service.save(patient);
         log.info("Patient is saved : ", p);
         return new SuccessDataResult<>(p, "Patient is saved");
+    }
+
+    @GetMapping("/{id}")
+    public DataResult<Patient> findById(@PathVariable long id) {
+        Patient patient = (Patient) service.findById(id);
+        return new SuccessDataResult<>(patient, "Patient retrived Succesfully");
     }
 }

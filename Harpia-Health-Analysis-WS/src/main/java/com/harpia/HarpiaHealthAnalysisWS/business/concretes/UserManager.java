@@ -27,4 +27,9 @@ public class UserManager implements UserService {
     public List<User> findAll() {
         return userRepository.findAll();
     }
+
+    @Override
+    public User findById(long id) {
+        return userRepository.findById(id).get();
+    }
 }

@@ -17,6 +17,7 @@ import java.util.List;
 public class AdminController {
     protected static final Logger log = LoggerFactory.getLogger(AdminController.class);
 
+
     @Autowired
     private UserService service;
 
@@ -26,5 +27,9 @@ public class AdminController {
         return new SuccessDataResult<>(admin, "All Admins retrived successfully");
     }
 
-
+    @GetMapping("/{id}")
+    public DataResult<Admin> findById(@PathVariable long id) {
+        Admin admin = (Admin) service.findById(id);
+        return new SuccessDataResult<>(admin, "Admin retrived Succesfully");
+    }
 }
