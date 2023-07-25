@@ -1,5 +1,6 @@
 package com.harpia.HarpiaHealthAnalysisWS.controller.user;
 
+import com.harpia.HarpiaHealthAnalysisWS.model.Patient;
 import com.harpia.HarpiaHealthAnalysisWS.model.User;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.UserService;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.DataResult;
@@ -24,5 +25,12 @@ public class UserController {
     public DataResult<List<User>> findAllUserList() {
         return new SuccessDataResult<>(service.findAll(), "All users retrived successfully");
     }
+
+    @GetMapping("/{id}")
+    public DataResult<User> findById(@PathVariable long id) {
+        User user = service.findById(id);
+        return new SuccessDataResult<>(user, "User retrived Succesfully");
+    }
+
 }
 
