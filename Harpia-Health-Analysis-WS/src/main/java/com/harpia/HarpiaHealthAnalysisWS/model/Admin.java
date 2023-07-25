@@ -12,6 +12,6 @@ import lombok.Data;
 public class Admin extends User {
 
     public Admin() {
-        setUserRoleId(EnumUserRole.ADMIN.getId());
+        setRoleId(EnumUserRole.ADMIN.getId());
     }
 }

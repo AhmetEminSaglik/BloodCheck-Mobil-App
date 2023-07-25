@@ -13,7 +13,7 @@ public class HealthcarePersonnel extends User {
 
 
     public HealthcarePersonnel() {
-        setUserRoleId(EnumUserRole.HEALTHCARE_PERSONNEL.getId());
+        setRoleId(EnumUserRole.HEALTHCARE_PERSONNEL.getId());
     }
 
     @Override

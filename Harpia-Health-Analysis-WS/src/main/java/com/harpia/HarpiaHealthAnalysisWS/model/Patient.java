@@ -14,7 +14,7 @@ public class Patient extends User {
     int diabeticType;
 
     public Patient() {
-        setUserRoleId(EnumUserRole.PATIENT.getId());
+        setRoleId(EnumUserRole.PATIENT.getId());
     }
 
     @Override
