@@ -32,5 +32,11 @@ public class UserController {
         return new SuccessDataResult<>(user, "User retrived Succesfully");
     }
 
+    @GetMapping("/roleid/{id}")
+    public DataResult<List<User>> findByRoleId(@PathVariable int id) {
+        List<User> user = service.findAllByRoleId(id);
+        return new SuccessDataResult<>(user, "Patient retrived Succesfully");
+    }
+
 }
 

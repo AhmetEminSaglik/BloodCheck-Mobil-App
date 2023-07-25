@@ -14,4 +14,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     <S extends User> List<S> saveAll(Iterable<S> entities);
 
     List<User> findAll();
+    List<User> findAllByRoleId(int id);
 }
