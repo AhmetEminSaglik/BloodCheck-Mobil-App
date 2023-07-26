@@ -1,5 +1,6 @@
 package com.harpia.HarpiaHealthAnalysisWS.controller.user;
 
+import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.UserRoleService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.login.LoginValidationService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.singup.SignupUser;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.singup.SignupValidationService;
@@ -9,6 +10,8 @@ import com.harpia.HarpiaHealthAnalysisWS.model.HealthcarePersonnel;
 import com.harpia.HarpiaHealthAnalysisWS.model.LoginCredentials;
 import com.harpia.HarpiaHealthAnalysisWS.model.User;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.UserService;
+import com.harpia.HarpiaHealthAnalysisWS.model.UserRole;
+import com.harpia.HarpiaHealthAnalysisWS.model.enums.EnumUserRole;
 import com.harpia.HarpiaHealthAnalysisWS.utility.exception.ApiRequestException;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.DataResult;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.Result;
@@ -20,6 +23,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -30,6 +34,9 @@ public class UserController {
 
     @Autowired
     private UserService service;
+    @Autowired
+    private UserRoleService roleService;
+
 
     @GetMapping()
     public DataResult<List<User>> findAllUserList() {
@@ -57,8 +64,20 @@ public class UserController {
 
     @GetMapping("/roleid/{id}")
     public DataResult<List<User>> findByRoleId(@PathVariable int id) {
-        List<User> user = service.findAllByRoleId(id);
-        return new SuccessDataResult<>(user, "Patient retrived Succesfully");
+        List<User> userList = service.findAllByRoleId(id);
+
+        System.out.println("----------------------------------");
+        UserRole role = roleService.findById(id);
+        String msg;
+        if (role == null) {
+            return new SuccessDataResult<>("Unknown User type is requested");
+        }
+        if (userList.isEmpty()) {
+            msg = "Found no one in " + role.getRole() + " user type";
+        } else {
+            msg = role.getRole() + " list is retrived";
+        }
+        return new SuccessDataResult<>(userList, msg);
     }
 
     @PostMapping("/login")
