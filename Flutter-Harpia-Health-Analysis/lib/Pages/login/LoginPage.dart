@@ -1,18 +1,19 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_harpia_health_analysis/model/EnumUserRole.dart';
+import 'package:flutter_harpia_health_analysis/Pages/afterlogin/HomePage.dart';
+import 'package:flutter_harpia_health_analysis/model/userrole/EnumUserRole.dart';
 import 'package:flutter_harpia_health_analysis/util/ProductColor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequest.dart';
-import '../core/ResponsiveDesign.dart';
-import '../httprequest/ResponseEntity.dart';
-import '../model/User.dart';
+import '../../core/ResponsiveDesign.dart';
+import '../../httprequest/ResponseEntity.dart';
+import '../../model/User.dart';
 import 'dart:convert';
 
-import '../model/UserFactory.dart';
-import '../util/CustomSnackBar.dart';
-import '../util/SharedPref.dart';
+import '../../model/UserFactory.dart';
+import '../../util/CustomSnackBar.dart';
+import '../../util/SharedPref.dart';
 
 class LoginPage extends StatefulWidget {
   final String title;
@@ -198,29 +199,7 @@ class _LoginButton extends StatelessWidget {
         height: ResponsiveDesign.getScreenHeight() / 15,
         child: ElevatedButton(
             onPressed: () {
-              bool controlResult = formKey.currentState!.validate();
-              if (controlResult) {
-                String username = tfUsername.text;
-                String pass = tfPassword.text;
-                var request = HttpRequest();
-                request.login(username, pass).then((resp) {
-                  debugPrint(resp.body);
-                  Map<String, dynamic> jsonData = json.decode(resp.body);
-                  var respEntity = ResponseEntity.fromJson(jsonData);
-
-                  if (!respEntity.success) {
-                    String errMsg = respEntity.message;
-                    ScaffoldMessenger.of(context)
-                        .showSnackBar(CustomSnackBar.getSnackBar(errMsg));
-                  } else {
-                    // LOGIN
-                    User user = UserFactory.createUser(respEntity.data);
-                    SharedPref.setLoginDataUser(user);
-
-                    // var sp = SharedPref();
-                  }
-                });
-              }
+              loginProcess(context);
             },
             style: ButtonStyle(
                 backgroundColor:
@@ -230,6 +209,44 @@ class _LoginButton extends StatelessWidget {
             child: Text("login",
                 style: TextStyle(
                     fontSize: ResponsiveDesign.getScreenWidth() / 20))));
+  }
+
+  void loginProcess(BuildContext context) {
+    bool controlResult = formKey.currentState!.validate();
+    if (controlResult) {
+      String username = tfUsername.text;
+      String pass = tfPassword.text;
+      var request = HttpRequest();
+      request.login(username, pass).then((resp) {
+        debugPrint(resp.body);
+        Map<String, dynamic> jsonData = json.decode(resp.body);
+        var respEntity = ResponseEntity.fromJson(jsonData);
+
+        if (!respEntity.success) {
+          showInvalidUsernameOrPassword(
+              context: context, msg: respEntity.message);
+        } else {
+          User user = UserFactory.createUser(respEntity.data);
+          saveUserData(user);
+          navigateToHomePage(context: context, roleId: user.roleId);
+        }
+      });
+    }
+  }
+
+  void showInvalidUsernameOrPassword(
+      {required BuildContext context, required String msg}) {
+    ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar.getSnackBar(msg));
+  }
+
+  void saveUserData(User user) {
+    SharedPref.setLoginDataUser(user);
+  }
+
+  void navigateToHomePage(
+      {required BuildContext context, required int roleId}) {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => HomePage(userRoleId: roleId)));
   }
 }
 

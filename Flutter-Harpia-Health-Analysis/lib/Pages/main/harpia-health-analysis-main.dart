@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'core/ResponsiveDesign.dart';
-import 'business/LoginPage.dart';
+import '../../core/ResponsiveDesign.dart';
+import '../login/LoginPage.dart';
 
 void main() {
   runApp(const MyApp());

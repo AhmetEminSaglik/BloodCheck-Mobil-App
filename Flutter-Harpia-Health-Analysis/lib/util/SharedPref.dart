@@ -1,6 +1,5 @@
 import 'package:flutter_harpia_health_analysis/model/EnumUserProp.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../model/User.dart';
 
 class SharedPref {
@@ -8,9 +7,9 @@ class SharedPref {
 
   static void setLoginDataUser(User user) async {
     await _initiliazeSharedPref();
-    // _printSP();
+    _printSP();
     _addDataToSP(user);
-    // _printSP();
+    _printSP();
   }
 
   static Future<void> _initiliazeSharedPref() async {
@@ -34,7 +33,7 @@ class SharedPref {
 
     int id = sp.getInt(EnumUserProp.ID.name) ?? -1;
     int roleId = sp.getInt(EnumUserProp.ROLE_ID.name) ?? -1;
-    String username = sp.getString(EnumUserProp.USERNAME.name)?? "NULL";
+    String username = sp.getString(EnumUserProp.USERNAME.name) ?? "NULL";
     String pass = sp.getString(EnumUserProp.PASSWORD.name) ?? "NULL";
     String name = sp.getString(EnumUserProp.NAME.name) ?? "NULL";
     String lastname = sp.getString(EnumUserProp.LASTNAME.name) ?? "NULL";

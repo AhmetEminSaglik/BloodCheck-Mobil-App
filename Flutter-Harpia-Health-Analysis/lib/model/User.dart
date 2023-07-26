@@ -2,7 +2,7 @@ import 'package:flutter_harpia_health_analysis/exception/Exceptions.dart';
 import 'package:flutter_harpia_health_analysis/model/Admin.dart';
 import 'package:flutter_harpia_health_analysis/model/HealthcarePersonnel.dart';
 import 'package:flutter_harpia_health_analysis/model/Patient.dart';
-import 'package:flutter_harpia_health_analysis/model/EnumUserRole.dart';
+import 'package:flutter_harpia_health_analysis/model/userrole/EnumUserRole.dart';
 
 abstract class User {
   late int _id;
@@ -36,14 +36,7 @@ abstract class User {
     } else if (roleId == EnumUserRole.PATIENT.roleId) {
       return Patient.fromJson(json);
     }
-    throw UnknowUserRoleIdException(msg: "$roleId is an unknow User Role id");
-    /*  return User(id: -1,
-        roleId: -1,
-        name: "",
-        lastname: "",
-        username: "",
-        password: "");*/
-  }
+    throw UnknowUserRoleIdException(msg: "$roleId is an unknow User Role id");}
 
   String get password => _password;
 
