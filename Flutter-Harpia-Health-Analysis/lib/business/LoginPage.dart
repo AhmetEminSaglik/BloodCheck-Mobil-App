@@ -1,6 +1,18 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_harpia_health_analysis/model/EnumUserRole.dart';
+import 'package:flutter_harpia_health_analysis/util/ProductColor.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequest.dart';
 import '../core/ResponsiveDesign.dart';
+import '../httprequest/ResponseEntity.dart';
+import '../model/User.dart';
+import 'dart:convert';
+
+import '../model/UserFactory.dart';
+import '../util/CustomSnackBar.dart';
+import '../util/SharedPref.dart';
 
 class LoginPage extends StatefulWidget {
   final String title;
@@ -13,6 +25,10 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   var formKey = GlobalKey<FormState>();
+
+  Future<void> setUserDataSharedPref() async {
+    var sp = await SharedPreferences.getInstance();
+  }
 
   TextEditingController tfUsername = TextEditingController();
   TextEditingController tfPassword = TextEditingController();
@@ -145,16 +161,23 @@ class _InputTextFormField extends StatelessWidget {
       },
       decoration: InputDecoration(
           labelText: hint,
-          labelStyle:
-              TextStyle(fontSize: ResponsiveDesign.getScreenWidth() / 22),
+          labelStyle: TextStyle(
+              fontSize: ResponsiveDesign.getScreenWidth() / 25,
+              color: ProductColor.black,
+              fontWeight: FontWeight.bold),
           hintText: hint,
           hintStyle:
               TextStyle(fontSize: ResponsiveDesign.getScreenWidth() / 22),
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+              borderSide: BorderSide(color: ProductColor.darkBlue)),
           filled: true,
-          fillColor: Colors.white,
-          border: const OutlineInputBorder(
+          fillColor: ProductColor.white,
+          border: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(10.0)))),
-      style: TextStyle(fontSize: ResponsiveDesign.getScreenWidth() / 22),
+      style: TextStyle(
+          fontSize: ResponsiveDesign.getScreenWidth() / 22,
+          color: ProductColor.darkBlue),
     );
   }
 }
@@ -175,13 +198,28 @@ class _LoginButton extends StatelessWidget {
         height: ResponsiveDesign.getScreenHeight() / 15,
         child: ElevatedButton(
             onPressed: () {
-              var request = HttpRequest();
-              request.getAllUserData();
               bool controlResult = formKey.currentState!.validate();
               if (controlResult) {
                 String username = tfUsername.text;
                 String pass = tfPassword.text;
-                print("Username : $username, Password : $pass");
+                var request = HttpRequest();
+                request.login(username, pass).then((resp) {
+                  debugPrint(resp.body);
+                  Map<String, dynamic> jsonData = json.decode(resp.body);
+                  var respEntity = ResponseEntity.fromJson(jsonData);
+
+                  if (!respEntity.success) {
+                    String errMsg = respEntity.message;
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(CustomSnackBar.getSnackBar(errMsg));
+                  } else {
+                    // LOGIN
+                    User user = UserFactory.createUser(respEntity.data);
+                    SharedPref.setLoginDataUser(user);
+
+                    // var sp = SharedPref();
+                  }
+                });
               }
             },
             style: ButtonStyle(
@@ -189,7 +227,7 @@ class _LoginButton extends StatelessWidget {
                     MaterialStateColor.resolveWith((states) => Colors.pink),
                 foregroundColor:
                     MaterialStateColor.resolveWith((states) => Colors.white)),
-            child: Text("login3",
+            child: Text("login",
                 style: TextStyle(
                     fontSize: ResponsiveDesign.getScreenWidth() / 20))));
   }
