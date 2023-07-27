@@ -1,9 +1,15 @@
 package com.harpia.HarpiaHealthAnalysisWS.business.concretes;
 
+import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.disease.DiseaseService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.user.UserRoleService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.user.UserService;
+import com.harpia.HarpiaHealthAnalysisWS.model.disease.Diabetic;
+import com.harpia.HarpiaHealthAnalysisWS.model.disease.Disease;
+import com.harpia.HarpiaHealthAnalysisWS.model.enums.EnumDiseaseType;
 import com.harpia.HarpiaHealthAnalysisWS.model.enums.EnumUserRole;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.Admin;
+import com.harpia.HarpiaHealthAnalysisWS.model.users.HealthcarePersonnel;
+import com.harpia.HarpiaHealthAnalysisWS.model.users.Patient;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.User;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.role.UserRole;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.DataResult;
@@ -16,6 +22,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Component
 public class InitialDataLoader implements CommandLineRunner {
@@ -28,32 +35,49 @@ public class InitialDataLoader implements CommandLineRunner {
     private UserService userService;
     @Autowired
     private UserRoleService roleService;
+    @Autowired
+    private DiseaseService diseaseService;
     private static final Logger log = LoggerFactory.getLogger(InitialDataLoader.class);
 
-    public void saveInitilizateData() {
+    private Random random = new Random();
 
+    public void saveInitilizateData() {
         saveUserRoleData();
-        saveAdminData();
+        saveUserData(getAdminList());
+        // rest is the fake data
+        saveUserData(getHealthCarePersonList());
+        saveUserData(getPatientList());
+        saveDiseaseData();
     }
 
 
     private void saveUserRoleData() {
-        List<UserRole> data = roleService.saveAll(getStandartUserRoleList());
-        String msg = "3 roles are added";
-        DataResult result = new SuccessDataResult<>(data, msg);
-        log.info(result.toString());
+        List<UserRole> list = roleService.saveAll(getStandartUserRoleList());
+        list.forEach(System.out::println);
     }
 
-    private void saveAdminData() {
-        List<User> list = getAdminList();
+    private void saveDiseaseData() {
+        List<Disease> list = getDiseaseList();
+        list = diseaseService.saveAll(list);
+        list.forEach(System.out::println);
+    }
+
+    private boolean isUserRegistered(String username) {
+        User user = userService.findByUsername(username);
+        if (user == null)
+            return false;
+        return true;
+
+    }
+
+    private void saveUserData(List<User> list) {
         for (int i = 0; i < list.size(); i++) {
             String username = list.get(i).getUsername();
-            String pass = list.get(i).getPassword();
-            User user = userService.findByUsernameAndPassword(username, pass);
-            if (user == null) {
-                userService.save(list.get(i));
+            if (isUserRegistered(username)) {
+                System.out.println(list.get(i).getClass().getSimpleName() + " -----> data is already registered.");
             } else {
-                log.info("Admin(" + (i + 1) + ") data is already registered.");
+                User user = userService.save(list.get(i));
+                System.out.println(user);
             }
         }
     }
@@ -83,6 +107,54 @@ public class InitialDataLoader implements CommandLineRunner {
         admin.setPassword("saglik");
         admin.setRoleId(EnumUserRole.ADMIN.getId());
         list.add(admin);
+        return list;
+    }
+
+    private List<User> getHealthCarePersonList() {
+        List<User> list = new ArrayList<>();
+        for (int i = 1; i <= 5; i++) {
+            HealthcarePersonnel user = new HealthcarePersonnel();
+            user.setName("HCP Name" + i);
+            user.setLastname("HCP Lastname" + i);
+            user.setUsername("hcp" + i);
+            user.setPassword("hcp" + i);
+            user.setRoleId(EnumUserRole.HEALTHCARE_PERSONAL.getId());
+            list.add(user);
+        }
+        return list;
+    }
+
+    private List<User> getPatientList() {
+        List<User> list = new ArrayList<>();
+        for (int i = 1; i < 40; i++) {
+            Patient user = new Patient();
+            user.setName("Patient Name" + i);
+            user.setLastname("Patient Lastname" + i);
+            user.setUsername("pat" + i);
+            user.setPassword("pat" + i);
+            int hcp_id = random.nextInt(5) + 3;
+            HealthcarePersonnel personnel = (HealthcarePersonnel) userService.findById(hcp_id);
+            user.setHealthcarePersonnel(personnel);
+            user.setRoleId(EnumUserRole.PATIENT.getId());
+            list.add(user);
+        }
+        return list;
+    }
+
+    private List<Disease> getDiseaseList() {
+        List<Disease> list = new ArrayList<>();
+        for (int i = 1; i < 50; i++) {
+            Diabetic diabetic = new Diabetic();
+            diabetic.setBloodPressure(random.nextInt(200) + 50);
+            diabetic.setCholesterol(random.nextInt(200) + 50);
+            diabetic.setBloodSugar(random.nextInt(200) + 50);
+
+            int patient_id = random.nextInt(39) + 8;
+            Patient patient = (Patient) userService.findById(patient_id);
+            diabetic.setPatient(patient);
+            diabetic.setDiseaseTypeId(EnumDiseaseType.DIABETIC.getId());
+            list.add(diabetic);
+        }
         return list;
     }
 

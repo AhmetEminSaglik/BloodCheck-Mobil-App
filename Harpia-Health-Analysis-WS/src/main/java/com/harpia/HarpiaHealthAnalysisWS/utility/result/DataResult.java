@@ -6,7 +6,7 @@ public class DataResult<T> extends Result {
 
     public DataResult(T data, boolean success, String message) {
         super(success, message);
-        this.data=data;
+        this.data = data;
     }
 
     public DataResult(T data, boolean success) {
@@ -16,5 +16,12 @@ public class DataResult<T> extends Result {
 
     public T getData() {
         return this.data;
+    }
+
+    @Override
+    public String toString() {
+        return "DataResult{" +
+                "success=" + isSuccess() + "\ndata=" + data + ",\n message : " + getMessage() +
+                '}';
     }
 }

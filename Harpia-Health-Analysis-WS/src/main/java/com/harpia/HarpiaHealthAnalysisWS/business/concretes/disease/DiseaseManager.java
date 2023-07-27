@@ -27,4 +27,9 @@ public class DiseaseManager implements DiseaseService {
     public List<Disease> findAll() {
         return repository.findAll();
     }
+
+    @Override
+    public List<Disease> saveAll(List<Disease> list) {
+        return repository.saveAll(list);
+    }
 }

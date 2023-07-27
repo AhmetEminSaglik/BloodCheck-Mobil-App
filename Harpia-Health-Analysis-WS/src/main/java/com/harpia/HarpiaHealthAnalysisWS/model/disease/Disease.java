@@ -15,9 +15,9 @@ public abstract class Disease {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Long id;
+    @Column
+    private int diseaseTypeId;
     //    @Column
-//    private int diseaseTypeId;
-//    @Column
 //    private String name;
 //    @OneToOne
 //    @JoinColumn(name = "patient_id")

@@ -10,4 +10,6 @@ public interface DiseaseService {
     Disease findById(long id);
 
     List<Disease> findAll();
+
+    List<Disease> saveAll(List<Disease> list);
 }

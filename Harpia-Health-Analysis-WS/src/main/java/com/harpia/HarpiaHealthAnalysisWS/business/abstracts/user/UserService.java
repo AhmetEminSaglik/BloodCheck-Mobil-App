@@ -9,7 +9,6 @@ public interface UserService {
 
     List<User> saveAll(List<User> list);
 
-
     User findById(long id);
 
     User findByUsernameAndPassword(String username, String password);

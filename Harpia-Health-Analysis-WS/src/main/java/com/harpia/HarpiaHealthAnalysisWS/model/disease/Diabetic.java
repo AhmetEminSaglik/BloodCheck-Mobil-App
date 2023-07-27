@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @AllArgsConstructor
-@NoArgsConstructor
+//@NoArgsConstructor
 @Table(name = "diabetic_patients")
 public class Diabetic extends Disease {
     @Column
@@ -21,8 +21,8 @@ public class Diabetic extends Disease {
     @Column
     int cholesterol;
 
-//    public Diabetic() {
-//        setDiseaseTypeId(EnumDiseaseType.DIABETIC.getId());
+    public Diabetic() {
+        setDiseaseTypeId(EnumDiseaseType.DIABETIC.getId());
 //        setName(EnumDiseaseType.DIABETIC.getName());
-//    }
+    }
 }
