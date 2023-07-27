@@ -1,30 +1,25 @@
 package com.harpia.HarpiaHealthAnalysisWS.controller.user;
 
-import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.UserRoleService;
+import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.disease.DiseaseService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.login.LoginValidationService;
-import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.singup.SignupUser;
-import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.singup.SignupValidationService;
 import com.harpia.HarpiaHealthAnalysisWS.business.concretes.login.LoginCredentialsValidation;
-import com.harpia.HarpiaHealthAnalysisWS.business.concretes.login.SignupCredentialsValidation;
-import com.harpia.HarpiaHealthAnalysisWS.model.HealthcarePersonnel;
 import com.harpia.HarpiaHealthAnalysisWS.model.LoginCredentials;
-import com.harpia.HarpiaHealthAnalysisWS.model.User;
-import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.UserService;
-import com.harpia.HarpiaHealthAnalysisWS.model.UserRole;
-import com.harpia.HarpiaHealthAnalysisWS.model.enums.EnumUserRole;
-import com.harpia.HarpiaHealthAnalysisWS.utility.exception.ApiRequestException;
+import com.harpia.HarpiaHealthAnalysisWS.model.disease.Diabetic;
+import com.harpia.HarpiaHealthAnalysisWS.model.disease.Disease;
+import com.harpia.HarpiaHealthAnalysisWS.model.users.HealthcarePersonnel;
+import com.harpia.HarpiaHealthAnalysisWS.model.users.Patient;
+import com.harpia.HarpiaHealthAnalysisWS.model.users.User;
+import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.user.UserService;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.DataResult;
-import com.harpia.HarpiaHealthAnalysisWS.utility.result.Result;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.SuccessDataResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @RestController
 @RequestMapping("/users")
@@ -34,27 +29,15 @@ public class UserController {
 
     @Autowired
     private UserService service;
+    //    @Autowired
+//    private UserRoleService roleService;
     @Autowired
-    private UserRoleService roleService;
-
+    private DiseaseService diseaseService;
 
     @GetMapping()
     public DataResult<List<User>> findAllUserList() {
         return new SuccessDataResult<>(service.findAll(), "All users retrived successfully");
     }
-
-//    @PostMapping("/save")
-//    public ResponseEntity<DataResult<User>> saveHealthcarePersonnel(@RequestBody User user) {
-//        log.info("user : "+user);
-//        log.info("user name  : "+user.getClass().getName());
-//        SignupUser signupUser = new SignupUser(service);
-//        DataResult<User> dataResult = signupUser.signup(user);
-//        return ResponseEntity.status(HttpStatus.CREATED).body(dataResult);
-//
-////        HealthcarePersonnel personel = (HealthcarePersonnel) service.save(inputPersonel);
-////        log.info("Healthcare Personnel is saved : ", personel);
-////        return new SuccessDataResult<>(personel, "Healthcare Personnel is saved");
-//    }
 
     @GetMapping("/{id}")
     public DataResult<User> findById(@PathVariable long id) {
@@ -62,11 +45,72 @@ public class UserController {
         return new SuccessDataResult<>(user, "User retrived Succesfully");
     }
 
-    @GetMapping("/roleid/{id}")
+    @PostMapping
+//    public DataResult<List<User>> findByRoleId(@PathVariable int id) {
+    public DataResult<List<User>> saveFakePatient_HCP_Disesase() {
+        Random random = new Random();
+
+        List<User> userList = new ArrayList<>();
+        for (int i = 1; i <= 3; i++) {
+            User hcp = new HealthcarePersonnel();
+            hcp.setName("hcp" + i);
+            hcp.setLastname("hcp" + i);
+            hcp.setUsername("hcp" + i);
+            hcp.setPassword("hcp");
+//            service.save(hcp);
+            System.out.println("SAVELENECEK HCP  :" + hcp);
+            hcp = service.save(hcp);
+
+            userList.add(hcp);
+        }
+
+        for (int i = 1; i <= 10; i++) {
+            Patient p = new Patient();
+
+            HealthcarePersonnel hcp = (HealthcarePersonnel) service.findById(random.nextInt(3) + 1);
+            p.setHealthcarePersonnel(hcp);
+            p.setName("pat" + i);
+            p.setLastname("pat" + i);
+            p.setUsername("pat" + i);
+            p.setPassword("pat");
+            System.out.println("PATIENT KAYDEDILECEK " + p);
+            service.save(p);
+
+//            p = (Patient) service.save(p);
+//            userList.add(p);
+        }
+
+        for (int i = 4; i <= 5; i++) {
+            Patient patient = (Patient) service.findById(i);
+            List<Disease> diseaseList = new ArrayList<>();
+            int diseaseNumber = random.nextInt(5) + 1;
+            for (int j = 1; j <= diseaseNumber; j++) {
+                Diabetic diabetic = new Diabetic();
+                diabetic.setPatient(patient);
+                diabetic.setBloodPressure(random.nextInt(100));
+                diabetic.setBloodSugar(random.nextInt(100));
+                diabetic.setCholesterol(random.nextInt(100));
+                diabetic.setPatient(patient);
+                diseaseList.add(diabetic);
+            }
+            userList.add(patient);
+        }
+        for (int i = 0; i < 50; i++) {
+            Diabetic dis = new Diabetic();
+            Patient pat = (Patient) service.findById(random.nextInt(10) + 4);
+            dis.setPatient(pat);
+            dis.setCholesterol(random.nextInt(500));
+            dis.setBloodSugar(random.nextInt(500));
+            dis.setBloodPressure(random.nextInt(500));
+            diseaseService.save(dis);
+        }
+        return new SuccessDataResult<>(userList, "FAKE Userlar kaydedildi");
+    }
+    /*@GetMapping("/roleid/{id}")
     public DataResult<List<User>> findByRoleId(@PathVariable int id) {
         List<User> userList = service.findAllByRoleId(id);
 
-        System.out.println("----------------------------------");
+      *//*  System.out.println("----------------------------------");
         UserRole role = roleService.findById(id);
         String msg;
         if (role == null) {
@@ -76,9 +120,9 @@ public class UserController {
             msg = "Found no one in " + role.getRole() + " user type";
         } else {
             msg = role.getRole() + " list is retrived";
-        }
+        }*//*
         return new SuccessDataResult<>(userList, msg);
-    }
+    }*/
 
     @PostMapping("/login")
     public DataResult<User> login(@RequestBody LoginCredentials loginCreds) {
