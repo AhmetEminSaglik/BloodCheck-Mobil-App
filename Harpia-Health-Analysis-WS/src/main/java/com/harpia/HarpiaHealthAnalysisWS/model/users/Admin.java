@@ -14,8 +14,16 @@ import lombok.NoArgsConstructor;
 //@NoArgsConstructor
 @Table(name = "admins")
 public class Admin extends User {
+//    public Admin(Long id, String name, String lastname, String username, String password) {
+//        super(id, name, lastname, username, password);
+//    }
 
 //    public Admin() {
 //        setRoleId(EnumUserRole.ADMIN.getId());
 //    }
+
+    @Override
+    public String toString() {
+        return "Admin{"+super.toString()+"}";
+    }
 }

@@ -8,7 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:flutter_harpia_health_analysis/harpia-health-analysis-main.dart';
+import 'package:flutter_harpia_health_analysis/Pages/main/harpia-health-analysis-main.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {

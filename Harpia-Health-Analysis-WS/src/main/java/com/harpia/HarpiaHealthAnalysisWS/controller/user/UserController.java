@@ -45,6 +45,11 @@ public class UserController {
         return new SuccessDataResult<>(user, "User retrived Succesfully");
     }
 
+    public User saveUser(User user) {
+        user=service.save(user);
+        return user;
+    }
+
     @PostMapping
 //    public DataResult<List<User>> findByRoleId(@PathVariable int id) {
     public DataResult<List<User>> saveFakePatient_HCP_Disesase() {
