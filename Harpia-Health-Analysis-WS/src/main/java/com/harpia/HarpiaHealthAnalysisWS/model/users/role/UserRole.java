@@ -1,5 +1,4 @@
-/*
-package com.harpia.HarpiaHealthAnalysisWS.model.users;
+package com.harpia.HarpiaHealthAnalysisWS.model.users.role;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -23,4 +22,3 @@ public class UserRole {
 //    @OneToOne(mappedBy = "userRole")
 //    private User user;
 }
-*/

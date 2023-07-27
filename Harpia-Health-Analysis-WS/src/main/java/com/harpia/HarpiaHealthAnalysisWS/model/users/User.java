@@ -15,8 +15,8 @@ public abstract class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Long id;
-    //    @Column
-//    private int roleId;
+    @Column
+    private int roleId;
     @Column
     private String name;
     @Column

@@ -1,9 +1,8 @@
-/*
 package com.harpia.HarpiaHealthAnalysisWS.controller.user.role;
 
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.user.UserRoleService;
-import com.harpia.HarpiaHealthAnalysisWS.model.users.UserRole;
 import com.harpia.HarpiaHealthAnalysisWS.model.enums.EnumUserRole;
+import com.harpia.HarpiaHealthAnalysisWS.model.users.role.UserRole;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.SuccessDataResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,23 +26,16 @@ public class UserRoleController {
         this.service = service;
     }
 
-    @PostMapping
+    /*@PostMapping
     public SuccessDataResult<List<UserRole>> setupStandartUserRole() {
         List<UserRole> data = service.saveAll(getStandartUserRoleList());
-        String msg="3 roles are added";
-        return new SuccessDataResult<>(data,msg);
-    }
+        String msg = "3 roles are added";
+        return new SuccessDataResult<>(data, msg);
+    }*/
 
-    private List<UserRole> getStandartUserRoleList() {
-        List<UserRole> list = new ArrayList<>();
-        list.add(new UserRole(1, EnumUserRole.ADMIN.getName()));
-        list.add(new UserRole(2, EnumUserRole.HEALTHCARE_PERSONAL.getName()));
-        list.add(new UserRole(3, EnumUserRole.PATIENT.getName()));
-        return list;
-    }
+
 
     public UserRole findUserRoleById(int id) {
         return service.findById(id);
     }
 }
-*/

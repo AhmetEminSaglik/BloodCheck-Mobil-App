@@ -69,10 +69,10 @@ public class UserController {
             userList.add(hcp);
         }
 
-        for (int i = 1; i <= 10; i++) {
+        for (int i = 3; i <= 13; i++) {
             Patient p = new Patient();
 
-            HealthcarePersonnel hcp = (HealthcarePersonnel) service.findById(random.nextInt(3) + 1);
+            HealthcarePersonnel hcp = (HealthcarePersonnel) service.findById(random.nextInt(3) + 3);
             p.setHealthcarePersonnel(hcp);
             p.setName("pat" + i);
             p.setLastname("pat" + i);
