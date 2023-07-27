@@ -1,8 +1,8 @@
-package com.harpia.HarpiaHealthAnalysisWS.business.concretes;
+package com.harpia.HarpiaHealthAnalysisWS.business.concretes.user;
 
-import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.UserService;
-import com.harpia.HarpiaHealthAnalysisWS.dataaccess.UserRepository;
-import com.harpia.HarpiaHealthAnalysisWS.model.User;
+import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.user.UserService;
+import com.harpia.HarpiaHealthAnalysisWS.dataaccess.user.UserRepository;
+import com.harpia.HarpiaHealthAnalysisWS.model.users.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,10 +33,10 @@ public class UserManager implements UserService {
         return userRepository.findById(id).get();
     }
 
-    @Override
-    public List<User> findAllByRoleId(int id) {
-        return userRepository.findAllByRoleId(id);
-    }
+//    @Override
+//    public List<User> findAllByRoleId(int id) {
+//        return userRepository.findAllByRoleId(id);
+//    }
 
     @Override
     public User findByUsernameAndPassword(String username, String password) {

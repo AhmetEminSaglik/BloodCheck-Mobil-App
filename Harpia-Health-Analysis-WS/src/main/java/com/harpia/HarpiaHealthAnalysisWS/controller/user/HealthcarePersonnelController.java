@@ -1,10 +1,9 @@
 package com.harpia.HarpiaHealthAnalysisWS.controller.user;
 
-import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.UserService;
+import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.user.UserService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.singup.SignupUser;
-import com.harpia.HarpiaHealthAnalysisWS.model.Admin;
-import com.harpia.HarpiaHealthAnalysisWS.model.HealthcarePersonnel;
-import com.harpia.HarpiaHealthAnalysisWS.model.User;
+import com.harpia.HarpiaHealthAnalysisWS.model.users.HealthcarePersonnel;
+import com.harpia.HarpiaHealthAnalysisWS.model.users.User;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.DataResult;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.SuccessDataResult;
 import org.slf4j.Logger;
@@ -18,8 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/healthcare_personnels")
 @CrossOrigin()
 public class HealthcarePersonnelController {
-    protected static final Logger log = LoggerFactory.getLogger(HealthcarePersonnelController.class);
-
+    private static final Logger log = LoggerFactory.getLogger(HealthcarePersonnelController.class);
     @Autowired
     private UserService service;
 

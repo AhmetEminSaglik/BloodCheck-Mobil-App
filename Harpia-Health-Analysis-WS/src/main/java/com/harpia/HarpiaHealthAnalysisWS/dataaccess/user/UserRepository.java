@@ -1,7 +1,7 @@
-package com.harpia.HarpiaHealthAnalysisWS.dataaccess;
+package com.harpia.HarpiaHealthAnalysisWS.dataaccess.user;
 
 
-import com.harpia.HarpiaHealthAnalysisWS.model.User;
+import com.harpia.HarpiaHealthAnalysisWS.model.users.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -19,5 +19,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     List<User> findAll();
 
-    List<User> findAllByRoleId(int id);
+//    List<User> findAllByRoleId(int id);
 }

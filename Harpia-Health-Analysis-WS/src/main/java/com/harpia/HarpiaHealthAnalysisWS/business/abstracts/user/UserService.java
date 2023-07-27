@@ -1,6 +1,6 @@
-package com.harpia.HarpiaHealthAnalysisWS.business.abstracts;
+package com.harpia.HarpiaHealthAnalysisWS.business.abstracts.user;
 
-import com.harpia.HarpiaHealthAnalysisWS.model.User;
+import com.harpia.HarpiaHealthAnalysisWS.model.users.User;
 
 import java.util.List;
 
@@ -17,6 +17,6 @@ public interface UserService {
 
     List<User> findAll();
 
-    List<User> findAllByRoleId(int id);
+//    List<User> findAllByRoleId(int id);
 
 }

@@ -1,11 +1,10 @@
 package com.harpia.HarpiaHealthAnalysisWS.business.concretes.login;
 
-import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.UserService;
+import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.user.UserService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.singup.SignupCredentialsValidationService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.singup.SignupValidationService;
-import com.harpia.HarpiaHealthAnalysisWS.model.User;
+import com.harpia.HarpiaHealthAnalysisWS.model.users.User;
 import com.harpia.HarpiaHealthAnalysisWS.model.enums.EnumInputName;
-import com.harpia.HarpiaHealthAnalysisWS.utility.result.DataResult;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.ErrorDataResult;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.Result;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.SuccessDataResult;

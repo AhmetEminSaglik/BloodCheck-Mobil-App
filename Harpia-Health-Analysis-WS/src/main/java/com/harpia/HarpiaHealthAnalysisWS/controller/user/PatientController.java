@@ -1,16 +1,10 @@
 package com.harpia.HarpiaHealthAnalysisWS.controller.user;
 
-import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.UserService;
+import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.user.UserService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.singup.SignupUser;
-import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.singup.SignupValidationService;
-import com.harpia.HarpiaHealthAnalysisWS.business.concretes.login.SignupCredentialsValidation;
-import com.harpia.HarpiaHealthAnalysisWS.model.HealthcarePersonnel;
-import com.harpia.HarpiaHealthAnalysisWS.model.Patient;
-import com.harpia.HarpiaHealthAnalysisWS.model.User;
-import com.harpia.HarpiaHealthAnalysisWS.utility.exception.ApiRequestException;
+import com.harpia.HarpiaHealthAnalysisWS.model.users.Patient;
+import com.harpia.HarpiaHealthAnalysisWS.model.users.User;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.DataResult;
-import com.harpia.HarpiaHealthAnalysisWS.utility.result.ErrorDataResult;
-import com.harpia.HarpiaHealthAnalysisWS.utility.result.Result;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.SuccessDataResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
