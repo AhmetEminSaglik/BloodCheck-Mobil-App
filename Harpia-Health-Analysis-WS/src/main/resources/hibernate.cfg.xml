@@ -20,8 +20,8 @@
         <property name="hibernate.jdbc.time_zone">UTC</property>
         &lt;!&ndash;        <property name="hibernate.jdbc.batch_size">10</property>&ndash;&gt;
         <property name="hibernate.order_inserts">true</property>
-        <mapping class="com.harpia.HarpiaHealthAnalysisWS.model.User"/>
-        <mapping class="com.harpia.HarpiaHealthAnalysisWS.model.UserRole"/>
+        <mapping class="com.harpia.HarpiaHealthAnalysisWS.model.users.User"/>
+        <mapping class="com.harpia.HarpiaHealthAnalysisWS.model.users.UserRole"/>
 &lt;!&ndash;        <mapping class="org.ahmeteminsaglik.entities.db.Record"/>&ndash;&gt;
 &lt;!&ndash;        <mapping class="org.ahmeteminsaglik.entities.db.DataStructor"/>&ndash;&gt;
 &lt;!&ndash;        <mapping class="org.ahmeteminsaglik.entities.db.DataStructorProcess"/>&ndash;&gt;
