@@ -1,25 +1,20 @@
 import 'package:flutter_harpia_health_analysis/model/User.dart';
 
 class Patient extends User {
-  late int _diabeticType;
-
   Patient(
       {required int id,
       required int roleId,
       required String name,
       required String lastname,
       required String username,
-      required String password,
-      required int diabeticType})
+      required String password})
       : super(
             id: id,
             roleId: roleId,
             name: name,
             lastname: lastname,
             username: username,
-            password: password) {
-    _diabeticType = diabeticType;
-  }
+            password: password) {}
 
   factory Patient.fromJson(Map<String, dynamic> json) {
     return Patient(
@@ -28,9 +23,7 @@ class Patient extends User {
         name: json["name"] as String,
         lastname: json["lastname"] as String,
         username: json["username"] as String,
-        password: json["password"] as String,
-        diabeticType: json["diabeticType"] as int
-    );
+        password: json["password"] as String);
   }
 
   Map<String, dynamic> toJson() {
@@ -40,16 +33,8 @@ class Patient extends User {
       'name': name,
       'lastname': lastname,
       'username': username,
-      'password': password,
-      'diabeticType': diabeticType
+      'password': password
     };
-  }
-
-
-  int get diabeticType => _diabeticType;
-
-  set diabeticType(int value) {
-    _diabeticType = value;
   }
 
   String toString() {
@@ -60,7 +45,6 @@ class Patient extends User {
         ", lastname='$lastname'" +
         ", username='$username'" +
         ", password='$password'" +
-        "diabeticType: '$diabeticType'" +
         '}';
   }
 }

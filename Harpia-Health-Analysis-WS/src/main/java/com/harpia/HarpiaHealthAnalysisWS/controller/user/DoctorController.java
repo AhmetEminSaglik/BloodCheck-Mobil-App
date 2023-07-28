@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/healthcare_personnels")
+@RequestMapping("/doctor")
 @CrossOrigin()
 public class DoctorController {
     private static final Logger log = LoggerFactory.getLogger(DoctorController.class);
@@ -22,7 +22,7 @@ public class DoctorController {
     private UserService service;
 
     @PostMapping("/save")
-    public ResponseEntity<DataResult<User>> saveHealthcarePersonnel(@RequestBody Doctor inputPersonel) {
+    public ResponseEntity<DataResult<User>> saveDoctor(@RequestBody Doctor inputPersonel) {
         SignupUser signupUser = new SignupUser(service);
         DataResult<User> dataResult = signupUser.signup(inputPersonel);
         return ResponseEntity.status(HttpStatus.CREATED).body(dataResult);

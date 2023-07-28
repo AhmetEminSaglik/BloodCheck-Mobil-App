@@ -46,7 +46,7 @@ public class DiseaseController {
             hcp.setLastname("hcp" + i);
             hcp.setUsername("hcp" + i);
             hcp.setPassword("hcp");
-            hcpCont.saveHealthcarePersonnel(hcp);
+            hcpCont.saveDoctor(hcp);
             Diabetic diabetic = new Diabetic();
 //            diabetic.setPatient(patient);
             diabetic.setBloodPressure(random.nextInt(10));

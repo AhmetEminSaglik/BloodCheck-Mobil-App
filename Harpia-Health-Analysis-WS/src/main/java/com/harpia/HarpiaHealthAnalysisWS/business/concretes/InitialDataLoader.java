@@ -43,7 +43,7 @@ public class InitialDataLoader implements CommandLineRunner {
         saveUserRoleData();
         saveUserData(getAdminList());
         // rest is the fake data
-        saveUserData(getHealthCarePersonList());
+        saveUserData(getDoctorList());
         saveUserData(getPatientList());
         saveDiseaseData();
     }
@@ -108,14 +108,14 @@ public class InitialDataLoader implements CommandLineRunner {
         return list;
     }
 
-    private List<User> getHealthCarePersonList() {
+    private List<User> getDoctorList() {
         List<User> list = new ArrayList<>();
         for (int i = 1; i <= 5; i++) {
             Doctor user = new Doctor();
-            user.setName("HCP Name" + i);
-            user.setLastname("HCP Lastname" + i);
-            user.setUsername("hcp" + i);
-            user.setPassword("hcp" + i);
+            user.setName("doctor Name" + i);
+            user.setLastname("doctor Lastname" + i);
+            user.setUsername("doc" + i);
+            user.setPassword("doc" + i);
             user.setRoleId(EnumUserRole.DOCTOR.getId());
             list.add(user);
         }
@@ -130,8 +130,8 @@ public class InitialDataLoader implements CommandLineRunner {
             user.setLastname("Patient Lastname" + i);
             user.setUsername("pat" + i);
             user.setPassword("pat" + i);
-            int hcp_id = random.nextInt(5) + 3;
-            Doctor personnel = (Doctor) userService.findById(hcp_id);
+            int doctor_id = random.nextInt(5) + 3;
+            Doctor personnel = (Doctor) userService.findById(doctor_id);
 //            user.setHealthcarePersonnel(personnel);
             user.setDoctorId(personnel.getId());
             user.setRoleId(EnumUserRole.PATIENT.getId());

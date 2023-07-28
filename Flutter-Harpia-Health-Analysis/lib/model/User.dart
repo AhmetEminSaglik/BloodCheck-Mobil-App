@@ -31,7 +31,7 @@ abstract class User {
     int roleId = json["roleId"];
     if (roleId == EnumUserRole.ADMIN.roleId) {
       return Admin.fromJson(json);
-    } else if (roleId == EnumUserRole.HEALTHCARE_PERSONEL.roleId) {
+    } else if (roleId == EnumUserRole.DOCTOR.roleId) {
       return HealthcarePersonnel.fromJson(json);
     } else if (roleId == EnumUserRole.PATIENT.roleId) {
       return Patient.fromJson(json);

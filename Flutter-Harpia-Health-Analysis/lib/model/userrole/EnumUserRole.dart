@@ -1,7 +1,8 @@
 enum EnumUserRole {
 
   ADMIN(roleId: 1,roleName: "Admin"),
-  HEALTHCARE_PERSONEL(roleId: 2,roleName: "HealthCare Personel"),
+  /*HEALTHCARE_PERSONEL(roleId: 2,roleName: "HealthCare Personel"),*/
+  DOCTOR(roleId: 2,roleName: "Doctor"),
   PATIENT(roleId: 3,roleName: "Patient");
 
   final int roleId;
@@ -14,7 +15,7 @@ enum EnumUserRole {
       case 1:
       return EnumUserRole.ADMIN.name;
       case 2:
-      return EnumUserRole.HEALTHCARE_PERSONEL.name;
+      return EnumUserRole.DOCTOR.name;
       case 3:
       return EnumUserRole.PATIENT.name;
       default:
