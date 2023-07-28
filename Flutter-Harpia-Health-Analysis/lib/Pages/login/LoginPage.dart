@@ -13,6 +13,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestUser.dart';
 import 'dart:convert';
 
+import '../../httprequest/HttpRequestDisease.dart';
+import '../../model/EnumUserProp.dart';
+import '../../model/diesease/Disease.dart';
+
 class LoginPage extends StatefulWidget {
   final String title;
 
@@ -198,6 +202,7 @@ class _LoginButton extends StatelessWidget {
         child: ElevatedButton(
             onPressed: () {
               loginProcess(context);
+
             },
             style: ButtonStyle(
                 backgroundColor:
@@ -209,13 +214,30 @@ class _LoginButton extends StatelessWidget {
                     fontSize: ResponsiveDesign.getScreenWidth() / 20))));
   }
 
-  void loginProcess(BuildContext context) {
+  Future<void> printDiseaseList() async{
+
+    var http = HttpRequestDisease();
+    // print('patient Id :');
+    var patientId = SharedPref.sp.getInt(EnumUserProp.ID.name) ?? -1;
+    print('patient Id : $patientId');
+    // List<Disease> list = [];
+    List<Disease> list = await http
+        .getDiseaseListOfPatientid(patientId); //.then((value) => {list = value}
+    list.forEach((e) {
+      print("disease : $e");
+    });
+    // return list;
+
+
+  }
+
+  void loginProcess(BuildContext context) async {
     bool controlResult = formKey.currentState!.validate();
     if (controlResult) {
       String username = tfUsername.text;
       String pass = tfPassword.text;
       var request = HttpRequestUser();
-      request.login(username, pass).then((resp) {
+      request.login(username, pass).then((resp) async {
         // debugPrint(resp.body);
         Map<String, dynamic> jsonData = json.decode(resp.body);
         // print("res.body : ${resp.body}");
@@ -228,9 +250,11 @@ class _LoginButton extends StatelessWidget {
           User user = UserFactory.createUser(respEntity.data);
           saveUserData(user);
           navigateToHomePage(context: context, roleId: user.roleId);
+          await printDiseaseList();
         }
       });
     }
+
   }
 
   void showInvalidUsernameOrPassword(

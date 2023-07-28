@@ -14,6 +14,6 @@ class _DiseaseChartWidgetState extends State<DiseaseChartWidget> {
   //RATIO 1.75 is good
   @override
   Widget build(BuildContext context) {
-    return;
+    return Container();
   }
 }
