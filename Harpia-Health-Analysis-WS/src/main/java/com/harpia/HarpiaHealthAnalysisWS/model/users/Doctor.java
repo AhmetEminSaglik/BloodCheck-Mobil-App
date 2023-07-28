@@ -1,20 +1,16 @@
 package com.harpia.HarpiaHealthAnalysisWS.model.users;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ManyToAny;
-
-import java.util.List;
 
 @Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "healthcare_personnels")
-public class HealthcarePersonnel extends User {
+@Table(name = "doctor")
+public class Doctor extends User {
     @Column
     int totalPatientNumber;
 
@@ -29,13 +25,13 @@ public class HealthcarePersonnel extends User {
 */
 
 
-//    public HealthcarePersonnel() {
+//    public Doctor() {
 //        setRoleId(EnumUserRole.HEALTHCARE_PERSONAL.getId());
 //    }
 
     @Override
     public String toString() {
-        return "HealthcarePersonnel{" + super.toString() +
+        return "Doctor{" + super.toString() +
                 "totalPatientNumber=" + totalPatientNumber +
                 '}';
     }

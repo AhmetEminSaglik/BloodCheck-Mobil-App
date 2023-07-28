@@ -1,11 +1,11 @@
 package com.harpia.HarpiaHealthAnalysisWS.controller.disease;
 
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.disease.DiseaseService;
-import com.harpia.HarpiaHealthAnalysisWS.controller.user.HealthcarePersonnelController;
+import com.harpia.HarpiaHealthAnalysisWS.controller.user.DoctorController;
 import com.harpia.HarpiaHealthAnalysisWS.controller.user.PatientController;
 import com.harpia.HarpiaHealthAnalysisWS.model.disease.Diabetic;
 import com.harpia.HarpiaHealthAnalysisWS.model.disease.Disease;
-import com.harpia.HarpiaHealthAnalysisWS.model.users.HealthcarePersonnel;
+import com.harpia.HarpiaHealthAnalysisWS.model.users.Doctor;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.Patient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +32,7 @@ public class DiseaseController {
     private PatientController patCont;
 
     @Autowired
-    private HealthcarePersonnelController hcpCont;
+    private DoctorController hcpCont;
 
     @PostMapping
     ResponseEntity<List<Patient>> saveFakeDiabeticPatients() {
@@ -41,7 +41,7 @@ public class DiseaseController {
         Random random = new Random();
         for (int i = 1; i <= 10; i++) {
             Disease diseaseResult = null;
-            HealthcarePersonnel hcp = new HealthcarePersonnel();
+            Doctor hcp = new Doctor();
             hcp.setName("hcp" + i);
             hcp.setLastname("hcp" + i);
             hcp.setUsername("hcp" + i);
@@ -61,7 +61,7 @@ public class DiseaseController {
             p1.setLastname("patt" + i);
             p1.setUsername("aes" + i);
             p1.setPassword("aes");
-            p1.setHealthcarePersonnel(hcp);
+            p1.setDoctorId(hcp.getId());
 //            p1.setDiseasesList(diseaseList);
             patCont.savePatient(p1);
             service.save(diabetic);

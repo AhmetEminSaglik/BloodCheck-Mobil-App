@@ -8,12 +8,10 @@ import com.harpia.HarpiaHealthAnalysisWS.model.disease.Disease;
 import com.harpia.HarpiaHealthAnalysisWS.model.enums.EnumDiseaseType;
 import com.harpia.HarpiaHealthAnalysisWS.model.enums.EnumUserRole;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.Admin;
-import com.harpia.HarpiaHealthAnalysisWS.model.users.HealthcarePersonnel;
+import com.harpia.HarpiaHealthAnalysisWS.model.users.Doctor;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.Patient;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.User;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.role.UserRole;
-import com.harpia.HarpiaHealthAnalysisWS.utility.result.DataResult;
-import com.harpia.HarpiaHealthAnalysisWS.utility.result.SuccessDataResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,7 +83,7 @@ public class InitialDataLoader implements CommandLineRunner {
     private List<UserRole> getStandartUserRoleList() {
         List<UserRole> list = new ArrayList<>();
         list.add(new UserRole(1, EnumUserRole.ADMIN.getName()));
-        list.add(new UserRole(2, EnumUserRole.HEALTHCARE_PERSONAL.getName()));
+        list.add(new UserRole(2, EnumUserRole.DOCTOR.getName()));
         list.add(new UserRole(3, EnumUserRole.PATIENT.getName()));
         return list;
     }
@@ -103,8 +101,8 @@ public class InitialDataLoader implements CommandLineRunner {
         admin = new Admin();
         admin.setName("Ahmet Emin");
         admin.setLastname("SAGLIK");
-        admin.setUsername("emin");
-        admin.setPassword("saglik");
+        admin.setUsername("aes");
+        admin.setPassword("aes");
         admin.setRoleId(EnumUserRole.ADMIN.getId());
         list.add(admin);
         return list;
@@ -113,12 +111,12 @@ public class InitialDataLoader implements CommandLineRunner {
     private List<User> getHealthCarePersonList() {
         List<User> list = new ArrayList<>();
         for (int i = 1; i <= 5; i++) {
-            HealthcarePersonnel user = new HealthcarePersonnel();
+            Doctor user = new Doctor();
             user.setName("HCP Name" + i);
             user.setLastname("HCP Lastname" + i);
             user.setUsername("hcp" + i);
             user.setPassword("hcp" + i);
-            user.setRoleId(EnumUserRole.HEALTHCARE_PERSONAL.getId());
+            user.setRoleId(EnumUserRole.DOCTOR.getId());
             list.add(user);
         }
         return list;
@@ -133,8 +131,9 @@ public class InitialDataLoader implements CommandLineRunner {
             user.setUsername("pat" + i);
             user.setPassword("pat" + i);
             int hcp_id = random.nextInt(5) + 3;
-            HealthcarePersonnel personnel = (HealthcarePersonnel) userService.findById(hcp_id);
-            user.setHealthcarePersonnel(personnel);
+            Doctor personnel = (Doctor) userService.findById(hcp_id);
+//            user.setHealthcarePersonnel(personnel);
+            user.setDoctorId(personnel.getId());
             user.setRoleId(EnumUserRole.PATIENT.getId());
             list.add(user);
         }

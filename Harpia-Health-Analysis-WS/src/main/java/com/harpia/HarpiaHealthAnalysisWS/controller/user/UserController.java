@@ -6,7 +6,7 @@ import com.harpia.HarpiaHealthAnalysisWS.business.concretes.login.LoginCredentia
 import com.harpia.HarpiaHealthAnalysisWS.model.LoginCredentials;
 import com.harpia.HarpiaHealthAnalysisWS.model.disease.Diabetic;
 import com.harpia.HarpiaHealthAnalysisWS.model.disease.Disease;
-import com.harpia.HarpiaHealthAnalysisWS.model.users.HealthcarePersonnel;
+import com.harpia.HarpiaHealthAnalysisWS.model.users.Doctor;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.Patient;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.User;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.user.UserService;
@@ -57,7 +57,7 @@ public class UserController {
 
         List<User> userList = new ArrayList<>();
         for (int i = 1; i <= 3; i++) {
-            User hcp = new HealthcarePersonnel();
+            User hcp = new Doctor();
             hcp.setName("hcp" + i);
             hcp.setLastname("hcp" + i);
             hcp.setUsername("hcp" + i);
@@ -72,8 +72,8 @@ public class UserController {
         for (int i = 3; i <= 13; i++) {
             Patient p = new Patient();
 
-            HealthcarePersonnel hcp = (HealthcarePersonnel) service.findById(random.nextInt(3) + 3);
-            p.setHealthcarePersonnel(hcp);
+            Doctor hcp = (Doctor) service.findById(random.nextInt(3) + 3);
+            p.setDoctorId(hcp.getId());
             p.setName("pat" + i);
             p.setLastname("pat" + i);
             p.setUsername("pat" + i);

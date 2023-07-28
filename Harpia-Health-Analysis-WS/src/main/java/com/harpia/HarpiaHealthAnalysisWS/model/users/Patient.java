@@ -26,9 +26,10 @@ public class Patient extends User {
 //    @NonNull
     List<Disease> diseasesList;*/
 
-    @ManyToOne
+    /*@ManyToOne
     @JoinColumn(name = "healthcare_personnel_id")
-    private HealthcarePersonnel healthcarePersonnel;
+    private Doctor healthcarePersonnel;*/
+    private long doctorId;
 
     /*public Patient() {
         setRoleId(EnumUserRole.PATIENT.getId());

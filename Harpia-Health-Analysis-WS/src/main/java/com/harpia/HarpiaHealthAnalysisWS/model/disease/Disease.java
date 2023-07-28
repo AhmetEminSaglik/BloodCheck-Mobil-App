@@ -1,6 +1,5 @@
 package com.harpia.HarpiaHealthAnalysisWS.model.disease;
 
-import com.harpia.HarpiaHealthAnalysisWS.model.users.HealthcarePersonnel;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.Patient;
 import jakarta.persistence.*;
 import lombok.Data;

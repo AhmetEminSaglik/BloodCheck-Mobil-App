@@ -29,7 +29,8 @@ class Patient extends User {
         lastname: json["lastname"] as String,
         username: json["username"] as String,
         password: json["password"] as String,
-        diabeticType: json["diabeticType"] as int);
+        diabeticType: json["diabeticType"] as int
+    );
   }
 
   Map<String, dynamic> toJson() {
