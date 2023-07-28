@@ -91,11 +91,11 @@ public class UserController {
             int diseaseNumber = random.nextInt(5) + 1;
             for (int j = 1; j <= diseaseNumber; j++) {
                 Diabetic diabetic = new Diabetic();
-                diabetic.setPatient(patient);
+                diabetic.setPatientId(patient.getId());
                 diabetic.setBloodPressure(random.nextInt(100));
                 diabetic.setBloodSugar(random.nextInt(100));
                 diabetic.setCholesterol(random.nextInt(100));
-                diabetic.setPatient(patient);
+                diabetic.setPatientId(patient.getId());
                 diseaseList.add(diabetic);
             }
             userList.add(patient);
@@ -103,7 +103,7 @@ public class UserController {
         for (int i = 0; i < 50; i++) {
             Diabetic dis = new Diabetic();
             Patient pat = (Patient) service.findById(random.nextInt(10) + 4);
-            dis.setPatient(pat);
+            dis.setPatientId(pat.getId());
             dis.setCholesterol(random.nextInt(500));
             dis.setBloodSugar(random.nextInt(500));
             dis.setBloodPressure(random.nextInt(500));

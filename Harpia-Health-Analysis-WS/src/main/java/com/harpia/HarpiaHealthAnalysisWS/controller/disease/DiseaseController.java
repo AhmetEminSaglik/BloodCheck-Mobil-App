@@ -7,6 +7,8 @@ import com.harpia.HarpiaHealthAnalysisWS.model.disease.Diabetic;
 import com.harpia.HarpiaHealthAnalysisWS.model.disease.Disease;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.Doctor;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.Patient;
+import com.harpia.HarpiaHealthAnalysisWS.utility.result.DataResult;
+import com.harpia.HarpiaHealthAnalysisWS.utility.result.SuccessDataResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +22,8 @@ import java.util.Random;
 
 @RestController
 @RequestMapping("/diseases")
-@CrossOrigin(
-        origins = "http://localhost:8080"
-)
+@CrossOrigin()
+//        origins = "http://localhost:8080"
 public class DiseaseController {
     private static final Logger log = LoggerFactory.getLogger(DiseaseController.class);
 
@@ -33,6 +34,20 @@ public class DiseaseController {
 
     @Autowired
     private DoctorController hcpCont;
+
+    @GetMapping("/patient/id/{id}")
+    private ResponseEntity<DataResult<List<Disease>>> getAllDiseaseByPatientId(@PathVariable long id) {
+//        Patient patient=patCont.findById(id).getData();
+        List<Disease> diseaseList = service.findAllByPatientId(id);
+        String msg = "";
+        if (!diseaseList.isEmpty()) {
+            msg = "Inquiries with ID " + id + " have been fetched.";
+        } else {
+            msg = "Not found any registered data for ID " + id;
+        }
+        DataResult<List<Disease>> result = new SuccessDataResult<>(diseaseList, msg);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
 
     @PostMapping
     ResponseEntity<List<Patient>> saveFakeDiabeticPatients() {

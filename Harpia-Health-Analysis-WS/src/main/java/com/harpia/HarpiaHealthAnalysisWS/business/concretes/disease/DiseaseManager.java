@@ -32,4 +32,9 @@ public class DiseaseManager implements DiseaseService {
     public List<Disease> saveAll(List<Disease> list) {
         return repository.saveAll(list);
     }
+
+    @Override
+    public List<Disease> findAllByPatientId(long id) {
+        return repository.findAllByPatientId(id);
+    }
 }

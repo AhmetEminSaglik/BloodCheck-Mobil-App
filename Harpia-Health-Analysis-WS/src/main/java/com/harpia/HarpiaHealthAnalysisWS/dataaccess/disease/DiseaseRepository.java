@@ -13,5 +13,5 @@ public interface DiseaseRepository extends JpaRepository<Disease, Long> {
 
     List<Disease> findAll();
 
-//    List<Disease> findAllByDiseaseTypeIdAnd(int id);
+    List<Disease> findAllByPatientId(long id);
 }

@@ -13,23 +13,25 @@ public abstract class Disease {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private Long id;
+    private long id;
     @Column
     private int diseaseTypeId;
     //    @Column
 //    private String name;
 //    @OneToOne
 //    @JoinColumn(name = "patient_id")
-    @ManyToOne
-    @JoinColumn(name = "patient_id")
-    private Patient patient;
+//    @ManyToOne
+//    @JoinColumn(name = "patient_id")
+//    private Patient patient;
+    @Column
+    private long patientId;
 
     @Override
     public String toString() {
         return "Disease{" +
                 "id=" + id +
-//                ", diseaseTypeId=" + diseaseTypeId +
-                ", patient=" + patient +
+                ", diseaseTypeId=" + diseaseTypeId +
+                ", patientId=" + patientId +
                 '}';
     }
 }

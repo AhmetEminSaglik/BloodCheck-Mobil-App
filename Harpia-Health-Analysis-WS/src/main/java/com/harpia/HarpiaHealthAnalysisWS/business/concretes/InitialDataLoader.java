@@ -42,7 +42,7 @@ public class InitialDataLoader implements CommandLineRunner {
     public void saveInitilizateData() {
         saveUserRoleData();
         saveUserData(getAdminList());
-        // rest is the fake data
+//         rest is the fake data
         saveUserData(getDoctorList());
         saveUserData(getPatientList());
         saveDiseaseData();
@@ -150,7 +150,7 @@ public class InitialDataLoader implements CommandLineRunner {
 
             int patient_id = random.nextInt(39) + 8;
             Patient patient = (Patient) userService.findById(patient_id);
-            diabetic.setPatient(patient);
+            diabetic.setPatientId(patient.getId());
             diabetic.setDiseaseTypeId(EnumDiseaseType.DIABETIC.getId());
             list.add(diabetic);
         }
