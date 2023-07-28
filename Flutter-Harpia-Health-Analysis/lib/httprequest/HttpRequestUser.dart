@@ -1,22 +1,21 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_harpia_health_analysis/httprequest/BaseHttpRequest.dart';
 import 'package:flutter_harpia_health_analysis/util/HttpUtil.dart';
 import 'package:http/http.dart' as http;
 
-class HttpRequest {
-  static String _localhost = "http://10.0.2.2:";
-  static String _port = "8080";
-  static String _apiVersion = "/api/1.0";
-  static String _baseUrl = _localhost + _port + _apiVersion;
+class HttpRequestUser {
+  static final String _classUrl = "/user";
+  static final String _baseUrl = BaseHttpRequestConfig.baseUrl + _classUrl;
 
   Future<void> getAllUserData() async {
-    Uri url = Uri.parse("$_baseUrl/users");
+    Uri url = Uri.parse(_baseUrl);
     var resp = await http.get(url);
     debugPrint(resp.body);
   }
 
   Future<http.Response> login(String username, String password) async {
-    Uri url = Uri.parse("$_baseUrl/users/login");
+    Uri url = Uri.parse("$_baseUrl/user/login");
     // var requestData = {"username": username, "password": password};
     Map<String, dynamic> requestData = {
       "username": username,

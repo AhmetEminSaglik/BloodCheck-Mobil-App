@@ -2,18 +2,16 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/HomePage.dart';
-import 'package:flutter_harpia_health_analysis/model/userrole/EnumUserRole.dart';
+import 'package:flutter_harpia_health_analysis/core/ResponsiveDesign.dart';
+import 'package:flutter_harpia_health_analysis/httprequest/ResponseEntity.dart';
+import 'package:flutter_harpia_health_analysis/model/user/User.dart';
+import 'package:flutter_harpia_health_analysis/model/user/UserFactory.dart';
+import 'package:flutter_harpia_health_analysis/util/CustomSnackBar.dart';
 import 'package:flutter_harpia_health_analysis/util/ProductColor.dart';
+import 'package:flutter_harpia_health_analysis/util/SharedPref.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_harpia_health_analysis/httprequest/HttpRequest.dart';
-import '../../core/ResponsiveDesign.dart';
-import '../../httprequest/ResponseEntity.dart';
-import '../../model/User.dart';
+import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestUser.dart';
 import 'dart:convert';
-
-import '../../model/UserFactory.dart';
-import '../../util/CustomSnackBar.dart';
-import '../../util/SharedPref.dart';
 
 class LoginPage extends StatefulWidget {
   final String title;
@@ -216,7 +214,7 @@ class _LoginButton extends StatelessWidget {
     if (controlResult) {
       String username = tfUsername.text;
       String pass = tfPassword.text;
-      var request = HttpRequest();
+      var request = HttpRequestUser();
       request.login(username, pass).then((resp) {
         debugPrint(resp.body);
         Map<String, dynamic> jsonData = json.decode(resp.body);

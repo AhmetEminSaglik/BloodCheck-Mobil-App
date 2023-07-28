@@ -1,35 +1,31 @@
-import 'package:flutter_harpia_health_analysis/model/User.dart';
+import 'dart:ffi';
 
-class HealthcarePersonnel extends User {
-  int? totalPatientNumber;
+import 'User.dart';
 
-  HealthcarePersonnel(
-      {required int id,
+class Patient extends User {
+  Patient(
+      {required Long id,
       required int roleId,
       required String name,
       required String lastname,
       required String username,
-      required String password,
-      required int totalPatientNumber})
+      required String password})
       : super(
             id: id,
             roleId: roleId,
             name: name,
             lastname: lastname,
             username: username,
-            password: password) {
-    this.totalPatientNumber = totalPatientNumber;
-  }
+            password: password) {}
 
-  factory HealthcarePersonnel.fromJson(Map<String, dynamic> json) {
-    return HealthcarePersonnel(
-        id: json["id"] as int,
+  factory Patient.fromJson(Map<String, dynamic> json) {
+    return Patient(
+        id: json["id"] as Long,
         roleId: json["roleId"] as int,
         name: json["name"] as String,
         lastname: json["lastname"] as String,
         username: json["username"] as String,
-        password: json["password"] as String,
-        totalPatientNumber: json["totalPatientNumber"] as int);
+        password: json["password"] as String);
   }
 
   Map<String, dynamic> toJson() {
@@ -39,20 +35,18 @@ class HealthcarePersonnel extends User {
       'name': name,
       'lastname': lastname,
       'username': username,
-      'password': password,
-      'totalPatientNumber': totalPatientNumber
+      'password': password
     };
   }
 
   String toString() {
-    return "HealthcarePersonnel{" +
+    return "Patient{" +
         "id=$id" +
         ", roleId=$roleId" +
         ", name='$name'" +
         ", lastname='$lastname'" +
         ", username='$username'" +
         ", password='$password'" +
-        "totalPatientNumber: '$totalPatientNumber'" +
         '}';
   }
 }

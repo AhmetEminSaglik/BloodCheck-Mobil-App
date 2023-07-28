@@ -1,6 +1,7 @@
 import 'package:flutter_harpia_health_analysis/model/EnumUserProp.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../model/User.dart';
+
+import '../model/user/User.dart';
 
 class SharedPref {
   static var sp = null;

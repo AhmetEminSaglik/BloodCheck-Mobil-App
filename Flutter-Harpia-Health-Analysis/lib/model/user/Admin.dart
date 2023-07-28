@@ -1,8 +1,11 @@
+
+import 'dart:ffi';
+
 import 'User.dart';
 
 class Admin extends User {
   Admin(
-      {required int id,
+      {required Long id,
       required int roleId,
       required String name,
       required String lastname,
@@ -25,7 +28,7 @@ class Admin extends User {
 
   factory Admin.fromJson(Map<String, dynamic> json) {
     return Admin(
-        id: json["id"] as int,
+        id: json["id"] as Long,
         roleId: json["roleId"] as int,
         name: json["name"] as String,
         lastname: json['lastname'] as String,

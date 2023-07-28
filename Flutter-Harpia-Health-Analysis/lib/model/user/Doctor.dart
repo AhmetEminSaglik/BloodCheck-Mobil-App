@@ -1,29 +1,38 @@
-import 'package:flutter_harpia_health_analysis/model/User.dart';
 
-class Patient extends User {
-  Patient(
-      {required int id,
+import 'dart:ffi';
+
+import 'User.dart';
+
+class Doctor extends User {
+  int? totalPatientNumber;
+
+  Doctor(
+      {required Long id,
       required int roleId,
       required String name,
       required String lastname,
       required String username,
-      required String password})
+      required String password,
+      required int totalPatientNumber})
       : super(
             id: id,
             roleId: roleId,
             name: name,
             lastname: lastname,
             username: username,
-            password: password) {}
+            password: password) {
+    this.totalPatientNumber = totalPatientNumber;
+  }
 
-  factory Patient.fromJson(Map<String, dynamic> json) {
-    return Patient(
-        id: json["id"] as int,
+  factory Doctor.fromJson(Map<String, dynamic> json) {
+    return Doctor(
+        id: json["id"] as Long,
         roleId: json["roleId"] as int,
         name: json["name"] as String,
         lastname: json["lastname"] as String,
         username: json["username"] as String,
-        password: json["password"] as String);
+        password: json["password"] as String,
+        totalPatientNumber: json["totalPatientNumber"] as int);
   }
 
   Map<String, dynamic> toJson() {
@@ -33,18 +42,20 @@ class Patient extends User {
       'name': name,
       'lastname': lastname,
       'username': username,
-      'password': password
+      'password': password,
+      'totalPatientNumber': totalPatientNumber
     };
   }
 
   String toString() {
-    return "Patient{" +
+    return "Doctor{" +
         "id=$id" +
         ", roleId=$roleId" +
         ", name='$name'" +
         ", lastname='$lastname'" +
         ", username='$username'" +
         ", password='$password'" +
+        "totalPatientNumber: '$totalPatientNumber'" +
         '}';
   }
 }
