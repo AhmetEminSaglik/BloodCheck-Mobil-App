@@ -10,7 +10,7 @@ class PatientChartDataManager implements PatientChartDataService {
     // TODO: implement transferPatientDiseaseDataToPatientChartData
   }
 
-  Future<Disease> getDiseaseDataOfPatient() async {
-
-  }
+  // Future<Disease> getDiseaseDataOfPatient() async {
+  //
+  // }
 }

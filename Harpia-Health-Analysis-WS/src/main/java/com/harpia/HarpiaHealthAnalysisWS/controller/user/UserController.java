@@ -133,6 +133,7 @@ public class UserController {
     public DataResult<User> login(@RequestBody LoginCredentials loginCreds) {
         LoginValidationService loginService = new LoginCredentialsValidation(service);
         DataResult<User> result = loginService.validateLoginCredentials(loginCreds.getUsername(), loginCreds.getPassword());
+        System.out.println(result.getData().getId().getClass().getSimpleName());
         return result;
     }
 

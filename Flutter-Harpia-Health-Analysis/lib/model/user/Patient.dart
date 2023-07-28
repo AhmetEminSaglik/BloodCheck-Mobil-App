@@ -4,7 +4,7 @@ import 'User.dart';
 
 class Patient extends User {
   Patient(
-      {required Long id,
+      {required int id,
       required int roleId,
       required String name,
       required String lastname,
@@ -16,11 +16,11 @@ class Patient extends User {
             name: name,
             lastname: lastname,
             username: username,
-            password: password) {}
+            password: password);
 
   factory Patient.fromJson(Map<String, dynamic> json) {
     return Patient(
-        id: json["id"] as Long,
+        id: json["id"],
         roleId: json["roleId"] as int,
         name: json["name"] as String,
         lastname: json["lastname"] as String,

@@ -4,10 +4,10 @@ import 'dart:ffi';
 import 'User.dart';
 
 class Doctor extends User {
-  int? totalPatientNumber;
+  late int totalPatientNumber;
 
   Doctor(
-      {required Long id,
+      {required int id,
       required int roleId,
       required String name,
       required String lastname,
@@ -26,7 +26,7 @@ class Doctor extends User {
 
   factory Doctor.fromJson(Map<String, dynamic> json) {
     return Doctor(
-        id: json["id"] as Long,
+        id: json["id"] as int,
         roleId: json["roleId"] as int,
         name: json["name"] as String,
         lastname: json["lastname"] as String,

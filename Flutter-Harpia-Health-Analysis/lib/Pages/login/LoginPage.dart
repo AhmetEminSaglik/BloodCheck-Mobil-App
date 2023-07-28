@@ -216,8 +216,9 @@ class _LoginButton extends StatelessWidget {
       String pass = tfPassword.text;
       var request = HttpRequestUser();
       request.login(username, pass).then((resp) {
-        debugPrint(resp.body);
+        // debugPrint(resp.body);
         Map<String, dynamic> jsonData = json.decode(resp.body);
+        // print("res.body : ${resp.body}");
         var respEntity = ResponseEntity.fromJson(jsonData);
 
         if (!respEntity.success) {

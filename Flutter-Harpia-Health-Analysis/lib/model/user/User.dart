@@ -1,6 +1,6 @@
 import 'dart:ffi';
 
-import 'package:flutter_harpia_health_analysis/exception/Exceptions.dart';
+import 'package:flutter_harpia_health_analysis/exceptions/UnknowUserRoleIdException.dart';
 import 'package:flutter_harpia_health_analysis/model/user/Admin.dart';
 import 'package:flutter_harpia_health_analysis/model/user/Doctor.dart';
 import 'package:flutter_harpia_health_analysis/model/userrole/EnumUserRole.dart';
@@ -8,7 +8,7 @@ import 'package:flutter_harpia_health_analysis/model/userrole/EnumUserRole.dart'
 import 'Patient.dart';
 
 abstract class User {
-  late Long _id;
+  late int _id;
   late int _roleId;
   late String _name;
   late String _lastname;
@@ -16,7 +16,7 @@ abstract class User {
   late String _password;
 
   User(
-      {required Long id,
+      {required int id,
       required int roleId,
       required String name,
       required String lastname,
@@ -72,9 +72,9 @@ abstract class User {
     _roleId = value;
   }
 
-  Long get id => _id;
+  int get id => _id;
 
-  set id(Long value) {
+  set id(int value) {
     _id = value;
   }
 }

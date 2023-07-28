@@ -15,4 +15,8 @@ class ResponseEntity {
     return {'success': success, 'message': message, 'data': data};
   }
 
+  @override
+  String toString() {
+    return 'ResponseEntity{success: $success, message: $message, data: $data}';
+  }
 }
