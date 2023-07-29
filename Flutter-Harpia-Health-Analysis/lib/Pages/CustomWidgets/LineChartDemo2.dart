@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -44,11 +46,11 @@ class LineChartDemo2 extends StatelessWidget {
                       colors: gradientColors
                           .map((e) => e.withOpacity(0.3))
                           .toList())),
-              spots: const [
-                FlSpot(0, 3),
-                FlSpot(2, 3.5),
-                FlSpot(4, 3.1),
-                FlSpot(6, 8),
+              spots: [
+                FlSpot(0, getRandomValue(0)),
+                FlSpot(2, getRandomValue(0)),
+                FlSpot(4, getRandomValue(0)),
+                FlSpot(6, getRandomValue(0)),
               ]),
           LineChartBarData(
               isCurved: true,
@@ -58,12 +60,16 @@ class LineChartDemo2 extends StatelessWidget {
               dotData: FlDotData(show: false),
               belowBarData:
                   BarAreaData(show: true, color: Colors.red.withOpacity(0.3)),
-              spots: const [
-                FlSpot(6, 8),
-                FlSpot(8, 13.7),
-                FlSpot(10, 14),
-                FlSpot(11, 15),
+              spots: [
+                FlSpot(6, getRandomValue(8)),
+                FlSpot(8, getRandomValue(8)),
+                FlSpot(10, getRandomValue(8)),
+                FlSpot(11, getRandomValue(8)),
               ])
         ]);
   }
+}
+
+double getRandomValue(int val) {
+  return Random().nextInt(8).toDouble() + val;
 }

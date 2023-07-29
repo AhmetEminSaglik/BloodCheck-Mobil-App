@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(width: 700, height: 300, child: DiseaseChartWidget()),
+            // const SizedBox(width: 700, height: 300, child: DiseaseChartWidget()),
             SizedBox(width: 450, height: 300, child: LineChartDemo1()),
             SizedBox(width: 450, height: 300, child: LineChartDemo2()),
             // LineChartDemo2(),

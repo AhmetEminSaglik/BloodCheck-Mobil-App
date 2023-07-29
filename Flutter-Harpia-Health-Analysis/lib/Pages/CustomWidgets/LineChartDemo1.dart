@@ -1,65 +1,68 @@
+import 'dart:math';
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-
 class LineChartDemo1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) => LineChart(
-    LineChartData(
-      minX: 0,
-      maxX: 10,
-      minY: 0,
-      maxY: 10,
-      titlesData: const FlTitlesData(
-        leftTitles: AxisTitles(
-          // axisNameWidget: CustomWidget(),
-          sideTitles: SideTitles(
-              reservedSize: 110,
-              showTitles: true,
-              interval: 1,
-              getTitlesWidget: leftTiles),
-        ),
-        bottomTitles: AxisTitles(
-          axisNameSize: 25,
-          // axisNameWidget: CustomWidget(),
-          sideTitles: SideTitles(
-              reservedSize: 50,
-              showTitles: true,
-              getTitlesWidget: bottomTiles),
-        ),
-        /*leftTitles: SideTitles(showTitles: true),
+        LineChartData(
+          minX: 0,
+          maxX: 10,
+          minY: 0,
+          maxY: 10,
+          titlesData: const FlTitlesData(
+            leftTitles: AxisTitles(
+              // axisNameWidget: CustomWidget(),
+              sideTitles: SideTitles(
+                  reservedSize: 110,
+                  showTitles: true,
+                  interval: 1,
+                  getTitlesWidget: leftTiles),
+            ),
+            bottomTitles: AxisTitles(
+              axisNameSize: 25,
+              // axisNameWidget: CustomWidget(),
+              sideTitles: SideTitles(
+                  reservedSize: 50,
+                  showTitles: true,
+                  getTitlesWidget: bottomTiles),
+            ),
+            /*leftTitles: SideTitles(showTitles: true),
         bottomTitles: SideTitles(showTitles: true),*/
-      ),
-      gridData: FlGridData(
-          show: true,
-          getDrawingHorizontalLine: (value) {
-            return FlLine(color: Colors.green, strokeWidth: 1);
-          },
-          getDrawingVerticalLine: (value) {
-            return FlLine(color: Colors.black, strokeWidth: 1);
-          }),
-      borderData: FlBorderData(
-          show: true, border: Border.all(color: Colors.red, width: 3)),
-      lineBarsData: [
-        LineChartBarData(
-          spots: [
-            const FlSpot(1, 6),
-            const FlSpot(2, 4),
-            const FlSpot(3, 8),
-            const FlSpot(4, 6),
-            const FlSpot(5, 7),
-            const FlSpot(6, 6.5),
+          ),
+          gridData: FlGridData(
+              show: true,
+              getDrawingHorizontalLine: (value) {
+                return FlLine(color: Colors.green, strokeWidth: 1);
+              },
+              getDrawingVerticalLine: (value) {
+                return FlLine(color: Colors.black, strokeWidth: 1);
+              }),
+          borderData: FlBorderData(
+              show: true, border: Border.all(color: Colors.red, width: 3)),
+          lineBarsData: [
+            LineChartBarData(
+              spots: [
+                FlSpot(1, getRandomValue()),
+                FlSpot(2, getRandomValue()),
+                FlSpot(3, getRandomValue()),
+                FlSpot(4, getRandomValue()),
+                FlSpot(5, getRandomValue()),
+                FlSpot(6, getRandomValue()),
+                FlSpot(7, getRandomValue()),
+                FlSpot(8, getRandomValue()),
+                FlSpot(9, getRandomValue()),
+              ],
+              isCurved: true,
+              color: Colors.blue,
+              barWidth: 5,
+              belowBarData:
+                  BarAreaData(show: true, color: Colors.blue.withOpacity(0.5)),
+            )
           ],
-          isCurved: true,
-          color: Colors.blue,
-          barWidth: 5,
-          belowBarData:
-          BarAreaData(show: true, color: Colors.blue.withOpacity(0.5)),
-        )
-      ],
-    ),
-  );
+        ),
+      );
 }
 
 class CustomWidget extends StatelessWidget {
@@ -130,4 +133,8 @@ Widget leftTiles(double value, TitleMeta meta) {
     style: axisTextStyle(),
     textAlign: TextAlign.left,
   );
+}
+
+double getRandomValue() {
+  return Random().nextInt(8).toDouble()+1;
 }
