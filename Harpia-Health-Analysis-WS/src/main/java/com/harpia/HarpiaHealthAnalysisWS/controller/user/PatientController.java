@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/patients")
@@ -34,5 +36,11 @@ public class PatientController {
     public DataResult<Patient> findById(@PathVariable long id) {
         Patient patient = (Patient) service.findById(id);
         return new SuccessDataResult<>(patient, "Patient retrived Succesfully");
+    }
+
+    @GetMapping("/doctor/{id}")
+    public ResponseEntity<DataResult<List<Patient>>> getPatientListOfDoctorId(@PathVariable long id) {
+        List<Patient> patientList= service.
+
     }
 }

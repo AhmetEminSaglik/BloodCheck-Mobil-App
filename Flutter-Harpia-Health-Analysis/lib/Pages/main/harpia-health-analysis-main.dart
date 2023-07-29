@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_harpia_health_analysis/Pages/afterlogin/HomePage.dart';
+import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/HomePage.dart';
 import '../../core/ResponsiveDesign.dart';
 import '../login/LoginPage.dart';
 
@@ -20,7 +20,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const HomePage(userRoleId: 3)/*const LoginPage(title: "Login")*/,
+      // home: const HomePage(userRoleId: 3),
+      home: const LoginPage(title: "Login"),
     );
   }
 }

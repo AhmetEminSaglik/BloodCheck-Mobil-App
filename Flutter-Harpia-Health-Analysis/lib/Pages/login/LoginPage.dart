@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_harpia_health_analysis/Pages/afterlogin/HomePage.dart';
+import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/HomePage.dart';
 import 'package:flutter_harpia_health_analysis/core/ResponsiveDesign.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/ResponseEntity.dart';
 import 'package:flutter_harpia_health_analysis/model/user/User.dart';
