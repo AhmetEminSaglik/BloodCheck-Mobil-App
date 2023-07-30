@@ -1,18 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/DiseaseChartWidget.dart';
-import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/HomePageAdmin.dart';
+import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/admin/HomePageAdmin.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/HomePageDoctor.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/HomePagePatient.dart';
-import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestDisease.dart';
-import 'package:flutter_harpia_health_analysis/model/EnumUserProp.dart';
-import 'package:flutter_harpia_health_analysis/model/diesease/Disease.dart';
-import 'package:flutter_harpia_health_analysis/business/factory/DiseaseFactory.dart';
 import 'package:flutter_harpia_health_analysis/model/userrole/EnumUserRole.dart';
-import 'package:flutter_harpia_health_analysis/util/SharedPref.dart';
-
-import '../../CustomWidgets/LineChartDemo1.dart';
-import '../../CustomWidgets/LineChartDemo2.dart';
-
 class HomePage extends StatefulWidget {
   const HomePage({required this.userRoleId});
 
