@@ -12,14 +12,18 @@ class ResponsiveDesign {
 
   static double getScreenWidth() {
     if (!_IsDataNull(_screenWidth)) {
+      if(_screenHeight>_screenWidth)
       return _screenWidth;
+      return _screenHeight;
     }
     return -1;
   }
 
   static double getScreenHeight() {
     if (!_IsDataNull(_screenHeight)) {
-      return _screenHeight;
+      if(_screenHeight>_screenWidth)
+        return _screenHeight;
+        return _screenWidth;
     }
     return -1;
 
