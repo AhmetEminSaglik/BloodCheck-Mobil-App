@@ -26,6 +26,10 @@ import java.util.Random;
 public class InitialDataLoader implements CommandLineRunner {
     static String[] maleName = {"James", "Robert", "John", "Michael", "David", "William", "Richard", "Joseph", "Thomas", "Charles", "Christopher", "Daniel", "Matthew", "Anthony", "Mark", "Donald", "Steven", "Paul", "Andrew", "Joshua"};
     static String[] femaleName = {"Mary", "Patricia", "Jennifer", "Linda", "Elizabeth", "Barbara", "Susan", "Jessica", "Sarah", "Karen", "Lisa", "Nancy", "Betty", "Margaret", "Sandra", "Ashley", "Kimberly", "Emily", "Donna", "Michelle", "Carol", "Amanda"};
+    static int doctorIdStartingIndex = 2;
+    static int totalDoctorNumber = 3;
+    static int totalPatientNumber = 10;
+    static int totalDiseaeNumber = 50;
 
     @Override
     public void run(String... args) throws Exception {
@@ -117,7 +121,7 @@ public class InitialDataLoader implements CommandLineRunner {
 
     private List<User> getDoctorList() {
         List<User> list = new ArrayList<>();
-        for (int i = 1; i <= 3; i++) {
+        for (int i = 1; i <= totalDoctorNumber; i++) {
             Doctor user = new Doctor();
             user.setName(getName(i));
             user.setLastname(getName(i));
@@ -131,15 +135,15 @@ public class InitialDataLoader implements CommandLineRunner {
 
     private List<User> getPatientList() {
         List<User> list = new ArrayList<>();
-        for (int i = 1; i < 50; i++) {
+        for (int i = 1; i <= 10; i++) {
             Patient user = new Patient();
             user.setName(getName(i));
             user.setLastname(getName(i));
             user.setUsername("pat" + i);
             user.setPassword("pass");
 //            user.setDiseaseTypeId(EnumDiseaseType.DIABETIC.getId());
-            user.setDiseaseTypeId((i%2+1));
-            int doctor_id = random.nextInt(2) + 3;
+            user.setDiseaseTypeId((i % 2 + 1));
+            int doctor_id = random.nextInt(totalDoctorNumber - 1) + doctorIdStartingIndex + 1;
             Doctor personnel = (Doctor) userService.findById(doctor_id);
 //            user.setHealthcarePersonnel(personnel);
             user.setDoctorId(personnel.getId());
@@ -157,7 +161,7 @@ public class InitialDataLoader implements CommandLineRunner {
             diabetic.setCholesterol(random.nextInt(200) + 50);
             diabetic.setBloodSugar(random.nextInt(200) + 50);
 
-            int patient_id = random.nextInt(39) + 8;
+            int patient_id = random.nextInt(totalPatientNumber - 1) + 2 + totalDoctorNumber + 1; // admin + doctor  +1=  patient starting index
             Patient patient = (Patient) userService.findById(patient_id);
             diabetic.setPatientId(patient.getId());
             diabetic.setDiseaseTypeId(EnumDiseaseType.DIABETIC.getId());
