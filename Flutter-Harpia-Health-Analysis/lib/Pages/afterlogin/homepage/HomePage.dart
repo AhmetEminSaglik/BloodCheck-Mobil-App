@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/DiseaseChartWidget.dart';
-import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/HomePageAdminContent.dart';
-import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/HomePageDoctorContent.dart';
-import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/HomePagePatientContent.dart';
+import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/HomePageAdmin.dart';
+import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/HomePageDoctor.dart';
+import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/HomePagePatient.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestDisease.dart';
 import 'package:flutter_harpia_health_analysis/model/EnumUserProp.dart';
 import 'package:flutter_harpia_health_analysis/model/diesease/Disease.dart';
-import 'package:flutter_harpia_health_analysis/model/diesease/DiseaseFactory.dart';
+import 'package:flutter_harpia_health_analysis/business/factory/DiseaseFactory.dart';
 import 'package:flutter_harpia_health_analysis/model/userrole/EnumUserRole.dart';
 import 'package:flutter_harpia_health_analysis/util/SharedPref.dart';
 
@@ -23,51 +23,20 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  Widget getBody() {
+  Widget getContentPage() {
     if (widget.userRoleId == EnumUserRole.ADMIN.roleId) {
-      return const HomePageAdminContent();
+      return const HomePageAdmin();
     } else if (widget.userRoleId == EnumUserRole.DOCTOR.roleId) {
-      return const HomePageDoctorContent();
+      return const HomePageDoctor();
     } else if (widget.userRoleId == EnumUserRole.PATIENT.roleId) {
-      return const HomePagePatientContent();
+      return const HomePagePatient();
     }
     return const Text("Unknow UserRoleType is login");
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(EnumUserRole.getRoleName(widget.userRoleId)),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [getBody()],
-          /*
-          children: [
-            // const SizedBox(width: 700, height: 300, child: DiseaseChartWidget()),
-            SizedBox(width: 450, height: 300, child: LineChartDemo1()),
-            SizedBox(width: 450, height: 300, child: LineChartDemo2()),
-            // LineChartDemo2(),
-          ],
-       */
-        ),
-      )
-      /*SingleChildScrollView(
-        child: Column(
-          children: [
-            // LineChartDemo2()
-            ElevatedButton(
-              child: Text("Test"),
-              onPressed: () {
-                // printDiseaseData();
-              },
-            ),
-          ],
-        ),
-      )*/
-      ,
-    ); // MyLineChart(),'
+    return getContentPage(); // MyLineChart(),'
   }
 }
 

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_harpia_health_analysis/core/ResponsiveDesign.dart';
 
-class HomePageAdminContent extends StatefulWidget {
-  const HomePageAdminContent({Key? key}) : super(key: key);
+class HomePageAdmin extends StatefulWidget {
+  const HomePageAdmin({Key? key}) : super(key: key);
 
   @override
-  State<HomePageAdminContent> createState() => _HomePageAdminContentState();
+  State<HomePageAdmin> createState() => _HomePageAdminState();
 }
 
-class _HomePageAdminContentState extends State<HomePageAdminContent> {
+class _HomePageAdminState extends State<HomePageAdmin> {
   @override
   Widget build(BuildContext context) {
     return Column(

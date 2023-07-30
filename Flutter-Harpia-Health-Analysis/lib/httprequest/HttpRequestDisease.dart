@@ -4,16 +4,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/BaseHttpRequest.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/ResponseEntity.dart';
 import 'package:flutter_harpia_health_analysis/model/diesease/Disease.dart';
-import 'package:flutter_harpia_health_analysis/model/diesease/DiseaseFactory.dart';
+import 'package:flutter_harpia_health_analysis/business/factory/DiseaseFactory.dart';
 import 'package:flutter_harpia_health_analysis/util/HttpUtil.dart';
 import 'package:http/http.dart' as http;
 
 class HttpRequestDisease {
-  static final String _classUrl = "/diseases";
+  static const String _classUrl = "/diseases";
   static final String _baseUrl = BaseHttpRequestConfig.baseUrl + _classUrl;
 
   Future<List<Disease>> getDiseaseListOfPatientid(int id) async {
-    Uri uri = Uri.parse(_baseUrl + "/patient/id/${id}");
+    Uri uri = Uri.parse("$_baseUrl/patient/id/$id");
     var resp = await http.get(uri);
     debugPrint(resp.body);
     Map<String, dynamic> jsonData = json.decode(resp.body);

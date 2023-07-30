@@ -6,14 +6,14 @@ import 'package:flutter_harpia_health_analysis/util/HttpUtil.dart';
 import 'package:http/http.dart' as http;
 
 class HttpRequestPatient {
-  static final String _classUrl = "/doctor";
+  static const String _classUrl = "/patients";
   static final String _baseUrl = BaseHttpRequestConfig.baseUrl + _classUrl;
 
-  Future<void> getPatientListOfDoctorId(int id) async {
-    Uri url = Uri.parse(_baseUrl);
-    var resp = await http.get(url);
-    debugPrint(resp.body);
-  }
+  // Future<void> getPatientListOfDoctorId(int id) async {
+  //   Uri url = Uri.parse("$_baseUrl/doctor/$id");
+  //   var resp = await http.get(url);
+  //   debugPrint(resp.body);
+  // }
 
 // Future<http.Response> login(String username, String password) async {
 //   Uri url = Uri.parse("$_baseUrl/user/login");

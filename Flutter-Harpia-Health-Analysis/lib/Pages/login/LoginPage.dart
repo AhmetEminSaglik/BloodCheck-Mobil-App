@@ -5,7 +5,7 @@ import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/HomePag
 import 'package:flutter_harpia_health_analysis/core/ResponsiveDesign.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/ResponseEntity.dart';
 import 'package:flutter_harpia_health_analysis/model/user/User.dart';
-import 'package:flutter_harpia_health_analysis/model/user/UserFactory.dart';
+import 'package:flutter_harpia_health_analysis/business/factory/UserFactory.dart';
 import 'package:flutter_harpia_health_analysis/util/CustomSnackBar.dart';
 import 'package:flutter_harpia_health_analysis/util/ProductColor.dart';
 import 'package:flutter_harpia_health_analysis/util/SharedPref.dart';
@@ -202,7 +202,6 @@ class _LoginButton extends StatelessWidget {
         child: ElevatedButton(
             onPressed: () {
               loginProcess(context);
-
             },
             style: ButtonStyle(
                 backgroundColor:
@@ -212,23 +211,6 @@ class _LoginButton extends StatelessWidget {
             child: Text("login",
                 style: TextStyle(
                     fontSize: ResponsiveDesign.getScreenWidth() / 20))));
-  }
-
-  Future<void> printDiseaseList() async{
-
-    var http = HttpRequestDisease();
-    // print('patient Id :');
-    var patientId = SharedPref.sp.getInt(EnumUserProp.ID.name) ?? -1;
-    print('patient Id : $patientId');
-    // List<Disease> list = [];
-    List<Disease> list = await http
-        .getDiseaseListOfPatientid(patientId); //.then((value) => {list = value}
-    list.forEach((e) {
-      print("disease : $e");
-    });
-    // return list;
-
-
   }
 
   void loginProcess(BuildContext context) async {
@@ -250,11 +232,9 @@ class _LoginButton extends StatelessWidget {
           User user = UserFactory.createUser(respEntity.data);
           saveUserData(user);
           navigateToHomePage(context: context, roleId: user.roleId);
-          await printDiseaseList();
         }
       });
     }
-
   }
 
   void showInvalidUsernameOrPassword(
