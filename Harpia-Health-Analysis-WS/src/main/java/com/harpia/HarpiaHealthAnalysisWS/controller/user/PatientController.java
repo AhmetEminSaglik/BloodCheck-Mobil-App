@@ -13,8 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 
 @RestController
 @RequestMapping("/patients")
@@ -23,24 +21,22 @@ public class PatientController {
     private static final Logger log = LoggerFactory.getLogger(PatientController.class);
 
     @Autowired
-    private UserService service;
+    private UserService userService;
+//    @Autowired
+//    private PatientService patientService;
 
     @PostMapping("save")
     public ResponseEntity<DataResult<User>> savePatient(@RequestBody Patient inputPatient) {
-        SignupUser signupUser = new SignupUser(service);
+        SignupUser signupUser = new SignupUser(userService);
         DataResult<User> dataResult = signupUser.signup(inputPatient);
         return ResponseEntity.status(HttpStatus.CREATED).body(dataResult);
     }
 
     @GetMapping("/{id}")
     public DataResult<Patient> findById(@PathVariable long id) {
-        Patient patient = (Patient) service.findById(id);
+        Patient patient = (Patient) userService.findById(id);
         return new SuccessDataResult<>(patient, "Patient retrived Succesfully");
     }
 
-    @GetMapping("/doctor/{id}")
-    public ResponseEntity<DataResult<List<Patient>>> getPatientListOfDoctorId(@PathVariable long id) {
-        List<Patient> patientList= service.
 
-    }
 }

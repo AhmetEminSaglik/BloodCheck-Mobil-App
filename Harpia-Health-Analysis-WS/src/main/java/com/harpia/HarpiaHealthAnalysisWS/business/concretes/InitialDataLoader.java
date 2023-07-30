@@ -24,6 +24,9 @@ import java.util.Random;
 
 @Component
 public class InitialDataLoader implements CommandLineRunner {
+    static String[] maleName = {"James", "Robert", "John", "Michael", "David", "William", "Richard", "Joseph", "Thomas", "Charles", "Christopher", "Daniel", "Matthew", "Anthony", "Mark", "Donald", "Steven", "Paul", "Andrew", "Joshua"};
+    static String[] femaleName = {"Mary", "Patricia", "Jennifer", "Linda", "Elizabeth", "Barbara", "Susan", "Jessica", "Sarah", "Karen", "Lisa", "Nancy", "Betty", "Margaret", "Sandra", "Ashley", "Kimberly", "Emily", "Donna", "Michelle", "Carol", "Amanda"};
+
     @Override
     public void run(String... args) throws Exception {
         saveInitilizateData();
@@ -37,7 +40,7 @@ public class InitialDataLoader implements CommandLineRunner {
     private DiseaseService diseaseService;
     private static final Logger log = LoggerFactory.getLogger(InitialDataLoader.class);
 
-    private Random random = new Random();
+    private static Random random = new Random();
 
     public void saveInitilizateData() {
         saveUserRoleData();
@@ -108,14 +111,18 @@ public class InitialDataLoader implements CommandLineRunner {
         return list;
     }
 
+    private static String getName(int i) {
+        return i % 2 == 0 ? maleName[random.nextInt(maleName.length)] : femaleName[random.nextInt(femaleName.length)];
+    }
+
     private List<User> getDoctorList() {
         List<User> list = new ArrayList<>();
-        for (int i = 1; i <= 5; i++) {
+        for (int i = 1; i <= 3; i++) {
             Doctor user = new Doctor();
-            user.setName("doctor Name" + i);
-            user.setLastname("doctor Lastname" + i);
+            user.setName(getName(i));
+            user.setLastname(getName(i));
             user.setUsername("doc" + i);
-            user.setPassword("doc" + i);
+            user.setPassword("pass");
             user.setRoleId(EnumUserRole.DOCTOR.getId());
             list.add(user);
         }
@@ -124,13 +131,15 @@ public class InitialDataLoader implements CommandLineRunner {
 
     private List<User> getPatientList() {
         List<User> list = new ArrayList<>();
-        for (int i = 1; i < 40; i++) {
+        for (int i = 1; i < 50; i++) {
             Patient user = new Patient();
-            user.setName("Patient Name" + i);
-            user.setLastname("Patient Lastname" + i);
+            user.setName(getName(i));
+            user.setLastname(getName(i));
             user.setUsername("pat" + i);
-            user.setPassword("pat" + i);
-            int doctor_id = random.nextInt(5) + 3;
+            user.setPassword("pass");
+//            user.setDiseaseTypeId(EnumDiseaseType.DIABETIC.getId());
+            user.setDiseaseTypeId((i%2+1));
+            int doctor_id = random.nextInt(2) + 3;
             Doctor personnel = (Doctor) userService.findById(doctor_id);
 //            user.setHealthcarePersonnel(personnel);
             user.setDoctorId(personnel.getId());
@@ -142,7 +151,7 @@ public class InitialDataLoader implements CommandLineRunner {
 
     private List<Disease> getDiseaseList() {
         List<Disease> list = new ArrayList<>();
-        for (int i = 1; i < 50; i++) {
+        for (int i = 1; i <= 100; i++) {
             Diabetic diabetic = new Diabetic();
             diabetic.setBloodPressure(random.nextInt(200) + 50);
             diabetic.setCholesterol(random.nextInt(200) + 50);

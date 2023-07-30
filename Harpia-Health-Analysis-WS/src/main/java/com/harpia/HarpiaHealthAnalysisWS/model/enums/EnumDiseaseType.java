@@ -1,7 +1,7 @@
 package com.harpia.HarpiaHealthAnalysisWS.model.enums;
 
 public enum EnumDiseaseType {
-    DIABETIC(1, "Diabetic");
+    DIABETIC(1, "Diabetic"), CANCER(2, "Cancer");
 
     private final int id;
     private final String role;

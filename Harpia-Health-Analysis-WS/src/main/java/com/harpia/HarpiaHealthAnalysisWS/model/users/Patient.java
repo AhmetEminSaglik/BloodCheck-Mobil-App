@@ -29,7 +29,10 @@ public class Patient extends User {
     /*@ManyToOne
     @JoinColumn(name = "healthcare_personnel_id")
     private Doctor healthcarePersonnel;*/
+    @Column
     private long doctorId;
+    @Column
+    private int diseaseTypeId;
 
     /*public Patient() {
         setRoleId(EnumUserRole.PATIENT.getId());

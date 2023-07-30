@@ -36,7 +36,7 @@ public class DiseaseController {
     private DoctorController hcpCont;
 
     @GetMapping("/patient/id/{id}")
-    private ResponseEntity<DataResult<List<Disease>>> getAllDiseaseByPatientId(@PathVariable long id) {
+    private ResponseEntity<DataResult<List<Disease>>> findAllDiseaseByPatientId(@PathVariable long id) {
 //        Patient patient=patCont.findById(id).getData();
         List<Disease> diseaseList = service.findAllByPatientId(id);
         String msg = "";
