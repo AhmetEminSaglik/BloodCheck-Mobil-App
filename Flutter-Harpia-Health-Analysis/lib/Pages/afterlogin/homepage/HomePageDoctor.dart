@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestDoctor.dart';
-import 'package:flutter_harpia_health_analysis/util/PatientListFutureBuilder.dart';
 import 'package:flutter_harpia_health_analysis/util/SharedPref.dart';
 import '../../../model/EnumUserProp.dart';
 import '../../../model/user/Patient.dart';
+import '../../../util/patient/PatientListFutureBuilder.dart';
 
 class HomePageDoctor extends StatefulWidget {
   const HomePageDoctor({Key? key}) : super(key: key);
@@ -16,7 +16,7 @@ class _HomePageDoctorState extends State<HomePageDoctor> {
   @override
   Widget build(BuildContext context) {
     return PatientListFutureBuilder(
-      patientList: getPatientList(), appBarTitle:  "My Patient List",
+    patientList: getPatientList(), appBarTitle:  "My Patient List",
     );
   }
 }

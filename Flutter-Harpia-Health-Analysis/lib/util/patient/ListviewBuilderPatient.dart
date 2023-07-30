@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/HomePagePatient.dart';
-import '../core/ResponsiveDesign.dart';
-import '../model/diesease/EnumDiseaseType.dart';
-import '../model/user/Patient.dart';
+import '../../core/ResponsiveDesign.dart';
+import '../../model/diesease/EnumDiseaseType.dart';
+import '../../model/user/Patient.dart';
 
 class ListviewBuilderPatient extends StatelessWidget {
   const ListviewBuilderPatient({
@@ -22,11 +22,11 @@ class ListviewBuilderPatient extends StatelessWidget {
           title: Text(appBarTitle),
         ),
         backgroundColor: Colors.cyan,
-        body: getbodyForPatientListView(patientList));
+        body: getBodyForPatientListView(patientList));
   }
 }
 
-Widget getbodyForPatientListView(List<Patient> patientList) {
+Widget getBodyForPatientListView(List<Patient> patientList) {
   if (patientList.isEmpty) {
     return Padding(
       padding: EdgeInsets.only(

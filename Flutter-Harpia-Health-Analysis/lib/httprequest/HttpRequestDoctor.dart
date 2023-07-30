@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'dart:ffi';
+import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/BaseHttpRequest.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/ResponseEntity.dart';
 import 'package:flutter_harpia_health_analysis/business/factory/UserFactory.dart';
+import 'package:flutter_harpia_health_analysis/model/user/Doctor.dart';
 import 'package:flutter_harpia_health_analysis/model/user/Patient.dart';
 import 'package:flutter_harpia_health_analysis/util/HttpUtil.dart';
 import 'package:http/http.dart' as http;
@@ -25,13 +27,16 @@ class HttpRequestDoctor {
     var respEntity = ResponseEntity.fromJson(jsonData);
     List<Patient> patientList = UserFactory.createPatientList(respEntity.data);
     return patientList;
+  }
 
-//     Map<String,dynamic> jsonData=json.decode(resp.body);
-//     ResponseEntity responseEntity=ResponseEntity.fromJson(jsonData);
-//     Iterable<User> patientList=
-//     (responseEntity.data as List).map((data) => UserFactory.createUser(data));
-// patientList.forEach((element) {
-//   print('$element');});
+  Future<List<Doctor>> getDoctorList() async {
+    Uri url = Uri.parse(_baseUrl);
+    print("URL : $url");
+    var resp = await http.get(url);
+    Map<String, dynamic> jsonData = json.decode(resp.body);
+    var respEntity = ResponseEntity.fromJson(jsonData);
+    List<Doctor> doctorList = UserFactory.createDoctorList(respEntity.data);
+    return doctorList;
   }
 
 // Future<http.Response> login(String username, String password) async {
