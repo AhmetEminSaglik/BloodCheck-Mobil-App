@@ -12,10 +12,13 @@ public interface UserService {
     User findById(long id);
 
     User findByUsernameAndPassword(String username, String password);
+
     User findByUsername(String username);
 
 
     List<User> findAll();
+
+    List<User> findAllByRoleId(int roleId);
 
 //    List<User> findAllByRoleId(int id);
 

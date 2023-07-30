@@ -2,6 +2,7 @@ package com.harpia.HarpiaHealthAnalysisWS.controller.user;
 
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.user.UserService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.singup.SignupUser;
+import com.harpia.HarpiaHealthAnalysisWS.model.enums.EnumUserRole;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.Patient;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.User;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.DataResult;
@@ -12,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -38,5 +41,13 @@ public class PatientController {
         return new SuccessDataResult<>(patient, "Patient retrived Succesfully");
     }
 
+    @GetMapping
+    public ResponseEntity<DataResult<Patient>> getPatientList() {
+        List<User> userList = userService.findAllByRoleId(EnumUserRole.PATIENT.getId());
+        String msg = "PatientList is retrived successfully";
+        DataResult result = new SuccessDataResult(userList, msg);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+
+    }
 
 }

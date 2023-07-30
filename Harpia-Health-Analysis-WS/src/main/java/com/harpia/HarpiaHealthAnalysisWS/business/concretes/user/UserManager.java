@@ -29,6 +29,11 @@ public class UserManager implements UserService {
     }
 
     @Override
+    public List<User> findAllByRoleId(int roleId) {
+        return userRepository.findAllByRoleId(roleId);
+    }
+
+    @Override
     public User findById(long id) {
         return userRepository.findById(id).get();
     }
