@@ -3,6 +3,7 @@ package com.harpia.HarpiaHealthAnalysisWS.controller.user;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.user.PatientService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.user.UserService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.singup.SignupUser;
+import com.harpia.HarpiaHealthAnalysisWS.model.enums.EnumUserRole;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.Doctor;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.Patient;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.User;
@@ -15,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.crypto.Data;
 import java.util.List;
 
 @RestController
@@ -35,14 +37,24 @@ public class DoctorController {
         return ResponseEntity.status(HttpStatus.CREATED).body(dataResult);
     }
 
+    @GetMapping
+    public ResponseEntity<DataResult<List<User>>> findAllDoctorlist() {
+        List<User> doctorList = userService.findAllByRoleId(EnumUserRole.DOCTOR.getId());
+        String msg = "Doctor list is retrieved successfully";
+        DataResult<List<User>> dataResult = new SuccessDataResult<>(doctorList, msg);
+        return ResponseEntity.ok().body(dataResult);
+    }
+
+
     @GetMapping("/{id}")
+
     public DataResult<Doctor> findById(@PathVariable long id) {
         Doctor personnel = (Doctor) userService.findById(id);
         return new SuccessDataResult<>(personnel, "Healthcare Personnel retrived Succesfully");
     }
 
     @GetMapping("/{id}/patients")
-    public ResponseEntity<DataResult<List<Patient>>> getPatientListOfDoctorId(@PathVariable long id) {
+    public ResponseEntity<DataResult<List<Patient>>> findPatientListOfDoctorId(@PathVariable long id) {
         List<Patient> patientList = patientService.findAllPatientByDoctorId(id);
         String msg = "Patient List belongs to Doctor ID " + id + " is retrived";
         DataResult<List<Patient>> result = new SuccessDataResult(patientList, msg);
