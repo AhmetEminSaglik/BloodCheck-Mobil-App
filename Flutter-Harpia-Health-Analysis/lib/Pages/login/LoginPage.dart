@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/HomePage.dart';
 import 'package:flutter_harpia_health_analysis/core/ResponsiveDesign.dart';
@@ -12,10 +10,6 @@ import 'package:flutter_harpia_health_analysis/util/SharedPref.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestUser.dart';
 import 'dart:convert';
-
-import '../../httprequest/HttpRequestDisease.dart';
-import '../../model/EnumUserProp.dart';
-import '../../model/diesease/Disease.dart';
 
 class LoginPage extends StatefulWidget {
   final String title;
@@ -165,18 +159,18 @@ class _InputTextFormField extends StatelessWidget {
       decoration: InputDecoration(
           labelText: hint,
           labelStyle: TextStyle(
-              fontSize: ResponsiveDesign.getScreenWidth() / 25,
+              fontSize: ResponsiveDesign.getScreenWidth() / 23,
               color: ProductColor.black,
               fontWeight: FontWeight.bold),
           hintText: hint,
           hintStyle:
-              TextStyle(fontSize: ResponsiveDesign.getScreenWidth() / 22),
+              TextStyle(fontSize: ResponsiveDesign.getScreenWidth() / 20),
           focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(10.0)),
               borderSide: BorderSide(color: ProductColor.darkBlue)),
           filled: true,
           fillColor: ProductColor.white,
-          border: OutlineInputBorder(
+          border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(10.0)))),
       style: TextStyle(
           fontSize: ResponsiveDesign.getScreenWidth() / 22,

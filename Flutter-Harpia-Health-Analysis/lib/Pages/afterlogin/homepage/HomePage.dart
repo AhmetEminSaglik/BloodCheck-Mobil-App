@@ -23,33 +23,19 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  Widget getContentPage() {
+  Widget getUserPage() {
     if (widget.userRoleId == EnumUserRole.ADMIN.roleId) {
       return const HomePageAdmin();
     } else if (widget.userRoleId == EnumUserRole.DOCTOR.roleId) {
       return const HomePageDoctor();
     } else if (widget.userRoleId == EnumUserRole.PATIENT.roleId) {
-      return const HomePagePatient();
+      return const HomePagePatient(displayNamePatientPage: "My Disease Chart");
     }
     return const Text("Unknow UserRoleType is login");
   }
 
   @override
   Widget build(BuildContext context) {
-    return getContentPage(); // MyLineChart(),'
+    return getUserPage();
   }
-}
-
-Future<List<Disease>> getDiseaseData() async {
-  var http = HttpRequestDisease();
-  // print('patient Id :');
-  var patientId = SharedPref.sp.getInt(EnumUserProp.ID.name) ?? -1;
-  print('patient Id : $patientId');
-  // List<Disease> list = [];
-  List<Disease> list = await http
-      .getDiseaseListOfPatientid(patientId); //.then((value) => {list = value}
-  // list.forEach((e) {
-  //   print("disease : $e");
-  // });
-  return list;
 }
