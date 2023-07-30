@@ -1,34 +1,24 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/BaseHttpRequest.dart';
-import 'package:flutter_harpia_health_analysis/util/HttpUtil.dart';
 import 'package:http/http.dart' as http;
+
+import '../business/factory/UserFactory.dart';
+import '../model/user/Patient.dart';
+import 'ResponseEntity.dart';
 
 class HttpRequestPatient {
   static const String _classUrl = "/patients";
   static final String _baseUrl = BaseHttpRequestConfig.baseUrl + _classUrl;
 
-  // Future<void> getPatientListOfDoctorId(int id) async {
-  //   Uri url = Uri.parse("$_baseUrl/doctor/$id");
-  //   var resp = await http.get(url);
-  //   debugPrint(resp.body);
-  // }
-
-// Future<http.Response> login(String username, String password) async {
-//   Uri url = Uri.parse("$_baseUrl/user/login");
-//   var requestData = {"username": username, "password": password};
-// Map<String, dynamic> requestData = {
-//   "username": username,
-//   "password": password,
-// };
-// var resp = await http.post(url,
-//     headers: HttpUtil.header, body: jsonEncode(requestData));
-// return resp;
-// }
-// Future<void> getDiseaseListOfPatientid(Long id) async {
-//   Uri uri = Uri.parse(_baseUrl + "/${id}");
-//   var resp = await http.get(uri);
-//   debugPrint(resp.body);
-// }
+  Future<List<Patient>> getPatientList() async {
+    Uri url = Uri.parse(_baseUrl);
+    print("URL : $url");
+    var resp = await http.get(url);
+    debugPrint(resp.body);
+    Map<String, dynamic> jsonData = json.decode(resp.body);
+    var respEntity = ResponseEntity.fromJson(jsonData);
+    List<Patient> patientList = UserFactory.createPatientList(respEntity.data);
+    return patientList;
+  }
 }
