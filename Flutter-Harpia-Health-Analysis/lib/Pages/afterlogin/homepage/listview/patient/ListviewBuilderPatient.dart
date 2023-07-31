@@ -1,30 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/HomePagePatient.dart';
-import 'package:flutter_harpia_health_analysis/model/user/Doctor.dart';
-import 'package:flutter_harpia_health_analysis/util/ProductColor.dart';
-import '../../core/ResponsiveDesign.dart';
-import '../../model/diesease/EnumDiseaseType.dart';
-import '../../model/user/Patient.dart';
-import '../Utils.dart';
+import 'package:flutter_harpia_health_analysis/util/Utils.dart';
+import '../../../../../core/ResponsiveDesign.dart';
+import '../../../../../model/diesease/EnumDiseaseType.dart';
+import '../../../../../model/user/Patient.dart';
 
-class ListviewBuilderDoctor extends StatelessWidget {
-  const ListviewBuilderDoctor({
+class ListviewBuilderPatient extends StatelessWidget {
+  const ListviewBuilderPatient({
     super.key,
-    required this.doctorList,
+    required this.patientList,
   });
 
-  final List<Doctor> doctorList;
+  final List<Patient> patientList;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.cyan,
-        body: getBodyForPatientListView(doctorList));
+        body: getBodyForPatientListView(patientList));
   }
 }
 
-Widget getBodyForPatientListView(List<Doctor> doctorList) {
-  if (doctorList.isEmpty) {
+Widget getBodyForPatientListView(List<Patient> patientList) {
+  if (patientList.isEmpty) {
     return Padding(
       padding: EdgeInsets.only(
           right: ResponsiveDesign.getScreenWidth() / 25,
@@ -39,20 +37,20 @@ Widget getBodyForPatientListView(List<Doctor> doctorList) {
     );
   } else {
     return ListView.builder(
-        itemCount: doctorList.length,
+        itemCount: patientList.length,
         itemBuilder: (context, index) {
           return InkWell(
             onTap: () {
-              // print("Click Item : ${doctorList[index]}");
+              // print("Click Item : ${patientList[index]}");
               navigateToPatientChartPage(
                   context: context,
                   routePage: HomePagePatient(
                       displayNamePatientPage:
-                          "${doctorList[index].name} ${doctorList[index].lastname}"));
+                          "${patientList[index].name} ${patientList[index].lastname}"));
             },
             child: Card(
               color:
-              CustomListViewItemColor.getBackgroundColor(colorindex: 2, index: index),
+                  CustomListViewItemColor.getBackgroundColor(colorindex: 2, index: index),
               shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(15))
                   /*borderRadius: BorderRadius.only(
@@ -74,13 +72,13 @@ Widget getBodyForPatientListView(List<Doctor> doctorList) {
                         ListViewItemText(
                             isBold: false,
                             text:
-                                "${index + 1}-) ${"${doctorList[index].name} ${doctorList[index].lastname}"}"),
-                        // SizedBox(
-                        //     width: ResponsiveDesign.getScreenWidth() / 5,
-                        //     child: ListViewItemText(
-                        //         isBold: true,
-                        //         text: EnumDiseaseType.getDiseaseName(
-                        //             doctorList[index].totalPatientNumber))),
+                                "${index + 1}-) ${"${patientList[index].name} ${patientList[index].lastname}"}"),
+                        SizedBox(
+                            width: ResponsiveDesign.getScreenWidth() / 5,
+                            child: ListViewItemText(
+                                isBold: true,
+                                text: EnumDiseaseType.getDiseaseName(
+                                    patientList[index].diseaseTypeId))),
                       ],
                     ),
                   ),
@@ -115,16 +113,18 @@ void navigateToPatientChartPage(
   Navigator.push(context, MaterialPageRoute(builder: (context) => routePage));
 }
 /*
+
 Color getListViewItemBackgroundColor(
     {required int colorindex, required int index}) {
   if (colorindex == 1) {
     return index % 2 == 0 ? Colors.cyanAccent : Colors.tealAccent;
   } else if (colorindex == 2) {
-    return index % 2 == 0 ? ProductColor.white : ProductColor.dartWhite;
+    return index % 2 == 0 ? Colors.white : Colors.white70;
   } else if (colorindex == 3) {
     return index % 2 == 0 ? Colors.white54 : Colors.white70;
   } else if (colorindex == 4) {
     return index % 2 == 0 ? Colors.white : Colors.blueGrey;
   }
   return Colors.black;
-}*/
+}
+*/

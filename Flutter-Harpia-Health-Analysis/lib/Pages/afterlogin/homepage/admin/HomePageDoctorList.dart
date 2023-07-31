@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../httprequest/HttpRequestDoctor.dart';
 import '../../../../model/user/Doctor.dart';
-import '../../../../util/doctor/DoctorListFutureBuilder.dart';
+import '../listview/doctor/DoctorListFutureBuilder.dart';
 
 class HomePageDoctorList extends StatelessWidget {
   const HomePageDoctorList({Key? key}) : super(key: key);

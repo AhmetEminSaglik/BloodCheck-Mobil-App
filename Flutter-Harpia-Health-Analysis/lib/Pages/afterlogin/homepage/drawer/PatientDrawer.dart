@@ -5,6 +5,8 @@ import 'package:flutter_harpia_health_analysis/Pages/afterlogin/profile/AdminPro
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/profile/AdminProfile.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/profile/DoctorProfile.dart';
 
+import '../../../../util/SafeLogoutDrawerItem.dart';
+
 class PatientDrawer extends StatefulWidget {
   @override
   State<PatientDrawer> createState() => _PatientDrawerState();
@@ -31,6 +33,7 @@ class _PatientDrawerState extends State<PatientDrawer> {
               context: context, title: "HomePage", selectedIndex: 0),
           _buildDrawerListTile(
               context: context, title: "Profile", selectedIndex: 1),
+          SafeLogoutDrawerItem(),
         ],
       ),
     );

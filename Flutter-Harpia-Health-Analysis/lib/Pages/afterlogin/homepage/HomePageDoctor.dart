@@ -3,7 +3,7 @@ import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestDoctor.dar
 import 'package:flutter_harpia_health_analysis/util/SharedPref.dart';
 import '../../../model/EnumUserProp.dart';
 import '../../../model/user/Patient.dart';
-import '../../../util/patient/PatientListFutureBuilder.dart';
+import 'listview/patient/PatientListFutureBuilder.dart';
 
 class HomePageDoctor extends StatefulWidget {
   const HomePageDoctor({Key? key}) : super(key: key);

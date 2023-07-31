@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/HomePagePatient.dart';
 import 'package:flutter_harpia_health_analysis/model/user/Patient.dart';
-
-import '../../model/user/User.dart';
 import 'ListviewBuilderPatient.dart';
 
 class PatientListFutureBuilder extends StatelessWidget {

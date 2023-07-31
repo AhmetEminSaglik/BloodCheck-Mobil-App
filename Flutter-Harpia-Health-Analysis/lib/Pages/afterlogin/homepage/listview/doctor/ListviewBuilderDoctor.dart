@@ -1,28 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/HomePagePatient.dart';
-import 'package:flutter_harpia_health_analysis/util/Utils.dart';
-import '../../core/ResponsiveDesign.dart';
-import '../../model/diesease/EnumDiseaseType.dart';
-import '../../model/user/Patient.dart';
+import 'package:flutter_harpia_health_analysis/model/user/Doctor.dart';
+import '../../../../../core/ResponsiveDesign.dart';
+import '../../../../../util/Utils.dart';
 
-class ListviewBuilderPatient extends StatelessWidget {
-  const ListviewBuilderPatient({
+class ListviewBuilderDoctor extends StatelessWidget {
+  const ListviewBuilderDoctor({
     super.key,
-    required this.patientList,
+    required this.doctorList,
   });
 
-  final List<Patient> patientList;
+  final List<Doctor> doctorList;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.cyan,
-        body: getBodyForPatientListView(patientList));
+        body: getBodyForPatientListView(doctorList));
   }
 }
 
-Widget getBodyForPatientListView(List<Patient> patientList) {
-  if (patientList.isEmpty) {
+Widget getBodyForPatientListView(List<Doctor> doctorList) {
+  if (doctorList.isEmpty) {
     return Padding(
       padding: EdgeInsets.only(
           right: ResponsiveDesign.getScreenWidth() / 25,
@@ -37,20 +36,20 @@ Widget getBodyForPatientListView(List<Patient> patientList) {
     );
   } else {
     return ListView.builder(
-        itemCount: patientList.length,
+        itemCount: doctorList.length,
         itemBuilder: (context, index) {
           return InkWell(
             onTap: () {
-              // print("Click Item : ${patientList[index]}");
+              // print("Click Item : ${doctorList[index]}");
               navigateToPatientChartPage(
                   context: context,
                   routePage: HomePagePatient(
                       displayNamePatientPage:
-                          "${patientList[index].name} ${patientList[index].lastname}"));
+                          "${doctorList[index].name} ${doctorList[index].lastname}"));
             },
             child: Card(
               color:
-                  CustomListViewItemColor.getBackgroundColor(colorindex: 2, index: index),
+              CustomListViewItemColor.getBackgroundColor(colorindex: 2, index: index),
               shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(15))
                   /*borderRadius: BorderRadius.only(
@@ -72,13 +71,13 @@ Widget getBodyForPatientListView(List<Patient> patientList) {
                         ListViewItemText(
                             isBold: false,
                             text:
-                                "${index + 1}-) ${"${patientList[index].name} ${patientList[index].lastname}"}"),
-                        SizedBox(
-                            width: ResponsiveDesign.getScreenWidth() / 5,
-                            child: ListViewItemText(
-                                isBold: true,
-                                text: EnumDiseaseType.getDiseaseName(
-                                    patientList[index].diseaseTypeId))),
+                                "${index + 1}-) ${"${doctorList[index].name} ${doctorList[index].lastname}"}"),
+                        // SizedBox(
+                        //     width: ResponsiveDesign.getScreenWidth() / 5,
+                        //     child: ListViewItemText(
+                        //         isBold: true,
+                        //         text: EnumDiseaseType.getDiseaseName(
+                        //             doctorList[index].totalPatientNumber))),
                       ],
                     ),
                   ),
@@ -113,18 +112,16 @@ void navigateToPatientChartPage(
   Navigator.push(context, MaterialPageRoute(builder: (context) => routePage));
 }
 /*
-
 Color getListViewItemBackgroundColor(
     {required int colorindex, required int index}) {
   if (colorindex == 1) {
     return index % 2 == 0 ? Colors.cyanAccent : Colors.tealAccent;
   } else if (colorindex == 2) {
-    return index % 2 == 0 ? Colors.white : Colors.white70;
+    return index % 2 == 0 ? ProductColor.white : ProductColor.dartWhite;
   } else if (colorindex == 3) {
     return index % 2 == 0 ? Colors.white54 : Colors.white70;
   } else if (colorindex == 4) {
     return index % 2 == 0 ? Colors.white : Colors.blueGrey;
   }
   return Colors.black;
-}
-*/
+}*/

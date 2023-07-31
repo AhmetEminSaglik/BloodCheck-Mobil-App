@@ -5,6 +5,8 @@ import 'package:flutter_harpia_health_analysis/Pages/afterlogin/profile/AdminPro
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/profile/AdminProfile.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/profile/DoctorProfile.dart';
 
+import '../../../../util/SafeLogoutDrawerItem.dart';
+
 class DoctorDrawer extends StatefulWidget {
   @override
   State<DoctorDrawer> createState() => _DoctorDrawerState();
@@ -31,6 +33,8 @@ class _DoctorDrawerState extends State<DoctorDrawer> {
               context: context, title: "HomePage", selectedIndex: 0),
           _buildDrawerListTile(
               context: context, title: "Profile", selectedIndex: 1),
+          // _buildDrawerListTileSafeLogout(context: context, title: title, selectedIndex: selectedIndex)
+          SafeLogoutDrawerItem(),
         ],
       ),
     );
@@ -46,6 +50,21 @@ class _DoctorDrawerState extends State<DoctorDrawer> {
         setState(() {
           selectedIndex = selectedIndex;
           Navigator.pop(context);
+        });
+      },
+    );
+  }
+
+  ListTile _buildDrawerListTileSafeLogout({
+    required BuildContext context,
+    required String title,
+    required int selectedIndex,
+  }) {
+    return ListTile(
+      title: Text(title),
+      onTap: () {
+        setState(() {
+          Navigator.of(context).popUntil((route) => route.isFirst); //removes all pages until first page.
         });
       },
     );

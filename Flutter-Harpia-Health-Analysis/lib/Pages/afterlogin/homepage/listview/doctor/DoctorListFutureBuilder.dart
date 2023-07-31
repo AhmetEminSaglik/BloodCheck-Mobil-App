@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_harpia_health_analysis/model/user/Patient.dart';
-import 'package:flutter_harpia_health_analysis/util/doctor/ListviewBuilderDoctor.dart';
-import '../../model/user/Doctor.dart';
+
+import '../../../../../model/user/Doctor.dart';
+import 'ListviewBuilderDoctor.dart';
 
 class DoctorListFutureBuilder extends StatelessWidget {
   final Future<List<Doctor>> doctorList;
