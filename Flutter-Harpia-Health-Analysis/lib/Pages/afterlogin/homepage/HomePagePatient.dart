@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/LineChartDemo1.dart';
 import 'package:flutter_harpia_health_analysis/model/userrole/EnumUserRole.dart';
-import 'package:flutter_harpia_health_analysis/util/ProductColor.dart';
 import '../../../httprequest/HttpRequestDisease.dart';
 import '../../../model/EnumUserProp.dart';
 import '../../../model/diesease/Disease.dart';
@@ -28,10 +27,6 @@ class _HomePagePatientState extends State<HomePagePatient> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: ProductColor.green,
-        title: Text(widget.displayNamePatientPage),
-      ),
       body: SingleChildScrollView(
         child: Column(
           children: [

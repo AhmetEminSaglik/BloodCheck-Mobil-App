@@ -16,7 +16,7 @@ class _HomePageDoctorState extends State<HomePageDoctor> {
   @override
   Widget build(BuildContext context) {
     return PatientListFutureBuilder(
-    patientList: getPatientList(), appBarTitle:  "My Patient List",
+    patientList: getPatientList(), appBarTitle:  "My Patient List (D)",
     );
   }
 }

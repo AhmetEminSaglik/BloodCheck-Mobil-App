@@ -242,8 +242,8 @@ class _LoginButton extends StatelessWidget {
 
   void navigateToHomePage(
       {required BuildContext context, required int roleId}) {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => HomePage(userRoleId: roleId)));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => HomePage()));
   }
 }
 

@@ -2,23 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/admin/HomePageAdmin.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/HomePageDoctor.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/HomePagePatient.dart';
+import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/drawer/MainDrawer.dart';
 import 'package:flutter_harpia_health_analysis/model/userrole/EnumUserRole.dart';
-class HomePage extends StatefulWidget {
-  const HomePage({required this.userRoleId});
 
-  final int userRoleId;
+import '../../../util/Utils.dart';
+class HomePage extends StatefulWidget {
 
   @override
   State<HomePage> createState() => _HomePageState();
+
+  HomePage({super.key});
 }
 
 class _HomePageState extends State<HomePage> {
+  int userRoleId = SharedPrefUtils.getRoleId();
   Widget getUserPage() {
-    if (widget.userRoleId == EnumUserRole.ADMIN.roleId) {
+    if (userRoleId == EnumUserRole.ADMIN.roleId) {
       return const HomePageAdmin();
-    } else if (widget.userRoleId == EnumUserRole.DOCTOR.roleId) {
+    } else if (userRoleId == EnumUserRole.DOCTOR.roleId) {
       return const HomePageDoctor();
-    } else if (widget.userRoleId == EnumUserRole.PATIENT.roleId) {
+    } else if (userRoleId == EnumUserRole.PATIENT.roleId) {
       return const HomePagePatient(displayNamePatientPage: "My Disease Chart");
     }
     return const Text("Unknow UserRoleType is login");
@@ -26,6 +29,10 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return getUserPage();
+    return Scaffold(
+      appBar: AppBar(title: Text("App Bar Demo"),),
+      body: getUserPage(),
+      drawer: const MainDrawer(),
+    );
   }
 }

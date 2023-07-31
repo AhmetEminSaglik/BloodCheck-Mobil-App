@@ -29,7 +29,6 @@ class PatientListFutureBuilder extends StatelessWidget {
           List<Patient> patientList = snapshot.data ?? [];
 
           return ListviewBuilderPatient(
-              appBarTitle: appBarTitle,
               // routePage: const HomePagePatient(displayNamePatientPage: patientList[inde]),
               patientList: patientList);
         }

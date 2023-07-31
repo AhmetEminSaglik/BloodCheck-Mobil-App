@@ -3,13 +3,10 @@ import 'package:flutter_harpia_health_analysis/model/user/Patient.dart';
 import 'package:flutter_harpia_health_analysis/util/doctor/ListviewBuilderDoctor.dart';
 import '../../model/user/Doctor.dart';
 
-
 class DoctorListFutureBuilder extends StatelessWidget {
   final Future<List<Doctor>> doctorList;
-  final String appBarTitle;
 
-  const DoctorListFutureBuilder(
-      {super.key, required this.doctorList, required this.appBarTitle});
+  const DoctorListFutureBuilder({super.key, required this.doctorList});
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +24,7 @@ class DoctorListFutureBuilder extends StatelessWidget {
         } else {
           List<Doctor> doctorList = snapshot.data ?? [];
 
-          return ListviewBuilderDoctor(
-              appBarTitle: appBarTitle,
-              doctorList: doctorList);
+          return ListviewBuilderDoctor(doctorList: doctorList);
         }
       },
     );

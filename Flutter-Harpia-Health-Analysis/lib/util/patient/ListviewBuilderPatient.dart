@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/HomePagePatient.dart';
+import 'package:flutter_harpia_health_analysis/util/Utils.dart';
 import '../../core/ResponsiveDesign.dart';
 import '../../model/diesease/EnumDiseaseType.dart';
 import '../../model/user/Patient.dart';
@@ -7,20 +8,14 @@ import '../../model/user/Patient.dart';
 class ListviewBuilderPatient extends StatelessWidget {
   const ListviewBuilderPatient({
     super.key,
-    required this.appBarTitle,
     required this.patientList,
   });
 
-  final String appBarTitle;
   final List<Patient> patientList;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.cyan,
-          title: Text(appBarTitle),
-        ),
         backgroundColor: Colors.cyan,
         body: getBodyForPatientListView(patientList));
   }
@@ -55,7 +50,7 @@ Widget getBodyForPatientListView(List<Patient> patientList) {
             },
             child: Card(
               color:
-                  getListViewItemBackgroundColor(colorindex: 1, index: index),
+                  CustomListViewItemColor.getBackgroundColor(colorindex: 2, index: index),
               shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(15))
                   /*borderRadius: BorderRadius.only(
@@ -117,6 +112,7 @@ void navigateToPatientChartPage(
     {required BuildContext context, required routePage}) {
   Navigator.push(context, MaterialPageRoute(builder: (context) => routePage));
 }
+/*
 
 Color getListViewItemBackgroundColor(
     {required int colorindex, required int index}) {
@@ -131,3 +127,4 @@ Color getListViewItemBackgroundColor(
   }
   return Colors.black;
 }
+*/

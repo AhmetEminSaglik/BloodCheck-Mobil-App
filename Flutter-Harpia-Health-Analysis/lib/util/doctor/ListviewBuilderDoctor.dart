@@ -1,27 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/HomePagePatient.dart';
 import 'package:flutter_harpia_health_analysis/model/user/Doctor.dart';
+import 'package:flutter_harpia_health_analysis/util/ProductColor.dart';
 import '../../core/ResponsiveDesign.dart';
 import '../../model/diesease/EnumDiseaseType.dart';
 import '../../model/user/Patient.dart';
+import '../Utils.dart';
 
 class ListviewBuilderDoctor extends StatelessWidget {
   const ListviewBuilderDoctor({
     super.key,
-    required this.appBarTitle,
     required this.doctorList,
   });
 
-  final String appBarTitle;
   final List<Doctor> doctorList;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.cyan,
-          title: Text(appBarTitle),
-        ),
         backgroundColor: Colors.cyan,
         body: getBodyForPatientListView(doctorList));
   }
@@ -56,7 +52,7 @@ Widget getBodyForPatientListView(List<Doctor> doctorList) {
             },
             child: Card(
               color:
-                  getListViewItemBackgroundColor(colorindex: 1, index: index),
+              CustomListViewItemColor.getBackgroundColor(colorindex: 2, index: index),
               shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(15))
                   /*borderRadius: BorderRadius.only(
@@ -118,17 +114,17 @@ void navigateToPatientChartPage(
     {required BuildContext context, required routePage}) {
   Navigator.push(context, MaterialPageRoute(builder: (context) => routePage));
 }
-
+/*
 Color getListViewItemBackgroundColor(
     {required int colorindex, required int index}) {
   if (colorindex == 1) {
     return index % 2 == 0 ? Colors.cyanAccent : Colors.tealAccent;
   } else if (colorindex == 2) {
-    return index % 2 == 0 ? Colors.white : Colors.white70;
+    return index % 2 == 0 ? ProductColor.white : ProductColor.dartWhite;
   } else if (colorindex == 3) {
     return index % 2 == 0 ? Colors.white54 : Colors.white70;
   } else if (colorindex == 4) {
     return index % 2 == 0 ? Colors.white : Colors.blueGrey;
   }
   return Colors.black;
-}
+}*/
