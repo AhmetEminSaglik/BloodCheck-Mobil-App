@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/admin/HomePageAdmin.dart';
-import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/HomePageDoctor.dart';
-import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/HomePagePatient.dart';
+import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/users/HomePagePatient.dart';
+import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/appbar/MainAppBar.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/drawer/MainDrawer.dart';
 import 'package:flutter_harpia_health_analysis/model/userrole/EnumUserRole.dart';
 
-import '../../../util/Utils.dart';
+import '../../../../util/Utils.dart';
+import 'HomePageDoctor.dart';
+import 'admin/HomePageAdmin.dart';
 class HomePage extends StatefulWidget {
 
   @override
@@ -30,7 +31,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("App Bar Demo"),),
+      appBar:MainAppBar(), // AppBar(title : Text("demo")),
       body: getUserPage(),
       drawer: const MainDrawer(),
     );

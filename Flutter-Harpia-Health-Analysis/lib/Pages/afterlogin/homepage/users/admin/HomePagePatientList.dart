@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../../../httprequest/HttpRequestPatient.dart';
-import '../../../../model/user/Patient.dart';
-import '../listview/patient/PatientListFutureBuilder.dart';
+
+import '../../../../../httprequest/HttpRequestPatient.dart';
+import '../../../../../model/user/Patient.dart';
+import '../../listview/patient/PatientListFutureBuilder.dart';
 
 class HomePagePatientList extends StatelessWidget {
   const HomePagePatientList({Key? key}) : super(key: key);

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/HomePagePatient.dart';
 import 'package:flutter_harpia_health_analysis/util/Utils.dart';
 import '../../../../../core/ResponsiveDesign.dart';
 import '../../../../../model/diesease/EnumDiseaseType.dart';
 import '../../../../../model/user/Patient.dart';
+import '../../users/HomePagePatient.dart';
 
 class ListviewBuilderPatient extends StatelessWidget {
   const ListviewBuilderPatient({

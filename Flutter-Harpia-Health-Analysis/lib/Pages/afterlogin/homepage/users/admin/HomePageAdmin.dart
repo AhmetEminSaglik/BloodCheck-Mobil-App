@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/admin/HomePageDoctorList.dart';
-import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/admin/HomePagePatientList.dart';
-import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/drawer/AdminDrawer.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'HomePageDoctorList.dart';
+import 'HomePagePatientList.dart';
 
 class HomePageAdmin extends StatefulWidget {
   const HomePageAdmin({Key? key}) : super(key: key);
@@ -19,8 +19,6 @@ class _HomePageAdminState extends State<HomePageAdmin> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: pageList[selectedIndex],
-      drawer: AdminDrawer(),
-      // drawer: AdminDrawer(),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(

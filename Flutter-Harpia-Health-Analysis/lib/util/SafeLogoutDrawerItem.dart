@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_harpia_health_analysis/Pages/main/harpia-health-analysis-main.dart';
 import 'package:flutter_harpia_health_analysis/util/SharedPref.dart';
 
 class SafeLogoutDrawerItem extends StatefulWidget {
@@ -23,7 +24,7 @@ class _SafeLogoutDrawerItemState extends State<SafeLogoutDrawerItem> {
         setState(() {
           SafeLogOut.clearSharedPref();
           Navigator.of(context).popUntil(
-              (route) => route.isFirst); //removes all pages until first page.
+              (route) => route.isFirst);
         });
       },
     );
@@ -32,6 +33,6 @@ class _SafeLogoutDrawerItemState extends State<SafeLogoutDrawerItem> {
 
 class SafeLogOut {
   static void clearSharedPref() {
-    SharedPref.sp.clear();
+    // SharedPref.sp.clear();
   }
 }

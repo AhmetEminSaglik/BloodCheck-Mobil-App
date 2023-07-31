@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/HomePagePatient.dart';
 import 'package:flutter_harpia_health_analysis/model/user/Doctor.dart';
 import '../../../../../core/ResponsiveDesign.dart';
 import '../../../../../util/Utils.dart';
+import '../../users/HomePagePatient.dart';
 
 class ListviewBuilderDoctor extends StatelessWidget {
   const ListviewBuilderDoctor({

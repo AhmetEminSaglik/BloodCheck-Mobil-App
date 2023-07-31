@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/LineChartDemo1.dart';
 import 'package:flutter_harpia_health_analysis/model/userrole/EnumUserRole.dart';
-import '../../../httprequest/HttpRequestDisease.dart';
-import '../../../model/EnumUserProp.dart';
-import '../../../model/diesease/Disease.dart';
-import '../../../util/SharedPref.dart';
-import '../../CustomWidgets/LineChartDemo2.dart';
+import '../../../../httprequest/HttpRequestDisease.dart';
+import '../../../../model/EnumUserProp.dart';
+import '../../../../model/diesease/Disease.dart';
+import '../../../../util/SharedPref.dart';
+import '../../../CustomWidgets/LineChartDemo2.dart';
 
 class HomePagePatient extends StatefulWidget {
   final String displayNamePatientPage;

@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/HomePageDoctor.dart';
-import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/admin/HomePageAdmin.dart';
-import 'package:flutter_harpia_health_analysis/Pages/afterlogin/profile/AdminProfile.dart';
-import 'package:flutter_harpia_health_analysis/Pages/afterlogin/profile/AdminProfile.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/profile/DoctorProfile.dart';
 
 import '../../../../util/SafeLogoutDrawerItem.dart';

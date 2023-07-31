@@ -7,16 +7,17 @@ class SharedPref {
   static var _sp = null;
 
   static void setLoginDataUser(User user) async {
-    await _initiliazeSharedPref();
+    await initiliazeSharedPref();
     _printSP();
     _addDataToSP(user);
     _printSP();
   }
 
-  static Future<void> _initiliazeSharedPref() async {
+  static Future<SharedPreferences> initiliazeSharedPref() async {
     if (_sp == null) {
       _sp = await SharedPreferences.getInstance();
     }
+    return sp;
   }
 
   static void _addDataToSP(User user) {
