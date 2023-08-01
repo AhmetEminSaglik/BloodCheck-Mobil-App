@@ -109,7 +109,7 @@ public class InitialDataLoader implements CommandLineRunner {
         admin.setName("Ahmet Emin");
         admin.setLastname("SAGLIK");
         admin.setUsername("aes");
-        admin.setPassword("aes");
+        admin.setPassword("pass");
         admin.setRoleId(EnumUserRole.ADMIN.getId());
         list.add(admin);
         return list;
