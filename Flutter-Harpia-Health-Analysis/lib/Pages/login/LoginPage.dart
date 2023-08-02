@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/drawer/DrawerCubit.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/users/HomePage.dart';
 import 'package:flutter_harpia_health_analysis/core/ResponsiveDesign.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/ResponseEntity.dart';
@@ -10,6 +11,7 @@ import 'package:flutter_harpia_health_analysis/util/SharedPref.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestUser.dart';
 import 'dart:convert';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginPage extends StatefulWidget {
   final String title;
@@ -224,7 +226,7 @@ class _LoginButton extends StatelessWidget {
               context: context, msg: respEntity.message);
         } else {
           User user = UserFactory.createUser(respEntity.data);
-          saveUserData(user);
+          saveUserData(context, user);
           navigateToHomePage(context: context, roleId: user.roleId);
         }
       });
@@ -236,8 +238,9 @@ class _LoginButton extends StatelessWidget {
     ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar.getSnackBar(msg));
   }
 
-  void saveUserData(User user) {
-    SharedPref.setLoginDataUser(user);
+  void saveUserData(BuildContext context, User user) {
+    SharedPref.setLoginDataUser(user)
+        .then((value) => context.read<DrawerCubit>().resetBody());
   }
 
   void navigateToHomePage(

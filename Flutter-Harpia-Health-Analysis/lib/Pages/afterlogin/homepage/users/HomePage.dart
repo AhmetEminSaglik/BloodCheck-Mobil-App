@@ -16,37 +16,13 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 
   HomePage({super.key});
-
-  Widget getUserPage() {
-    int userRoleId = SharedPrefUtils.getRoleId();
-    if (userRoleId == EnumUserRole.ADMIN.roleId) {
-      return const HomePageAdmin();
-    } else if (userRoleId == EnumUserRole.DOCTOR.roleId) {
-      return const HomePageDoctor();
-    } else if (userRoleId == EnumUserRole.PATIENT.roleId) {
-      return const HomePagePatient(displayNamePatientPage: "My Disease Chart");
-    }
-    return const Text("Unknow UserRoleType is login");
-  }
 }
 
 class _HomePageState extends State<HomePage> {
-/*  int userRoleId = SharedPrefUtils.getRoleId();
-  Widget getUserPage() {
-    if (userRoleId == EnumUserRole.ADMIN.roleId) {
-      return const HomePageAdmin();
-    } else if (userRoleId == EnumUserRole.DOCTOR.roleId) {
-      return const HomePageDoctor();
-    } else if (userRoleId == EnumUserRole.PATIENT.roleId) {
-      return const HomePagePatient(displayNamePatientPage: "My Disease Chart");
-    }
-    return const Text("Unknow UserRoleType is login");
-  }*/
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MainAppBar(), // AppBar(title : Text("demo")),
+      appBar: MainAppBar(),
       body: CustomScrollView(
         slivers: [
           SliverFillRemaining(
@@ -59,7 +35,6 @@ class _HomePageState extends State<HomePage> {
           )
         ],
       ),
-
       drawer: const MainDrawer(),
     );
   }

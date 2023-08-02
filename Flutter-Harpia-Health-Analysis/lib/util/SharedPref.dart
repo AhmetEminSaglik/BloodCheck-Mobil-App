@@ -6,11 +6,11 @@ import '../model/user/User.dart';
 class SharedPref {
   static var _sp = null;
 
-  static void setLoginDataUser(User user) async {
+  static Future<void> setLoginDataUser(User user) async {
     await initiliazeSharedPref();
-    _printSP();
+    // _printSP();
     _addDataToSP(user);
-    _printSP();
+    // _printSP();
   }
 
   static Future<SharedPreferences> initiliazeSharedPref() async {
