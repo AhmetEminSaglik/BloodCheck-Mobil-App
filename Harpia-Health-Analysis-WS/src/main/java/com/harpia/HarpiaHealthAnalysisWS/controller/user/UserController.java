@@ -46,7 +46,7 @@ public class UserController {
     }
 
     public User saveUser(User user) {
-        user=service.save(user);
+        user = service.save(user);
         return user;
     }
 
@@ -137,6 +137,12 @@ public class UserController {
         return result;
     }
 
+    /*@PostMapping("/signup")
+    public ResponseEntity<DataResult<User>> signup(@RequestBody Doctor user) {
+        System.out.println("requested signupCredientals : " + user);
+
+        return ResponseEntity.ok().body(new SuccessDataResult(user));
+    }*/
     /*@PostMapping("/signup")
     public DataResult<User> signup(@RequestBody LoginCredentials loginCreds) {
         SignupValidationService signupService = new SignupCredentialsValidation(service);

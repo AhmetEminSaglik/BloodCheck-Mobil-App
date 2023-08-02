@@ -39,6 +39,18 @@ class HttpRequestDoctor {
     return doctorList;
   }
 
+  Future<http.Response> signup(Doctor user) async {
+    Uri url = Uri.parse("$_baseUrl");
+    print("URL : $url");
+    Map<String, dynamic> requestData = user.toJson();
+    print("to json  $requestData");
+    var resp = await http.post(url,
+        headers: HttpUtil.header, body: jsonEncode(requestData));
+    print('requestData : $requestData');
+    print('resp : $resp');
+    print('resp.body : ${resp.body}');
+    return resp;
+  }
 // Future<http.Response> login(String username, String password) async {
 //   Uri url = Uri.parse("$_baseUrl/user/login");
 //   var requestData = {"username": username, "password": password};

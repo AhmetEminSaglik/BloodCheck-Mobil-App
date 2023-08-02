@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/appbar/AppBarCubit.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/drawer/DrawerCubit.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/profile/AdminProfile.dart';
+import 'package:flutter_harpia_health_analysis/Pages/afterlogin/registerpage/DoctorRegisterPage.dart';
 import '../../../../util/SafeLogoutDrawerItem.dart';
 import '../users/admin/HomePageAdmin.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,7 +14,7 @@ class AdminDrawer extends StatefulWidget {
 
 class _AdminDrawerState extends State<AdminDrawer> {
   // static int roleId = SharedPref.sp.getInt(EnumUserProp.ROLE_ID.name) ?? -1;
-  var pageList = [const HomePageAdmin(), const AdminProfile()];
+  var pageList = [const HomePageAdmin(), const AdminProfile(),const DoctorRegisterPage()];
   int selectedIndex = 0;
 
   @override
@@ -27,6 +28,8 @@ class _AdminDrawerState extends State<AdminDrawer> {
               context: context, title: "HomePage", selectedIndex: 0),
           _buildDrawerListTile(
               context: context, title: "Profile", selectedIndex: 1),
+          _buildDrawerListTile(
+              context: context, title: "Register Doctor", selectedIndex: 2),
           SafeLogoutDrawerItem(),
         ],
       ),

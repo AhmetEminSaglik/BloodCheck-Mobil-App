@@ -30,7 +30,7 @@ public class DoctorController {
     @Autowired
     private PatientService patientService;
 
-    @PostMapping("/save")
+    @PostMapping()
     public ResponseEntity<DataResult<User>> saveDoctor(@RequestBody Doctor inputPersonel) {
         SignupUser signupUser = new SignupUser(userService);
         DataResult<User> dataResult = signupUser.signup(inputPersonel);

@@ -4,10 +4,8 @@ import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/drawer/
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/users/HomePage.dart';
 import 'package:flutter_harpia_health_analysis/core/ResponsiveDesign.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/ResponseEntity.dart';
-import 'package:flutter_harpia_health_analysis/model/EnumUserProp.dart';
 import 'package:flutter_harpia_health_analysis/model/user/User.dart';
 import 'package:flutter_harpia_health_analysis/business/factory/UserFactory.dart';
-import 'package:flutter_harpia_health_analysis/model/userrole/EnumUserRole.dart';
 import 'package:flutter_harpia_health_analysis/util/CustomSnackBar.dart';
 import 'package:flutter_harpia_health_analysis/util/ProductColor.dart';
 import 'package:flutter_harpia_health_analysis/util/SharedPref.dart';
@@ -93,7 +91,7 @@ class _InputTextFieldPadding extends StatelessWidget {
       padding: EdgeInsets.only(
           left: ResponsiveDesign.getScreenWidth() / 30,
           right: ResponsiveDesign.getScreenWidth() / 30,
-          bottom: ResponsiveDesign.getScreenWidth() / 30),
+          bottom: ResponsiveDesign.getScreenWidth() / 25),
       child: widget,
     );
   }
