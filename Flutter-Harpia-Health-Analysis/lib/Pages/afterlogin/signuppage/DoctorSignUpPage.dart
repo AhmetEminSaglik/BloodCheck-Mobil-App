@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestDoctor.dart';
 import 'package:flutter_harpia_health_analysis/model/user/Doctor.dart';
 import 'package:flutter_harpia_health_analysis/model/userrole/EnumUserRole.dart';
+import 'package:flutter_harpia_health_analysis/util/CustomAlertDialog.dart';
 
 import '../../../business/factory/UserFactory.dart';
 import '../../../core/ResponsiveDesign.dart';
@@ -12,14 +13,14 @@ import '../../../util/CustomSnackBar.dart';
 import '../../../util/ProductColor.dart';
 import 'dart:convert';
 
-class DoctorRegisterPage extends StatefulWidget {
-  const DoctorRegisterPage({Key? key}) : super(key: key);
+class DoctorSignUpPage extends StatefulWidget {
+  const DoctorSignUpPage({Key? key}) : super(key: key);
 
   @override
-  State<DoctorRegisterPage> createState() => _DoctorRegisterPageState();
+  State<DoctorSignUpPage> createState() => _DoctorSignUpPageState();
 }
 
-class _DoctorRegisterPageState extends State<DoctorRegisterPage> {
+class _DoctorSignUpPageState extends State<DoctorSignUpPage> {
   var formKey = GlobalKey<FormState>();
   TextEditingController tfUsername = TextEditingController();
   TextEditingController tfPassword = TextEditingController();
@@ -57,7 +58,12 @@ class _DoctorRegisterPageState extends State<DoctorRegisterPage> {
                         controller: tfLastname,
                         obscure: false),
                     _SigninButton(
-                        formKey: formKey,tfUsername: tfUsername,tfPassword: tfPassword,tfName:tfName,tfLastname: tfLastname,)
+                      formKey: formKey,
+                      tfUsername: tfUsername,
+                      tfPassword: tfPassword,
+                      tfName: tfName,
+                      tfLastname: tfLastname,
+                    )
                   ],
                 ),
               )
@@ -128,7 +134,7 @@ class _SigninButton extends StatelessWidget {
         height: ResponsiveDesign.getScreenHeight() / 15,
         child: ElevatedButton(
             onPressed: () {
-              _signupProcess(context);
+              _signUpProcess(context);
             },
             style: ButtonStyle(
                 backgroundColor:
@@ -140,7 +146,7 @@ class _SigninButton extends StatelessWidget {
                     fontSize: ResponsiveDesign.getScreenWidth() / 20))));
   }
 
-  void _signupProcess(BuildContext context) async {
+  void _signUpProcess(BuildContext context) async {
     bool controlResult = formKey.currentState!.validate();
     if (controlResult) {
       String username = tfUsername.text;
@@ -148,18 +154,27 @@ class _SigninButton extends StatelessWidget {
       String name = tfName.text;
       String lastname = tfLastname.text;
       var request = HttpRequestDoctor();
-      Doctor doctor = Doctor(id: 0, roleId: EnumUserRole.DOCTOR.roleId, name: name, lastname:
-      lastname, username: username, password:pass, totalPatientNumber: -11);
-      request.signup(doctor).then((resp) async {
+      Doctor doctor = Doctor(
+          id: 0,
+          roleId: EnumUserRole.DOCTOR.roleId,
+          name: name,
+          lastname: lastname,
+          username: username,
+          password: pass,
+          totalPatientNumber: -11);
+      request.signUp(doctor).then((resp) async {
         // debugPrint(resp.body);
         Map<String, dynamic> jsonData = json.decode(resp.body);
         // print("res.body : ${resp.body}");
         var respEntity = ResponseEntity.fromJson(jsonData);
-
         if (!respEntity.success) {
-          showInvalidUsername(context: context, msg: respEntity.message);
+          showAlertDialogInvalidUsername(
+              context: context, msg: respEntity.message);
         } else {
           User user = UserFactory.createUser(respEntity.data);
+          showAlertDialogDoctorSignUpSuccessfully(
+              context: context, msg: respEntity.message);
+
           // saveUserData(context, user);
           // navigateToHomePage(context: context, roleId: user.roleId);
         }
@@ -167,11 +182,32 @@ class _SigninButton extends StatelessWidget {
     }
   }
 
-  void showInvalidUsername(
+  void showAlertDialogInvalidUsername(
       {required BuildContext context, required String msg}) {
-    ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar.getSnackBar(msg));
+    showDialog(
+        context: context,
+        builder: (builder) => CustomAlertDialog.getAlertDialogUserSignUp(
+            success: false,
+            context: context,
+            title: "Sign-Up",
+            subTitle: "Failed :",
+            msg: msg,
+            roleId: EnumUserRole.DOCTOR.roleId));
+    // ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar.getSnackBar(msg));
   }
 
+  void showAlertDialogDoctorSignUpSuccessfully(
+      {required BuildContext context, required String msg}) {
+    showDialog(
+        context: context,
+        builder: (builder) => CustomAlertDialog.getAlertDialogUserSignUp(
+            success: true,
+            context: context,
+            title: "Sign-Up",
+            subTitle: "Successfull",
+            msg: msg,
+            roleId: EnumUserRole.DOCTOR.roleId));
+  }
 /*  void saveUserData(BuildContext context, User user) {
     SharedPref.setLoginDataUser(user).then((value) {
       context.read<DrawerCubit>().resetBody();

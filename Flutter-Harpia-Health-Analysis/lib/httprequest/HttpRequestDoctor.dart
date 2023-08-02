@@ -39,7 +39,7 @@ class HttpRequestDoctor {
     return doctorList;
   }
 
-  Future<http.Response> signup(Doctor user) async {
+  Future<http.Response> signUp(Doctor user) async {
     Uri url = Uri.parse("$_baseUrl");
     print("URL : $url");
     Map<String, dynamic> requestData = user.toJson();
