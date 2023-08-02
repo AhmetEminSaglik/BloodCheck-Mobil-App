@@ -41,57 +41,65 @@ Widget getBodyForPatientListView(List<Patient> patientList) {
       ),
     );
   } else {
-    return ListView.builder(
-        itemCount: patientList.length,
-        itemBuilder: (context, index) {
-          return InkWell(
-            onTap: () {
-              // print("Click Item : ${patientList[index]}");
-              navigateToPatientChartPage(
-                  context: context,
-                  routePage: HomePagePatient(
-                      displayNamePatientPage:
-                          "${patientList[index].name} ${patientList[index].lastname}"));
-            },
-            child: Card(
-              color: CustomListViewItemColor.getBackgroundColor(
-                  colorindex: 2, index: index),
-              shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(15))
-                  /*borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(15),
-                        bottomRight: Radius.circular(15)),*/
-                  ),
-              child: Container(
-                height: ResponsiveDesign.getScreenHeight() / 11,
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      left: ResponsiveDesign.getScreenWidth() / 25,
-                      top: ResponsiveDesign.getScreenWidth() / 17,
-                      right: ResponsiveDesign.getScreenWidth() / 10,
+    return Padding(
+      padding: EdgeInsets.only(
+        left: ResponsiveDesign.getScreenWidth() / 40,
+        top: ResponsiveDesign.getScreenWidth() / 80,
+        right: ResponsiveDesign.getScreenWidth() / 40,
+      ),
+      child: ListView.builder(
+          itemCount: patientList.length,
+          itemBuilder: (context, index) {
+            return InkWell(
+              onTap: () {
+                // print("Click Item : ${patientList[index]}");
+                navigateToPatientChartPage(
+                    context: context,
+                    routePage: HomePagePatient(
+                        displayNamePatientPage:
+                            "${patientList[index].name} ${patientList[index].lastname}"));
+              },
+              child: Card(
+                color: CustomListViewItemColor.getBackgroundColor(
+                    colorindex: 2, index: index),
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(15))
+                    /*borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(15),
+                          bottomRight: Radius.circular(15)),*/
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        ListViewItemText(
-                            isBold: false,
-                            text:
-                                "${index + 1}-) ${"${patientList[index].name} ${patientList[index].lastname}"}"),
-                        SizedBox(
-                            width: ResponsiveDesign.getScreenWidth() / 5,
-                            child: ListViewItemText(
-                                isBold: true,
-                                text: EnumDiseaseType.getDiseaseName(
-                                    patientList[index].diseaseTypeId))),
-                      ],
+                child: Container(
+                  height: ResponsiveDesign.getScreenHeight() / 11,
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        left: ResponsiveDesign.getScreenWidth() / 25,
+                        top: ResponsiveDesign.getScreenWidth() / 17,
+                        right: ResponsiveDesign.getScreenWidth() / 25,
+                      ),
+                      child: Row(
+                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          ListViewItemText(
+                              isBold: false,
+                              text:
+                                  "${"${patientList[index].name} ${patientList[index].lastname}"}"),
+                          const Spacer(),
+                          SizedBox(
+                              width: ResponsiveDesign.getScreenWidth() / 3.5,
+                              child: ListViewItemText(
+                                  isBold: true,
+                                  text: EnumDiseaseType.getDiseaseName(
+                                      patientList[index].diseaseTypeId))),
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          );
-        });
+            );
+          }),
+    );
   }
 }
 
@@ -103,11 +111,14 @@ class ListViewItemText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      text,
-      style: TextStyle(
-        fontSize: ResponsiveDesign.getScreenHeight() / 43,
-        fontWeight: isBold ? FontWeight.bold : null,
+    return Padding(
+      padding: EdgeInsets.only(left: ResponsiveDesign.getScreenWidth() / 25),
+      child: Text(
+        text,
+        style: TextStyle(
+          fontSize: ResponsiveDesign.getScreenHeight() / 40,
+          fontWeight: isBold ? FontWeight.bold : null,
+        ),
       ),
     );
   }

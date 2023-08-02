@@ -41,45 +41,52 @@ Widget getBodyForPatientListView(List<Doctor> doctorList) {
       ),
     );
   } else {
-    return ListView.builder(
-        itemCount: doctorList.length,
-        itemBuilder: (context, index) {
-          return InkWell(
-            onTap: () {
-              // print("Click Item : ${doctorList[index]}");
-              navigateToPatientChartPage(
-                  context: context,
-                  routePage: HomePageDoctor(id: doctorList[index].id));
-            },
-            child: Card(
-              color: CustomListViewItemColor.getBackgroundColor(
-                  colorindex: 2, index: index),
-              shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(15))),
-              child: Container(
-                height: ResponsiveDesign.getScreenHeight() / 11,
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      left: ResponsiveDesign.getScreenWidth() / 25,
-                      top: ResponsiveDesign.getScreenWidth() / 17,
-                      right: ResponsiveDesign.getScreenWidth() / 10,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        ListViewItemText(
-                            isBold: false,
-                            text:
-                                "${index + 1}-) ${"${doctorList[index].name} ${doctorList[index].lastname}"}"),
-                      ],
+    return Padding(
+      padding: EdgeInsets.only(
+        left: ResponsiveDesign.getScreenWidth() / 40,
+        top: ResponsiveDesign.getScreenWidth() / 80,
+        right: ResponsiveDesign.getScreenWidth() / 40,
+      ),
+      child: ListView.builder(
+          itemCount: doctorList.length,
+          itemBuilder: (context, index) {
+            return InkWell(
+              onTap: () {
+                // print("Click Item : ${doctorList[index]}");
+                navigateToPatientChartPage(
+                    context: context,
+                    routePage: HomePageDoctor(id: doctorList[index].id));
+              },
+              child: Card(
+                color: CustomListViewItemColor.getBackgroundColor(
+                    colorindex: 2, index: index),
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(15))),
+                child: Container(
+                  height: ResponsiveDesign.getScreenHeight() / 11,
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        left: ResponsiveDesign.getScreenWidth() / 25,
+                        top: ResponsiveDesign.getScreenWidth() / 17,
+                        right: ResponsiveDesign.getScreenWidth() / 25,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ListViewItemText(
+                              isBold: false,
+                              text:
+                                  "${"${doctorList[index].name} ${doctorList[index].lastname}"}"),
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          );
-        });
+            );
+          }),
+    );
   }
 }
 
@@ -91,11 +98,15 @@ class ListViewItemText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      text,
-      style: TextStyle(
-        fontSize: ResponsiveDesign.getScreenHeight() / 43,
-        fontWeight: isBold ? FontWeight.bold : null,
+    return Padding(
+      padding: EdgeInsets.only(left: ResponsiveDesign.getScreenWidth() / 25),
+      child: Text(
+        text,
+        style: TextStyle(
+          fontSize: ResponsiveDesign.getScreenHeight() / 40,
+          fontWeight: isBold ? FontWeight.bold : null,
+
+        ),
       ),
     );
   }
