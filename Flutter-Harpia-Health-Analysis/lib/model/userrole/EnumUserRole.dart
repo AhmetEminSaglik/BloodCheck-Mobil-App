@@ -13,11 +13,11 @@ enum EnumUserRole {
 
       switch (roleId) {
       case 1:
-      return EnumUserRole.ADMIN.name;
+      return EnumUserRole.ADMIN.roleName;
       case 2:
-      return EnumUserRole.DOCTOR.name;
+      return EnumUserRole.DOCTOR.roleName;
       case 3:
-      return EnumUserRole.PATIENT.name;
+      return EnumUserRole.PATIENT.roleName;
       default:
       throw ArgumentError("Invalid roleId");
       }

@@ -7,10 +7,7 @@ class DoctorProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-          child: Text(
-        "Doctor Profile Body",
-        style: TextStyle(fontSize: 35),
-      )),
+          child: Text("Doctor Profile Body", style: TextStyle(fontSize: 35))),
     );
   }
 }

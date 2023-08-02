@@ -7,9 +7,6 @@ class AdminProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
         body: Center(
-            child: Text(
-      " Profile Body",
-      style: TextStyle(fontSize: 35),
-    )));
+            child: Text("Admin Profile Body", style: TextStyle(fontSize: 35))));
   }
 }

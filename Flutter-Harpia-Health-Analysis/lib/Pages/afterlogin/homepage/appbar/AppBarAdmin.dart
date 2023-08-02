@@ -1,8 +1,12 @@
+/*
 import 'package:flutter/material.dart';
 
 class AppBarAdmin extends AppBar {
-  AppBarAdmin({super.key});
+  Widget title;
 
-  @override
-  Widget? get title => const Text("Admin Appbar");
+  AppBarAdmin({super.key, required this.title});
+
+// @override
+// Widget? get title => const Text("Admin Appbar");
 }
+*/

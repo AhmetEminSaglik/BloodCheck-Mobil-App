@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/users/HomePageDoctor.dart';
 import 'package:flutter_harpia_health_analysis/model/user/Doctor.dart';
 import '../../../../../core/ResponsiveDesign.dart';
 import '../../../../../util/Utils.dart';
-import '../../users/HomePagePatient.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../appbar/AppBarCubit.dart';
 
 class ListviewBuilderDoctor extends StatelessWidget {
   const ListviewBuilderDoctor({
@@ -14,6 +17,9 @@ class ListviewBuilderDoctor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context
+        .read<AppBarCubit>()
+        .setTitleRoleNameWithPageListSize(doctorList.length);
     return Scaffold(
         backgroundColor: Colors.cyan,
         body: getBodyForPatientListView(doctorList));
@@ -43,19 +49,13 @@ Widget getBodyForPatientListView(List<Doctor> doctorList) {
               // print("Click Item : ${doctorList[index]}");
               navigateToPatientChartPage(
                   context: context,
-                  routePage: HomePagePatient(
-                      displayNamePatientPage:
-                          "${doctorList[index].name} ${doctorList[index].lastname}"));
+                  routePage: HomePageDoctor(id: doctorList[index].id));
             },
             child: Card(
-              color:
-              CustomListViewItemColor.getBackgroundColor(colorindex: 2, index: index),
+              color: CustomListViewItemColor.getBackgroundColor(
+                  colorindex: 2, index: index),
               shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(15))
-                  /*borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(15),
-                        bottomRight: Radius.circular(15)),*/
-                  ),
+                  borderRadius: BorderRadius.all(Radius.circular(15))),
               child: Container(
                 height: ResponsiveDesign.getScreenHeight() / 11,
                 child: SingleChildScrollView(
@@ -72,12 +72,6 @@ Widget getBodyForPatientListView(List<Doctor> doctorList) {
                             isBold: false,
                             text:
                                 "${index + 1}-) ${"${doctorList[index].name} ${doctorList[index].lastname}"}"),
-                        // SizedBox(
-                        //     width: ResponsiveDesign.getScreenWidth() / 5,
-                        //     child: ListViewItemText(
-                        //         isBold: true,
-                        //         text: EnumDiseaseType.getDiseaseName(
-                        //             doctorList[index].totalPatientNumber))),
                       ],
                     ),
                   ),

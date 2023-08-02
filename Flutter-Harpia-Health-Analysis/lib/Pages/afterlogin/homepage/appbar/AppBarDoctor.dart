@@ -1,8 +1,9 @@
+/*
 import 'package:flutter/material.dart';
 
 class AppBarDoctor extends AppBar {
-  AppBarDoctor({super.key});
+  Widget title;
 
-  @override
-  Widget? get title => const Text("Doctor Appbar");
+  AppBarDoctor({super.key, required this.title});
 }
+*/

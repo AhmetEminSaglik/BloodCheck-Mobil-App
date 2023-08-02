@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_harpia_health_analysis/model/user/Patient.dart';
+import '../../appbar/AppBarCubit.dart';
 import 'ListviewBuilderPatient.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 class PatientListFutureBuilder extends StatelessWidget {
   final Future<List<Patient>> patientList;
   final String appBarTitle;

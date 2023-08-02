@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/appbar/AppBarCubit.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/drawer/DrawerCubit.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/profile/AdminProfile.dart';
 import '../../../../util/SafeLogoutDrawerItem.dart';
@@ -41,6 +42,9 @@ class _AdminDrawerState extends State<AdminDrawer> {
       title: Text(title),
       onTap: () {
         context.read<DrawerCubit>().updateBody(pageList[selectedIndex]);
+        if (selectedIndex != 0) {
+          context.read<AppBarCubit>().setTitleRoleName();
+        }
         Navigator.pop(context);
       },
     );

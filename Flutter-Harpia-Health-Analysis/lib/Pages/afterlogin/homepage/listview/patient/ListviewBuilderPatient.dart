@@ -3,7 +3,9 @@ import 'package:flutter_harpia_health_analysis/util/Utils.dart';
 import '../../../../../core/ResponsiveDesign.dart';
 import '../../../../../model/diesease/EnumDiseaseType.dart';
 import '../../../../../model/user/Patient.dart';
+import '../../appbar/AppBarCubit.dart';
 import '../../users/HomePagePatient.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ListviewBuilderPatient extends StatelessWidget {
   const ListviewBuilderPatient({
@@ -15,6 +17,9 @@ class ListviewBuilderPatient extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context
+        .read<AppBarCubit>()
+        .setTitleRoleNameWithPageListSize(patientList.length);
     return Scaffold(
         backgroundColor: Colors.cyan,
         body: getBodyForPatientListView(patientList));
@@ -49,8 +54,8 @@ Widget getBodyForPatientListView(List<Patient> patientList) {
                           "${patientList[index].name} ${patientList[index].lastname}"));
             },
             child: Card(
-              color:
-                  CustomListViewItemColor.getBackgroundColor(colorindex: 2, index: index),
+              color: CustomListViewItemColor.getBackgroundColor(
+                  colorindex: 2, index: index),
               shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(15))
                   /*borderRadius: BorderRadius.only(

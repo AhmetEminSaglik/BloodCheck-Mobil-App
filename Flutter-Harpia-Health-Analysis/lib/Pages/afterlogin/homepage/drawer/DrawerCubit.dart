@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/users/HomePage.dart';
 
+import '../../../../model/EnumUserProp.dart';
 import '../../../../model/userrole/EnumUserRole.dart';
+import '../../../../util/SharedPref.dart';
 import '../../../../util/Utils.dart';
 import '../users/HomePageDoctor.dart';
 import '../users/HomePagePatient.dart';
@@ -14,6 +16,7 @@ class DrawerCubit extends Cubit<Widget> {
   DrawerCubit() : super(getUserPage());
 
   void updateBody(Widget newBody) {
+
     _body = newBody;
     emit(_body);
   }
@@ -28,7 +31,8 @@ class DrawerCubit extends Cubit<Widget> {
     if (userRoleId == EnumUserRole.ADMIN.roleId) {
       return const HomePageAdmin();
     } else if (userRoleId == EnumUserRole.DOCTOR.roleId) {
-      return const HomePageDoctor();
+      int doctorId = SharedPref.sp.getInt(EnumUserProp.ID.name) ?? -1;
+      return HomePageDoctor(id: doctorId);
     } else if (userRoleId == EnumUserRole.PATIENT.roleId) {
       return const HomePagePatient(displayNamePatientPage: "My Disease Chart");
     }

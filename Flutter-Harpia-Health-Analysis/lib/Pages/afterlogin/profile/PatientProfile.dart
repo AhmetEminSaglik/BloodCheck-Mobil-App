@@ -6,7 +6,8 @@ class PatientProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Center(child: Text("Patient Profile Body",style: TextStyle(fontSize: 35),)),
+      body: Center(
+          child: Text("Patient Profile Body", style: TextStyle(fontSize: 35))),
     );
   }
 }

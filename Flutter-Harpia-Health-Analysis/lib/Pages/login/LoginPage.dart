@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/appbar/AppBarCubit.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/drawer/DrawerCubit.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/users/HomePage.dart';
 import 'package:flutter_harpia_health_analysis/core/ResponsiveDesign.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/ResponseEntity.dart';
+import 'package:flutter_harpia_health_analysis/model/EnumUserProp.dart';
 import 'package:flutter_harpia_health_analysis/model/user/User.dart';
 import 'package:flutter_harpia_health_analysis/business/factory/UserFactory.dart';
+import 'package:flutter_harpia_health_analysis/model/userrole/EnumUserRole.dart';
 import 'package:flutter_harpia_health_analysis/util/CustomSnackBar.dart';
 import 'package:flutter_harpia_health_analysis/util/ProductColor.dart';
 import 'package:flutter_harpia_health_analysis/util/SharedPref.dart';
@@ -239,8 +242,10 @@ class _LoginButton extends StatelessWidget {
   }
 
   void saveUserData(BuildContext context, User user) {
-    SharedPref.setLoginDataUser(user)
-        .then((value) => context.read<DrawerCubit>().resetBody());
+    SharedPref.setLoginDataUser(user).then((value) {
+      context.read<DrawerCubit>().resetBody();
+      context.read<AppBarCubit>().setTitleRoleName();
+    });
   }
 
   void navigateToHomePage(

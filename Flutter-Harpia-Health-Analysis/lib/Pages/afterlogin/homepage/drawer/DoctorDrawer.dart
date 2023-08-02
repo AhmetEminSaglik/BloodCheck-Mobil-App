@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/drawer/DrawerCubit.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/profile/DoctorProfile.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../model/EnumUserProp.dart';
 import '../../../../util/SafeLogoutDrawerItem.dart';
+import '../../../../util/SharedPref.dart';
 import '../users/HomePageDoctor.dart';
 
 class DoctorDrawer extends StatefulWidget {
@@ -16,8 +18,9 @@ class DoctorDrawer extends StatefulWidget {
 
 class _DoctorDrawerState extends State<DoctorDrawer> {
   // static int roleId = SharedPref.sp.getInt(EnumUserProp.ROLE_ID.name) ?? -1;
+  static int doctorId = SharedPref.sp.getInt(EnumUserProp.ID.name) ?? -1;
 
-  var pageList = [const HomePageDoctor(), const DoctorProfile()];
+  var pageList = [HomePageDoctor(id: doctorId), const DoctorProfile()];
   int selectedIndex = 0;
 
   @override
