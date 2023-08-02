@@ -5,10 +5,11 @@ class AdminProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Admin Profile"),
-      ),
-    );
+    return const Scaffold(
+        body: Center(
+            child: Text(
+      " Profile Body",
+      style: TextStyle(fontSize: 35),
+    )));
   }
 }

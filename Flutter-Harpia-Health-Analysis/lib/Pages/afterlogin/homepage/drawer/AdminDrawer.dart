@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/drawer/DrawerCubit.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/profile/AdminProfile.dart';
-import 'package:flutter_harpia_health_analysis/Pages/afterlogin/profile/AdminProfile.dart';
-
 import '../../../../util/SafeLogoutDrawerItem.dart';
 import '../users/admin/HomePageAdmin.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AdminDrawer extends StatefulWidget {
   @override
@@ -22,32 +22,15 @@ class _AdminDrawerState extends State<AdminDrawer> {
         padding: EdgeInsets.zero,
         children: [
           const DrawerHeader(child: Text("Admin Drawer Header")),
-          // DrawerHeader(child: Text("Header")),
           _buildDrawerListTile(
               context: context, title: "HomePage", selectedIndex: 0),
           _buildDrawerListTile(
               context: context, title: "Profile", selectedIndex: 1),
-          // _buildDrawerListTileSafeLogout(context:  context,title: "Safe logout",selectedIndex: 3)
           SafeLogoutDrawerItem(),
         ],
       ),
     );
   }
-
-/*  ListTile _buildDrawerListTileSafeLogout({
-    required BuildContext context,
-    required String title,
-    required int selectedIndex,
-  }) {
-    return ListTile(
-          title: Text(title),
-          onTap: () {
-            setState(() {
-              Navigator.of(context).popUntil((route) => route.isFirst); //removes all pages until first page.
-            });
-          },
-        );
-  }*/
 
   ListTile _buildDrawerListTile({
     required BuildContext context,
@@ -57,10 +40,8 @@ class _AdminDrawerState extends State<AdminDrawer> {
     return ListTile(
       title: Text(title),
       onTap: () {
-        setState(() {
-          selectedIndex = selectedIndex;
-          Navigator.pop(context);
-        });
+        context.read<DrawerCubit>().updateBody(pageList[selectedIndex]);
+        Navigator.pop(context);
       },
     );
   }

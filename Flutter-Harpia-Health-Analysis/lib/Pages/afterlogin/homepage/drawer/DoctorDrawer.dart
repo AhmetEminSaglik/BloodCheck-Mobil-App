@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/drawer/DrawerCubit.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/profile/DoctorProfile.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../util/SafeLogoutDrawerItem.dart';
+import '../users/HomePageDoctor.dart';
 
 class DoctorDrawer extends StatefulWidget {
   @override
   State<DoctorDrawer> createState() => _DoctorDrawerState();
+
   DoctorDrawer() {
     print("DOCTOR drawer'e geldi");
   }
@@ -14,7 +17,7 @@ class DoctorDrawer extends StatefulWidget {
 class _DoctorDrawerState extends State<DoctorDrawer> {
   // static int roleId = SharedPref.sp.getInt(EnumUserProp.ROLE_ID.name) ?? -1;
 
-  var pageList = [/*const HomePageDoctor(),*/ const DoctorProfile()];
+  var pageList = [const HomePageDoctor(), const DoctorProfile()];
   int selectedIndex = 0;
 
   @override
@@ -43,14 +46,12 @@ class _DoctorDrawerState extends State<DoctorDrawer> {
     return ListTile(
       title: Text(title),
       onTap: () {
-        setState(() {
-          selectedIndex = selectedIndex;
-          Navigator.pop(context);
-        });
+        context.read<DrawerCubit>().updateBody(pageList[selectedIndex]);
+        Navigator.pop(context);
       },
     );
   }
-
+/*
   ListTile _buildDrawerListTileSafeLogout({
     required BuildContext context,
     required String title,
@@ -60,9 +61,10 @@ class _DoctorDrawerState extends State<DoctorDrawer> {
       title: Text(title),
       onTap: () {
         setState(() {
-          Navigator.of(context).popUntil((route) => route.isFirst); //removes all pages until first page.
+          Navigator.of(context).popUntil(
+              (route) => route.isFirst); //removes all pages until first page.
         });
       },
     );
-  }
+  }*/
 }

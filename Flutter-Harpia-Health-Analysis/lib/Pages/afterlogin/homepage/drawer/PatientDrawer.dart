@@ -1,20 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_harpia_health_analysis/Pages/afterlogin/profile/DoctorProfile.dart';
-
+import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/drawer/DrawerCubit.dart';
+import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/users/HomePagePatient.dart';
+import 'package:flutter_harpia_health_analysis/Pages/afterlogin/profile/PatientProfile.dart';
+import 'package:flutter_harpia_health_analysis/model/EnumUserProp.dart';
+import 'package:flutter_harpia_health_analysis/util/SharedPref.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../util/SafeLogoutDrawerItem.dart';
 
 class PatientDrawer extends StatefulWidget {
   @override
   State<PatientDrawer> createState() => _PatientDrawerState();
+
   PatientDrawer() {
     print("Patient drawer'e geldi");
   }
 }
 
 class _PatientDrawerState extends State<PatientDrawer> {
-  // static int roleId = SharedPref.sp.getInt(EnumUserProp.ROLE_ID.name) ?? -1;
-
-  var pageList = [/*const HomePageDoctor(),*/ const DoctorProfile()];
+  static String name = SharedPref.sp.getString(EnumUserProp.NAME.name);
+  static String lastname = SharedPref.sp.getString(EnumUserProp.LASTNAME.name);
+  var pageList = [
+    HomePagePatient(displayNamePatientPage: "$name $lastname"),
+    const PatientProfile()
+  ];
   int selectedIndex = 0;
 
   @override
@@ -24,7 +32,6 @@ class _PatientDrawerState extends State<PatientDrawer> {
         padding: EdgeInsets.zero,
         children: [
           const DrawerHeader(child: Text("Patient Drawer Header")),
-          // DrawerHeader(child: Text("Header")),
           _buildDrawerListTile(
               context: context, title: "HomePage", selectedIndex: 0),
           _buildDrawerListTile(
@@ -42,10 +49,8 @@ class _PatientDrawerState extends State<PatientDrawer> {
     return ListTile(
       title: Text(title),
       onTap: () {
-        setState(() {
-          selectedIndex = selectedIndex;
-          Navigator.pop(context);
-        });
+        context.read<DrawerCubit>().updateBody(pageList[selectedIndex]);
+        Navigator.pop(context);
       },
     );
   }
