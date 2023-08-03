@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 
 import '../business/factory/UserFactory.dart';
 import '../model/user/Patient.dart';
+import '../util/HttpUtil.dart';
 import 'ResponseEntity.dart';
 
 class HttpRequestPatient {
@@ -20,5 +21,17 @@ class HttpRequestPatient {
     var respEntity = ResponseEntity.fromJson(jsonData);
     List<Patient> patientList = UserFactory.createPatientList(respEntity.data);
     return patientList;
+  }
+  Future<http.Response> signUp(Patient user) async {
+    Uri url = Uri.parse(_baseUrl);
+    print("URL : $url");
+    Map<String, dynamic> requestData = user.toJson();
+    print("to json  $requestData");
+    var resp = await http.post(url,
+        headers: HttpUtil.header, body: jsonEncode(requestData));
+    print('requestData : $requestData');
+    print('resp : $resp');
+    print('resp.body : ${resp.body}');
+    return resp;
   }
 }

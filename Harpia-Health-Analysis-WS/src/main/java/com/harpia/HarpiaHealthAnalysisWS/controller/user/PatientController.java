@@ -28,7 +28,7 @@ public class PatientController {
 //    @Autowired
 //    private PatientService patientService;
 
-    @PostMapping("save")
+    @PostMapping()
     public ResponseEntity<DataResult<User>> savePatient(@RequestBody Patient inputPatient) {
         SignupUser signupUser = new SignupUser(userService);
         DataResult<User> dataResult = signupUser.signup(inputPatient);

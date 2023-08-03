@@ -1,7 +1,7 @@
 enum EnumDiseaseType {
 
   DIABETIC(id: 1,name: "Diabetic"),
-  CANCER(id: 1,name: "Cancer");
+  CANCER(id: 2,name: "Cancer");
   /*HEALTHCARE_PERSONEL(roleId: 2,roleName: "HealthCare Personel"),*/
   // DOCTOR(id: 2,name: "Doctor"),
   // PATIENT(id: 3,name: "Patient");

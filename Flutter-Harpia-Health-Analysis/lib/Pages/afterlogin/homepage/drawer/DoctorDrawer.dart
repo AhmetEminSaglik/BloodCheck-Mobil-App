@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/drawer/DrawerCubit.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/profile/DoctorProfile.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_harpia_health_analysis/Pages/afterlogin/signuppage/PatientSignUpPage.dart';
 import '../../../../model/EnumUserProp.dart';
 import '../../../../util/SafeLogoutDrawerItem.dart';
 import '../../../../util/SharedPref.dart';
+import '../appbar/AppBarCubit.dart';
 import '../users/HomePageDoctor.dart';
 
 class DoctorDrawer extends StatefulWidget {
@@ -17,10 +19,9 @@ class DoctorDrawer extends StatefulWidget {
 }
 
 class _DoctorDrawerState extends State<DoctorDrawer> {
-  // static int roleId = SharedPref.sp.getInt(EnumUserProp.ROLE_ID.name) ?? -1;
   static int doctorId = SharedPref.sp.getInt(EnumUserProp.ID.name) ?? -1;
 
-  var pageList = [HomePageDoctor(id: doctorId), const DoctorProfile()];
+  var pageList = [HomePageDoctor(id: doctorId), const DoctorProfile(),const PatientSignUpPage()];
   int selectedIndex = 0;
 
   @override
@@ -35,6 +36,8 @@ class _DoctorDrawerState extends State<DoctorDrawer> {
               context: context, title: "HomePage", selectedIndex: 0),
           _buildDrawerListTile(
               context: context, title: "Profile", selectedIndex: 1),
+          _buildDrawerListTile(
+              context: context, title: "Sign Up Patient", selectedIndex: 2),
           // _buildDrawerListTileSafeLogout(context: context, title: title, selectedIndex: selectedIndex)
           SafeLogoutDrawerItem(),
         ],
@@ -50,6 +53,7 @@ class _DoctorDrawerState extends State<DoctorDrawer> {
       title: Text(title),
       onTap: () {
         context.read<DrawerCubit>().updateBody(pageList[selectedIndex]);
+        context.read<AppBarCubit>().setTitleRoleName();
         Navigator.pop(context);
       },
     );
