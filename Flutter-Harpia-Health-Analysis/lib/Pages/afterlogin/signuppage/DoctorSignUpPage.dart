@@ -3,13 +3,10 @@ import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestDoctor.dar
 import 'package:flutter_harpia_health_analysis/model/user/Doctor.dart';
 import 'package:flutter_harpia_health_analysis/model/userrole/EnumUserRole.dart';
 import 'package:flutter_harpia_health_analysis/util/CustomAlertDialog.dart';
-
 import '../../../business/factory/UserFactory.dart';
 import '../../../core/ResponsiveDesign.dart';
-import '../../../httprequest/HttpRequestUser.dart';
 import '../../../httprequest/ResponseEntity.dart';
 import '../../../model/user/User.dart';
-import '../../../util/CustomSnackBar.dart';
 import '../../../util/ProductColor.dart';
 import 'dart:convert';
 
@@ -57,7 +54,7 @@ class _DoctorSignUpPageState extends State<DoctorSignUpPage> {
                         hintText: "Lastname",
                         controller: tfLastname,
                         obscure: false),
-                    _SigninButton(
+                    _SignUpButton(
                       formKey: formKey,
                       tfUsername: tfUsername,
                       tfPassword: tfPassword,
@@ -96,31 +93,12 @@ class _FormInputTextField extends StatelessWidget {
     );
   }
 }
-/*
-class _ObscureInputTextField extends StatelessWidget {
-  final TextEditingController controller;
-  final String hintText;
 
-  const _ObscureInputTextField(
-      {required this.controller,
-      required this.hintText}); //({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return _InputTextFieldPadding(
-        widget: _InputTextFormField(
-      hint: hintText,
-      textEditController: controller,
-      obscureText: true,
-    ));
-  }
-}*/
-
-class _SigninButton extends StatelessWidget {
+class _SignUpButton extends StatelessWidget {
   final TextEditingController tfUsername, tfPassword, tfName, tfLastname;
   GlobalKey<FormState> formKey;
 
-  _SigninButton(
+  _SignUpButton(
       {required this.formKey,
       required this.tfUsername,
       required this.tfPassword,
@@ -144,6 +122,10 @@ class _SigninButton extends StatelessWidget {
             child: Text("Sign in",
                 style: TextStyle(
                     fontSize: ResponsiveDesign.getScreenWidth() / 20))));
+  }
+
+  void resetTextFields(List<TextEditingController> list) {
+    list.forEach((e) => e.text = "");
   }
 
   void _signUpProcess(BuildContext context) async {
@@ -174,9 +156,13 @@ class _SigninButton extends StatelessWidget {
           User user = UserFactory.createUser(respEntity.data);
           showAlertDialogDoctorSignUpSuccessfully(
               context: context, msg: respEntity.message);
-
-          // saveUserData(context, user);
-          // navigateToHomePage(context: context, roleId: user.roleId);
+          List<TextEditingController> list = [
+            tfUsername,
+            tfPassword,
+            tfName,
+            tfLastname
+          ];
+          resetTextFields(list);
         }
       });
     }
@@ -193,7 +179,6 @@ class _SigninButton extends StatelessWidget {
             subTitle: "Failed :",
             msg: msg,
             roleId: EnumUserRole.DOCTOR.roleId));
-    // ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar.getSnackBar(msg));
   }
 
   void showAlertDialogDoctorSignUpSuccessfully(
@@ -208,18 +193,6 @@ class _SigninButton extends StatelessWidget {
             msg: msg,
             roleId: EnumUserRole.DOCTOR.roleId));
   }
-/*  void saveUserData(BuildContext context, User user) {
-    SharedPref.setLoginDataUser(user).then((value) {
-      context.read<DrawerCubit>().resetBody();
-      context.read<AppBarCubit>().setTitleRoleName();
-    });
-  }*/
-
-/* void navigateToHomePage(
-      {required BuildContext context, required int roleId}) {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => HomePage()));
-  }*/
 }
 
 class _InputTextFieldPadding extends StatelessWidget {

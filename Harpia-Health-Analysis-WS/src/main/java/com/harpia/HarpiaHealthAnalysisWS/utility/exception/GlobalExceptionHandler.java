@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-public class GlobalExceptionHandler2 {
+public class GlobalExceptionHandler {
     @ExceptionHandler(ApiRequestException.class)
     public ResponseEntity<ErrorDataResult<NullValue>> handleCustomException(ApiRequestException ex) {
         return ResponseEntity.status(ex.getHttpStatus())

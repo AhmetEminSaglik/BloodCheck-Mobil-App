@@ -29,7 +29,7 @@ class _AdminDrawerState extends State<AdminDrawer> {
           _buildDrawerListTile(
               context: context, title: "Profile", selectedIndex: 1),
           _buildDrawerListTile(
-              context: context, title: "Register Doctor", selectedIndex: 2),
+              context: context, title: "Sign Up Doctor", selectedIndex: 2),
           SafeLogoutDrawerItem(),
         ],
       ),

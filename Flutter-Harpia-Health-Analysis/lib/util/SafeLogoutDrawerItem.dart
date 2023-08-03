@@ -19,7 +19,7 @@ class _SafeLogoutDrawerItemState extends State<SafeLogoutDrawerItem> {
 
   ListTile _buildDrawerListTileSafeLogout({required BuildContext context}) {
     return ListTile(
-      title: const Text("Safe logout"),
+      title: const Text("Safe Logout"),
       onTap: () {
         setState(() {
           SafeLogOut.clearSharedPref();
