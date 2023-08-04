@@ -15,9 +15,12 @@ import com.harpia.HarpiaHealthAnalysisWS.utility.result.SuccessDataResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Random;
 
@@ -132,6 +135,11 @@ public class UserController {
     @PostMapping("/login")
     public DataResult<User> login(@RequestBody LoginCredentials loginCreds) {
         LoginValidationService loginService = new LoginCredentialsValidation(service);
+//        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//        loginCreds.setPassword(passwordEncoder.encode(loginCreds.getPassword()));
+//        Base64.getDecoder().decode(loginCreds.getPassword());
+//        List<User> userList=service.findAll();
+//        passwordEncoder.matches()
         DataResult<User> result = loginService.validateLoginCredentials(loginCreds.getUsername(), loginCreds.getPassword());
         System.out.println(result.getData().getId().getClass().getSimpleName());
         return result;

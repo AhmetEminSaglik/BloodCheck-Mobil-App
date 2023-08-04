@@ -21,15 +21,15 @@ public class UserManager implements UserService {
 
     @Override
     public User save(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+//        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
     @Override
     public List<User> saveAll(List<User> list) {
-        list.forEach(user -> {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-        });
+//        list.forEach(user -> {
+//            user.setPassword(passwordEncoder.encode(user.getPassword()));
+//        });
         return userRepository.saveAll(list);
     }
 
