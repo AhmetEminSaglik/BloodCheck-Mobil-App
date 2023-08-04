@@ -1,9 +1,8 @@
-import 'dart:ffi';
-
 import 'User.dart';
 
 class Patient extends User {
   late int _diseaseTypeId;
+  late int _doctorId;
 
   Patient(
       {required int id,
@@ -12,7 +11,8 @@ class Patient extends User {
       required String lastname,
       required String username,
       required String password,
-      required int diseaseTypeId})
+      required int diseaseTypeId,
+      required int doctorId})
       : super(
             id: id,
             roleId: roleId,
@@ -21,6 +21,7 @@ class Patient extends User {
             username: username,
             password: password) {
     _diseaseTypeId = diseaseTypeId;
+    _doctorId = doctorId;
   }
 
   factory Patient.fromJson(Map<String, dynamic> json) {
@@ -31,7 +32,8 @@ class Patient extends User {
         lastname: json["lastname"] as String,
         username: json["username"] as String,
         password: json["password"] as String,
-        diseaseTypeId: json["diseaseTypeId"] as int);
+        diseaseTypeId: json["diseaseTypeId"] as int,
+        doctorId: json["doctorId"] as int);
   }
 
   Map<String, dynamic> toJson() {
@@ -42,7 +44,8 @@ class Patient extends User {
       'lastname': lastname,
       'username': username,
       'password': password,
-      'diseaseTypeId': _diseaseTypeId
+      'diseaseTypeId': _diseaseTypeId,
+      'doctorId': _doctorId,
     };
   }
 
@@ -54,6 +57,7 @@ class Patient extends User {
         ", lastname='$lastname'" +
         ", username='$username'" +
         ", password='$password'" +
+        ", doctorId='$_doctorId'" +
         ", diseaseTypeId='$_diseaseTypeId'" +
         '}';
   }
@@ -62,5 +66,11 @@ class Patient extends User {
 
   set diseaseTypeId(int value) {
     _diseaseTypeId = value;
+  }
+
+  int get doctorId => _doctorId;
+
+  set doctorId(int value) {
+    _doctorId = value;
   }
 }

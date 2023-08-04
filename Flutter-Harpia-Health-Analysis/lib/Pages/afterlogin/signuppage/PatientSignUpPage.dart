@@ -5,6 +5,7 @@ import 'package:flutter_harpia_health_analysis/model/diesease/EnumDiseaseType.da
 import 'package:flutter_harpia_health_analysis/model/user/Doctor.dart';
 import 'package:flutter_harpia_health_analysis/model/userrole/EnumUserRole.dart';
 import 'package:flutter_harpia_health_analysis/util/CustomAlertDialog.dart';
+import 'package:flutter_harpia_health_analysis/util/SharedPref.dart';
 import '../../../business/factory/UserFactory.dart';
 import '../../../core/ResponsiveDesign.dart';
 import '../../../httprequest/ResponseEntity.dart';
@@ -227,16 +228,17 @@ class _SignUpButton extends StatelessWidget {
       String name = tfName.text;
       String lastname = tfLastname.text;
       int diseaseTypeId = diseaseDropdownMenuButton.selectedDiseaseValue;
+      int doctorId = SharedPref.sp.getInt("id") ?? -1;
       var request = HttpRequestPatient();
       Patient patient = Patient(
-        id: 0,
-        roleId: EnumUserRole.PATIENT.roleId,
-        name: name,
-        lastname: lastname,
-        username: username,
-        password: pass,
-        diseaseTypeId: diseaseTypeId,
-      );
+          id: 0,
+          roleId: EnumUserRole.PATIENT.roleId,
+          name: name,
+          lastname: lastname,
+          username: username,
+          password: pass,
+          diseaseTypeId: diseaseTypeId,
+          doctorId: doctorId);
       request.signUp(patient).then((resp) async {
         // debugPrint(resp.body);
         Map<String, dynamic> jsonData = json.decode(resp.body);
