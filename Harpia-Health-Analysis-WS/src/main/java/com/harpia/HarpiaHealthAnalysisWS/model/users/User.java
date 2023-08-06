@@ -1,5 +1,6 @@
 package com.harpia.HarpiaHealthAnalysisWS.model.users;
 
+import com.harpia.HarpiaHealthAnalysisWS.utility.datetime.UtilCustomDateTime;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,6 +26,8 @@ public abstract class User {
     private String username;
     @Column
     private String password;
+    @Column(name = "created_at")
+    private String createdTime = UtilCustomDateTime.createDateTimeStringFormat();
 
     @Override
     public String toString() {
@@ -35,6 +38,7 @@ public abstract class User {
                 ", lastname='" + lastname + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", createdTime='" + createdTime + '\'' +
                 '}';
     }
 

@@ -1,3 +1,4 @@
+/*
 package com.harpia.HarpiaHealthAnalysisWS.model.disease;
 
 import com.harpia.HarpiaHealthAnalysisWS.model.users.Patient;
@@ -35,3 +36,4 @@ public abstract class Disease {
                 '}';
     }
 }
+*/

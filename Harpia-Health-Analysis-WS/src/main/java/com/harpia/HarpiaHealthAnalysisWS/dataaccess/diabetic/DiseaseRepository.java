@@ -1,6 +1,7 @@
+/*
 package com.harpia.HarpiaHealthAnalysisWS.dataaccess.disease;
 
-import com.harpia.HarpiaHealthAnalysisWS.model.disease.Disease;
+import com.harpia.HarpiaHealthAnalysisWS.model.diabetic.Disease;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -15,3 +16,4 @@ public interface DiseaseRepository extends JpaRepository<Disease, Long> {
 
     List<Disease> findAllByPatientId(long id);
 }
+*/

@@ -1,13 +1,9 @@
 package com.harpia.HarpiaHealthAnalysisWS.model.users;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.harpia.HarpiaHealthAnalysisWS.model.disease.Disease;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Data
 @Entity
@@ -32,16 +28,11 @@ public class Patient extends User {
     @Column
     private long doctorId;
     @Column
-    private int diseaseTypeId;
-
-    /*public Patient() {
-        setRoleId(EnumUserRole.PATIENT.getId());
-    }*/
+    private int diabeticTypeId;
 
     @Override
     public String toString() {
         return "Patient{" + super.toString() + ", " +
-//                "diseasesList=" + diseasesList +
                 '}';
     }
 }

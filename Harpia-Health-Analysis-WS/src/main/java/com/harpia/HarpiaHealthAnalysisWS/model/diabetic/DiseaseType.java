@@ -1,3 +1,4 @@
+/*
 package com.harpia.HarpiaHealthAnalysisWS.model.disease;
 
 import jakarta.persistence.*;
@@ -22,3 +23,4 @@ public class DiseaseType {
 //    @OneToOne(mappedBy = "userRole")
 //    private User user;
 }
+*/

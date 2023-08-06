@@ -1,11 +1,10 @@
 package com.harpia.HarpiaHealthAnalysisWS.business.concretes;
 
-import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.disease.DiseaseService;
+import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.diabetic.DiabeticService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.user.UserRoleService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.user.UserService;
-import com.harpia.HarpiaHealthAnalysisWS.model.disease.Diabetic;
-import com.harpia.HarpiaHealthAnalysisWS.model.disease.Disease;
-import com.harpia.HarpiaHealthAnalysisWS.model.enums.EnumDiseaseType;
+import com.harpia.HarpiaHealthAnalysisWS.model.diabetic.Diabetic;
+import com.harpia.HarpiaHealthAnalysisWS.model.enums.EnumDiabeticType;
 import com.harpia.HarpiaHealthAnalysisWS.model.enums.EnumUserRole;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.Admin;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.Doctor;
@@ -41,31 +40,36 @@ public class InitialDataLoader implements CommandLineRunner {
     @Autowired
     private UserRoleService roleService;
     @Autowired
-    private DiseaseService diseaseService;
+    private DiabeticService diabeticService;
     private static final Logger log = LoggerFactory.getLogger(InitialDataLoader.class);
 
     private static Random random = new Random();
 
     public void saveInitilizateData() {
+        saveDiabeticTypeData();
         saveUserRoleData();
         saveUserData(getAdminList());
 //         rest is the fake data
         saveUserData(getDoctorList());
         saveUserData(getPatientList());
-        saveDiseaseData();
+//        saveDiseaseData();
     }
 
+    private void saveDiabeticTypeData() {
+        List<Diabetic> list=getDiabeticTypeList();
+        list.forEach(e -> diabeticService.save(e));
+    }
 
     private void saveUserRoleData() {
         List<UserRole> list = roleService.saveAll(getStandartUserRoleList());
         list.forEach(System.out::println);
     }
 
-    private void saveDiseaseData() {
+ /*   private void saveDiseaseData() {
         List<Disease> list = getDiseaseList();
         list = diseaseService.saveAll(list);
         list.forEach(System.out::println);
-    }
+    }*/
 
     private boolean isUserRegistered(String username) {
         User user = userService.findByUsername(username);
@@ -92,6 +96,14 @@ public class InitialDataLoader implements CommandLineRunner {
         list.add(new UserRole(1, EnumUserRole.ADMIN.getName()));
         list.add(new UserRole(2, EnumUserRole.DOCTOR.getName()));
         list.add(new UserRole(3, EnumUserRole.PATIENT.getName()));
+        return list;
+    }
+    private List<Diabetic> getDiabeticTypeList() {
+        List<Diabetic> list = new ArrayList<>();
+        list.add(new Diabetic(1, EnumDiabeticType.TIP_1.getName()));
+        list.add(new Diabetic(2, EnumDiabeticType.TIP_2.getName()));
+        list.add(new Diabetic(3, EnumDiabeticType.HIPOGLISEMI.getName()));
+        list.add(new Diabetic(4, EnumDiabeticType.HIPERGLISEMI.getName()));
         return list;
     }
 
@@ -141,8 +153,8 @@ public class InitialDataLoader implements CommandLineRunner {
             user.setLastname(getName(i));
             user.setUsername("pat" + i);
             user.setPassword("pass");
-//            user.setDiseaseTypeId(EnumDiseaseType.DIABETIC.getId());
-            user.setDiseaseTypeId((i % 2 + 1));
+//            user.setDiseaseTypeId(EnumDiabeticType.DIABETIC.getId());
+            user.setDiabeticTypeId((i % 4 + 1));
             int doctor_id = random.nextInt(totalDoctorNumber - 1) + doctorIdStartingIndex + 1;
             Doctor personnel = (Doctor) userService.findById(doctor_id);
 //            user.setHealthcarePersonnel(personnel);
@@ -152,6 +164,7 @@ public class InitialDataLoader implements CommandLineRunner {
         }
         return list;
     }
+/*
 
     private List<Disease> getDiseaseList() {
         List<Disease> list = new ArrayList<>();
@@ -164,11 +177,12 @@ public class InitialDataLoader implements CommandLineRunner {
             int patient_id = random.nextInt(totalPatientNumber - 1) + 2 + totalDoctorNumber + 1; // admin + doctor  +1=  patient starting index
             Patient patient = (Patient) userService.findById(patient_id);
             diabetic.setPatientId(patient.getId());
-            diabetic.setDiseaseTypeId(EnumDiseaseType.DIABETIC.getId());
+            diabetic.setDiseaseTypeId(EnumDiabeticType.DIABETIC.getId());
             list.add(diabetic);
         }
         return list;
     }
+*/
 
 
 }

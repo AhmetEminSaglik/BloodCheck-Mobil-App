@@ -23,7 +23,7 @@ public class Cancer extends Disease {
 //
 //    public Cancer() {
 //        setDiseaseTypeId(2);
-//        setName(EnumDiseaseType.DIABETIC.getName());
+//        setName(EnumDiabeticType.DIABETIC.getName());
 //    }
 }
 */
