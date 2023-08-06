@@ -1,10 +1,8 @@
 package com.harpia.HarpiaHealthAnalysisWS.model.users;
 
-import com.harpia.HarpiaHealthAnalysisWS.utility.datetime.UtilCustomDateTime;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Data

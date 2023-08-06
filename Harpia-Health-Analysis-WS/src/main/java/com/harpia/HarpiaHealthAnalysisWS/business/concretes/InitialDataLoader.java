@@ -1,8 +1,11 @@
 package com.harpia.HarpiaHealthAnalysisWS.business.concretes;
 
+import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.diabetic.BloodResultService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.diabetic.DiabeticService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.user.UserRoleService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.user.UserService;
+import com.harpia.HarpiaHealthAnalysisWS.controller.user.PatientController;
+import com.harpia.HarpiaHealthAnalysisWS.model.bloodresult.BloodResult;
 import com.harpia.HarpiaHealthAnalysisWS.model.diabetic.Diabetic;
 import com.harpia.HarpiaHealthAnalysisWS.model.enums.EnumDiabeticType;
 import com.harpia.HarpiaHealthAnalysisWS.model.enums.EnumUserRole;
@@ -36,6 +39,10 @@ public class InitialDataLoader implements CommandLineRunner {
     }
 
     @Autowired
+    BloodResultService bloodResultService;
+    @Autowired
+    private PatientController patientController;
+    @Autowired
     private UserService userService;
     @Autowired
     private UserRoleService roleService;
@@ -53,10 +60,27 @@ public class InitialDataLoader implements CommandLineRunner {
         saveUserData(getDoctorList());
         saveUserData(getPatientList());
 //        saveDiseaseData();
+        saveBloodResult();
+    }
+
+    private void saveBloodResult() {
+        List<Patient> patientList = (List<Patient>) patientController.getPatientList().getBody().getData();
+        for (int i = 0; i < patientList.size(); i++) {
+            int bloodResultNumber = random.nextInt(70) + 30;
+            List<BloodResult> bloodResultList = new ArrayList<>();
+            for (int j = 0; j < bloodResultNumber; j++) {
+                BloodResult bloodResult = new BloodResult(j * 5);
+                bloodResult.setBloodPresure(random.nextInt(100) + 50);
+                bloodResult.setBloodSugar(random.nextInt(100) + 50);
+                bloodResult.setPatientId(patientList.get(i).getId());
+                bloodResultList.add(bloodResult);
+            }
+            bloodResultService.saveList(bloodResultList);
+        }
     }
 
     private void saveDiabeticTypeData() {
-        List<Diabetic> list=getDiabeticTypeList();
+        List<Diabetic> list = getDiabeticTypeList();
         list.forEach(e -> diabeticService.save(e));
     }
 
@@ -98,6 +122,7 @@ public class InitialDataLoader implements CommandLineRunner {
         list.add(new UserRole(3, EnumUserRole.PATIENT.getName()));
         return list;
     }
+
     private List<Diabetic> getDiabeticTypeList() {
         List<Diabetic> list = new ArrayList<>();
         list.add(new Diabetic(1, EnumDiabeticType.TIP_1.getName()));
