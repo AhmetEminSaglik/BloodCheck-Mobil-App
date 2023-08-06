@@ -1,8 +1,9 @@
 package com.harpia.HarpiaHealthAnalysisWS.model.enums;
 
 public enum EnumUserRole {
-    ADMIN(1, "Admin"), DOCTOR(2, "Doctor"),/*HEALTHCARE_PERSONAL(2, "Healthcare_Personal")*/ PATIENT(3, "Patient");
-
+    ADMIN(1, "Admin"),
+    DOCTOR(2, "Doctor"),
+    PATIENT(3, "Patient");
     private final int id;
     private final String role;
 
@@ -10,7 +11,6 @@ public enum EnumUserRole {
         this.id = id;
         this.role = role;
     }
-
     public int getId() {
         return this.id;
     }

@@ -3,7 +3,6 @@ package com.harpia.HarpiaHealthAnalysisWS.model.signincredentials;
 public abstract class SignupUserCredentials {
     String Username, password, name, lastname;
 
-
     public SignupUserCredentials(String username, String password, String name, String lastname) {
         Username = username;
         this.password = password;

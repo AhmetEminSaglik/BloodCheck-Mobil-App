@@ -37,7 +37,6 @@ public class BloodResultController {
     @GetMapping("/patient/{patientId}/minutes/{min}")
     public ResponseEntity<DataResult<BloodResult>> findPatientIdBloodResultRequestedMinutes(@PathVariable int patientId, @PathVariable int min) {
         LocalDateTime time = LocalDateTime.now().minusMinutes(min);
-
         List<BloodResult> list = service.findAllByPatientIdAndCreatedAtAfter(patientId, time);
         String msg = "BloodResult List belongs to Patient ID " + patientId + " is retrived";
         DataResult dataResult = new SuccessDataResult(list, msg);

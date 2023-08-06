@@ -25,10 +25,8 @@ public class BloodResult {
     private int bloodSugar;
     @Column(name = "blood_pressure")
     private int bloodPresure;
-
     @Column(name = "created_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime createdAt = LocalDateTime.now();
-
 
     public BloodResult(int counter) {
         createdAt = LocalDateTime.now().minusMinutes(counter);

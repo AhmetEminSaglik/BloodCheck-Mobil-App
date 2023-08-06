@@ -30,8 +30,6 @@ public class InitialDataLoader implements CommandLineRunner {
     static String[] femaleName = {"Mary", "Patricia", "Jennifer", "Linda", "Elizabeth", "Barbara", "Susan", "Jessica", "Sarah", "Karen", "Lisa", "Nancy", "Betty", "Margaret", "Sandra", "Ashley", "Kimberly", "Emily", "Donna", "Michelle", "Carol", "Amanda"};
     static int doctorIdStartingIndex = 2;
     static int totalDoctorNumber = 3;
-    static int totalPatientNumber = 10;
-    static int totalDiseaeNumber = 50;
 
     @Override
     public void run(String... args) throws Exception {
@@ -59,7 +57,6 @@ public class InitialDataLoader implements CommandLineRunner {
 //         rest is the fake data
         saveUserData(getDoctorList());
         saveUserData(getPatientList());
-//        saveDiseaseData();
         saveBloodResult();
     }
 
@@ -89,20 +86,12 @@ public class InitialDataLoader implements CommandLineRunner {
         list.forEach(System.out::println);
     }
 
- /*   private void saveDiseaseData() {
-        List<Disease> list = getDiseaseList();
-        list = diseaseService.saveAll(list);
-        list.forEach(System.out::println);
-    }*/
-
     private boolean isUserRegistered(String username) {
         User user = userService.findByUsername(username);
         if (user == null)
             return false;
         return true;
-
     }
-
     private void saveUserData(List<User> list) {
         for (int i = 0; i < list.size(); i++) {
             String username = list.get(i).getUsername();
@@ -114,7 +103,6 @@ public class InitialDataLoader implements CommandLineRunner {
             }
         }
     }
-
     private List<UserRole> getStandartUserRoleList() {
         List<UserRole> list = new ArrayList<>();
         list.add(new UserRole(1, EnumUserRole.ADMIN.getName()));
@@ -122,7 +110,6 @@ public class InitialDataLoader implements CommandLineRunner {
         list.add(new UserRole(3, EnumUserRole.PATIENT.getName()));
         return list;
     }
-
     private List<Diabetic> getDiabeticTypeList() {
         List<Diabetic> list = new ArrayList<>();
         list.add(new Diabetic(1, EnumDiabeticType.TIP_1.getName()));
@@ -131,7 +118,6 @@ public class InitialDataLoader implements CommandLineRunner {
         list.add(new Diabetic(4, EnumDiabeticType.HIPERGLISEMI.getName()));
         return list;
     }
-
     private List<User> getAdminList() {
         List<User> list = new ArrayList<>();
         User admin = new Admin();
@@ -178,36 +164,14 @@ public class InitialDataLoader implements CommandLineRunner {
             user.setLastname(getName(i));
             user.setUsername("pat" + i);
             user.setPassword("pass");
-//            user.setDiseaseTypeId(EnumDiabeticType.DIABETIC.getId());
             user.setDiabeticTypeId((i % 4 + 1));
             int doctor_id = random.nextInt(totalDoctorNumber - 1) + doctorIdStartingIndex + 1;
             Doctor personnel = (Doctor) userService.findById(doctor_id);
-//            user.setHealthcarePersonnel(personnel);
             user.setDoctorId(personnel.getId());
             user.setRoleId(EnumUserRole.PATIENT.getId());
             list.add(user);
         }
         return list;
     }
-/*
-
-    private List<Disease> getDiseaseList() {
-        List<Disease> list = new ArrayList<>();
-        for (int i = 1; i <= 100; i++) {
-            Diabetic diabetic = new Diabetic();
-            diabetic.setBloodPressure(random.nextInt(200) + 50);
-            diabetic.setCholesterol(random.nextInt(200) + 50);
-            diabetic.setBloodSugar(random.nextInt(200) + 50);
-
-            int patient_id = random.nextInt(totalPatientNumber - 1) + 2 + totalDoctorNumber + 1; // admin + doctor  +1=  patient starting index
-            Patient patient = (Patient) userService.findById(patient_id);
-            diabetic.setPatientId(patient.getId());
-            diabetic.setDiseaseTypeId(EnumDiabeticType.DIABETIC.getId());
-            list.add(diabetic);
-        }
-        return list;
-    }
-*/
-
 
 }

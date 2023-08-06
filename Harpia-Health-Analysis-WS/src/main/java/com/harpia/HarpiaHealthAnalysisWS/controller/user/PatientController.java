@@ -16,17 +16,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
 @RestController
 @RequestMapping("/patients")
 @CrossOrigin
 public class PatientController {
     private static final Logger log = LoggerFactory.getLogger(PatientController.class);
-
     @Autowired
     private UserService userService;
-//    @Autowired
-//    private PatientService patientService;
 
     @PostMapping()
     public ResponseEntity<DataResult<User>> savePatient(@RequestBody Patient inputPatient) {
@@ -47,7 +43,5 @@ public class PatientController {
         String msg = "PatientList is retrived successfully";
         DataResult result = new SuccessDataResult(userList, msg);
         return ResponseEntity.status(HttpStatus.OK).body(result);
-
     }
-
 }

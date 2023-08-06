@@ -16,7 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.crypto.Data;
 import java.util.List;
 
 @RestController
@@ -44,7 +43,6 @@ public class DoctorController {
         DataResult<List<User>> dataResult = new SuccessDataResult<>(doctorList, msg);
         return ResponseEntity.ok().body(dataResult);
     }
-
 
     @GetMapping("/{id}")
 

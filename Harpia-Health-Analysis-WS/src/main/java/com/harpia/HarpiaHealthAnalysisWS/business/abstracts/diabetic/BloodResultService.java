@@ -9,7 +9,9 @@ public interface BloodResultService {
     BloodResult save(BloodResult BloodResult);
 
     List<BloodResult> saveList(List<BloodResult> list);
+
     List<BloodResult> findAll();
+
     List<BloodResult> findAllByPatientIdAndCreatedAtAfter(int patientId, LocalDateTime time);
 
 }

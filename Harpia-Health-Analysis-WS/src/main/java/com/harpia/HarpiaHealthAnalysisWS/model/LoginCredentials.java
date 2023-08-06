@@ -24,4 +24,12 @@ public class LoginCredentials {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    @Override
+    public String toString() {
+        return "LoginCredentials{" +
+                "Username='" + Username + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }

@@ -14,21 +14,6 @@ public class Doctor extends User {
     @Column
     int totalPatientNumber;
 
-    @Column(name = "disaseList")
-//    @OneToMany(mappedBy = "healthcarePersonnel")
-//    @ManyToMany
-//    @ManyToMany/*(mappedBy = "patient")*/
-/*
-    @ManyToAny
-    @JsonBackReference
-    List<Patient> patientLisssttt;
-*/
-
-
-//    public Doctor() {
-//        setRoleId(EnumUserRole.HEALTHCARE_PERSONAL.getId());
-//    }
-
     @Override
     public String toString() {
         return "Doctor{" + super.toString() +

@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 public class AdminController {
     protected static final Logger log = LoggerFactory.getLogger(AdminController.class);
-
     @Autowired
     private UserService service;
 
@@ -27,8 +26,6 @@ public class AdminController {
         SignupUser signupUser = new SignupUser(service);
         DataResult<User> dataResult = signupUser.signup(inputAdmin);
         return ResponseEntity.status(HttpStatus.CREATED).body(dataResult);
-//        Admin admin = (Admin) service.save(inputAdmin);
-//        return new SuccessDataResult<>(admin, "Admin Saved Successfuly");
     }
 
     @GetMapping("/{id}")

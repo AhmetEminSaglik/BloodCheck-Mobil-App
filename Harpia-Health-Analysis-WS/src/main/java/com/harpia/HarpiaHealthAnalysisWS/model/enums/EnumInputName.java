@@ -2,7 +2,6 @@ package com.harpia.HarpiaHealthAnalysisWS.model.enums;
 
 public enum EnumInputName {
     USERNAME("Username"), PASSWORD("Password");
-
     private final String name;
 
     EnumInputName(String name) {

@@ -17,8 +17,4 @@ public class UserRole {
     int id;
     @Column()
     String role;
-
-//    @JsonBackReference
-//    @OneToOne(mappedBy = "userRole")
-//    private User user;
 }

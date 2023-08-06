@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "user_type")
 @AllArgsConstructor
-//@NoArgsConstructor
+@NoArgsConstructor
 @Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = "username"))
 public abstract class User {
     @Id
@@ -30,18 +30,11 @@ public abstract class User {
 
     @Column(name = "created_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime createdAt = LocalDateTime.now();
-    static int counter = 1;
-
-    public User() {
-        createdAt = LocalDateTime.now().minusMinutes(3 * counter);
-        counter++;
-    }
 
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-//                ", userRoleId=" + roleId +
                 ", name='" + name + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", username='" + username + '\'' +
@@ -49,5 +42,4 @@ public abstract class User {
                 ", createdTime='" + createdAt + '\'' +
                 '}';
     }
-
 }

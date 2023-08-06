@@ -5,5 +5,4 @@ import com.harpia.HarpiaHealthAnalysisWS.utility.result.DataResult;
 
 public interface LoginValidationService {
     DataResult<User> validateLoginCredentials(String username, String password);
-
 }

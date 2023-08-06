@@ -21,11 +21,8 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:8080")
 public class UserController {
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
-
     @Autowired
     private UserService service;
-    //    @Autowired
-//    private UserRoleService roleService;
 
     @GetMapping()
     public DataResult<List<User>> findAllUserList() {
@@ -35,23 +32,11 @@ public class UserController {
     @Autowired
     UserRepository repository;
 
-    @GetMapping("/time/hours/{hour}")
-    public DataResult<List<User>> findByLastCreatedMinusHours(@PathVariable int hour) {
-        LocalDateTime localDateTime = LocalDateTime.now().minusHours(hour);
-        return new SuccessDataResult<>(repository.findAllByCreatedAtAfter(localDateTime));
-    }
-
     @GetMapping("/time/minutes/{min}")
     public DataResult<List<User>> findByLastCreatedMinusMinutes(@PathVariable int min) {
         LocalDateTime localDateTime = LocalDateTime.now().minusMinutes(min);
         return new SuccessDataResult<>(repository.findAllByCreatedAtAfter(localDateTime));
     }
-
-//    @GetMapping("/time/min/{min}")
-//    public DataResult<List<User>> findByLastCreatedMinusSeconds(@PathVariable int min) {
-//        LocalDateTime localDateTime = LocalDateTime.now().minusMinutes(min);
-//        return new SuccessDataResult<>(repository.findAllByCreatedTimeAfter(localDateTime));
-//    }
 
     @GetMapping("/{id}")
     public DataResult<User> findById(@PathVariable long id) {

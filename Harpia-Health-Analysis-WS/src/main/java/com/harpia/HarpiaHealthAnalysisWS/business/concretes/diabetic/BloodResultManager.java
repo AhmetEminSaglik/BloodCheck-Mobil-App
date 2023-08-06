@@ -21,12 +21,6 @@ public class BloodResultManager implements BloodResultService {
 
     @Override
     public List<BloodResult> saveList(List<BloodResult> list) {
-        /*System.out.println("GELEN LIST : ");
-        list.forEach(System.out::println);
-        list =repository.saveAll(list);
-        System.out.println("SAVE ALL SONRASi LIST : ");
-        list.forEach(System.out::println);
-        return list;*/
         return repository.saveAll(list);
     }
 
@@ -37,7 +31,6 @@ public class BloodResultManager implements BloodResultService {
 
     @Override
     public List<BloodResult> findAllByPatientIdAndCreatedAtAfter(int patientId, LocalDateTime time) {
-        return repository.findAllByPatientIdAndCreatedAtAfter(patientId,time);
+        return repository.findAllByPatientIdAndCreatedAtAfter(patientId, time);
     }
-
 }

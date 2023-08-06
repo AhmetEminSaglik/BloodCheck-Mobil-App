@@ -15,12 +15,11 @@ public interface UserService {
     User findByUsernameAndPassword(String username, String password);
 
     User findByUsername(String username);
+
     List<User> findAllByCreatedTimeAfter(LocalDateTime time);
 
     List<User> findAll();
 
     List<User> findAllByRoleId(int roleId);
-
-//    List<User> findAllByRoleId(int id);
 
 }

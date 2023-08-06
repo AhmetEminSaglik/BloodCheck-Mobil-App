@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 public class LoginCredentialsValidation implements LoginValidationService, LoginCredentialsValidationService {
     private static final Logger log = LoggerFactory.getLogger(LoginCredentialsValidation.class);
     private final UserService userService;
-
     private final int usernameMinLength = 3;
     private final int usernameMaxLength = 10;
     private final int passwordMinLength = 3;
@@ -34,7 +33,6 @@ public class LoginCredentialsValidation implements LoginValidationService, Login
             return new ErrorDataResult<>(result.getMessage());
         }
         return isUsernameAndPasswordRegistered(username, password);
-
     }
 
     @Override

@@ -51,6 +51,4 @@ public class SignupCredentialsValidation implements SignupValidationService, Sig
         return LengthValidator.isLengthValid(
                 EnumInputName.USERNAME, username, usernameMinLength, usernameMaxLength);
     }
-
-
 }

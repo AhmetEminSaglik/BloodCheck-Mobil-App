@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class DiabeticManager implements DiabeticService {
-
     @Autowired
     DiabeticRepository rep;
 
