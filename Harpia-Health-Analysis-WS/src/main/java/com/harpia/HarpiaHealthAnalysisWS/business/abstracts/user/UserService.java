@@ -2,6 +2,7 @@ package com.harpia.HarpiaHealthAnalysisWS.business.abstracts.user;
 
 import com.harpia.HarpiaHealthAnalysisWS.model.users.User;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface UserService {
@@ -14,7 +15,7 @@ public interface UserService {
     User findByUsernameAndPassword(String username, String password);
 
     User findByUsername(String username);
-
+    List<User> findAllByCreatedTimeAfter(LocalDateTime time);
 
     List<User> findAll();
 

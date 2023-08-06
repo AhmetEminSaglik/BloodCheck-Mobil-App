@@ -2,6 +2,7 @@ package com.harpia.HarpiaHealthAnalysisWS.controller.user;
 
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.login.LoginValidationService;
 import com.harpia.HarpiaHealthAnalysisWS.business.concretes.login.LoginCredentialsValidation;
+import com.harpia.HarpiaHealthAnalysisWS.dataaccess.user.UserRepository;
 import com.harpia.HarpiaHealthAnalysisWS.model.LoginCredentials;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.User;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.user.UserService;
@@ -11,6 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -27,6 +30,18 @@ public class UserController {
     @GetMapping()
     public DataResult<List<User>> findAllUserList() {
         return new SuccessDataResult<>(service.findAll(), "All users retrived successfully");
+    }
+
+    @Autowired
+    UserRepository repository;
+
+    @GetMapping("/time/{min}")
+    public DataResult<List<User>> findByTime(@PathVariable int min) {
+        LocalDateTime localDateTime= LocalDateTime.now();
+        log.info("localDateTime              : "+localDateTime);
+        localDateTime=localDateTime.minusMinutes(min);
+        log.info("MINUS "+min+" localDateTime : "+localDateTime);
+        return new SuccessDataResult<>(repository.findAllByCreatedTimeAfter(localDateTime));
     }
 
     @GetMapping("/{id}")
