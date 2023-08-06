@@ -1,17 +1,44 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../httprequest/HttpRequestDoctor.dart';
 import '../../../../../model/user/Doctor.dart';
 import 'ListviewBuilderDoctor.dart';
 
-class DoctorListFutureBuilder extends StatelessWidget {
-  final Future<List<Doctor>> doctorList;
+class DoctorListFutureBuilder extends StatefulWidget {
+  @override
+  State<DoctorListFutureBuilder> createState() =>
+      _DoctorListFutureBuilderState();
+}
 
-  const DoctorListFutureBuilder({super.key, required this.doctorList});
+class _DoctorListFutureBuilderState extends State<DoctorListFutureBuilder> {
+  bool isLoading = true;
+  List<Doctor> docList = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
+  }
+
+  void getData() async {
+    print("CALISTI");
+    isLoading = true;
+    setState(() {});
+    var resp = await HttpRequestDoctor.getDoctorList();
+    setState(() {
+      isLoading = false;
+      docList = resp;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Doctor>>(
-      future: doctorList,
+    return isLoading
+        ? const Center(child: CircularProgressIndicator())
+        : ListviewBuilderDoctor(doctorList: docList);
+    /*  return FutureBuilder<List<Doctor>>(
+      future: getData(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
@@ -27,6 +54,6 @@ class DoctorListFutureBuilder extends StatelessWidget {
           return ListviewBuilderDoctor(doctorList: doctorList);
         }
       },
-    );
+    );*/
   }
 }

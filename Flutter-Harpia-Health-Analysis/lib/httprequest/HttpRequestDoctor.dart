@@ -29,7 +29,7 @@ class HttpRequestDoctor {
     return patientList;
   }
 
-  Future<List<Doctor>> getDoctorList() async {
+  static Future<List<Doctor>> getDoctorList() async {
     Uri url = Uri.parse(_baseUrl);
     print("URL : $url");
     var resp = await http.get(url);

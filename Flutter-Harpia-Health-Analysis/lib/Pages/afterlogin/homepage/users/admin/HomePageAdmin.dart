@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/appbar/AppBarCubit.dart';
+import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/listview/doctor/DoctorListFutureBuilder.dart';
+import 'package:flutter_harpia_health_analysis/util/ProductColor.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'HomePageDoctorList.dart';
@@ -13,15 +15,22 @@ class HomePageAdmin extends StatefulWidget {
 }
 
 class _HomePageAdminState extends State<HomePageAdmin> {
-  var pageList = [const HomePageDoctorList(), const HomePagePatientList()];
+  var pageList = [DoctorListFutureBuilder(), const HomePagePatientList()];
+
   // var pageList = [ const HomePagePatientList(),const HomePageDoctorList()];
 
   int selectedIndex = 0;
+  var cont = PageController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: pageList[selectedIndex],
+      backgroundColor: Colors.cyan,
+      // body: pageList[selectedIndex],
+      body: IndexedStack(
+        children: pageList,
+        index: selectedIndex,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(
@@ -29,10 +38,9 @@ class _HomePageAdminState extends State<HomePageAdmin> {
           BottomNavigationBarItem(
               icon: FaIcon(FontAwesomeIcons.bed), label: "Patient"),
         ],
-        currentIndex: selectedIndex,
+        // currentIndex: selectedIndex,
         onTap: (index) {
-
-
+          // cont.jumpToPage(index);
           setState(() {
             selectedIndex = index;
           });

@@ -9,14 +9,15 @@ class HomePageDoctorList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DoctorListFutureBuilder(
-        doctorList: getDoctorList());
+    return DoctorListFutureBuilder();
   }
 }
 
+/*
 Future<List<Doctor>> getDoctorList() async {
   var http = HttpRequestDoctor();
   List<Doctor> doctorList = await http.getDoctorList();
   print('doctorList  size : ${doctorList.length}');
   return doctorList;
 }
+*/

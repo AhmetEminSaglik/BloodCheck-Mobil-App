@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/appbar/AppBarCubit.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/drawer/DrawerCubit.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/profile/AdminProfile.dart';
+import 'package:flutter_harpia_health_analysis/model/userrole/EnumUserRole.dart';
+import 'package:flutter_harpia_health_analysis/util/SharedPref.dart';
+import '../../../../model/EnumUserProp.dart';
 import '../../../../util/SafeLogoutDrawerItem.dart';
 import '../../signuppage/DoctorSignUpPage.dart';
 import '../users/admin/HomePageAdmin.dart';
@@ -14,8 +17,21 @@ class AdminDrawer extends StatefulWidget {
 
 class _AdminDrawerState extends State<AdminDrawer> {
   // static int roleId = SharedPref.sp.getInt(EnumUserProp.ROLE_ID.name) ?? -1;
-  var pageList = [const HomePageAdmin(), const AdminProfile(),const DoctorSignUpPage()];
+  var pageList = [
+    const HomePageAdmin(),
+    const AdminProfile(),
+    const DoctorSignUpPage()
+  ];
   int selectedIndex = 0;
+
+  /*getData() {
+    switch(SharedPref.sp.getInt(EnumUserProp.ROLE_ID)){
+      case EnumUserRole.ADMIN.roleId:
+
+      case EnumUserRole.DOCTOR.roleId:
+
+    }*/
+  }
 
   @override
   Widget build(BuildContext context) {
