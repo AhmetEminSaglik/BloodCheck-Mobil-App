@@ -31,24 +31,12 @@ public abstract class User {
     private String password;
 
     @Column(name = "created_at", columnDefinition = "TIMESTAMP")
-    private LocalDateTime createdTime = LocalDateTime.now();
-//    @Column(name = "time_string")
-//    private String createdTime = UtilCustomDateTime.createDateTimeStringFormat();
-//    @Column(name = "time_local_date_time2", columnDefinition = "TIMESTAMP")
-//    private Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-//    @Column(name = "time_stamp")
-//    private  Timestamp timestamp= Timestamp.from(Instant.from(localDateTime));
-
+    private LocalDateTime createdAt = LocalDateTime.now();
     static int counter = 1;
 
     public User() {
-        createdTime = LocalDateTime.now().minusMinutes(3 * counter);
+        createdAt = LocalDateTime.now().minusMinutes(3 * counter);
         counter++;
-        /*try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }*/
     }
 
     @Override
@@ -60,7 +48,7 @@ public abstract class User {
                 ", lastname='" + lastname + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", createdTime='" + createdTime + '\'' +
+                ", createdTime='" + createdAt + '\'' +
                 '}';
     }
 

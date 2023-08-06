@@ -35,14 +35,23 @@ public class UserController {
     @Autowired
     UserRepository repository;
 
-    @GetMapping("/time/{min}")
-    public DataResult<List<User>> findByTime(@PathVariable int min) {
-        LocalDateTime localDateTime= LocalDateTime.now();
-        log.info("localDateTime              : "+localDateTime);
-        localDateTime=localDateTime.minusMinutes(min);
-        log.info("MINUS "+min+" localDateTime : "+localDateTime);
-        return new SuccessDataResult<>(repository.findAllByCreatedTimeAfter(localDateTime));
+    @GetMapping("/time/hours/{hour}")
+    public DataResult<List<User>> findByLastCreatedMinusHours(@PathVariable int hour) {
+        LocalDateTime localDateTime = LocalDateTime.now().minusHours(hour);
+        return new SuccessDataResult<>(repository.findAllByCreatedAtAfter(localDateTime));
     }
+
+    @GetMapping("/time/minutes/{min}")
+    public DataResult<List<User>> findByLastCreatedMinusMinutes(@PathVariable int min) {
+        LocalDateTime localDateTime = LocalDateTime.now().minusMinutes(min);
+        return new SuccessDataResult<>(repository.findAllByCreatedAtAfter(localDateTime));
+    }
+
+//    @GetMapping("/time/min/{min}")
+//    public DataResult<List<User>> findByLastCreatedMinusSeconds(@PathVariable int min) {
+//        LocalDateTime localDateTime = LocalDateTime.now().minusMinutes(min);
+//        return new SuccessDataResult<>(repository.findAllByCreatedTimeAfter(localDateTime));
+//    }
 
     @GetMapping("/{id}")
     public DataResult<User> findById(@PathVariable long id) {

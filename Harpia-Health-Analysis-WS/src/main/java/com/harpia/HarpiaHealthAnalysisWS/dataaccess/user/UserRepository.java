@@ -22,7 +22,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findAll();
 //    @Query("SELECT e FROM User e WHERE e.createdTime >= :timeThreshold")
 //    List<User> findCreatedAfter(LocalDateTime timeThreshold);
-    List<User> findAllByCreatedTimeAfter(LocalDateTime time);
+    List<User> findAllByCreatedAtAfter(LocalDateTime time);
     List<User> findAllByRoleId(int roleId);
 //    List<User> findUse
 

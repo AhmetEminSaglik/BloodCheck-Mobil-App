@@ -65,6 +65,6 @@ public class UserManager implements UserService {
 
     @Override
     public List<User> findAllByCreatedTimeAfter(LocalDateTime time) {
-        return userRepository.findAllByCreatedTimeAfter(time);
+        return userRepository.findAllByCreatedAtAfter(time);
     }
 }
