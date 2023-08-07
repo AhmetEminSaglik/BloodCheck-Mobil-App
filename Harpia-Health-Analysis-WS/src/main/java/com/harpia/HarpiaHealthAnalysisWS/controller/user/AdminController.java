@@ -2,6 +2,7 @@ package com.harpia.HarpiaHealthAnalysisWS.controller.user;
 
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.user.UserService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.singup.SignupUser;
+import com.harpia.HarpiaHealthAnalysisWS.model.enums.EnumUserRole;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.Admin;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.User;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.DataResult;
@@ -23,6 +24,7 @@ public class AdminController {
 
     @PostMapping("/save")
     public ResponseEntity<DataResult<User>> saveAdmin(@RequestBody Admin inputAdmin) {
+        inputAdmin.setRoleId(EnumUserRole.ADMIN.getId());
         SignupUser signupUser = new SignupUser(service);
         DataResult<User> dataResult = signupUser.signup(inputAdmin);
         return ResponseEntity.status(HttpStatus.CREATED).body(dataResult);

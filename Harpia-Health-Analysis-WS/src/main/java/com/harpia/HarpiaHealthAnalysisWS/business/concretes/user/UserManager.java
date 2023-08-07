@@ -28,12 +28,12 @@ public class UserManager implements UserService {
     }
 
     public List<User> findAll() {
-        return userRepository.findAll();
+        return userRepository.findAllByOrderByIdAsc();
     }
 
     @Override
     public List<User> findAllByRoleId(int roleId) {
-        return userRepository.findAllByRoleId(roleId);
+        return userRepository.findAllByRoleIdOrderByIdDesc(roleId);
     }
 
     @Override

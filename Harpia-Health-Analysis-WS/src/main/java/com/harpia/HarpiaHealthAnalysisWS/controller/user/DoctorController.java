@@ -31,6 +31,7 @@ public class DoctorController {
 
     @PostMapping()
     public ResponseEntity<DataResult<User>> saveDoctor(@RequestBody Doctor inputPersonel) {
+        inputPersonel.setRoleId(EnumUserRole.DOCTOR.getId());
         SignupUser signupUser = new SignupUser(userService);
         DataResult<User> dataResult = signupUser.signup(inputPersonel);
         return ResponseEntity.status(HttpStatus.CREATED).body(dataResult);

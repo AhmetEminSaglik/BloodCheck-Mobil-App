@@ -1,9 +1,7 @@
 package com.harpia.HarpiaHealthAnalysisWS.model.users;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @Entity
@@ -20,5 +18,21 @@ public class Patient extends User {
     public String toString() {
         return "Patient{" + super.toString() + ", " +
                 '}';
+    }
+
+    public long getDoctorId() {
+        return doctorId;
+    }
+
+    public void setDoctorId(long doctorId) {
+        this.doctorId = doctorId;
+    }
+
+    public int getDiabeticTypeId() {
+        return diabeticTypeId;
+    }
+
+    public void setDiabeticTypeId(int diabeticTypeId) {
+        this.diabeticTypeId = diabeticTypeId;
     }
 }

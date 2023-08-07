@@ -26,6 +26,7 @@ public class PatientController {
 
     @PostMapping()
     public ResponseEntity<DataResult<User>> savePatient(@RequestBody Patient inputPatient) {
+        inputPatient.setRoleId(EnumUserRole.PATIENT.getId());
         SignupUser signupUser = new SignupUser(userService);
         DataResult<User> dataResult = signupUser.signup(inputPatient);
         return ResponseEntity.status(HttpStatus.CREATED).body(dataResult);
