@@ -8,36 +8,17 @@ import '../../../../util/ProductColor.dart';
 import '../appbar/AppBarCubit.dart';
 
 class HomePageDoctor extends StatefulWidget {
-  final int id;
+  final int doctorId;
 
-  const HomePageDoctor({Key? key, required this.id}) : super(key: key);
+  const HomePageDoctor({Key? key, required this.doctorId}) : super(key: key);
 
   @override
   State<HomePageDoctor> createState() => _HomePageDoctorState();
-
-  Future<List<Patient>> getPatientList(int doctorId) async {
-    var http = HttpRequestDoctor();
-    List<Patient> patientList = await http.getPatientListOfDoctorId(doctorId);
-    return patientList;
-  }
 }
 
 class _HomePageDoctorState extends State<HomePageDoctor> {
   bool visibleAppBar = false;
-
-  @override
-  void initState() {
-    super.initState();
-    visibleAppBar = PermissionUtils.letRunForAdmin();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: visibleAppBar ? getAppBar() : null,
-      body: ListviewBuilderPatient(),
-    );
-  }
+  List<Patient> patientList = [];
 
   AppBar getAppBar() {
     return AppBar(
@@ -46,5 +27,24 @@ class _HomePageDoctorState extends State<HomePageDoctor> {
         return titleWidget;
       }),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    visibleAppBar = PermissionUtils.letRunForAdmin();
+    setPatientList(widget.doctorId);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: visibleAppBar ? getAppBar() : null,
+      body: ListviewBuilderPatient(widget.doctorId),
+    );
+  }
+
+  void setPatientList(int doctorId) async {
+    patientList = await HttpRequestDoctor.getPatientListOfDoctorId(doctorId);
   }
 }

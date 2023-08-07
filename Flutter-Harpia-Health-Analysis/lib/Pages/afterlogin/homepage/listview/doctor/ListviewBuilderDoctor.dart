@@ -14,8 +14,9 @@ class ListviewBuilderDoctor extends StatefulWidget {
 
 class _ListviewBuilderDoctorState extends State<ListviewBuilderDoctor> {
   bool isLoading = true;
-  List<Doctor> doctorList=[];
-@override
+  List<Doctor> doctorList = [];
+
+  @override
   void initState() {
     super.initState();
     retriveDoctorList();
@@ -33,12 +34,17 @@ class _ListviewBuilderDoctorState extends State<ListviewBuilderDoctor> {
 
   @override
   Widget build(BuildContext context) {
-    context
+    /*context
         .read<AppBarCubit>()
-        .setTitleRoleNameWithPageListSize(doctorList.length);
+        .setTitleRoleNameWithPageListSize(doctorList.length);*/
     return Scaffold(
         backgroundColor: Colors.cyan,
-        body: getBodyDoctorListview(doctorList));
+        body: RefreshIndicator(
+          onRefresh: () async {
+            retriveDoctorList();
+          },
+          child: getBodyDoctorListview(doctorList),
+        ));
   }
 }
 
@@ -70,7 +76,7 @@ Widget getBodyDoctorListview(List<Doctor> doctorList) {
               onTap: () {
                 navigateToPatientChartPage(
                     context: context,
-                    routePage: HomePageDoctor(id: doctorList[index].id));
+                    routePage: HomePageDoctor(doctorId: doctorList[index].id));
               },
               child: Card(
                 color: CustomListViewItemColor.getBackgroundColor(
@@ -120,7 +126,6 @@ class ListViewItemText extends StatelessWidget {
         style: TextStyle(
           fontSize: ResponsiveDesign.getScreenHeight() / 40,
           fontWeight: isBold ? FontWeight.bold : null,
-
         ),
       ),
     );

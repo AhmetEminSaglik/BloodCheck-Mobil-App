@@ -17,7 +17,7 @@ class HttpRequestDoctor {
   static const String _classUrl = "/doctors";
   static final String _baseUrl = BaseHttpRequestConfig.baseUrl + _classUrl;
 
-  Future<List<Patient>> getPatientListOfDoctorId(int id) async {
+  static Future<List<Patient>> getPatientListOfDoctorId(int id) async {
     Uri url = Uri.parse("$_baseUrl/$id/patients");
     print("URL : $url");
     //http://localhost:8080/api/1.0/doctors/7/patients

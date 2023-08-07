@@ -19,7 +19,6 @@ class _HomePageAdminState extends State<HomePageAdmin> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.cyan,
-      // body: pageList[selectedIndex],
       body: IndexedStack(
         index: selectedIndex,
         children: pageList,
@@ -31,9 +30,8 @@ class _HomePageAdminState extends State<HomePageAdmin> {
           BottomNavigationBarItem(
               icon: FaIcon(FontAwesomeIcons.bed), label: "Patient"),
         ],
-        // currentIndex: selectedIndex,
+        currentIndex: selectedIndex,
         onTap: (index) {
-          // cont.jumpToPage(index);
           setState(() {
             selectedIndex = index;
           });

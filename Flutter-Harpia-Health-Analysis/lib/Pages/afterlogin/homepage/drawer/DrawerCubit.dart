@@ -16,7 +16,6 @@ class DrawerCubit extends Cubit<Widget> {
   DrawerCubit() : super(getUserPage());
 
   void updateBody(Widget newBody) {
-
     _body = newBody;
     emit(_body);
   }
@@ -32,7 +31,7 @@ class DrawerCubit extends Cubit<Widget> {
       return const HomePageAdmin();
     } else if (userRoleId == EnumUserRole.DOCTOR.roleId) {
       int doctorId = SharedPref.sp.getInt(EnumUserProp.ID.name) ?? -1;
-      return HomePageDoctor(id: doctorId);
+      return HomePageDoctor(doctorId: doctorId);
     } else if (userRoleId == EnumUserRole.PATIENT.roleId) {
       return const HomePagePatient(displayNamePatientPage: "My Disease Chart");
     }

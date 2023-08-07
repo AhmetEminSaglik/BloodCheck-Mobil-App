@@ -21,7 +21,7 @@ class DoctorDrawer extends StatefulWidget {
 class _DoctorDrawerState extends State<DoctorDrawer> {
   static int doctorId = SharedPref.sp.getInt(EnumUserProp.ID.name) ?? -1;
 
-  var pageList = [HomePageDoctor(id: doctorId), const DoctorProfile(),const PatientSignUpPage()];
+  var pageList = [HomePageDoctor(doctorId: doctorId), const DoctorProfile(),const PatientSignUpPage()];
   int selectedIndex = 0;
 
   @override

@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestPatient.dart';
+import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestDoctor.dart';
 import 'package:flutter_harpia_health_analysis/util/Utils.dart';
 import '../../../../../core/ResponsiveDesign.dart';
+import '../../../../../httprequest/HttpRequestPatient.dart';
 import '../../../../../model/diesease/EnumDiabeticType.dart';
 import '../../../../../model/user/Patient.dart';
-import '../../appbar/AppBarCubit.dart';
 import '../../users/HomePagePatient.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ListviewBuilderPatient extends StatefulWidget {
+  int doctorId;
+
+  ListviewBuilderPatient([this.doctorId = -1]);
+
   @override
   State<ListviewBuilderPatient> createState() => _ListviewBuilderPatientState();
 }
 
 class _ListviewBuilderPatientState extends State<ListviewBuilderPatient> {
-  List<Patient> patientList = [];
   bool isLoading = true;
+  List<Patient> patientList = [];
 
   @override
   void initState() {
@@ -26,7 +29,12 @@ class _ListviewBuilderPatientState extends State<ListviewBuilderPatient> {
   void retrivePatientList() async {
     isLoading = true;
     setState(() {});
-    var resp = await HttpRequestPatient.getPatientList();
+    var resp;
+    if (widget.doctorId == -1) {
+      resp = await HttpRequestPatient.getPatientList();
+    } else {
+      resp = await HttpRequestDoctor.getPatientListOfDoctorId(widget.doctorId);
+    }
     setState(() {
       isLoading = false;
       patientList = resp;
@@ -35,12 +43,16 @@ class _ListviewBuilderPatientState extends State<ListviewBuilderPatient> {
 
   @override
   Widget build(BuildContext context) {
-    context
+    /*context
         .read<AppBarCubit>()
-        .setTitleRoleNameWithPageListSize(patientList.length);
+        .setTitleRoleNameWithPageListSize(patientList.length);*/
     return Scaffold(
         backgroundColor: Colors.cyan,
-        body: getBodyForPatientListView(patientList));
+        body: RefreshIndicator(
+            onRefresh: () async {
+              retrivePatientList();
+            },
+            child: getBodyForPatientListView(patientList)));
   }
 }
 
