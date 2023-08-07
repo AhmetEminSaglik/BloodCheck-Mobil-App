@@ -5,6 +5,7 @@ import 'package:flutter_harpia_health_analysis/model/diesease/EnumDiabeticType.d
 import 'package:flutter_harpia_health_analysis/model/user/Doctor.dart';
 import 'package:flutter_harpia_health_analysis/model/userrole/EnumUserRole.dart';
 import 'package:flutter_harpia_health_analysis/util/CustomAlertDialog.dart';
+import 'package:flutter_harpia_health_analysis/util/CustomSnackBar.dart';
 import 'package:flutter_harpia_health_analysis/util/SharedPref.dart';
 import '../../../business/factory/UserFactory.dart';
 import '../../../core/ResponsiveDesign.dart';
@@ -30,11 +31,12 @@ class _PatientSignUpPageState extends State<PatientSignUpPage> {
   TextEditingController tfName = TextEditingController();
   TextEditingController tfLastname = TextEditingController();
 
-  // int selectedDiseaseValue = -1;
-  _DiseaseDropdownMenuButton diseaseDropDownMenu = _DiseaseDropdownMenuButton();
+  // int selectedDiabeticTypeValue = -1;
+  _DiabeticyTypeDropdownMenuButton diabeticTypeDropDownMenu =
+      _DiabeticyTypeDropdownMenuButton();
 
   // int diseaseId=
-  // var DiseaseDropdownButton =  _DiseaseDropdownMenuButton();
+  // var DiseaseDropdownButton =  _DiabeticyTypeDropdownMenuButton();
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +54,8 @@ class _PatientSignUpPageState extends State<PatientSignUpPage> {
                 key: _formKey,
                 child: Column(
                   children: [
+                    diabeticTypeDropDownMenu,
+
                     _FormInputTextField(
                         hintText: "Username",
                         controller: tfUsername,
@@ -66,17 +70,16 @@ class _PatientSignUpPageState extends State<PatientSignUpPage> {
                         hintText: "Lastname",
                         controller: tfLastname,
                         obscure: false),
-                    // const _DiseaseDropdownMenuButton(),
-                    diseaseDropDownMenu,
-                    /*_DiseaseDropdownMenuButton(
-                        selectedDiseaseValue: selectedDiseaseValue),*/
+                    // const _DiabeticyTypeDropdownMenuButton(),
+                    /*_DiabeticyTypeDropdownMenuButton(
+                        selectedDiabeticTypeValue: selectedDiabeticTypeValue),*/
                     _SignUpButton(
                       formKey: _formKey,
                       tfUsername: tfUsername,
                       tfPassword: tfPassword,
                       tfName: tfName,
                       tfLastname: tfLastname,
-                      diseaseDropDownMenu: diseaseDropDownMenu,
+                      selectedDiabeticType: diabeticTypeDropDownMenu,
                     )
                   ],
                 ),
@@ -89,24 +92,31 @@ class _PatientSignUpPageState extends State<PatientSignUpPage> {
   }
 }
 
-class _DiseaseDropdownMenuButton extends StatefulWidget {
-  int selectedDiseaseValue = -1;
+class _DiabeticyTypeDropdownMenuButton extends StatefulWidget {
+  int selectedDiabeticTypeValue = -1;
 
-  _DiseaseDropdownMenuButton();
+  _DiabeticyTypeDropdownMenuButton();
 
   @override
-  State<_DiseaseDropdownMenuButton> createState() =>
-      _DiseaseDropdownMenuButtonState();
+  State<_DiabeticyTypeDropdownMenuButton> createState() =>
+      _DiabeticyTypeDropdownMenuButtonState();
 }
 
-class _DiseaseDropdownMenuButtonState
-    extends State<_DiseaseDropdownMenuButton> {
-  final items = [-1, EnumDiabeticType.TIP_1.id, EnumDiabeticType.TIP_2.id,EnumDiabeticType.HIPOGLISEMI.id,EnumDiabeticType.HIPERGLISEMI.id];
+class _DiabeticyTypeDropdownMenuButtonState
+    extends State<_DiabeticyTypeDropdownMenuButton> {
+  bool isDiabeticTypeConfirmed = false;
+  final items = [
+    -1,
+    EnumDiabeticType.TIP_1.id,
+    EnumDiabeticType.TIP_2.id,
+    EnumDiabeticType.HIPOGLISEMI.id,
+    EnumDiabeticType.HIPERGLISEMI.id
+  ];
 
   DropdownMenuItem<int> buildMenuItem(int id) => DropdownMenuItem(
       value: id,
       child: Text(
-        id > 0 ? EnumDiabeticType.getTypeName(id) : "Select Disease",
+        id > 0 ? EnumDiabeticType.getTypeName(id) : "Select Diabetic Type",
         style: TextStyle(fontSize: ResponsiveDesign.getScreenWidth() / 23),
       ));
 
@@ -128,18 +138,21 @@ class _DiseaseDropdownMenuButtonState
             child: DropdownButtonHideUnderline(
               child: DropdownButtonFormField<int>(
                 iconSize: ResponsiveDesign.getScreenWidth() / 15,
-                value: widget.selectedDiseaseValue,
+                value: widget.selectedDiabeticTypeValue,
                 items: items.map(buildMenuItem).toList(),
                 onChanged: (value) {
                   setState(() {
-                    widget.selectedDiseaseValue = value!;
-                    print(
-                        "widget.selectedDiseaseValue ${widget.selectedDiseaseValue}");
+                    widget.selectedDiabeticTypeValue = value!;
+                    if (widget.selectedDiabeticTypeValue > -1) {
+                      validateItemWithAlertDialog(
+                          selectedItemIndex: widget.selectedDiabeticTypeValue);
+                      print("confirmed : $isDiabeticTypeConfirmed");
+                    }
                   });
                 },
                 validator: (data) {
                   if (data == null || data < 0) {
-                    return "Select Diseae";
+                    return "Select Diabetic Type";
                   }
 
                   // if (data.length < _TextFieldInputLength.min) {
@@ -150,7 +163,7 @@ class _DiseaseDropdownMenuButtonState
                   // }
                   return null;
                 },
-                hint: const Text("Select Disease"),
+                // hint: const Text("Select Diabetic Type"),
                 isExpanded: true,
               ),
             ),
@@ -158,6 +171,24 @@ class _DiseaseDropdownMenuButtonState
         ),
       ),
     );
+  }
+
+  void validateItemWithAlertDialog({required int selectedItemIndex}) async {
+    var result = await showDialog(
+        context: context,
+        builder: (builder) => CustomAlertDialog.getAlertDialogValidateProcess(
+            context: context,
+            title: "Diabetic Type Validation",
+            msg: "Are you sure you want to select",
+            selectedItemName: EnumDiabeticType.getTypeName(selectedItemIndex),
+            roleId: EnumUserRole.PATIENT.roleId));
+    print("Result $result");
+    if (result == null || !result) {
+      setState(() {
+        widget.selectedDiabeticTypeValue = -1;
+      });
+    }
+    // ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar.getSnackBar("result : $isConfirmed"));
   }
 }
 
@@ -185,7 +216,7 @@ class _FormInputTextField extends StatelessWidget {
 
 class _SignUpButton extends StatelessWidget {
   final TextEditingController tfUsername, tfPassword, tfName, tfLastname;
-  final _DiseaseDropdownMenuButton diseaseDropDownMenu;
+  final _DiabeticyTypeDropdownMenuButton selectedDiabeticType;
   GlobalKey<FormState> formKey;
 
   _SignUpButton(
@@ -194,7 +225,7 @@ class _SignUpButton extends StatelessWidget {
       required this.tfPassword,
       required this.tfName,
       required this.tfLastname,
-      required this.diseaseDropDownMenu}); //({super.key /*,required this.screenInfo*/});
+      required this.selectedDiabeticType}); //({super.key /*,required this.screenInfo*/});
 
   @override
   Widget build(BuildContext context) {
@@ -203,7 +234,7 @@ class _SignUpButton extends StatelessWidget {
         height: ResponsiveDesign.getScreenHeight() / 15,
         child: ElevatedButton(
             onPressed: () {
-              _signUpProcess(context, diseaseDropDownMenu);
+              _signUpProcess(context, selectedDiabeticType);
             },
             style: ButtonStyle(
                 backgroundColor:
@@ -220,14 +251,14 @@ class _SignUpButton extends StatelessWidget {
   }
 
   void _signUpProcess(BuildContext context,
-      _DiseaseDropdownMenuButton diseaseDropdownMenuButton) async {
+      _DiabeticyTypeDropdownMenuButton diabeticTypeDropDownMenu) async {
     bool controlResult = formKey.currentState!.validate();
     if (controlResult) {
       String username = tfUsername.text;
       String pass = tfPassword.text;
       String name = tfName.text;
       String lastname = tfLastname.text;
-      int diabeticTypeId = diseaseDropdownMenuButton.selectedDiseaseValue;
+      int diabeticTypeId = diabeticTypeDropDownMenu.selectedDiabeticTypeValue;
       int doctorId = SharedPref.sp.getInt("id") ?? -1;
       var request = HttpRequestPatient();
       Patient patient = Patient(

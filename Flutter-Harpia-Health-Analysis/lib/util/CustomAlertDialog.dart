@@ -46,4 +46,64 @@ class CustomAlertDialog {
       ],
     );
   }
+
+  static AlertDialog getAlertDialogValidateProcess({
+    required BuildContext context,
+    required String title,
+    // required String subTitle,
+    required String selectedItemName,
+    required String msg,
+    required int roleId,
+  }) {
+    return AlertDialog(
+      title: Text(title, textAlign: TextAlign.center),
+      content: SizedBox(
+        height: ResponsiveDesign.getScreenHeight() / 8,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              /*Text(subTitle,
+                  style: TextStyle(
+                      fontSize: ResponsiveDesign.getScreenWidth() / 20,
+                      color: Colors.deepOrange)),*/
+              SizedBox(height: ResponsiveDesign.getScreenHeight() / 20),
+              Text(msg,
+                  style: TextStyle(
+                      fontSize: ResponsiveDesign.getScreenWidth() / 22)),
+              Text(selectedItemName,
+                  style: TextStyle(
+                      fontSize: ResponsiveDesign.getScreenWidth() / 19,
+                      color: Colors.redAccent)),
+            ],
+          ),
+        ),
+      ),
+      actions: [
+        Row(
+          children: [
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                },
+                child: Text(
+                  "No",
+                  style: TextStyle(
+                      fontSize: ResponsiveDesign.getScreenWidth() / 20),
+                )),
+            Spacer(),
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(true);
+                  //Navigator.pop(context);
+                },
+                child: Text(
+                  "Yes",
+                  style: TextStyle(
+                      fontSize: ResponsiveDesign.getScreenWidth() / 20),
+                )),
+          ],
+        )
+      ],
+    );
+  }
 }

@@ -7,6 +7,7 @@ import 'package:flutter_harpia_health_analysis/util/SharedPref.dart';
 import '../../../../model/EnumUserProp.dart';
 import '../../../../util/SafeLogoutDrawerItem.dart';
 import '../../signuppage/DoctorSignUpPage.dart';
+import '../../signuppage/PatientSignUpPage.dart';
 import '../users/admin/HomePageAdmin.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,7 +20,8 @@ class _AdminDrawerState extends State<AdminDrawer> {
   var pageList = [
     const HomePageAdmin(),
     const AdminProfile(),
-    const DoctorSignUpPage()
+    const DoctorSignUpPage(),
+    const PatientSignUpPage(),
   ];
   int selectedIndex = 0;
 
@@ -29,7 +31,6 @@ class _AdminDrawerState extends State<AdminDrawer> {
       case EnumUserRole.DOCTOR.roleId:
 
     }*/
-
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +45,8 @@ class _AdminDrawerState extends State<AdminDrawer> {
               context: context, title: "Profile", selectedIndex: 1),
           _buildDrawerListTile(
               context: context, title: "Sign Up Doctor", selectedIndex: 2),
+          _buildDrawerListTile(
+              context: context, title: "Sign Up Patient", selectedIndex: 3),
           SafeLogoutDrawerItem(),
         ],
       ),
