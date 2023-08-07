@@ -2,18 +2,34 @@ import 'package:flutter/material.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/users/HomePageDoctor.dart';
 import 'package:flutter_harpia_health_analysis/model/user/Doctor.dart';
 import '../../../../../core/ResponsiveDesign.dart';
+import '../../../../../httprequest/HttpRequestDoctor.dart';
 import '../../../../../util/Utils.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../appbar/AppBarCubit.dart';
 
-class ListviewBuilderDoctor extends StatelessWidget {
-  const ListviewBuilderDoctor({
-    super.key,
-    required this.doctorList,
-  });
+class ListviewBuilderDoctor extends StatefulWidget {
+  @override
+  State<ListviewBuilderDoctor> createState() => _ListviewBuilderDoctorState();
+}
 
-  final List<Doctor> doctorList;
+class _ListviewBuilderDoctorState extends State<ListviewBuilderDoctor> {
+  bool isLoading = true;
+  List<Doctor> doctorList=[];
+@override
+  void initState() {
+    super.initState();
+    retriveDoctorList();
+  }
+
+  void retriveDoctorList() async {
+    isLoading = true;
+    setState(() {});
+    var resp = await HttpRequestDoctor.getDoctorList();
+    setState(() {
+      isLoading = false;
+      doctorList = resp;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,11 +38,11 @@ class ListviewBuilderDoctor extends StatelessWidget {
         .setTitleRoleNameWithPageListSize(doctorList.length);
     return Scaffold(
         backgroundColor: Colors.cyan,
-        body: getBodyForPatientListView(doctorList));
+        body: getBodyDoctorListview(doctorList));
   }
 }
 
-Widget getBodyForPatientListView(List<Doctor> doctorList) {
+Widget getBodyDoctorListview(List<Doctor> doctorList) {
   if (doctorList.isEmpty) {
     return Padding(
       padding: EdgeInsets.only(
@@ -52,7 +68,6 @@ Widget getBodyForPatientListView(List<Doctor> doctorList) {
           itemBuilder: (context, index) {
             return InkWell(
               onTap: () {
-                // print("Click Item : ${doctorList[index]}");
                 navigateToPatientChartPage(
                     context: context,
                     routePage: HomePageDoctor(id: doctorList[index].id));
@@ -116,17 +131,3 @@ void navigateToPatientChartPage(
     {required BuildContext context, required routePage}) {
   Navigator.push(context, MaterialPageRoute(builder: (context) => routePage));
 }
-/*
-Color getListViewItemBackgroundColor(
-    {required int colorindex, required int index}) {
-  if (colorindex == 1) {
-    return index % 2 == 0 ? Colors.cyanAccent : Colors.tealAccent;
-  } else if (colorindex == 2) {
-    return index % 2 == 0 ? ProductColor.white : ProductColor.dartWhite;
-  } else if (colorindex == 3) {
-    return index % 2 == 0 ? Colors.white54 : Colors.white70;
-  } else if (colorindex == 4) {
-    return index % 2 == 0 ? Colors.white : Colors.blueGrey;
-  }
-  return Colors.black;
-}*/

@@ -8,7 +8,6 @@ public class LoginCredentials {
         Username = username;
         this.password = password;
     }
-
     public String getUsername() {
         return Username;
     }

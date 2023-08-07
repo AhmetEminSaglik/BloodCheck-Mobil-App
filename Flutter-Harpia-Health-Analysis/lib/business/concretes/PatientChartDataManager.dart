@@ -2,7 +2,7 @@ import 'dart:ffi';
 
 import 'package:flutter_harpia_health_analysis/business/abstracts/PatientChartData.dart';
 
-import '../../model/diesease/Disease.dart';
+import '../../model/diesease/old-Disease.dart';
 
 class PatientChartDataManager implements PatientChartDataService {
   @override

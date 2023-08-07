@@ -18,6 +18,9 @@ class ProductColor {
   static const _white = Colors.white;
   static const _green = Colors.green;
   static const _dartWhite = Colors.white70;
+  static const _redAccent = Colors.redAccent;
+
+  static const _appBarBackgroundColor = _redAccent;
 
   static get darkBlue => _darkBlue;
 
@@ -28,4 +31,8 @@ class ProductColor {
   static get dartWhite => _dartWhite;
 
   static get green => _green;
+
+  static get redAccent => _redAccent;
+
+  static get appBarBackgroundColor => _appBarBackgroundColor;
 }

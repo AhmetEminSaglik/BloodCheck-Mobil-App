@@ -1,6 +1,7 @@
+/*
 import 'dart:ffi';
 
-import 'package:flutter_harpia_health_analysis/model/diesease/Disease.dart';
+import 'package:flutter_harpia_health_analysis/model/diesease/old-Disease.dart';
 
 class Diabetic extends Disease {
   late int _bloodSugar;
@@ -43,3 +44,4 @@ class Diabetic extends Disease {
         '}';
   }
 }
+*/

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/listview/patient/ListviewBuilderPatient.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestDoctor.dart';
+import 'package:flutter_harpia_health_analysis/util/PermissionUtils.dart';
 import '../../../../model/user/Patient.dart';
-import '../listview/patient/PatientListFutureBuilder.dart';
+import '../../../../util/ProductColor.dart';
+import '../appbar/AppBarCubit.dart';
 
 class HomePageDoctor extends StatefulWidget {
   final int id;
@@ -19,11 +23,28 @@ class HomePageDoctor extends StatefulWidget {
 }
 
 class _HomePageDoctorState extends State<HomePageDoctor> {
+  bool visibleAppBar = false;
+
+  @override
+  void initState() {
+    super.initState();
+    visibleAppBar = PermissionUtils.letRunForAdmin();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return PatientListFutureBuilder(
-      patientList: widget.getPatientList(widget.id),
-      appBarTitle: "My Patient List (D)",
+    return Scaffold(
+      appBar: visibleAppBar ? getAppBar() : null,
+      body: ListviewBuilderPatient(),
+    );
+  }
+
+  AppBar getAppBar() {
+    return AppBar(
+      backgroundColor: ProductColor.appBarBackgroundColor,
+      title: BlocBuilder<AppBarCubit, Widget>(builder: (builder, titleWidget) {
+        return titleWidget;
+      }),
     );
   }
 }

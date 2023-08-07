@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/LineChartDemo1.dart';
-import 'package:flutter_harpia_health_analysis/model/userrole/EnumUserRole.dart';
-import '../../../../httprequest/HttpRequestDisease.dart';
-import '../../../../model/EnumUserProp.dart';
-import '../../../../model/diesease/Disease.dart';
-import '../../../../util/SharedPref.dart';
+import '../../../../util/PermissionUtils.dart';
+import '../../../../util/ProductColor.dart';
 import '../../../CustomWidgets/LineChartDemo2.dart';
+import '../appbar/AppBarCubit.dart';
 
 class HomePagePatient extends StatefulWidget {
   final String displayNamePatientPage;
@@ -17,16 +16,19 @@ class HomePagePatient extends StatefulWidget {
 }
 
 class _HomePagePatientState extends State<HomePagePatient> {
+  bool visibleAppBar = false;
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    printDiseaseList();
+    visibleAppBar =
+        PermissionUtils.letRunForAdmin() || PermissionUtils.letRunForDoctor();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: visibleAppBar ? getAppBar() : null,
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -39,7 +41,15 @@ class _HomePagePatientState extends State<HomePagePatient> {
   }
 }
 
-Future<void> printDiseaseList() async {
+AppBar getAppBar() {
+  return AppBar(
+    backgroundColor: ProductColor.appBarBackgroundColor,
+    title: BlocBuilder<AppBarCubit, Widget>(builder: (builder, titleWidget) {
+      return titleWidget;
+    }),
+  );
+}
+/*Future<void> printDiseaseList() async {
   var http = HttpRequestDisease();
   // print('patient Id :');
   if ((SharedPref.sp.getInt(EnumUserProp.ID.name) ??
@@ -53,4 +63,4 @@ Future<void> printDiseaseList() async {
       print("disease : $e");
     });
   }
-}
+}*/

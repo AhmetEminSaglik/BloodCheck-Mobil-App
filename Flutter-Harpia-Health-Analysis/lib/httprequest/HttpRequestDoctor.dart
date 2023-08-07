@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:ffi';
+import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/BaseHttpRequest.dart';

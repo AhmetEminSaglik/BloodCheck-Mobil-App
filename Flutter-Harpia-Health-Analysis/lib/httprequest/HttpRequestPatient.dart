@@ -12,7 +12,7 @@ class HttpRequestPatient {
   static const String _classUrl = "/patients";
   static final String _baseUrl = BaseHttpRequestConfig.baseUrl + _classUrl;
 
-  Future<List<Patient>> getPatientList() async {
+  static Future<List<Patient>> getPatientList() async {
     Uri url = Uri.parse(_baseUrl);
     print("URL : $url");
     var resp = await http.get(url);

@@ -1,19 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestPatient.dart';
 import 'package:flutter_harpia_health_analysis/util/Utils.dart';
 import '../../../../../core/ResponsiveDesign.dart';
-import '../../../../../model/diesease/EnumDiseaseType.dart';
+import '../../../../../model/diesease/EnumDiabeticType.dart';
 import '../../../../../model/user/Patient.dart';
 import '../../appbar/AppBarCubit.dart';
 import '../../users/HomePagePatient.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ListviewBuilderPatient extends StatelessWidget {
-  const ListviewBuilderPatient({
-    super.key,
-    required this.patientList,
-  });
+class ListviewBuilderPatient extends StatefulWidget {
+  @override
+  State<ListviewBuilderPatient> createState() => _ListviewBuilderPatientState();
+}
 
-  final List<Patient> patientList;
+class _ListviewBuilderPatientState extends State<ListviewBuilderPatient> {
+  List<Patient> patientList = [];
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    retrivePatientList();
+  }
+
+  void retrivePatientList() async {
+    isLoading = true;
+    setState(() {});
+    var resp = await HttpRequestPatient.getPatientList();
+    setState(() {
+      isLoading = false;
+      patientList = resp;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,8 +107,8 @@ Widget getBodyForPatientListView(List<Patient> patientList) {
                               width: ResponsiveDesign.getScreenWidth() / 3.5,
                               child: ListViewItemText(
                                   isBold: true,
-                                  text: EnumDiseaseType.getDiseaseName(
-                                      patientList[index].diseaseTypeId))),
+                                  text: EnumDiabeticType.getTypeName(
+                                      patientList[index].diabeticTypeId))),
                         ],
                       ),
                     ),
@@ -128,19 +146,3 @@ void navigateToPatientChartPage(
     {required BuildContext context, required routePage}) {
   Navigator.push(context, MaterialPageRoute(builder: (context) => routePage));
 }
-/*
-
-Color getListViewItemBackgroundColor(
-    {required int colorindex, required int index}) {
-  if (colorindex == 1) {
-    return index % 2 == 0 ? Colors.cyanAccent : Colors.tealAccent;
-  } else if (colorindex == 2) {
-    return index % 2 == 0 ? Colors.white : Colors.white70;
-  } else if (colorindex == 3) {
-    return index % 2 == 0 ? Colors.white54 : Colors.white70;
-  } else if (colorindex == 4) {
-    return index % 2 == 0 ? Colors.white : Colors.blueGrey;
-  }
-  return Colors.black;
-}
-*/

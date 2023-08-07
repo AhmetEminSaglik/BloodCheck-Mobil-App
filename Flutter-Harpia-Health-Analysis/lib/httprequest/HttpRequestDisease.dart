@@ -1,9 +1,10 @@
+/*
 import 'dart:convert';
 import 'dart:ffi';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/BaseHttpRequest.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/ResponseEntity.dart';
-import 'package:flutter_harpia_health_analysis/model/diesease/Disease.dart';
+import 'package:flutter_harpia_health_analysis/model/diesease/old-Disease.dart';
 import 'package:flutter_harpia_health_analysis/business/factory/DiseaseFactory.dart';
 import 'package:flutter_harpia_health_analysis/util/HttpUtil.dart';
 import 'package:http/http.dart' as http;
@@ -25,13 +26,15 @@ class HttpRequestDisease {
     // var respEntity = ResponseEntity.fromJson(jsonData);
     // return jsonData;
 
-    /*List<Disease> diseaseList = (respEntity.data as List)
+    */
+/*List<Disease> diseaseList = (respEntity.data as List)
         .map((data) => Disease.fromJson(data))
         .toList();
 
     diseaseList.forEach((e) {
       print("e : $e");
-    });*/
+    });*//*
+
   }
 
 // Future<void> getAllUserData() async {
@@ -52,3 +55,4 @@ class HttpRequestDisease {
 // return resp;
 // }
 }
+*/

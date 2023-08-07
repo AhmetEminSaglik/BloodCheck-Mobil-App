@@ -1,4 +1,5 @@
-import 'package:flutter_harpia_health_analysis/model/diesease/Disease.dart';
+/*
+import 'package:flutter_harpia_health_analysis/model/diesease/old-Disease.dart';
 
 class DiseaseFactory {
   static List<Disease> createDiseaseList(List<dynamic> json) {
@@ -7,3 +8,4 @@ class DiseaseFactory {
     return diseaseList;
   }
 }
+*/

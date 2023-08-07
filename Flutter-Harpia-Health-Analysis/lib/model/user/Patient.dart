@@ -1,7 +1,7 @@
 import 'User.dart';
 
 class Patient extends User {
-  late int _diseaseTypeId;
+  late int _diabeticTypeId;
   late int _doctorId;
 
   Patient(
@@ -11,7 +11,7 @@ class Patient extends User {
       required String lastname,
       required String username,
       required String password,
-      required int diseaseTypeId,
+      required int diabeticTypeId,
       required int doctorId})
       : super(
             id: id,
@@ -20,7 +20,7 @@ class Patient extends User {
             lastname: lastname,
             username: username,
             password: password) {
-    _diseaseTypeId = diseaseTypeId;
+    _diabeticTypeId = diabeticTypeId;
     _doctorId = doctorId;
   }
 
@@ -32,7 +32,7 @@ class Patient extends User {
         lastname: json["lastname"] as String,
         username: json["username"] as String,
         password: json["password"] as String,
-        diseaseTypeId: json["diseaseTypeId"] as int,
+        diabeticTypeId: json["diabeticTypeId"] as int,
         doctorId: json["doctorId"] as int);
   }
 
@@ -44,7 +44,7 @@ class Patient extends User {
       'lastname': lastname,
       'username': username,
       'password': password,
-      'diseaseTypeId': _diseaseTypeId,
+      'diabeticTypeId': _diabeticTypeId,
       'doctorId': _doctorId,
     };
   }
@@ -58,19 +58,19 @@ class Patient extends User {
         ", username='$username'" +
         ", password='$password'" +
         ", doctorId='$_doctorId'" +
-        ", diseaseTypeId='$_diseaseTypeId'" +
+        ", diabeticTypeId='$_diabeticTypeId'" +
         '}';
-  }
-
-  int get diseaseTypeId => _diseaseTypeId;
-
-  set diseaseTypeId(int value) {
-    _diseaseTypeId = value;
   }
 
   int get doctorId => _doctorId;
 
   set doctorId(int value) {
     _doctorId = value;
+  }
+
+  int get diabeticTypeId => _diabeticTypeId;
+
+  set diabeticTypeId(int value) {
+    _diabeticTypeId = value;
   }
 }

@@ -1,8 +1,9 @@
+/*
 import 'dart:ffi';
 
 import 'package:flutter_harpia_health_analysis/exceptions/UnknowDiseaseTypeException.dart';
-import 'package:flutter_harpia_health_analysis/model/diesease/Diabetic.dart';
-import 'package:flutter_harpia_health_analysis/model/diesease/EnumDiseaseType.dart';
+import 'package:flutter_harpia_health_analysis/model/diesease/old-Diabetic.dart';
+import 'package:flutter_harpia_health_analysis/model/diesease/EnumDiabeticType.dart';
 
 abstract class Disease {
   late int _id;
@@ -43,3 +44,4 @@ abstract class Disease {
     _id = value;
   }
 }
+*/

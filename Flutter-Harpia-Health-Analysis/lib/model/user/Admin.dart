@@ -1,6 +1,4 @@
 
-import 'dart:ffi';
-
 import 'User.dart';
 
 class Admin extends User {

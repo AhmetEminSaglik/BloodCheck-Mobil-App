@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/appbar/AppBarCubit.dart';
-import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/listview/doctor/DoctorListFutureBuilder.dart';
-import 'package:flutter_harpia_health_analysis/util/ProductColor.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'HomePageDoctorList.dart';
-import 'HomePagePatientList.dart';
+import '../../listview/doctor/ListviewBuilderDoctor.dart';
+import '../../listview/patient/ListviewBuilderPatient.dart';
 
 class HomePageAdmin extends StatefulWidget {
   const HomePageAdmin({Key? key}) : super(key: key);
@@ -15,10 +11,7 @@ class HomePageAdmin extends StatefulWidget {
 }
 
 class _HomePageAdminState extends State<HomePageAdmin> {
-  var pageList = [DoctorListFutureBuilder(), const HomePagePatientList()];
-
-  // var pageList = [ const HomePagePatientList(),const HomePageDoctorList()];
-
+  var pageList = [ListviewBuilderDoctor(), ListviewBuilderPatient()];
   int selectedIndex = 0;
   var cont = PageController();
 
@@ -28,8 +21,8 @@ class _HomePageAdminState extends State<HomePageAdmin> {
       backgroundColor: Colors.cyan,
       // body: pageList[selectedIndex],
       body: IndexedStack(
-        children: pageList,
         index: selectedIndex,
+        children: pageList,
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const [

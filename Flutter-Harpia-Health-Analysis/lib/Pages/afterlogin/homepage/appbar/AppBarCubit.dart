@@ -12,6 +12,7 @@ import 'AppBarPatient.dart';
 
 class AppBarCubit extends Cubit<Widget> {
   Widget appBarTitleWidget = const Text("Empty Text");
+  var backgroundColor = Colors.green;
 
   AppBarCubit() : super(const Text("Empty Text"));
 
@@ -33,7 +34,7 @@ class AppBarCubit extends Cubit<Widget> {
   }
 
   void setTitleRoleNameWithPageListSize(int listSize) {
-    int roleId = SharedPref.sp.getInt(EnumUserProp.ROLE_ID.name);
+    int roleId = SharedPrefUtils.getRoleId();
     String roleName = EnumUserRole.getRoleName(roleId);
     appBarTitleWidget = Row(
         children: [Text("$roleName Page"), const Spacer(), Text("$listSize")]);

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestDoctor.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestPatient.dart';
-import 'package:flutter_harpia_health_analysis/model/diesease/EnumDiseaseType.dart';
+import 'package:flutter_harpia_health_analysis/model/diesease/EnumDiabeticType.dart';
 import 'package:flutter_harpia_health_analysis/model/user/Doctor.dart';
 import 'package:flutter_harpia_health_analysis/model/userrole/EnumUserRole.dart';
 import 'package:flutter_harpia_health_analysis/util/CustomAlertDialog.dart';
@@ -101,12 +101,12 @@ class _DiseaseDropdownMenuButton extends StatefulWidget {
 
 class _DiseaseDropdownMenuButtonState
     extends State<_DiseaseDropdownMenuButton> {
-  final items = [-1, EnumDiseaseType.DIABETIC.id, EnumDiseaseType.CANCER.id];
+  final items = [-1, EnumDiabeticType.TIP_1.id, EnumDiabeticType.TIP_2.id,EnumDiabeticType.HIPOGLISEMI.id,EnumDiabeticType.HIPERGLISEMI.id];
 
   DropdownMenuItem<int> buildMenuItem(int id) => DropdownMenuItem(
       value: id,
       child: Text(
-        id > 0 ? EnumDiseaseType.getDiseaseName(id) : "Select Disease",
+        id > 0 ? EnumDiabeticType.getTypeName(id) : "Select Disease",
         style: TextStyle(fontSize: ResponsiveDesign.getScreenWidth() / 23),
       ));
 
@@ -227,7 +227,7 @@ class _SignUpButton extends StatelessWidget {
       String pass = tfPassword.text;
       String name = tfName.text;
       String lastname = tfLastname.text;
-      int diseaseTypeId = diseaseDropdownMenuButton.selectedDiseaseValue;
+      int diabeticTypeId = diseaseDropdownMenuButton.selectedDiseaseValue;
       int doctorId = SharedPref.sp.getInt("id") ?? -1;
       var request = HttpRequestPatient();
       Patient patient = Patient(
@@ -237,7 +237,7 @@ class _SignUpButton extends StatelessWidget {
           lastname: lastname,
           username: username,
           password: pass,
-          diseaseTypeId: diseaseTypeId,
+          diabeticTypeId: diabeticTypeId,
           doctorId: doctorId);
       request.signUp(patient).then((resp) async {
         // debugPrint(resp.body);

@@ -24,6 +24,7 @@ class _AdminDrawerState extends State<AdminDrawer> {
   ];
   int selectedIndex = 0;
 
+
   /*getData() {
     switch(SharedPref.sp.getInt(EnumUserProp.ROLE_ID)){
       case EnumUserRole.ADMIN.roleId:
@@ -31,7 +32,7 @@ class _AdminDrawerState extends State<AdminDrawer> {
       case EnumUserRole.DOCTOR.roleId:
 
     }*/
-  }
+
 
   @override
   Widget build(BuildContext context) {
