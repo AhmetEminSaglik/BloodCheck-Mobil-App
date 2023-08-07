@@ -16,7 +16,6 @@ class AdminDrawer extends StatefulWidget {
 }
 
 class _AdminDrawerState extends State<AdminDrawer> {
-  // static int roleId = SharedPref.sp.getInt(EnumUserProp.ROLE_ID.name) ?? -1;
   var pageList = [
     const HomePageAdmin(),
     const AdminProfile(),
@@ -24,11 +23,9 @@ class _AdminDrawerState extends State<AdminDrawer> {
   ];
   int selectedIndex = 0;
 
-
   /*getData() {
     switch(SharedPref.sp.getInt(EnumUserProp.ROLE_ID)){
       case EnumUserRole.ADMIN.roleId:
-
       case EnumUserRole.DOCTOR.roleId:
 
     }*/
