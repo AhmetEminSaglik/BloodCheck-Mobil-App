@@ -15,6 +15,6 @@ public class PatientManager implements PatientService {
 
     @Override
     public List<Patient> findAllPatientByDoctorId(long doctorId) {
-        return repository.findAllPatientByDoctorId(doctorId);
+        return repository.findAllPatientByDoctorIdOrderByIdDesc(doctorId);
     }
 }

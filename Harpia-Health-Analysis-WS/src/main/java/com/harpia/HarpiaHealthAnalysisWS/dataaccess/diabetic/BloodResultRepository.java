@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface BloodResultRepository extends JpaRepository<BloodResult, Long> {
 
-    List<BloodResult> findAllByPatientIdAndCreatedAtAfter(int patientId, LocalDateTime time);
+    List<BloodResult> findAllByPatientIdAndCreatedAtAfterOrderById(int patientId, LocalDateTime time);
 }
