@@ -1,8 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
-import 'dart:io';
-import 'dart:ui';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/BaseHttpRequest.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/ResponseEntity.dart';
 import 'package:flutter_harpia_health_analysis/business/factory/UserFactory.dart';
@@ -10,8 +6,6 @@ import 'package:flutter_harpia_health_analysis/model/user/Doctor.dart';
 import 'package:flutter_harpia_health_analysis/model/user/Patient.dart';
 import 'package:flutter_harpia_health_analysis/util/HttpUtil.dart';
 import 'package:http/http.dart' as http;
-
-import '../model/user/User.dart';
 
 class HttpRequestDoctor {
   static const String _classUrl = "/doctors";

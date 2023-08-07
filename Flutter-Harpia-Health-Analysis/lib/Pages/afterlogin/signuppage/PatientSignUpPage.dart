@@ -1,17 +1,19 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestDoctor.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestPatient.dart';
 import 'package:flutter_harpia_health_analysis/model/diesease/EnumDiabeticType.dart';
-import 'package:flutter_harpia_health_analysis/model/user/Doctor.dart';
 import 'package:flutter_harpia_health_analysis/model/userrole/EnumUserRole.dart';
 import 'package:flutter_harpia_health_analysis/util/CustomAlertDialog.dart';
-import 'package:flutter_harpia_health_analysis/util/CustomSnackBar.dart';
 import 'package:flutter_harpia_health_analysis/util/SharedPref.dart';
 import '../../../business/factory/UserFactory.dart';
 import '../../../core/ResponsiveDesign.dart';
+import '../../../httprequest/HttpRequestDoctor.dart';
 import '../../../httprequest/ResponseEntity.dart';
+import '../../../model/user/Doctor.dart';
 import '../../../model/user/Patient.dart';
 import '../../../model/user/User.dart';
+import '../../../util/CustomSnackBar.dart';
 import '../../../util/ProductColor.dart';
 import 'dart:convert';
 
@@ -25,18 +27,29 @@ class PatientSignUpPage extends StatefulWidget {
 final _formKey = GlobalKey<FormState>();
 // final _diseaseKey = GlobalKey<FormFieldState>();
 
+class DoctorPicklistItem {
+  int index;
+  int id;
+  String name;
+
+  DoctorPicklistItem(
+      {required this.index, required this.id, required this.name});
+
+  @override
+  String toString() {
+    return 'DoctorPicklistItem{index: $index, id: $id, name: $name}';
+  }
+}
+
 class _PatientSignUpPageState extends State<PatientSignUpPage> {
   TextEditingController tfUsername = TextEditingController();
   TextEditingController tfPassword = TextEditingController();
   TextEditingController tfName = TextEditingController();
   TextEditingController tfLastname = TextEditingController();
 
-  // int selectedDiabeticTypeValue = -1;
-  _DiabeticyTypeDropdownMenuButton diabeticTypeDropDownMenu =
-      _DiabeticyTypeDropdownMenuButton();
-
-  // int diseaseId=
-  // var DiseaseDropdownButton =  _DiabeticyTypeDropdownMenuButton();
+  _DiabeticTypeDropdownMenuButton diabeticTypeDropDownMenu =
+      _DiabeticTypeDropdownMenuButton();
+  _DoctorDropdownMenuButton doctorDropDownMenu = _DoctorDropdownMenuButton();
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +68,7 @@ class _PatientSignUpPageState extends State<PatientSignUpPage> {
                 child: Column(
                   children: [
                     diabeticTypeDropDownMenu,
-
+                    doctorDropDownMenu,
                     _FormInputTextField(
                         hintText: "Username",
                         controller: tfUsername,
@@ -70,8 +83,8 @@ class _PatientSignUpPageState extends State<PatientSignUpPage> {
                         hintText: "Lastname",
                         controller: tfLastname,
                         obscure: false),
-                    // const _DiabeticyTypeDropdownMenuButton(),
-                    /*_DiabeticyTypeDropdownMenuButton(
+                    // const _DiabeticTypeDropdownMenuButton(),
+                    /*_DiabeticTypeDropdownMenuButton(
                         selectedDiabeticTypeValue: selectedDiabeticTypeValue),*/
                     _SignUpButton(
                       formKey: _formKey,
@@ -80,6 +93,7 @@ class _PatientSignUpPageState extends State<PatientSignUpPage> {
                       tfName: tfName,
                       tfLastname: tfLastname,
                       selectedDiabeticType: diabeticTypeDropDownMenu,
+                      selectedDoctorId: doctorDropDownMenu,
                     )
                   ],
                 ),
@@ -92,21 +106,138 @@ class _PatientSignUpPageState extends State<PatientSignUpPage> {
   }
 }
 
-class _DiabeticyTypeDropdownMenuButton extends StatefulWidget {
-  int selectedDiabeticTypeValue = -1;
-
-  _DiabeticyTypeDropdownMenuButton();
+class _DoctorDropdownMenuButton extends StatefulWidget {
+  int selectedDoctorId = 0;
+  List<Doctor> doctorList = [];
+  List<DoctorPicklistItem> items = [
+    DoctorPicklistItem(index: 0, id: 0, name: "Select Doctor")
+  ];
 
   @override
-  State<_DiabeticyTypeDropdownMenuButton> createState() =>
-      _DiabeticyTypeDropdownMenuButtonState();
+  State<_DoctorDropdownMenuButton> createState() =>
+      _DoctorDropdownMenuButtonState();
 }
 
-class _DiabeticyTypeDropdownMenuButtonState
-    extends State<_DiabeticyTypeDropdownMenuButton> {
-  bool isDiabeticTypeConfirmed = false;
+class _DoctorDropdownMenuButtonState extends State<_DoctorDropdownMenuButton> {
+  @override
+  void initState() {
+    super.initState();
+    retriveDoctorList();
+  }
+
+  void retriveDoctorList() async {
+    // isLoading = true;
+    setState(() {});
+    var resp = await HttpRequestDoctor.getDoctorList();
+    // isLoading = false;
+    setState(() {
+      widget.doctorList = resp;
+      int index = 0;
+      resp.forEach((element) {
+        index++;
+        widget.items.add(
+          DoctorPicklistItem(
+              index: index,
+              id: element.id,
+              name: "${element.name} ${element.lastname}"),
+        );
+      });
+    });
+  }
+
+  /*DropdownMenuItem<int> buildMenuItem(int id) => DropdownMenuItem(
+      value: id,
+      child: Text(
+        items[id].name,
+        style: TextStyle(fontSize: ResponsiveDesign.getScreenWidth() / 23),
+      ));*/
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: ResponsiveDesign.getScreenWidth() / 1.5,
+      child: Container(
+        margin:
+            EdgeInsets.only(bottom: ResponsiveDesign.getScreenHeight() / 25),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.black, width: 2),
+        ),
+        child: Padding(
+          padding: EdgeInsets.only(
+              left: ResponsiveDesign.getScreenWidth() / 30,
+              right: ResponsiveDesign.getScreenWidth() / 30),
+          child: Center(
+            child: DropdownButtonHideUnderline(
+              child: DropdownButtonFormField<int>(
+                iconSize: ResponsiveDesign.getScreenWidth() / 15,
+                value: widget.selectedDoctorId,
+                items: widget.items
+                    .map((e) => DropdownMenuItem(
+                          value: e.index,
+                          child: Text(e.name,
+                              style: TextStyle(
+                                  fontSize:
+                                      ResponsiveDesign.getScreenWidth() / 23)),
+                        ))
+                    .toList(),
+                onChanged: (value) {
+                  setState(() {
+                    widget.selectedDoctorId = value!;
+                    if (widget.selectedDoctorId > 0) {
+                      validateItemWithAlertDialog(
+                          selectedItemIndex: widget.selectedDoctorId);
+                      // print("confirmed : $isDiabeticTypeConfirmed");
+                    }
+                  });
+                },
+                validator: (data) {
+                  if (data == null || data == 0) {
+                    return "Select Doctor";
+                  }
+
+                  return null;
+                },
+                isExpanded: true,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void validateItemWithAlertDialog({required int selectedItemIndex}) async {
+    var result = await showDialog(
+        context: context,
+        builder: (builder) => CustomAlertDialog.getAlertDialogValidateProcess(
+            context: context,
+            title: "Doctor Validation",
+            msg: "Are you sure you want to select",
+            selectedItemName: widget.items[selectedItemIndex].name,
+            roleId: EnumUserRole.DOCTOR.roleId));
+    if (result == null || !result) {
+      setState(() {
+        widget.selectedDoctorId = 0;
+      });
+    }
+    // ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar.getSnackBar("result : $isConfirmed"));
+  }
+}
+
+class _DiabeticTypeDropdownMenuButton extends StatefulWidget {
+  int selectedDiabeticTypeValue = 0;
+
+  _DiabeticTypeDropdownMenuButton();
+
+  @override
+  State<_DiabeticTypeDropdownMenuButton> createState() =>
+      _DiabeticTypeDropdownMenuButtonState();
+}
+
+class _DiabeticTypeDropdownMenuButtonState
+    extends State<_DiabeticTypeDropdownMenuButton> {
   final items = [
-    -1,
+    0,
     EnumDiabeticType.TIP_1.id,
     EnumDiabeticType.TIP_2.id,
     EnumDiabeticType.HIPOGLISEMI.id,
@@ -139,14 +270,15 @@ class _DiabeticyTypeDropdownMenuButtonState
               child: DropdownButtonFormField<int>(
                 iconSize: ResponsiveDesign.getScreenWidth() / 15,
                 value: widget.selectedDiabeticTypeValue,
+                //widget.selectedDiabeticTypeValue,
                 items: items.map(buildMenuItem).toList(),
                 onChanged: (value) {
                   setState(() {
                     widget.selectedDiabeticTypeValue = value!;
-                    if (widget.selectedDiabeticTypeValue > -1) {
+                    if (widget.selectedDiabeticTypeValue > 0) {
                       validateItemWithAlertDialog(
                           selectedItemIndex: widget.selectedDiabeticTypeValue);
-                      print("confirmed : $isDiabeticTypeConfirmed");
+                      // print("confirmed : $isDiabeticTypeConfirmed");
                     }
                   });
                 },
@@ -155,15 +287,8 @@ class _DiabeticyTypeDropdownMenuButtonState
                     return "Select Diabetic Type";
                   }
 
-                  // if (data.length < _TextFieldInputLength.min) {
-                  // return "Please enter ${_TextFieldInputLength.min} or more  character";
-                  // }
-                  // if (data.length > _TextFieldInputLength.max) {
-                  // return "Please enter ${_TextFieldInputLength.max} or less  character";
-                  // }
                   return null;
                 },
-                // hint: const Text("Select Diabetic Type"),
                 isExpanded: true,
               ),
             ),
@@ -174,6 +299,7 @@ class _DiabeticyTypeDropdownMenuButtonState
   }
 
   void validateItemWithAlertDialog({required int selectedItemIndex}) async {
+    print("SELECTED ITEM : ${widget.selectedDiabeticTypeValue}");
     var result = await showDialog(
         context: context,
         builder: (builder) => CustomAlertDialog.getAlertDialogValidateProcess(
@@ -182,13 +308,15 @@ class _DiabeticyTypeDropdownMenuButtonState
             msg: "Are you sure you want to select",
             selectedItemName: EnumDiabeticType.getTypeName(selectedItemIndex),
             roleId: EnumUserRole.PATIENT.roleId));
-    print("Result $result");
     if (result == null || !result) {
+      /*ScaffoldMessenger.of(context)
+          .showSnackBar(CustomSnackBar.getSnackBar("result : $result"));*/
+
       setState(() {
-        widget.selectedDiabeticTypeValue = -1;
+        widget.selectedDiabeticTypeValue = 0;
       });
     }
-    // ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar.getSnackBar("result : $isConfirmed"));
+    print("SELECTED NO ANSWER  ITEM : ${widget.selectedDiabeticTypeValue}");
   }
 }
 
@@ -216,7 +344,8 @@ class _FormInputTextField extends StatelessWidget {
 
 class _SignUpButton extends StatelessWidget {
   final TextEditingController tfUsername, tfPassword, tfName, tfLastname;
-  final _DiabeticyTypeDropdownMenuButton selectedDiabeticType;
+  final _DiabeticTypeDropdownMenuButton selectedDiabeticType;
+  final _DoctorDropdownMenuButton selectedDoctorId;
   GlobalKey<FormState> formKey;
 
   _SignUpButton(
@@ -225,7 +354,8 @@ class _SignUpButton extends StatelessWidget {
       required this.tfPassword,
       required this.tfName,
       required this.tfLastname,
-      required this.selectedDiabeticType}); //({super.key /*,required this.screenInfo*/});
+      required this.selectedDiabeticType,
+      required this.selectedDoctorId}); //({super.key /*,required this.screenInfo*/});
 
   @override
   Widget build(BuildContext context) {
@@ -234,7 +364,7 @@ class _SignUpButton extends StatelessWidget {
         height: ResponsiveDesign.getScreenHeight() / 15,
         child: ElevatedButton(
             onPressed: () {
-              _signUpProcess(context, selectedDiabeticType);
+              _signUpProcess(context, selectedDiabeticType, selectedDoctorId);
             },
             style: ButtonStyle(
                 backgroundColor:
@@ -250,8 +380,19 @@ class _SignUpButton extends StatelessWidget {
     _formKey.currentState!.reset();
   }
 
-  void _signUpProcess(BuildContext context,
-      _DiabeticyTypeDropdownMenuButton diabeticTypeDropDownMenu) async {
+  void resetPageInputs(
+      List<TextEditingController> list,
+      _DoctorDropdownMenuButton doctorDropDown,
+      _DiabeticTypeDropdownMenuButton diabeticDropDown) {
+    list.forEach((e) => e.text = "");
+    doctorDropDown.selectedDoctorId = 0;
+    diabeticDropDown.selectedDiabeticTypeValue = 0;
+  }
+
+  void _signUpProcess(
+      BuildContext context,
+      _DiabeticTypeDropdownMenuButton diabeticTypeDropDownMenu,
+      _DoctorDropdownMenuButton doctorDropdownMenu) async {
     bool controlResult = formKey.currentState!.validate();
     if (controlResult) {
       String username = tfUsername.text;
@@ -259,7 +400,9 @@ class _SignUpButton extends StatelessWidget {
       String name = tfName.text;
       String lastname = tfLastname.text;
       int diabeticTypeId = diabeticTypeDropDownMenu.selectedDiabeticTypeValue;
-      int doctorId = SharedPref.sp.getInt("id") ?? -1;
+      int doctorId =
+          doctorDropdownMenu.items[doctorDropdownMenu.selectedDoctorId].id;
+
       var request = HttpRequestPatient();
       Patient patient = Patient(
           id: 0,
@@ -282,15 +425,13 @@ class _SignUpButton extends StatelessWidget {
           User user = UserFactory.createUser(respEntity.data);
           showAlertDialogDoctorSignUpSuccessfully(
               context: context, msg: respEntity.message);
-          /*         List<TextEditingController> list = [
+          List<TextEditingController> list = [
             tfUsername,
             tfPassword,
             tfName,
             tfLastname
           ];
-          resetTextFields(list);*/
-          // formKey.currentState?.reset();
-          // resetFormData();
+          resetPageInputs(list, doctorDropdownMenu, diabeticTypeDropDownMenu);
         }
       });
     }
