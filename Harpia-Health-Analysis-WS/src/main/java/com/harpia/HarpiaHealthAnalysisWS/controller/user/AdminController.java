@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/admins")
 @CrossOrigin
 public class AdminController {
-    protected static final Logger log = LoggerFactory.getLogger(AdminController.class);
+    private static final Logger log = LoggerFactory.getLogger(AdminController.class);
     @Autowired
     private UserService service;
 

@@ -40,4 +40,5 @@ public class BloodResult {
                 ", bloodPresure=" + bloodPresure +
                 '}';
     }
+
 }

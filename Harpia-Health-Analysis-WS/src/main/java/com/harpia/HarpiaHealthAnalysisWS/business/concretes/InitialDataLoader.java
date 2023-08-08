@@ -2,13 +2,16 @@ package com.harpia.HarpiaHealthAnalysisWS.business.concretes;
 
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.diabetic.BloodResultService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.diabetic.DiabeticService;
+import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.timer.PatientTimerService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.user.UserRoleService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.user.UserService;
+import com.harpia.HarpiaHealthAnalysisWS.controller.timer.PatientTimerController;
 import com.harpia.HarpiaHealthAnalysisWS.controller.user.PatientController;
 import com.harpia.HarpiaHealthAnalysisWS.model.bloodresult.BloodResult;
 import com.harpia.HarpiaHealthAnalysisWS.model.diabetic.Diabetic;
 import com.harpia.HarpiaHealthAnalysisWS.model.enums.EnumDiabeticType;
 import com.harpia.HarpiaHealthAnalysisWS.model.enums.EnumUserRole;
+import com.harpia.HarpiaHealthAnalysisWS.model.timer.PatientTimer;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.Admin;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.Doctor;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.Patient;
@@ -46,6 +49,8 @@ public class InitialDataLoader implements CommandLineRunner {
     private UserRoleService roleService;
     @Autowired
     private DiabeticService diabeticService;
+    @Autowired
+    private PatientTimerController timerController;
     private static final Logger log = LoggerFactory.getLogger(InitialDataLoader.class);
 
     private static Random random = new Random();
@@ -58,6 +63,21 @@ public class InitialDataLoader implements CommandLineRunner {
         saveUserData(getDoctorList());
         saveUserData(getPatientList());
         saveBloodResult();
+        savePatientTimer();
+    }
+
+    private void savePatientTimer() {
+        List<Patient> patientList = (List<Patient>) patientController.getPatientList().getBody().getData();
+        List<PatientTimer> patientTimerList = new ArrayList<>();
+        patientList.forEach(e -> {
+            PatientTimer timer = new PatientTimer(0, random.nextInt(24), (random.nextInt(59) + 1),e.getId());
+            patientTimerList.add(timer);
+        });
+        int firstPatientIndex=(patientTimerList.size()-1);
+        patientTimerList.set(firstPatientIndex,new PatientTimer(0,0, 0,patientList.get(firstPatientIndex).getId()));
+        System.out.println("-------------------------------- "+patientTimerList.get(0));
+        System.out.println("-------------------------------- "+patientTimerList.get(patientTimerList.size()-1));
+        patientTimerList.forEach(e -> log.info(timerController.savePatientTimer(e).toString()));
     }
 
     private void saveBloodResult() {
@@ -92,6 +112,7 @@ public class InitialDataLoader implements CommandLineRunner {
             return false;
         return true;
     }
+
     private void saveUserData(List<User> list) {
         for (int i = 0; i < list.size(); i++) {
             String username = list.get(i).getUsername();
@@ -103,6 +124,7 @@ public class InitialDataLoader implements CommandLineRunner {
             }
         }
     }
+
     private List<UserRole> getStandartUserRoleList() {
         List<UserRole> list = new ArrayList<>();
         list.add(new UserRole(1, EnumUserRole.ADMIN.getName()));
@@ -110,6 +132,7 @@ public class InitialDataLoader implements CommandLineRunner {
         list.add(new UserRole(3, EnumUserRole.PATIENT.getName()));
         return list;
     }
+
     private List<Diabetic> getDiabeticTypeList() {
         List<Diabetic> list = new ArrayList<>();
         list.add(new Diabetic(1, EnumDiabeticType.TIP_1.getName()));
@@ -118,6 +141,7 @@ public class InitialDataLoader implements CommandLineRunner {
         list.add(new Diabetic(4, EnumDiabeticType.HIPERGLISEMI.getName()));
         return list;
     }
+
     private List<User> getAdminList() {
         List<User> list = new ArrayList<>();
         User admin = new Admin();
