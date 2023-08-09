@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/timer")
+@RequestMapping("/doctors/patient/timer")
 @CrossOrigin
 public class PatientTimerController {
 
@@ -37,10 +37,11 @@ public class PatientTimerController {
         }
 //        timer = service.save(timer);
         DataResult result = new SuccessDataResult(newPatientTimer, msg);
+        log.info("RESULT : "+result);
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
-    @GetMapping("/patient/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<DataResult<PatientTimer>> findPatientTimerByPatientId(@PathVariable long id) {
         PatientTimer timer = service.findByPatientId(id);
         String msg = "PatientTimer belongs to Patient ID " + id + " is retrived";
