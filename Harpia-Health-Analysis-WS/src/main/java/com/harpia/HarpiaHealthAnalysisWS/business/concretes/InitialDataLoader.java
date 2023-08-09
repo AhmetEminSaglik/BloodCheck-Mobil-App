@@ -1,5 +1,6 @@
 package com.harpia.HarpiaHealthAnalysisWS.business.concretes;
 
+import com.harpia.HarpiaHealthAnalysisWS.business.FakeSensors;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.diabetic.BloodResultService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.diabetic.DiabeticService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.timer.PatientTimerService;
@@ -62,21 +63,24 @@ public class InitialDataLoader implements CommandLineRunner {
 //         rest is the fake data
         saveUserData(getDoctorList());
         saveUserData(getPatientList());
-        saveBloodResult();
+//        saveBloodResult();
         savePatientTimer();
+//        List<PatientTimer> patientTimerList =timerController.findAllPatientTimers().getBody().getData();
+        FakeSensors fakeSensors = new FakeSensors();
+        fakeSensors.runFakeSensors(timerController.findAllPatientTimers().getBody().getData(), bloodResultService);
     }
 
     private void savePatientTimer() {
         List<Patient> patientList = (List<Patient>) patientController.getPatientList().getBody().getData();
         List<PatientTimer> patientTimerList = new ArrayList<>();
         patientList.forEach(e -> {
-            PatientTimer timer = new PatientTimer(0, random.nextInt(24), (random.nextInt(59) + 1),e.getId());
+            PatientTimer timer = new PatientTimer(0, random.nextInt(24), (random.nextInt(59) + 1), e.getId());
             patientTimerList.add(timer);
         });
-        int firstPatientIndex=(patientTimerList.size()-1);
-        patientTimerList.set(firstPatientIndex,new PatientTimer(0,0, 0,patientList.get(firstPatientIndex).getId()));
-        System.out.println("-------------------------------- "+patientTimerList.get(0));
-        System.out.println("-------------------------------- "+patientTimerList.get(patientTimerList.size()-1));
+//        int firstPatientIndex = (patientTimerList.size() - 1);
+//        patientTimerList.set(firstPatientIndex, new PatientTimer(0, 0, 0, patientList.get(firstPatientIndex).getId()));
+        System.out.println("-------------------------------- " + patientTimerList.get(0));
+        System.out.println("-------------------------------- " + patientTimerList.get(patientTimerList.size() - 1));
         patientTimerList.forEach(e -> log.info(timerController.savePatientTimer(e).toString()));
     }
 

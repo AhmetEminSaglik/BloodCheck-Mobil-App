@@ -11,9 +11,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 //@RequestMapping("/doctors/patient/timer")
-@RequestMapping("/timers/doctor/patient")
+@RequestMapping("/timers/doctors/patients")
 @CrossOrigin
 public class PatientTimerController {
 
@@ -38,7 +41,7 @@ public class PatientTimerController {
         }
 //        timer = service.save(timer);
         DataResult result = new SuccessDataResult(newPatientTimer, msg);
-        log.info("RESULT : "+result);
+        log.info("RESULT : " + result);
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
@@ -49,5 +52,12 @@ public class PatientTimerController {
         DataResult result = new SuccessDataResult(timer, msg);
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
-//    @GetMapping
+
+    @GetMapping
+    public ResponseEntity<DataResult<List<PatientTimer>>> findAllPatientTimers() {
+        List<PatientTimer> list = service.findAll();
+        String msg = "All patientTimers are retrived";
+        DataResult result = new SuccessDataResult(list, msg);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
 }

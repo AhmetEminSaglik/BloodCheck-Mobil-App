@@ -41,4 +41,43 @@ public class BloodResult {
                 '}';
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public long getPatientId() {
+        return patientId;
+    }
+
+    public void setPatientId(long patientId) {
+        this.patientId = patientId;
+    }
+
+    public int getBloodSugar() {
+        return bloodSugar;
+    }
+
+    public void setBloodSugar(int bloodSugar) {
+        this.bloodSugar = bloodSugar;
+    }
+
+    public int getBloodPresure() {
+        return bloodPresure;
+    }
+
+    public void setBloodPresure(int bloodPresure) {
+        this.bloodPresure = bloodPresure;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
 }

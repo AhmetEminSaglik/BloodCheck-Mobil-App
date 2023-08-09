@@ -6,6 +6,8 @@ import com.harpia.HarpiaHealthAnalysisWS.model.timer.PatientTimer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PatientTimerManager implements PatientTimerService {
     @Autowired
@@ -27,5 +29,10 @@ public class PatientTimerManager implements PatientTimerService {
     @Override
     public PatientTimer findByPatientId(long patientId) {
         return repoSitory.findByPatientId(patientId);
+    }
+
+    @Override
+    public List<PatientTimer> findAll() {
+        return repoSitory.findAll();
     }
 }
