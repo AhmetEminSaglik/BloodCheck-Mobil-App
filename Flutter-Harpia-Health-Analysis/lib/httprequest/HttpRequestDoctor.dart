@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter_harpia_health_analysis/httprequest/BaseHttpRequest.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/ResponseEntity.dart';
 import 'package:flutter_harpia_health_analysis/business/factory/UserFactory.dart';
@@ -51,7 +52,7 @@ class HttpRequestDoctor {
   /*Future<http.Response>*/
   static Future<http.Response> savePatientTimer(
       PatientTimer patientTimer) async {
-    Uri url = Uri.parse("$_baseUrl/patient/timer");
+    Uri url = Uri.parse("${BaseHttpRequestConfig.baseUrl}/timers/doctor/patient");
     print("URL : ${url}");
     // var requestData = {"username": username, "password": password};
     Map<String, dynamic> requestData = {

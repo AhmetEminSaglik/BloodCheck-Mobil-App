@@ -53,7 +53,9 @@ class _ListviewBuilderPatientState extends State<ListviewBuilderPatient> {
             onRefresh: () async {
               retrivePatientList();
             },
-            child: getBodyForPatientListView(patientList)));
+            child: isLoading
+            ? Center(child: CircularProgressIndicator())
+        : getBodyForPatientListView(patientList),));
   }
 }
 

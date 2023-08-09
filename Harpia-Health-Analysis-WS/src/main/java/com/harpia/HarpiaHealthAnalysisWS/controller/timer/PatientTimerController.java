@@ -12,7 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/doctors/patient/timer")
+//@RequestMapping("/doctors/patient/timer")
+@RequestMapping("/timers/doctor/patient")
 @CrossOrigin
 public class PatientTimerController {
 
@@ -48,4 +49,5 @@ public class PatientTimerController {
         DataResult result = new SuccessDataResult(timer, msg);
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
+//    @GetMapping
 }

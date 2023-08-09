@@ -39,13 +39,15 @@ class _ListviewBuilderDoctorState extends State<ListviewBuilderDoctor> {
         .read<AppBarCubit>()
         .setTitleRoleNameWithPageListSize(doctorList.length);*/
     return Scaffold(
-      backgroundColor: ProductColor.bodyBackground,
+        backgroundColor: ProductColor.bodyBackground,
         body: RefreshIndicator(
-      onRefresh: () async {
-        retriveDoctorList();
-      },
-      child: getBodyDoctorListview(doctorList),
-    ));
+          onRefresh: () async {
+            retriveDoctorList();
+          },
+          child: isLoading
+              ? Center(child: CircularProgressIndicator())
+              : getBodyDoctorListview(doctorList),
+        ));
   }
 }
 
