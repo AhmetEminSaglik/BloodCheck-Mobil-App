@@ -84,10 +84,15 @@ class _HomePagePatientState extends State<HomePagePatient> {
             ));
     // if (resp is PatientTimerAlertBoxRespond) {
     //   print("resp.result ${resp.result}");
-    if (resp.result) {
+    if (resp != null && resp.result) {
       print("patientId : ${widget.patientId}");
       resp.patientTimer.patientId = widget.patientId;
       sendRequestToSavePatientTimer(resp.patientTimer);
+    } else {
+      String msg = "Patient Timer setup is cancelled";
+      print(msg);
+      ScaffoldMessenger.of(context)
+          .showSnackBar(CustomSnackBar.getSnackBar(msg));
     }
     // }
 /*print("resp $resp");
