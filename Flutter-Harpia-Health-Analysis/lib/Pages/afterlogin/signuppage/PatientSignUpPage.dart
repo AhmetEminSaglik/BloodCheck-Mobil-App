@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestPatient.dart';
 import 'package:flutter_harpia_health_analysis/model/diesease/EnumDiabeticType.dart';
 import 'package:flutter_harpia_health_analysis/model/userrole/EnumUserRole.dart';
@@ -54,6 +55,7 @@ class _PatientSignUpPageState extends State<PatientSignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ProductColor.bodyBackground,
       body: Padding(
         padding: EdgeInsets.only(
             left: ResponsiveDesign.getScreenWidth() / 25,
@@ -162,42 +164,48 @@ class _DoctorDropdownMenuButtonState extends State<_DoctorDropdownMenuButton> {
         decoration: BoxDecoration(
           border: Border.all(color: Colors.black, width: 2),
         ),
-        child: Padding(
-          padding: EdgeInsets.only(
-              left: ResponsiveDesign.getScreenWidth() / 30,
-              right: ResponsiveDesign.getScreenWidth() / 30),
-          child: Center(
-            child: DropdownButtonHideUnderline(
-              child: DropdownButtonFormField<int>(
-                iconSize: ResponsiveDesign.getScreenWidth() / 15,
-                value: widget.selectedDoctorId,
-                items: widget.items
-                    .map((e) => DropdownMenuItem(
-                          value: e.index,
-                          child: Text(e.name,
-                              style: TextStyle(
-                                  fontSize:
-                                      ResponsiveDesign.getScreenWidth() / 23)),
-                        ))
-                    .toList(),
-                onChanged: (value) {
-                  setState(() {
-                    widget.selectedDoctorId = value!;
-                    if (widget.selectedDoctorId > 0) {
-                      validateItemWithAlertDialog(
-                          selectedItemIndex: widget.selectedDoctorId);
-                      // print("confirmed : $isDiabeticTypeConfirmed");
+        child: Container(
+          color: ProductColor.white,
+          child: Padding(
+            padding: EdgeInsets.only(
+                left: ResponsiveDesign.getScreenWidth() / 30,
+                right: ResponsiveDesign.getScreenWidth() / 30),
+            child: Center(
+              child: DropdownButtonHideUnderline(
+                child: DropdownButtonFormField<int>(
+                  // style: ButtonStyle(backgroundColor: Colors.red),
+                  decoration: InputDecoration(enabledBorder: InputBorder.none),
+                  iconSize: ResponsiveDesign.getScreenWidth() / 15,
+                  value: widget.selectedDoctorId,
+                  items: widget.items
+                      .map((e) => DropdownMenuItem(
+                            value: e.index,
+                            child: Text(e.name,
+                                style: TextStyle(
+                                    fontSize:
+                                        ResponsiveDesign.getScreenWidth() /
+                                            23)),
+                          ))
+                      .toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      widget.selectedDoctorId = value!;
+                      if (widget.selectedDoctorId > 0) {
+                        validateItemWithAlertDialog(
+                            selectedItemIndex: widget.selectedDoctorId);
+                        // print("confirmed : $isDiabeticTypeConfirmed");
+                      }
+                    });
+                  },
+                  validator: (data) {
+                    if (data == null || data == 0) {
+                      return "Select Doctor";
                     }
-                  });
-                },
-                validator: (data) {
-                  if (data == null || data == 0) {
-                    return "Select Doctor";
-                  }
 
-                  return null;
-                },
-                isExpanded: true,
+                    return null;
+                  },
+                  isExpanded: true,
+                ),
               ),
             ),
           ),
@@ -261,35 +269,40 @@ class _DiabeticTypeDropdownMenuButtonState
         decoration: BoxDecoration(
           border: Border.all(color: Colors.black, width: 2),
         ),
-        child: Padding(
-          padding: EdgeInsets.only(
-              left: ResponsiveDesign.getScreenWidth() / 30,
-              right: ResponsiveDesign.getScreenWidth() / 30),
-          child: Center(
-            child: DropdownButtonHideUnderline(
-              child: DropdownButtonFormField<int>(
-                iconSize: ResponsiveDesign.getScreenWidth() / 15,
-                value: widget.selectedDiabeticTypeValue,
-                //widget.selectedDiabeticTypeValue,
-                items: items.map(buildMenuItem).toList(),
-                onChanged: (value) {
-                  setState(() {
-                    widget.selectedDiabeticTypeValue = value!;
-                    if (widget.selectedDiabeticTypeValue > 0) {
-                      validateItemWithAlertDialog(
-                          selectedItemIndex: widget.selectedDiabeticTypeValue);
-                      // print("confirmed : $isDiabeticTypeConfirmed");
+        child: Container(
+          color: ProductColor.white,
+          child: Padding(
+            padding: EdgeInsets.only(
+                left: ResponsiveDesign.getScreenWidth() / 30,
+                right: ResponsiveDesign.getScreenWidth() / 30),
+            child: Center(
+              child: DropdownButtonHideUnderline(
+                child: DropdownButtonFormField<int>(
+                  decoration: InputDecoration(enabledBorder: InputBorder.none),
+                  iconSize: ResponsiveDesign.getScreenWidth() / 15,
+                  value: widget.selectedDiabeticTypeValue,
+                  //widget.selectedDiabeticTypeValue,
+                  items: items.map(buildMenuItem).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      widget.selectedDiabeticTypeValue = value!;
+                      if (widget.selectedDiabeticTypeValue > 0) {
+                        validateItemWithAlertDialog(
+                            selectedItemIndex:
+                                widget.selectedDiabeticTypeValue);
+                        // print("confirmed : $isDiabeticTypeConfirmed");
+                      }
+                    });
+                  },
+                  validator: (data) {
+                    if (data == null || data == 0) {
+                      return "Select Diabetic Type";
                     }
-                  });
-                },
-                validator: (data) {
-                  if (data == null || data < 0) {
-                    return "Select Diabetic Type";
-                  }
 
-                  return null;
-                },
-                isExpanded: true,
+                    return null;
+                  },
+                  isExpanded: true,
+                ),
               ),
             ),
           ),
@@ -376,9 +389,10 @@ class _SignUpButton extends StatelessWidget {
                     fontSize: ResponsiveDesign.getScreenWidth() / 20))));
   }
 
-  void resetFormData() {
-    _formKey.currentState!.reset();
-  }
+  // void resetFormData() {
+  //   _formKey.currentState!.reset();
+  // }
+  //
 
   void resetPageInputs(
       List<TextEditingController> list,
@@ -495,6 +509,10 @@ class _InputTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      // inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]"))],
+      inputFormatters: <TextInputFormatter>[
+        FilteringTextInputFormatter.allow(RegExp('[a-z A-Z 0-9]'))
+      ],
       maxLength: _TextFieldInputLength.max,
       controller: textEditController,
       obscureText: obscureText,

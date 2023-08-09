@@ -6,6 +6,7 @@ import 'package:flutter_harpia_health_analysis/model/EnumUserProp.dart';
 import 'package:flutter_harpia_health_analysis/util/SharedPref.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../util/SafeLogoutDrawerItem.dart';
+import '../../../../util/Utils.dart';
 
 class PatientDrawer extends StatefulWidget {
   @override
@@ -20,7 +21,9 @@ class _PatientDrawerState extends State<PatientDrawer> {
   static String name = SharedPref.sp.getString(EnumUserProp.NAME.name);
   static String lastname = SharedPref.sp.getString(EnumUserProp.LASTNAME.name);
   var pageList = [
-    HomePagePatient(displayNamePatientPage: "$name $lastname"),
+    HomePagePatient(
+        patientId: SharedPrefUtils.getUserId(),
+        displayNamePatientPage: "$name $lastname"),
     const PatientProfile()
   ];
   int selectedIndex = 0;

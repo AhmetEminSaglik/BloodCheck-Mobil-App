@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestDoctor.dart';
 import 'package:flutter_harpia_health_analysis/model/user/Doctor.dart';
 import 'package:flutter_harpia_health_analysis/model/userrole/EnumUserRole.dart';
@@ -27,6 +28,7 @@ class _DoctorSignUpPageState extends State<DoctorSignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ProductColor.bodyBackground,
       body: Padding(
         padding: EdgeInsets.only(
             left: ResponsiveDesign.getScreenWidth() / 25,
@@ -226,6 +228,10 @@ class _InputTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      // inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]"))],
+      inputFormatters: <TextInputFormatter>[
+        FilteringTextInputFormatter.allow(RegExp('[a-z A-Z 0-9]'))
+      ],
       maxLength: _TextFieldInputLength.max,
       controller: textEditController,
       obscureText: obscureText,

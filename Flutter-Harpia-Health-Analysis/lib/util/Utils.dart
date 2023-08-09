@@ -8,6 +8,10 @@ class SharedPrefUtils {
   static int getRoleId() {
     return SharedPref.sp.getInt(EnumUserProp.ROLE_ID.name);
   }
+
+  static int getUserId() {
+    return SharedPref.sp.getInt(EnumUserProp.ID.name);
+  }
 }
 
 class CustomListViewItemColor {
@@ -17,7 +21,7 @@ class CustomListViewItemColor {
       return index % 2 == 0 ? Colors.cyanAccent : Colors.tealAccent;
     } else if (colorindex == 2) {
       // return index % 2 == 0 ? ProductColor.white : Colors.orangeAccent;
-      return index % 2 == 0 ? ProductColor.white : ProductColor.dartWhite;
+      return index % 2 == 0 ? ProductColor.white : ProductColor.darkWhite;
     } else if (colorindex == 3) {
       return index % 2 == 0 ? Colors.white54 : Colors.white70;
     } else if (colorindex == 4) {

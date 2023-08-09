@@ -5,6 +5,7 @@ import '../../../../../core/ResponsiveDesign.dart';
 import '../../../../../httprequest/HttpRequestPatient.dart';
 import '../../../../../model/diesease/EnumDiabeticType.dart';
 import '../../../../../model/user/Patient.dart';
+import '../../../../../util/ProductColor.dart';
 import '../../users/HomePagePatient.dart';
 
 class ListviewBuilderPatient extends StatefulWidget {
@@ -47,7 +48,7 @@ class _ListviewBuilderPatientState extends State<ListviewBuilderPatient> {
         .read<AppBarCubit>()
         .setTitleRoleNameWithPageListSize(patientList.length);*/
     return Scaffold(
-        backgroundColor: Colors.cyan,
+        backgroundColor: ProductColor.bodyBackground,
         body: RefreshIndicator(
             onRefresh: () async {
               retrivePatientList();
@@ -86,6 +87,7 @@ Widget getBodyForPatientListView(List<Patient> patientList) {
                 navigateToPatientChartPage(
                     context: context,
                     routePage: HomePagePatient(
+                        patientId: patientList[index].id,
                         displayNamePatientPage:
                             "${patientList[index].name} ${patientList[index].lastname}"));
               },
@@ -142,11 +144,13 @@ class ListViewItemText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: ResponsiveDesign.getScreenWidth() / 25),
+      padding: EdgeInsets.only(left: ResponsiveDesign.getScreenWidth() / 35),
       child: Text(
         text,
         style: TextStyle(
-          fontSize: ResponsiveDesign.getScreenHeight() / 40,
+          fontSize: isBold
+              ? ResponsiveDesign.getScreenHeight() / 47
+              : ResponsiveDesign.getScreenHeight() / 40,
           fontWeight: isBold ? FontWeight.bold : null,
         ),
       ),

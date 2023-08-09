@@ -33,7 +33,9 @@ class DrawerCubit extends Cubit<Widget> {
       int doctorId = SharedPref.sp.getInt(EnumUserProp.ID.name) ?? -1;
       return HomePageDoctor(doctorId: doctorId);
     } else if (userRoleId == EnumUserRole.PATIENT.roleId) {
-      return const HomePagePatient(displayNamePatientPage: "My Disease Chart");
+      return HomePagePatient(
+          patientId: SharedPrefUtils.getUserId(),
+          displayNamePatientPage: "My Disease Chart");
     }
     return const Text("Unknow UserRoleType is login");
   }

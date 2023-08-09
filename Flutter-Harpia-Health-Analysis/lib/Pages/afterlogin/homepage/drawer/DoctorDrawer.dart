@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/drawer/DrawerCubit.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/profile/DoctorProfile.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_harpia_health_analysis/Pages/afterlogin/signuppage/PatientSignUpPage.dart';
 import '../../../../model/EnumUserProp.dart';
 import '../../../../util/SafeLogoutDrawerItem.dart';
 import '../../../../util/SharedPref.dart';

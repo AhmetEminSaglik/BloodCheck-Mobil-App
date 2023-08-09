@@ -24,6 +24,7 @@ class _HomePageState extends State<HomePage> {
         }),
       ),
       drawer: const MainDrawer(),
+      backgroundColor: ProductColor.bodyBackground,
       body: CustomScrollView(
         slivers: [
           SliverFillRemaining(

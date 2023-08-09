@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter_harpia_health_analysis/httprequest/BaseHttpRequest.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/ResponseEntity.dart';
 import 'package:flutter_harpia_health_analysis/business/factory/UserFactory.dart';
+import 'package:flutter_harpia_health_analysis/model/specialitem/doctor/PatientTimer.dart';
 import 'package:flutter_harpia_health_analysis/model/user/Doctor.dart';
 import 'package:flutter_harpia_health_analysis/model/user/Patient.dart';
 import 'package:flutter_harpia_health_analysis/util/HttpUtil.dart';
@@ -45,6 +46,23 @@ class HttpRequestDoctor {
     print('resp : $resp');
     print('resp.body : ${resp.body}');
     return resp;
+  }
+
+  /*Future<http.Response>*/
+  static Future<http.Response> savePatientTimer(
+      PatientTimer patientTimer) async {
+    Uri url = Uri.parse("$_baseUrl/patient/timer");
+    print("URL : ${url}");
+    // var requestData = {"username": username, "password": password};
+    Map<String, dynamic> requestData = {
+      "hours": patientTimer.hours,
+      "minutes": patientTimer.minutes,
+      "patientId": patientTimer.patientId,
+    };
+    var resp = await http.post(url,
+        headers: HttpUtil.header, body: jsonEncode(requestData));
+    return resp;
+    // return resp;
   }
 // Future<http.Response> login(String username, String password) async {
 //   Uri url = Uri.parse("$_baseUrl/user/login");

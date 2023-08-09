@@ -21,7 +21,7 @@ enum EnumDiabeticType {
       case 4:
       return EnumDiabeticType.HIPERGLISEMI.name;
       default:
-      return "Invalid Disease Type";
+      return "Invalid Diabetic Type";
       }
 
   }

@@ -1,8 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_harpia_health_analysis/core/ResponsiveDesign.dart';
+import 'package:flutter_harpia_health_analysis/model/specialitem/doctor/PatientTimer.dart';
+import 'package:flutter_harpia_health_analysis/model/specialitem/doctor/PatientTimerAlertBoxRespond.dart';
 import 'package:flutter_harpia_health_analysis/model/userrole/EnumUserRole.dart';
+import 'package:flutter_harpia_health_analysis/util/ProductColor.dart';
 
+import '../model/specialitem/doctor/PatientTimerWidget.dart';
 import '../model/user/User.dart';
 
 class CustomAlertDialog {
@@ -43,6 +47,49 @@ class CustomAlertDialog {
               style:
                   TextStyle(fontSize: ResponsiveDesign.getScreenWidth() / 20),
             )),
+      ],
+    );
+  }
+
+  static AlertDialog getAlertDialogSetUpPatientTimer(
+      {required PatientTimerWidget patientTimerWidget,
+      required BuildContext context}) {
+    return AlertDialog(
+      backgroundColor: ProductColor.alertBoxBackgroundColor,
+      title: Text("Setup Patient Timer",style: TextStyle(color: ProductColor.white)),
+      content: SizedBox(
+        height: ResponsiveDesign.getScreenHeight() / 6,
+        child: patientTimerWidget,
+      ),
+      actions: [
+        Row(
+          children: [
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(PatientTimerAlertBoxRespond(
+                      result: false, patientTimer: PatientTimer()));
+                },
+                child: Text(
+                  "Cancel",
+                  style: TextStyle(
+                      fontSize: ResponsiveDesign.getScreenWidth() / 20,color: ProductColor.white),
+                )),
+            Spacer(),
+            TextButton(
+                onPressed: () {
+                  print("donecek deger : ${patientTimerWidget.patientTimer}");
+                  Navigator.of(context).pop(PatientTimerAlertBoxRespond(
+                      result: true,
+                      patientTimer: patientTimerWidget.patientTimer));
+                  //Navigator.pop(context);
+                },
+                child: Text(
+                  "Ok",
+                  style: TextStyle(
+                      fontSize: ResponsiveDesign.getScreenWidth() / 20,color: ProductColor.white),
+                )),
+          ],
+        )
       ],
     );
   }

@@ -17,8 +17,10 @@ class ProductColor {
   static const _black = Color(0xFF29293A);
   static const _white = Colors.white;
   static const _green = Colors.green;
-  static const _dartWhite = Colors.white70;
+  static const _darkWhite = Colors.white70;
   static const _redAccent = Colors.redAccent;
+  static const _bodyBackground = Colors.cyan;
+  static const _alertBoxBackgroundColor = _bodyBackground;
 
   static const _appBarBackgroundColor = _redAccent;
 
@@ -28,11 +30,15 @@ class ProductColor {
 
   static get white => _white;
 
-  static get dartWhite => _dartWhite;
+  static get darkWhite => _darkWhite;
 
   static get green => _green;
 
   static get redAccent => _redAccent;
 
   static get appBarBackgroundColor => _appBarBackgroundColor;
+
+  static get bodyBackground => _bodyBackground;
+
+  static get alertBoxBackgroundColor => _alertBoxBackgroundColor;
 }
