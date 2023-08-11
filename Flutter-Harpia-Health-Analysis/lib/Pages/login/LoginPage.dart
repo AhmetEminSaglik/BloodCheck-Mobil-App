@@ -1,3 +1,4 @@
+// import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/appbar/AppBarCubit.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/drawer/DrawerCubit.dart';
@@ -32,6 +33,18 @@ class _LoginPageState extends State<LoginPage> {
 
   TextEditingController tfUsername = TextEditingController();
   TextEditingController tfPassword = TextEditingController();
+
+  /*void startFirebaseMessaging() async {
+    final fcmToken = await FirebaseMessaging.instance.getToken();
+    print("------------ . FCM TOKEN : $fcmToken");
+  }*/
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // startFirebaseMessaging();
+  }
 
   @override
   Widget build(BuildContext context) {
