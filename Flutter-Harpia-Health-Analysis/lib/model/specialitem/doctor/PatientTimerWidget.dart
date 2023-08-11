@@ -16,22 +16,25 @@ class PatientTimerWidget extends StatefulWidget {
   final PatientTimer _patientTimer = PatientTimer();
 
   PatientTimer get patientTimer => _patientTimer;
-  /*TODO Istenirse patient'indirek kayitli timeri cekilir ve ekrana o bastirilir.
+/*TODO Istenirse patient'indirek kayitli timeri cekilir ve ekrana o bastirilir.
      *  Eger bunu eklersem, doctor sureyi degistirmeyi kaydetmeye calistigi zamanda zaten kayitli degil istek atmam, server gereksiz mesgul olmaz.
   *
   * */
 }
 
 class _PatientTimerWidgetState extends State<PatientTimerWidget> {
-  FixedExtentScrollController minuteCont = FixedExtentScrollController(initialItem: 5);
-  FixedExtentScrollController hourCont = FixedExtentScrollController(initialItem: 10);
+  FixedExtentScrollController minuteCont =
+      FixedExtentScrollController(initialItem: 5);
+
+  FixedExtentScrollController hourCont =
+      FixedExtentScrollController(initialItem: 10);
+
   @override
   void initState() {
     super.initState();
-    widget._patientTimer.minutes=minuteCont.initialItem;
-    widget._patientTimer.hours=hourCont.initialItem;
+    widget._patientTimer.minutes = minuteCont.initialItem;
+    widget._patientTimer.hours = hourCont.initialItem;
   }
-
 
   @override
   Widget build(BuildContext context) {
