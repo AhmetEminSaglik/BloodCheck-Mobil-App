@@ -13,5 +13,6 @@ public interface BloodResultService {
     List<BloodResult> findAll();
 
     List<BloodResult> findAllByPatientIdAndCreatedAtAfter(int patientId, LocalDateTime time);
+    List<BloodResult> findAllBloodResultByPatientId(int patientId);
 
 }

@@ -33,6 +33,13 @@ public class BloodResultController {
         DataResult dataResult = new SuccessDataResult(bloodResult, msg);
         return ResponseEntity.status(HttpStatus.OK).body(dataResult);
     }
+    @GetMapping("/patient/{patientId}")
+    public ResponseEntity<DataResult<BloodResult>> findPatientIdAllBloodResults(@PathVariable int patientId) {
+        List<BloodResult> list = service.findAllBloodResultByPatientId(patientId);
+        String msg = "BloodResult List belongs to Patient ID " + patientId + " is retrived";
+        DataResult dataResult = new SuccessDataResult(list, msg);
+        return ResponseEntity.status(HttpStatus.OK).body(dataResult);
+    }
 
     @GetMapping("/patient/{patientId}/minutes/{min}")
     public ResponseEntity<DataResult<BloodResult>> findPatientIdBloodResultRequestedMinutes(@PathVariable int patientId, @PathVariable int min) {
