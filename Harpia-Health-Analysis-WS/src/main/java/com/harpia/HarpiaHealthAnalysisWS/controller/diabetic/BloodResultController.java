@@ -20,7 +20,7 @@ public class BloodResultController {
 
     @GetMapping
     public ResponseEntity<DataResult<BloodResult>> findAllBloodResult() {
-        List<BloodResult> list = service.findAll();
+        List<BloodResult> list = service.findAllPatientByOrderByIdDesc();
         String msg = "All Blood Results are retrived";
         DataResult dataResult = new SuccessDataResult(list, msg);
         return ResponseEntity.status(HttpStatus.OK).body(dataResult);
@@ -33,6 +33,7 @@ public class BloodResultController {
         DataResult dataResult = new SuccessDataResult(bloodResult, msg);
         return ResponseEntity.status(HttpStatus.OK).body(dataResult);
     }
+
     @GetMapping("/patient/{patientId}")
     public ResponseEntity<DataResult<BloodResult>> findPatientIdAllBloodResults(@PathVariable int patientId) {
         List<BloodResult> list = service.findAllBloodResultByPatientId(patientId);

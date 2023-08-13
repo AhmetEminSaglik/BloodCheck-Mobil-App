@@ -38,4 +38,9 @@ public class BloodResultManager implements BloodResultService {
     public List<BloodResult> findAllBloodResultByPatientId(int patientId) {
         return repository.findAllBloodResultByPatientIdOrderByIdDesc(patientId);
     }
+
+    @Override
+    public List<BloodResult> findAllPatientByOrderByIdDesc() {
+        return repository.findAllPatientByOrderByIdDesc();
+    }
 }

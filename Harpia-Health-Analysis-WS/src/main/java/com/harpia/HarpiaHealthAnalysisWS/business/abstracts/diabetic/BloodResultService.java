@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface BloodResultService {
+
     BloodResult save(BloodResult BloodResult);
 
     List<BloodResult> saveList(List<BloodResult> list);
@@ -14,5 +15,6 @@ public interface BloodResultService {
 
     List<BloodResult> findAllByPatientIdAndCreatedAtAfter(int patientId, LocalDateTime time);
     List<BloodResult> findAllBloodResultByPatientId(int patientId);
+    List<BloodResult> findAllPatientByOrderByIdDesc();
 
 }
