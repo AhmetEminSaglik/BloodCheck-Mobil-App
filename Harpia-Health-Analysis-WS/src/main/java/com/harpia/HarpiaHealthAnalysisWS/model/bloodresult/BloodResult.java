@@ -24,7 +24,7 @@ public class BloodResult {
     @Column(name = "blood_sugar")
     private int bloodSugar;
     @Column(name = "blood_pressure")
-    private int bloodPresure;
+    private int bloodPressure;
     @Column(name = "created_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime createdAt = LocalDateTime.now();
 
@@ -37,7 +37,7 @@ public class BloodResult {
         return "BloodMeasurement{" +
                 "id=" + id +
                 ", bloodSugar=" + bloodSugar +
-                ", bloodPresure=" + bloodPresure +
+                ", bloodPressure=" + bloodPressure +
                 '}';
     }
 
@@ -65,12 +65,12 @@ public class BloodResult {
         this.bloodSugar = bloodSugar;
     }
 
-    public int getBloodPresure() {
-        return bloodPresure;
+    public int getBloodPressure() {
+        return bloodPressure;
     }
 
-    public void setBloodPresure(int bloodPresure) {
-        this.bloodPresure = bloodPresure;
+    public void setBloodPressure(int bloodPressure) {
+        this.bloodPressure = bloodPressure;
     }
 
     public LocalDateTime getCreatedAt() {

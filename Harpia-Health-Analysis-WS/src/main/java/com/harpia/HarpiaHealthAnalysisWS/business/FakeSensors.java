@@ -69,7 +69,7 @@ public class FakeSensors {
             @Override
             public void run() {
                 BloodResult bloodResult = new BloodResult();
-                bloodResult.setBloodPresure(random.nextInt(250));
+                bloodResult.setBloodPressure(random.nextInt(250));
                 bloodResult.setBloodSugar(random.nextInt(250));
                 bloodResult.setPatientId(patientTimer.getPatientId());
                 bloodResultService.save(bloodResult);

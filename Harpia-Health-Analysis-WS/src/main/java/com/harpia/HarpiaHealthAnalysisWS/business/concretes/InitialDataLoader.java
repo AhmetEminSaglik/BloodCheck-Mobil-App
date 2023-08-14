@@ -91,7 +91,7 @@ public class InitialDataLoader implements CommandLineRunner {
             List<BloodResult> bloodResultList = new ArrayList<>();
             for (int j = 0; j < bloodResultNumber; j++) {
                 BloodResult bloodResult = new BloodResult(j * (i + 1) * 5);
-                bloodResult.setBloodPresure(random.nextInt(100) + 50);
+                bloodResult.setBloodPressure(random.nextInt(100) + 50);
                 bloodResult.setBloodSugar(random.nextInt(100) + 50);
                 bloodResult.setPatientId(patientList.get(i).getId());
                 bloodResultList.add(bloodResult);

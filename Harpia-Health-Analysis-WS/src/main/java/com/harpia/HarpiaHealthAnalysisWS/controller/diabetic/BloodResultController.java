@@ -27,9 +27,9 @@ public class BloodResultController {
     }
 
     @PostMapping
-    public ResponseEntity<DataResult<BloodResult>> saveBloodResult(BloodResult bloodResult) {
+    public ResponseEntity<DataResult<BloodResult>> saveBloodResult(@RequestBody  BloodResult bloodResult) {
         bloodResult = service.save(bloodResult);
-        String msg = "All Blood Results are retrived";
+        String msg = "Blood Results is saved";
         DataResult dataResult = new SuccessDataResult(bloodResult, msg);
         return ResponseEntity.status(HttpStatus.OK).body(dataResult);
     }
