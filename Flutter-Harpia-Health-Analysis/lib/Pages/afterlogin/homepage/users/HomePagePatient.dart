@@ -2,16 +2,21 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_harpia_health_analysis/core/ResponsiveDesign.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestDoctor.dart';
+import 'package:flutter_harpia_health_analysis/model/diesease/BloodResult.dart';
 import 'package:flutter_harpia_health_analysis/model/specialitem/doctor/PatientTimer.dart';
-import 'package:flutter_harpia_health_analysis/model/specialitem/doctor/PatientTimerAlertBoxRespond.dart';
 import 'package:flutter_harpia_health_analysis/model/specialitem/doctor/PatientTimerWidget.dart';
+import 'package:flutter_harpia_health_analysis/util/UtilBloodResultChartData.dart';
+import '../../../../httprequest/HttpRequestBloodResult.dart';
 import '../../../../httprequest/ResponseEntity.dart';
 import '../../../../util/CustomAlertDialog.dart';
 import '../../../../util/CustomSnackBar.dart';
 import '../../../../util/PermissionUtils.dart';
 import '../../../../util/ProductColor.dart';
+import '../../../CustomWidgets/LineChartDemo1.dart';
 import '../../../CustomWidgets/LineChartDemo2.dart';
+import '../../../CustomWidgets/LineChartDemo3.dart';
 import '../appbar/AppBarCubit.dart';
 
 class HomePagePatient extends StatefulWidget {
@@ -31,14 +36,27 @@ class _HomePagePatientState extends State<HomePagePatient> {
   bool visibleAppBar =
       PermissionUtils.letRunForAdmin() || PermissionUtils.letRunForDoctor();
   bool visiblePatientTimer = PermissionUtils.letRunForDoctor();
+  bool isLoading = true;
+  List<BloodResult> bloodResultList = [];
 
-  /*@override
+  @override
   void initState() {
     super.initState();
-    visibleAppBar =
-        PermissionUtils.letRunForAdmin() || PermissionUtils.letRunForDoctor();
-    visiblePatientTimer = PermissionUtils.letRunForDoctor();
-  }*/
+    retriveBloodResultData();
+  }
+
+  void retriveBloodResultData() async {
+    bloodResultList =
+        await HttpRequestBloodResult.getBloodResultDataOfPatientId(
+            widget.patientId);
+    // print("RETRIVED BLOOD RESULT LIST : ");
+    //
+    // print("BEFORE : list size : ${bloodResultList.length}");
+    UtilBloodResultChartData.uploadData(bloodResultList);
+    bloodResultList = UtilBloodResultChartData.getDailyDataList();
+    // print("AFTER : list size : ${bloodResultList.length}");
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +65,11 @@ class _HomePagePatientState extends State<HomePagePatient> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // SizedBox(width: 450, height: 300, child: LineChartDemo1()),
+            SizedBox(
+                width: ResponsiveDesign.getScreenWidth(),
+                height: 300,
+                child: LineChartDaily()),
+            SizedBox(width: 450, height: 300, child: LineChartDemo1()),
             SizedBox(width: 450, height: 300, child: LineChartDemo2()),
             _getPatientTimerButton(),
           ],

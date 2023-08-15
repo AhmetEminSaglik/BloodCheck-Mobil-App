@@ -21,13 +21,13 @@ public class BloodResultController {
     @GetMapping
     public ResponseEntity<DataResult<BloodResult>> findAllBloodResult() {
         List<BloodResult> list = service.findAllPatientByOrderByIdDesc();
-        String msg = "All Blood Results are retrived";
+        String msg = "All Blood Results are retrived. Size : " + list.size() + '.';
         DataResult dataResult = new SuccessDataResult(list, msg);
         return ResponseEntity.status(HttpStatus.OK).body(dataResult);
     }
 
     @PostMapping
-    public ResponseEntity<DataResult<BloodResult>> saveBloodResult(@RequestBody  BloodResult bloodResult) {
+    public ResponseEntity<DataResult<BloodResult>> saveBloodResult(@RequestBody BloodResult bloodResult) {
         bloodResult = service.save(bloodResult);
         String msg = "Blood Results is saved";
         DataResult dataResult = new SuccessDataResult(bloodResult, msg);
@@ -37,7 +37,7 @@ public class BloodResultController {
     @GetMapping("/patient/{patientId}")
     public ResponseEntity<DataResult<BloodResult>> findPatientIdAllBloodResults(@PathVariable int patientId) {
         List<BloodResult> list = service.findAllBloodResultByPatientId(patientId);
-        String msg = "BloodResult List belongs to Patient ID " + patientId + " is retrived";
+        String msg = "BloodResult List belongs to Patient ID " + patientId + " is retrived. Size : " + list.size() + '.';
         DataResult dataResult = new SuccessDataResult(list, msg);
         return ResponseEntity.status(HttpStatus.OK).body(dataResult);
     }
@@ -46,7 +46,7 @@ public class BloodResultController {
     public ResponseEntity<DataResult<BloodResult>> findPatientIdBloodResultRequestedMinutes(@PathVariable int patientId, @PathVariable int min) {
         LocalDateTime time = LocalDateTime.now().minusMinutes(min);
         List<BloodResult> list = service.findAllByPatientIdAndCreatedAtAfter(patientId, time);
-        String msg = "BloodResult List belongs to Patient ID " + patientId + " is retrived";
+        String msg ="BloodResult List belongs to Patient ID " + patientId + " is retrived. Size : " + list.size() + '.';
         DataResult dataResult = new SuccessDataResult(list, msg);
         return ResponseEntity.status(HttpStatus.OK).body(dataResult);
     }

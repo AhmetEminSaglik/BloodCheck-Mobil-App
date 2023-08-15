@@ -28,6 +28,13 @@ class LineChartDemo1 extends StatelessWidget {
                   showTitles: true,
                   getTitlesWidget: bottomTiles),
             ),
+            topTitles: AxisTitles(
+                sideTitles:  SideTitles(
+                  showTitles: false
+                  // interval:
+                )
+            )
+
             /*leftTitles: SideTitles(showTitles: true),
         bottomTitles: SideTitles(showTitles: true),*/
           ),
