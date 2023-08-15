@@ -43,6 +43,7 @@ class _HomePagePatientState extends State<HomePagePatient> {
   void initState() {
     super.initState();
     retriveBloodResultData();
+    print("/////////////////////DATA IS RETRIVED : bloodResultList size : ${bloodResultList.length} ");
   }
 
   void retriveBloodResultData() async {
@@ -52,9 +53,10 @@ class _HomePagePatientState extends State<HomePagePatient> {
     // print("RETRIVED BLOOD RESULT LIST : ");
     //
     // print("BEFORE : list size : ${bloodResultList.length}");
-    UtilBloodResultChartData.uploadData(bloodResultList);
-    bloodResultList = UtilBloodResultChartData.getDailyDataList();
-    // print("AFTER : list size : ${bloodResultList.length}");
+    UtilBloodResultChartData utilBloodResult= UtilBloodResultChartData();
+    utilBloodResult.uploadData(bloodResultList);
+    bloodResultList = utilBloodResult.getDailyDataList();
+    print("AFTER : list size : ${bloodResultList.length}");
 
   }
 

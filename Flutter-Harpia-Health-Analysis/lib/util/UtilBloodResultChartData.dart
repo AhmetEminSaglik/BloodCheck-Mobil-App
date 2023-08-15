@@ -1,15 +1,15 @@
 import '../model/diesease/BloodResult.dart';
 
 class UtilBloodResultChartData {
-  static List<BloodResult> _bloodResultListMonthly = [];
-  static List<BloodResult> _bloodResultListDaily = [];
+   List<BloodResult> _bloodResultListMonthly = [];
+   List<BloodResult> _bloodResultListDaily = [];
 
-  static void uploadData(List<BloodResult> bloodResultList) {
+   void uploadData(List<BloodResult> bloodResultList) {
     _bloodResultListMonthly = bloodResultList;
     parseAndSetDailyBloodResultData();
   }
 
-  static void parseAndSetDailyBloodResultData() {
+   void parseAndSetDailyBloodResultData() {
     final now = DateTime.now();
     var startTime = now;
     var endTime = now.subtract(const Duration(hours: 24));
@@ -26,7 +26,8 @@ class UtilBloodResultChartData {
     }
   }
 
-  static List<BloodResult> getDailyDataList() {
+   List<BloodResult> getDailyDataList() {
+    print("A1");
     final now = DateTime.now();
     final tmpTime = Duration(minutes: 10);
     // final tmpTime = Duration(hours: 1);
@@ -36,8 +37,9 @@ class UtilBloodResultChartData {
     int counterTimeMinus = 1;
     var startTime = now;
     var endTime = now.subtract(tmpTime * counterTimeMinus);
-
+    print("B1");
     for (int i = 0; i < _bloodResultListDaily.length; i++) {
+      print("C1 I : ${i+1}/${_bloodResultListDaily.length}");
       if (_bloodResultListDaily[i].createdAt.isBefore(startTime) &&
               _bloodResultListDaily[i].createdAt.isAfter(endTime) ||
           _bloodResultListDaily[i].createdAt.isAtSameMomentAs(endTime)) {
@@ -55,7 +57,7 @@ class UtilBloodResultChartData {
         endTime = now.subtract(tmpTime * counterTimeMinus);
       }
     }
-
+    print("D1");
     // print("-->>> AES --- >>------------------");
     int counter = 0;
     bloodResultGroupList.forEach((element) {
@@ -65,18 +67,19 @@ class UtilBloodResultChartData {
         print("------> $element");
       });
     });
+    print("E1");
     // print("-----------11111111111----");
     bloodResultGroupList.forEach((element) {
       if (element.isNotEmpty) {
         selectedBloodResult.add(element.first);
       }
     });
-
+    print("F1");
     // print("-----------222222222222----");
     selectedBloodResult.forEach((element) {
       print("SELECTED ITEM : $element");
     });
-
+    print("G1");
     return selectedBloodResult;
   }
 }
