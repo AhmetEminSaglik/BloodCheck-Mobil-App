@@ -39,7 +39,7 @@ public class PatientController {
     }
 
     @GetMapping
-    public ResponseEntity<DataResult<Patient>> getPatientList() {
+    public ResponseEntity<DataResult<List<Patient>>> getPatientList() {
         List<User> userList = userService.findAllByRoleId(EnumUserRole.PATIENT.getId());
         String msg = "PatientList is retrived successfully";
         DataResult result = new SuccessDataResult(userList, msg);
