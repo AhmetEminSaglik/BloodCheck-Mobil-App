@@ -66,9 +66,13 @@ public class InitialDataLoader implements CommandLineRunner {
         if (!isSavedBloodResultsBefore()) {
             List<Patient> patientList = patientController.getPatientList().getBody().getData();
             Patient patient_17_Days = patientList.get(patientList.size() - 1);
-            Patient patient_PerMinute = patientList.get(patientList.size() - 2);
+            Patient patient_6_Hours = patientList.get(patientList.size() - 2);
+            saveBloodResult_6_Hours(patient_6_Hours);
             saveBloodResult_17_Days_16_Hours(patient_17_Days);
-            saveBloodResultPerMinuteForSixMonth(patient_PerMinute);
+            for (int i = 0; i < patientList.size() - 2; i++) {
+                saveBloodResultPerMinuteForSixMonth(patientList.get(i));
+            }
+
         }
 //        new FakeSensors().runFakeSensors(timerController.findAllPatientTimers().getBody().getData(), bloodResultService);
     }
@@ -105,6 +109,32 @@ public class InitialDataLoader implements CommandLineRunner {
         bloodResultService.saveList(bloodResultList);
     }
 
+    void saveBloodResult_6_Hours(Patient patient) {
+
+//        int retrivedBloodResultData = retrivedBloodResultList.size();
+//        List<Patient> patientList = patientController.getPatientList().getBody().getData();
+//        Patient patient = patientList.get(patientList.size() - 1);
+        PatientTimer patientTimer = timerController.findPatientTimerByPatientId(patient.getId()).getBody().getData();
+        log.info(patientTimer.toString());
+        final int maxMinutes = 6 * 60;
+        int minutesCounter = 0;
+        int sensorTestTime = 30;
+        int createdTime = 0;//useMinute * minutesCounter;
+        List<BloodResult> bloodResultList = new ArrayList<>();
+        while (createdTime < maxMinutes) {
+            BloodResult bloodResult = new BloodResult(createdTime);
+            bloodResult.setBloodPressure(random.nextInt(150) + 50);
+            bloodResult.setBloodSugar(random.nextInt(150) + 50);
+            bloodResult.setPatientId(patient.getId());
+            bloodResultList.add(bloodResult);
+            minutesCounter++;
+            createdTime = sensorTestTime * minutesCounter;
+        }
+
+        Collections.reverse(bloodResultList);
+        log.info("bloodResultList size: " + bloodResultList.size());
+        bloodResultService.saveList(bloodResultList);
+    }
 
     void saveBloodResult_17_Days_16_Hours(Patient patient) {
 

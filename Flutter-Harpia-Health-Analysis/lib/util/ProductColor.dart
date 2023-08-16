@@ -13,13 +13,14 @@ class ProductColor {
   static get textColor =>
       {_darkThemeActivated ? _productWhite : _productBlack};*/
 
-  static const _darkBlue = Color(0xFF18344a);
+  static const _darkBlue = Color(0xff18344a);
   static const _black = Color(0xFF29293A);
   static const _white = Colors.white;
   static const _green = Colors.green;
   static const _darkWhite = Colors.white70;
   static const _redAccent = Colors.redAccent;
   static const _bodyBackground = Colors.cyan;
+  static const _bodyBackgroundLight =Color(0xffb4ead8);
   static const _alertBoxBackgroundColor = _bodyBackground;
 
   static const _appBarBackgroundColor = _redAccent;
@@ -39,6 +40,8 @@ class ProductColor {
   static get appBarBackgroundColor => _appBarBackgroundColor;
 
   static get bodyBackground => _bodyBackground;
+
+  static get bodyBackgroundLight => _bodyBackgroundLight;
 
   static get alertBoxBackgroundColor => _alertBoxBackgroundColor;
 }
