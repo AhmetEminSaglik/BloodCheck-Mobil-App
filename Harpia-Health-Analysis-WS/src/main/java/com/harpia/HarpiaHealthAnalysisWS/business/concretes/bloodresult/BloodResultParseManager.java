@@ -20,23 +20,26 @@ public class BloodResultParseManager implements BloodResultParseService {
     @Override
     public List<BloodResult> parseToDaily(List<BloodResult> list) {
         LocalDateTime endTime = LocalDateTime.now().minusDays(1);
-        List<BloodResult> dailyBloodResultList = parseToRequestedTime(list, endTime);
-        return getSelectedDataToShow(dailyBloodResultList, 10);
+//        List<BloodResult> dailyBloodResultList = parseToRequestedTime(list, endTime);
+//        return getSelectedDataToShow(dailyBloodResultList, 10);
+        return getSelectedDataToShow(list, 10);
     }
 
 
     @Override
     public List<BloodResult> parseToWeekly(List<BloodResult> list) {
         LocalDateTime endTime = LocalDateTime.now().minusDays(7);
-        List<BloodResult> dailyBloodResultList = parseToRequestedTime(list, endTime);
-        return getSelectedDataToShow(dailyBloodResultList, 60);
+//        List<BloodResult> dailyBloodResultList = parseToRequestedTime(list, endTime);
+//        return getSelectedDataToShow(dailyBloodResultList, 60);
+        return getSelectedDataToShow(list, 60);
     }
 
     @Override
     public List<BloodResult> parseToMonthly(List<BloodResult> list) {
         LocalDateTime endTime = LocalDateTime.now().minusDays(30);
-        List<BloodResult> dailyBloodResultList = parseToRequestedTime(list, endTime);
-        return getSelectedDataToShow(dailyBloodResultList, 60*4);
+//        List<BloodResult> dailyBloodResultList = parseToRequestedTime(list, endTime);
+//        return getSelectedDataToShow(dailyBloodResultList, 60*4);
+        return getSelectedDataToShow(list, 60 * 4);
     }
 
     /**

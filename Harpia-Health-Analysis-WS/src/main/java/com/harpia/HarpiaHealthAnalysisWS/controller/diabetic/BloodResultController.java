@@ -48,7 +48,7 @@ public class BloodResultController {
     }
 
     @GetMapping("/patient/{patientId}/minutes/{min}")
-    public ResponseEntity<DataResult<BloodResult>> findPatientIdBloodResultRequestedMinutes(@PathVariable int patientId, @PathVariable int min) {
+    public ResponseEntity<DataResult<List<BloodResult>>> findAllBloodResultByPatientIdRequestedMinutes(@PathVariable int patientId, @PathVariable int min) {
         int sixMonth = 60 * 24 * 30 * 6;
         if (min > sixMonth) {
             throw new InvalidRequestedBloodResultDateException(min);
@@ -71,28 +71,33 @@ public class BloodResultController {
     }
 
     @GetMapping("/patient/{patientId}/daily")
-    public ResponseEntity<DataResult<List<BloodResult>>> retriveDailyData(@PathVariable int patientId) {
-        List<BloodResult> bloodResultList = findSixMonthBloodResultData(patientId).getBody().getData();
+    public ResponseEntity<DataResult<List<BloodResult>>> retrieveDailyData(@PathVariable int patientId) {
+//        List<BloodResult> bloodResultList = findSixMonthBloodResultData(patientId).getBody().getData();
+        int oneDayTotalMinutes=60*24;
+        List<BloodResult> bloodResultList = findAllBloodResultByPatientIdRequestedMinutes(patientId,oneDayTotalMinutes).getBody().getData();
         bloodResultList = parseService.parseToDaily(bloodResultList);
-        String msg = "BloodResult List belongs to Patient ID " + patientId + " is retrived for DAILY data. Size of List is : " + bloodResultList.size() + '.';
+        String msg = "BloodResult List belongs to Patient ID " + patientId + " is retrieved for DAILY data. Size of List is : " + bloodResultList.size() + '.';
         DataResult dataResult = new SuccessDataResult(bloodResultList, msg);
         return ResponseEntity.status(HttpStatus.OK).body(dataResult);
     }
 
     @GetMapping("/patient/{patientId}/weekly")
-    public ResponseEntity<DataResult<List<BloodResult>>> retriveWeeklyData(@PathVariable int patientId) {
-        List<BloodResult> bloodResultList = findSixMonthBloodResultData(patientId).getBody().getData();
+    public ResponseEntity<DataResult<List<BloodResult>>> retrieveWeeklyData(@PathVariable int patientId) {
+        int oneWeekTotalMinutes=60*24*7;
+        List<BloodResult> bloodResultList = findAllBloodResultByPatientIdRequestedMinutes(patientId,oneWeekTotalMinutes).getBody().getData();
         bloodResultList = parseService.parseToWeekly(bloodResultList);
-        String msg = "BloodResult List belongs to Patient ID " + patientId + " is retrived for WEEKLY data. Size of List is : " + bloodResultList.size() + '.';
+        String msg = "BloodResult List belongs to Patient ID " + patientId + " is retrieved for WEEKLY data. Size of List is : " + bloodResultList.size() + '.';
         DataResult dataResult = new SuccessDataResult(bloodResultList, msg);
         return ResponseEntity.status(HttpStatus.OK).body(dataResult);
     }
 
     @GetMapping("/patient/{patientId}/monthly")
-    public ResponseEntity<DataResult<List<BloodResult>>> retriveMonthlyData(@PathVariable int patientId) {
-        List<BloodResult> bloodResultList = findSixMonthBloodResultData(patientId).getBody().getData();
+    public ResponseEntity<DataResult<List<BloodResult>>> retrieveMonthlyData(@PathVariable int patientId) {
+//        List<BloodResult> bloodResultList = findSixMonthBloodResultData(patientId).getBody().getData();
+        int oneMonthTotalMinutes=60*24*30;
+        List<BloodResult> bloodResultList = findAllBloodResultByPatientIdRequestedMinutes(patientId,oneMonthTotalMinutes).getBody().getData();
         bloodResultList = parseService.parseToMonthly(bloodResultList);
-        String msg = "BloodResult List belongs to Patient ID " + patientId + " is retrived for MONTHLY data. Size of List is : " + bloodResultList.size() + '.';
+        String msg = "BloodResult List belongs to Patient ID " + patientId + " is retrieved for MONTHLY data. Size of List is : " + bloodResultList.size() + '.';
         DataResult dataResult = new SuccessDataResult(bloodResultList, msg);
         return ResponseEntity.status(HttpStatus.OK).body(dataResult);
     }
