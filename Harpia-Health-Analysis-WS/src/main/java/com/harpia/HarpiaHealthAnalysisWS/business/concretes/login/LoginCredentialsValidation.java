@@ -3,15 +3,17 @@ package com.harpia.HarpiaHealthAnalysisWS.business.concretes.login;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.user.UserService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.login.LoginValidationService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.login.LoginCredentialsValidationService;
+import com.harpia.HarpiaHealthAnalysisWS.business.concretes.bloodresult.BloodResultParseManager;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.User;
 import com.harpia.HarpiaHealthAnalysisWS.model.enums.EnumInputName;
+import com.harpia.HarpiaHealthAnalysisWS.utility.CustomLog;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.*;
 import com.harpia.HarpiaHealthAnalysisWS.utility.validator.LengthValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class LoginCredentialsValidation implements LoginValidationService, LoginCredentialsValidationService {
-    private static final Logger log = LoggerFactory.getLogger(LoginCredentialsValidation.class);
+    private static CustomLog log = new CustomLog(LoginCredentialsValidation.class);
     private final UserService userService;
     private final int usernameMinLength = 3;
     private final int usernameMaxLength = 10;

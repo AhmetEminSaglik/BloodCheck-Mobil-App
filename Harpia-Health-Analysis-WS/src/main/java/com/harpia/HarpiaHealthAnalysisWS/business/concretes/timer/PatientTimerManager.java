@@ -20,7 +20,7 @@ public class PatientTimerManager implements PatientTimerService {
 
     @Override
     public PatientTimer update(PatientTimer newTimer) {
-        PatientTimer newPatientTimer= repoSitory.findByPatientId(newTimer.getPatientId());
+        PatientTimer newPatientTimer = repoSitory.findByPatientId(newTimer.getPatientId());
         newPatientTimer.setHours(newTimer.getHours());
         newPatientTimer.setMinutes(newTimer.getMinutes());
         return repoSitory.save(newPatientTimer);

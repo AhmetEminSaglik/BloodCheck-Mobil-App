@@ -18,7 +18,6 @@ public class BloodResult {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Long id;
-
     @Column(name = "patient_id")
     private long patientId;
     @Column(name = "blood_sugar")

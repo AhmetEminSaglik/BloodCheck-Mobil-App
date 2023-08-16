@@ -9,7 +9,6 @@ import com.harpia.HarpiaHealthAnalysisWS.utility.result.SuccessDataResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.StreamingHttpOutputMessage;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -73,8 +72,8 @@ public class BloodResultController {
     @GetMapping("/patient/{patientId}/daily")
     public ResponseEntity<DataResult<List<BloodResult>>> retrieveDailyData(@PathVariable int patientId) {
 //        List<BloodResult> bloodResultList = findSixMonthBloodResultData(patientId).getBody().getData();
-        int oneDayTotalMinutes=60*24;
-        List<BloodResult> bloodResultList = findAllBloodResultByPatientIdRequestedMinutes(patientId,oneDayTotalMinutes).getBody().getData();
+        int oneDayTotalMinutes = 60 * 24;
+        List<BloodResult> bloodResultList = findAllBloodResultByPatientIdRequestedMinutes(patientId, oneDayTotalMinutes).getBody().getData();
         bloodResultList = parseService.parseToDaily(bloodResultList);
         String msg = "BloodResult List belongs to Patient ID " + patientId + " is retrieved for DAILY data. Size of List is : " + bloodResultList.size() + '.';
         DataResult dataResult = new SuccessDataResult(bloodResultList, msg);
@@ -83,8 +82,8 @@ public class BloodResultController {
 
     @GetMapping("/patient/{patientId}/weekly")
     public ResponseEntity<DataResult<List<BloodResult>>> retrieveWeeklyData(@PathVariable int patientId) {
-        int oneWeekTotalMinutes=60*24*7;
-        List<BloodResult> bloodResultList = findAllBloodResultByPatientIdRequestedMinutes(patientId,oneWeekTotalMinutes).getBody().getData();
+        int oneWeekTotalMinutes = 60 * 24 * 7;
+        List<BloodResult> bloodResultList = findAllBloodResultByPatientIdRequestedMinutes(patientId, oneWeekTotalMinutes).getBody().getData();
         bloodResultList = parseService.parseToWeekly(bloodResultList);
         String msg = "BloodResult List belongs to Patient ID " + patientId + " is retrieved for WEEKLY data. Size of List is : " + bloodResultList.size() + '.';
         DataResult dataResult = new SuccessDataResult(bloodResultList, msg);
@@ -94,8 +93,8 @@ public class BloodResultController {
     @GetMapping("/patient/{patientId}/monthly")
     public ResponseEntity<DataResult<List<BloodResult>>> retrieveMonthlyData(@PathVariable int patientId) {
 //        List<BloodResult> bloodResultList = findSixMonthBloodResultData(patientId).getBody().getData();
-        int oneMonthTotalMinutes=60*24*30;
-        List<BloodResult> bloodResultList = findAllBloodResultByPatientIdRequestedMinutes(patientId,oneMonthTotalMinutes).getBody().getData();
+        int oneMonthTotalMinutes = 60 * 24 * 30;
+        List<BloodResult> bloodResultList = findAllBloodResultByPatientIdRequestedMinutes(patientId, oneMonthTotalMinutes).getBody().getData();
         bloodResultList = parseService.parseToMonthly(bloodResultList);
         String msg = "BloodResult List belongs to Patient ID " + patientId + " is retrieved for MONTHLY data. Size of List is : " + bloodResultList.size() + '.';
         DataResult dataResult = new SuccessDataResult(bloodResultList, msg);

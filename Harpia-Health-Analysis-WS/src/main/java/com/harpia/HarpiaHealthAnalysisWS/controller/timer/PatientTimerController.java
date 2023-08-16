@@ -1,7 +1,9 @@
 package com.harpia.HarpiaHealthAnalysisWS.controller.timer;
 
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.timer.PatientTimerService;
+import com.harpia.HarpiaHealthAnalysisWS.business.concretes.signup.SignupUser;
 import com.harpia.HarpiaHealthAnalysisWS.model.timer.PatientTimer;
+import com.harpia.HarpiaHealthAnalysisWS.utility.CustomLog;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.DataResult;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.SuccessDataResult;
 import org.slf4j.Logger;
@@ -18,7 +20,8 @@ import java.util.List;
 @RequestMapping("/timers/doctors/patients")
 @CrossOrigin
 public class PatientTimerController {
-    private static final Logger log = LoggerFactory.getLogger(PatientTimerController.class);
+    private static CustomLog log = new CustomLog(PatientTimerController.class);
+
     @Autowired
     PatientTimerService service;
 

@@ -5,6 +5,7 @@ import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.user.UserService;
 import com.harpia.HarpiaHealthAnalysisWS.business.concretes.login.SignupCredentialsValidation;
 import com.harpia.HarpiaHealthAnalysisWS.controller.user.PatientController;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.User;
+import com.harpia.HarpiaHealthAnalysisWS.utility.CustomLog;
 import com.harpia.HarpiaHealthAnalysisWS.utility.exception.ApiRequestException;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.DataResult;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.Result;
@@ -14,7 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 
 public class SignupUser {
-    private static final Logger log = LoggerFactory.getLogger(PatientController.class);
+    private static CustomLog log = new CustomLog(SignupUser.class);
     private final UserService service;
 
     public SignupUser(UserService service) {

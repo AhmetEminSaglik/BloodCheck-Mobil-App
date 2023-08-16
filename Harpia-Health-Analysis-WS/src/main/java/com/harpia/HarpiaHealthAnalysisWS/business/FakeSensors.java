@@ -1,15 +1,11 @@
 package com.harpia.HarpiaHealthAnalysisWS.business;
 
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.diabetic.BloodResultService;
-import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.timer.PatientTimerService;
-import com.harpia.HarpiaHealthAnalysisWS.business.concretes.timer.PatientTimerManager;
+import com.harpia.HarpiaHealthAnalysisWS.business.concretes.signup.SignupUser;
 import com.harpia.HarpiaHealthAnalysisWS.model.bloodresult.BloodResult;
 import com.harpia.HarpiaHealthAnalysisWS.model.timer.PatientTimer;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
-import org.springframework.stereotype.Component;
+import com.harpia.HarpiaHealthAnalysisWS.utility.CustomLog;
 
-import java.time.LocalTime;
 import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -18,6 +14,8 @@ import java.util.concurrent.TimeUnit;
 public class FakeSensors {
     ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
     Random random = new Random();
+    private static CustomLog log = new CustomLog(SignupUser.class);
+
 
 //    @Autowired
 //    PatientTimerService patientTimerService;
@@ -64,7 +62,7 @@ public class FakeSensors {
 */
 
 
-     Runnable getBloodResultAndSaveToDB(PatientTimer patientTimer, BloodResultService bloodResultService) {
+    Runnable getBloodResultAndSaveToDB(PatientTimer patientTimer, BloodResultService bloodResultService) {
         return new Runnable() {
             @Override
             public void run() {
@@ -78,8 +76,8 @@ public class FakeSensors {
     }
 
 
-     void addRunnableToExecutorService(Runnable runnable, PatientTimer patientTimer) {
-         executorService.scheduleAtFixedRate(runnable, 0, patientTimer.getMinutes(), TimeUnit.MINUTES);
+    void addRunnableToExecutorService(Runnable runnable, PatientTimer patientTimer) {
+        executorService.scheduleAtFixedRate(runnable, 0, patientTimer.getMinutes(), TimeUnit.MINUTES);
     }
 
 

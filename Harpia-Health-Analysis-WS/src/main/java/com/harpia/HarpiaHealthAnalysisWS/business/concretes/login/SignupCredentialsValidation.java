@@ -5,6 +5,7 @@ import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.singup.SignupCredent
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.singup.SignupValidationService;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.User;
 import com.harpia.HarpiaHealthAnalysisWS.model.enums.EnumInputName;
+import com.harpia.HarpiaHealthAnalysisWS.utility.CustomLog;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.ErrorDataResult;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.Result;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.SuccessDataResult;
@@ -13,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class SignupCredentialsValidation implements SignupValidationService, SignupCredentialsValidationService {
-    private static final Logger log = LoggerFactory.getLogger(SignupCredentialsValidation.class);
+    private static CustomLog log = new CustomLog(SignupCredentialsValidation.class);
     private final UserService userService;
     private final int usernameMinLength = 3;
     private final int usernameMaxLength = 10;

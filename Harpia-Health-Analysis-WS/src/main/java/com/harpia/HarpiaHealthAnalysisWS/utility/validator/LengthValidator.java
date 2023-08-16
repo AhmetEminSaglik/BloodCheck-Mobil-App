@@ -1,6 +1,7 @@
 package com.harpia.HarpiaHealthAnalysisWS.utility.validator;
 
 import com.harpia.HarpiaHealthAnalysisWS.model.enums.EnumInputName;
+import com.harpia.HarpiaHealthAnalysisWS.utility.CustomLog;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.ErrorResult;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.Result;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.SuccessResult;
@@ -8,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class LengthValidator {
-    private static final Logger log = LoggerFactory.getLogger(LengthValidator.class);
+    private static CustomLog log = new CustomLog(LengthValidator.class);
 
     public static Result isLengthValid(EnumInputName enumInputName, String input, int minLength, int maxLength) {
         final String inputName = enumInputName.getName();

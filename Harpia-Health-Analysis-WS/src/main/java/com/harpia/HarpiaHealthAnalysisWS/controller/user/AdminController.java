@@ -2,9 +2,11 @@ package com.harpia.HarpiaHealthAnalysisWS.controller.user;
 
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.user.UserService;
 import com.harpia.HarpiaHealthAnalysisWS.business.concretes.signup.SignupUser;
+import com.harpia.HarpiaHealthAnalysisWS.controller.user.role.UserRoleController;
 import com.harpia.HarpiaHealthAnalysisWS.model.enums.EnumUserRole;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.Admin;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.User;
+import com.harpia.HarpiaHealthAnalysisWS.utility.CustomLog;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.DataResult;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.SuccessDataResult;
 import org.slf4j.Logger;
@@ -18,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/admins")
 @CrossOrigin
 public class AdminController {
-    private static final Logger log = LoggerFactory.getLogger(AdminController.class);
+    private static CustomLog log = new CustomLog(AdminController.class);
     @Autowired
     private UserService service;
 

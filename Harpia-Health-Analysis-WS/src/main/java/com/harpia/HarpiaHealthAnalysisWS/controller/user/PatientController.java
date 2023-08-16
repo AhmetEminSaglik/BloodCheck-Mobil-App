@@ -5,6 +5,7 @@ import com.harpia.HarpiaHealthAnalysisWS.business.concretes.signup.SignupUser;
 import com.harpia.HarpiaHealthAnalysisWS.model.enums.EnumUserRole;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.Patient;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.User;
+import com.harpia.HarpiaHealthAnalysisWS.utility.CustomLog;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.DataResult;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.SuccessDataResult;
 import org.slf4j.Logger;
@@ -20,7 +21,7 @@ import java.util.List;
 @RequestMapping("/patients")
 @CrossOrigin
 public class PatientController {
-    private static final Logger log = LoggerFactory.getLogger(PatientController.class);
+    private static CustomLog log = new CustomLog(PatientController.class);
     @Autowired
     private UserService userService;
 

@@ -16,9 +16,7 @@ import com.harpia.HarpiaHealthAnalysisWS.model.users.Doctor;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.Patient;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.User;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.role.UserRole;
-import com.harpia.HarpiaHealthAnalysisWS.utility.LogUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.harpia.HarpiaHealthAnalysisWS.utility.CustomLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -52,8 +50,8 @@ public class InitialDataLoader implements CommandLineRunner {
     private DiabeticService diabeticService;
     @Autowired
     private PatientTimerController timerController;
-    private static final Logger log = LoggerFactory.getLogger(InitialDataLoader.class);
 
+    private static CustomLog log = new CustomLog(InitialDataLoader.class);
     private static Random random = new Random();
 
     public void saveInitilizateData() {
@@ -77,7 +75,7 @@ public class InitialDataLoader implements CommandLineRunner {
 
     boolean isSavedBloodResultsBefore() {
         List<BloodResult> retrivedBloodResultList = bloodResultService.findAll();
-        log.info(LogUtil.withPrefix("KAYITLI DATA : " + retrivedBloodResultList.size()));
+        log.info("KAYITLI DATA : " + retrivedBloodResultList.size());
         if (retrivedBloodResultList.size() > 300) {
             return true;
         }
@@ -86,8 +84,8 @@ public class InitialDataLoader implements CommandLineRunner {
 
     void saveBloodResultPerMinuteForSixMonth(Patient patient) {
         PatientTimer patientTimer = timerController.findPatientTimerByPatientId(patient.getId()).getBody().getData();
-        log.info(LogUtil.withPrefix(patientTimer.toString()));
-        final int maxMinutes = 60*24*30*6;//(24 * 17 + 16) * 60;
+        log.info(patientTimer.toString());
+        final int maxMinutes = 60 * 24 * 30 * 6;//(24 * 17 + 16) * 60;
         int minutesCounter = 0;
         int sensorTestTime = 3;
         int createdTime = 0;//useMinute * minutesCounter;
@@ -103,7 +101,7 @@ public class InitialDataLoader implements CommandLineRunner {
         }
 
         Collections.reverse(bloodResultList);
-        log.info(LogUtil.withPrefix("bloodResultList size: " + bloodResultList.size()));
+        log.info("bloodResultList size: " + bloodResultList.size());
         bloodResultService.saveList(bloodResultList);
     }
 
@@ -114,7 +112,7 @@ public class InitialDataLoader implements CommandLineRunner {
 //        List<Patient> patientList = patientController.getPatientList().getBody().getData();
 //        Patient patient = patientList.get(patientList.size() - 1);
         PatientTimer patientTimer = timerController.findPatientTimerByPatientId(patient.getId()).getBody().getData();
-        log.info(LogUtil.withPrefix(patientTimer.toString()));
+        log.info(patientTimer.toString());
         final int maxMinutes = (24 * 17 + 16) * 60;
         int minutesCounter = 0;
         int sensorTestTime = 60 + 17;
@@ -131,7 +129,7 @@ public class InitialDataLoader implements CommandLineRunner {
         }
 
         Collections.reverse(bloodResultList);
-        log.info(LogUtil.withPrefix("bloodResultList size: " + bloodResultList.size()));
+        log.info("bloodResultList size: " + bloodResultList.size());
         bloodResultService.saveList(bloodResultList);
     }
 

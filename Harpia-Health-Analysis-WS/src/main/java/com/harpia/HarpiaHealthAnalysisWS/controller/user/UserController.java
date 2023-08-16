@@ -6,6 +6,7 @@ import com.harpia.HarpiaHealthAnalysisWS.dataaccess.user.UserRepository;
 import com.harpia.HarpiaHealthAnalysisWS.model.LoginCredentials;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.User;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.user.UserService;
+import com.harpia.HarpiaHealthAnalysisWS.utility.CustomLog;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.DataResult;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.SuccessDataResult;
 import org.slf4j.Logger;
@@ -20,7 +21,7 @@ import java.util.List;
 @RequestMapping("/users")
 @CrossOrigin(origins = "http://localhost:8080")
 public class UserController {
-    private static final Logger log = LoggerFactory.getLogger(UserController.class);
+    private static CustomLog log = new CustomLog(UserController.class);
     @Autowired
     private UserService service;
 

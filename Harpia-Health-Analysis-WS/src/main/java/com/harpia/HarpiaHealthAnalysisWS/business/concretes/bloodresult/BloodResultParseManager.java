@@ -2,8 +2,7 @@ package com.harpia.HarpiaHealthAnalysisWS.business.concretes.bloodresult;
 
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.bloodresult.BloodResultParseService;
 import com.harpia.HarpiaHealthAnalysisWS.model.bloodresult.BloodResult;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.harpia.HarpiaHealthAnalysisWS.utility.CustomLog;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -13,14 +12,13 @@ import java.util.List;
 @Service
 public class BloodResultParseManager implements BloodResultParseService {
 
-    private static final Logger log = LoggerFactory.getLogger(BloodResultParseManager.class);
+    private static CustomLog log = new CustomLog(BloodResultParseManager.class);
 
     @Override
     public List<BloodResult> parseToDaily(List<BloodResult> list) {
         LocalDateTime endTime = LocalDateTime.now().minusDays(1);
         return getSelectedDataToShow(list, 10);
     }
-
 
     @Override
     public List<BloodResult> parseToWeekly(List<BloodResult> list) {
