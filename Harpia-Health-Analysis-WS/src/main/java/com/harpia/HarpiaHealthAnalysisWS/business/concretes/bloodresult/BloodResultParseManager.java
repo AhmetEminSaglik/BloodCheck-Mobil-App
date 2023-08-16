@@ -1,9 +1,7 @@
 package com.harpia.HarpiaHealthAnalysisWS.business.concretes.bloodresult;
 
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.bloodresult.BloodResultParseService;
-import com.harpia.HarpiaHealthAnalysisWS.controller.timer.PatientTimerController;
 import com.harpia.HarpiaHealthAnalysisWS.model.bloodresult.BloodResult;
-import com.harpia.HarpiaHealthAnalysisWS.utility.LogUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -20,8 +18,6 @@ public class BloodResultParseManager implements BloodResultParseService {
     @Override
     public List<BloodResult> parseToDaily(List<BloodResult> list) {
         LocalDateTime endTime = LocalDateTime.now().minusDays(1);
-//        List<BloodResult> dailyBloodResultList = parseToRequestedTime(list, endTime);
-//        return getSelectedDataToShow(dailyBloodResultList, 10);
         return getSelectedDataToShow(list, 10);
     }
 
@@ -29,16 +25,12 @@ public class BloodResultParseManager implements BloodResultParseService {
     @Override
     public List<BloodResult> parseToWeekly(List<BloodResult> list) {
         LocalDateTime endTime = LocalDateTime.now().minusDays(7);
-//        List<BloodResult> dailyBloodResultList = parseToRequestedTime(list, endTime);
-//        return getSelectedDataToShow(dailyBloodResultList, 60);
         return getSelectedDataToShow(list, 60);
     }
 
     @Override
     public List<BloodResult> parseToMonthly(List<BloodResult> list) {
         LocalDateTime endTime = LocalDateTime.now().minusDays(30);
-//        List<BloodResult> dailyBloodResultList = parseToRequestedTime(list, endTime);
-//        return getSelectedDataToShow(dailyBloodResultList, 60*4);
         return getSelectedDataToShow(list, 60 * 4);
     }
 
@@ -63,7 +55,7 @@ public class BloodResultParseManager implements BloodResultParseService {
     /**
      * For daily tmpMinute will be 10 which means minumum per 10 min saved data will be seen
      * For weekly tmpMinute will be 60 which means minumum per 60 min saved data will be seen
-     * For month tmpMinute will be ??? which means minumum per 60 min saved data will be seen
+     * For month tmpMinute will be (60 * 4)  which means minumum per 240 min saved data will be seen
      */
     private List<BloodResult> getSelectedDataToShow(List<BloodResult> list, int tmpMinute) {
         List<List<BloodResult>> brGroupList = new ArrayList<>();
@@ -73,15 +65,12 @@ public class BloodResultParseManager implements BloodResultParseService {
         int counterTimeMinus = 1;
         LocalDateTime startTime = LocalDateTime.now();
         LocalDateTime endTime = LocalDateTime.now().minusMinutes(tmpMinute * counterTimeMinus);
-//        log.info(LogUtil.withPrefix("startTime : " + startTime + " / endTime : " + endTime));
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getCreatedAt().isEqual(startTime) ||
                     list.get(i).getCreatedAt().isBefore(startTime) &&
                             list.get(i).getCreatedAt().isAfter(endTime)
             ) {
                 brGroup.add(list.get(i));
-//                log.info(LogUtil.withPrefix((i + 1) + " -) data is added : " + list.get(i) + "   startTime : " + startTime + " / endTime : " + endTime));
-
                 if (i == list.size() - 1) {
                     brGroupList.add(brGroup);
                 }
@@ -92,10 +81,8 @@ public class BloodResultParseManager implements BloodResultParseService {
                 brGroup = new ArrayList<>();
                 startTime = endTime;
                 endTime = startTime.minusMinutes(tmpMinute);
-//                log.info(LogUtil.withPrefix("UPDATED ---- startTime : " + startTime + " / endTime : " + endTime));
             }
         }
-//        log.info(LogUtil.withPrefix(" GROUP LIST YAZDIRILACAK  size : " + brGroupList.size()));
         brGroupList.forEach(group -> {
             if (group.size() > 0) {
                 selectedData.add(group.get(0));
