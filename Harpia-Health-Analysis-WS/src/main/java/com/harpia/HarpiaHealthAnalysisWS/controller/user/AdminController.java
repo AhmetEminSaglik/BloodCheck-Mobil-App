@@ -1,7 +1,7 @@
 package com.harpia.HarpiaHealthAnalysisWS.controller.user;
 
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.user.UserService;
-import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.singup.SignupUser;
+import com.harpia.HarpiaHealthAnalysisWS.business.concretes.signup.SignupUser;
 import com.harpia.HarpiaHealthAnalysisWS.model.enums.EnumUserRole;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.Admin;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.User;

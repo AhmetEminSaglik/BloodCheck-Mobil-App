@@ -18,9 +18,7 @@ import java.util.List;
 @RequestMapping("/timers/doctors/patients")
 @CrossOrigin
 public class PatientTimerController {
-
     private static final Logger log = LoggerFactory.getLogger(PatientTimerController.class);
-
     @Autowired
     PatientTimerService service;
 

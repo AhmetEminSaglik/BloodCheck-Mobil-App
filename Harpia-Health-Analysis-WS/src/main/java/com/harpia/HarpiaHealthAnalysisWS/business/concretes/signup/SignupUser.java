@@ -1,5 +1,6 @@
-package com.harpia.HarpiaHealthAnalysisWS.business.abstracts.singup;
+package com.harpia.HarpiaHealthAnalysisWS.business.concretes.signup;
 
+import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.singup.SignupValidationService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.user.UserService;
 import com.harpia.HarpiaHealthAnalysisWS.business.concretes.login.SignupCredentialsValidation;
 import com.harpia.HarpiaHealthAnalysisWS.controller.user.PatientController;

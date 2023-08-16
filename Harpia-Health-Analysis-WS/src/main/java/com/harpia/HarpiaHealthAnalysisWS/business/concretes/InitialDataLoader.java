@@ -70,7 +70,7 @@ public class InitialDataLoader implements CommandLineRunner {
             Patient patient_17_Days = patientList.get(patientList.size() - 1);
             Patient patient_PerMinute = patientList.get(patientList.size() - 2);
             saveBloodResult_17_Days_16_Hours(patient_17_Days);
-            saveBloodResultPerMinute(patient_PerMinute);
+            saveBloodResultPerMinuteForSixMonth(patient_PerMinute);
         }
 //        new FakeSensors().runFakeSensors(timerController.findAllPatientTimers().getBody().getData(), bloodResultService);
     }
@@ -84,12 +84,12 @@ public class InitialDataLoader implements CommandLineRunner {
         return false;
     }
 
-    void saveBloodResultPerMinute(Patient patient) {
+    void saveBloodResultPerMinuteForSixMonth(Patient patient) {
         PatientTimer patientTimer = timerController.findPatientTimerByPatientId(patient.getId()).getBody().getData();
         log.info(LogUtil.withPrefix(patientTimer.toString()));
-        final int maxMinutes = (24 * 17 + 16) * 60;
+        final int maxMinutes = 60*24*30*6;//(24 * 17 + 16) * 60;
         int minutesCounter = 0;
-        int sensorTestTime = 5;
+        int sensorTestTime = 3;
         int createdTime = 0;//useMinute * minutesCounter;
         List<BloodResult> bloodResultList = new ArrayList<>();
         while (createdTime < maxMinutes) {

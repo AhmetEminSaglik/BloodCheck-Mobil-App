@@ -34,10 +34,12 @@ public class BloodResult {
 
     @Override
     public String toString() {
-        return "BloodMeasurement{" +
+        return "BloodResult{" +
                 "id=" + id +
+                ", patientId=" + patientId +
                 ", bloodSugar=" + bloodSugar +
                 ", bloodPressure=" + bloodPressure +
+                ", createdAt=" + createdAt +
                 '}';
     }
 
