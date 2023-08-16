@@ -7,7 +7,6 @@ import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestDoctor.dar
 import 'package:flutter_harpia_health_analysis/model/diesease/BloodResult.dart';
 import 'package:flutter_harpia_health_analysis/model/specialitem/doctor/PatientTimer.dart';
 import 'package:flutter_harpia_health_analysis/model/specialitem/doctor/PatientTimerWidget.dart';
-import 'package:flutter_harpia_health_analysis/util/UtilBloodResultChartData.dart';
 import '../../../../httprequest/HttpRequestBloodResult.dart';
 import '../../../../httprequest/ResponseEntity.dart';
 import '../../../../util/CustomAlertDialog.dart';
@@ -37,27 +36,26 @@ class _HomePagePatientState extends State<HomePagePatient> {
       PermissionUtils.letRunForAdmin() || PermissionUtils.letRunForDoctor();
   bool visiblePatientTimer = PermissionUtils.letRunForDoctor();
   bool isLoading = true;
-  List<BloodResult> bloodResultList = [];
+  List<BloodResult> dailyBloodResultList = [];
+  List<BloodResult> weeklyBloodResultList = [];
+  List<BloodResult> monthlyBloodResultList = [];
 
   @override
   void initState() {
     super.initState();
     retriveBloodResultData();
-    print("/////////////////////DATA IS RETRIVED : bloodResultList size : ${bloodResultList.length} ");
   }
 
   void retriveBloodResultData() async {
-    bloodResultList =
-        await HttpRequestBloodResult.getBloodResultDataOfPatientId(
-            widget.patientId);
-    // print("RETRIVED BLOOD RESULT LIST : ");
-    //
-    // print("BEFORE : list size : ${bloodResultList.length}");
-    UtilBloodResultChartData utilBloodResult= UtilBloodResultChartData();
-    utilBloodResult.uploadData(bloodResultList);
-    bloodResultList = utilBloodResult.getDailyDataList();
-    print("AFTER : list size : ${bloodResultList.length}");
-
+    dailyBloodResultList =
+        await HttpRequestBloodResult.getDailyBloodResult(widget.patientId);
+    weeklyBloodResultList =
+        await HttpRequestBloodResult.getWeeklyBloodResult(widget.patientId);
+    monthlyBloodResultList =
+        await HttpRequestBloodResult.getMonthlyBloodResult(widget.patientId);
+    print("Retrived Data : Daily : ${dailyBloodResultList.length}");
+    print("Retrived Data : Weekly : ${weeklyBloodResultList.length}");
+    print("Retrived Data : Monthly : ${monthlyBloodResultList.length}");
   }
 
   @override
