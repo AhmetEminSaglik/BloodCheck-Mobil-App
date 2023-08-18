@@ -1,17 +1,17 @@
-import 'package:flutter_harpia_health_analysis/model/diesease/BloodResultCheckbox.dart';
+import 'package:flutter_harpia_health_analysis/model/diesease/CheckboxBloodResult.dart';
 import 'package:flutter_harpia_health_analysis/model/diesease/EnumBloodResultContent.dart';
 
-class VisibleBloodResultContent {
-  List<BloodResultCheckbox> list = [];
+class CheckBoxVisibleBloodResultContent {
+  List<CheckboxBloodResult> list = [];
 
-  VisibleBloodResultContent() {
-    list.add(BloodResultCheckbox(
+  CheckBoxVisibleBloodResultContent() {
+    list.add(CheckboxBloodResult(
         name: EnumBloodResultContent.BLOOD_SUGAR.name, showContent: false));
-    list.add(BloodResultCheckbox(
+    list.add(CheckboxBloodResult(
         name: EnumBloodResultContent.BLOOD_PRESSURE.name, showContent: false));
-    list.add(BloodResultCheckbox(
+    list.add(CheckboxBloodResult(
         name: EnumBloodResultContent.CALCIUM.name, showContent: true));
-    list.add(BloodResultCheckbox(
+    list.add(CheckboxBloodResult(
         name: EnumBloodResultContent.MAGNESIUM.name, showContent: true));
   }
 }

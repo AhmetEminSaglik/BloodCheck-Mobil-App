@@ -150,9 +150,10 @@ class ListViewItemText extends StatelessWidget {
       child: Text(
         text,
         style: TextStyle(
-          fontSize: isBold
-              ? ResponsiveDesign.getScreenHeight() / 47
-              : ResponsiveDesign.getScreenHeight() / 40,
+          fontSize:ResponsiveDesign.getScreenHeight() / 50,
+          // isBold
+          //     ? ResponsiveDesign.getScreenHeight() / 50
+          //     : ResponsiveDesign.getScreenHeight() / 47,
           fontWeight: isBold ? FontWeight.bold : null,
         ),
       ),

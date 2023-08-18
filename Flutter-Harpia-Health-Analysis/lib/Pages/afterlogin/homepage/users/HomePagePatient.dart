@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_harpia_health_analysis/core/ResponsiveDesign.dart';
@@ -9,15 +10,14 @@ import 'package:flutter_harpia_health_analysis/model/specialitem/doctor/PatientT
 import 'package:flutter_harpia_health_analysis/model/specialitem/doctor/PatientTimerWidget.dart';
 import '../../../../httprequest/HttpRequestBloodResult.dart';
 import '../../../../httprequest/ResponseEntity.dart';
-import '../../../../model/diesease/BloodResultCheckbox.dart';
+import '../../../../model/diesease/CheckboxBloodResult.dart';
 import '../../../../util/CustomAlertDialog.dart';
 import '../../../../util/CustomSnackBar.dart';
 import '../../../../util/PermissionUtils.dart';
 import '../../../../util/ProductColor.dart';
-import '../../../CustomWidgets/LineChartDemo1.dart';
-import '../../../CustomWidgets/LineChartDemo2.dart';
-import '../../../CustomWidgets/LineChartDemo3.dart';
-import '../../../CustomWidgets/VisibleBloodResultContent.dart';
+import '../../../CustomWidgets/CustomLineChartData.dart';
+import '../../../CustomWidgets/LineChartDaily.dart';
+import '../../../CustomWidgets/CheckBoxVisibleBloodResultContent.dart';
 import '../appbar/AppBarCubit.dart';
 
 class HomePagePatient extends StatefulWidget {
@@ -41,8 +41,9 @@ class _HomePagePatientState extends State<HomePagePatient> {
   List<BloodResult> dailyBloodResultList = [];
   List<BloodResult> weeklyBloodResultList = [];
   List<BloodResult> monthlyBloodResultList = [];
-  VisibleBloodResultContent visibleBloodResultContent =
-      VisibleBloodResultContent();
+  CheckBoxVisibleBloodResultContent _checkBoxVisibleBloodResultContent =
+      CheckBoxVisibleBloodResultContent();
+  late CustomLineChartData _customLineChartData;
 
   // List<Widget> checkBoxBloodResultContents = [];
 
@@ -55,9 +56,9 @@ class _HomePagePatientState extends State<HomePagePatient> {
 
 /*
   void fillCheckboxContents() {
-    for (int i = 0; i < visibleBloodResultContent.list.length; i++) {
-      checkBoxBloodResultContents.add(getBloodResultCheckboxItem(
-          bloodResultCheckbox: visibleBloodResultContent.list[i]));
+    for (int i = 0; i < _checkBoxVisibleBloodResultContent.list.length; i++) {
+      checkBoxBloodResultContents.add(getCheckboxBloodResultItem(
+          bloodResultCheckbox: _checkBoxVisibleBloodResultContent.list[i]));
     }
   }*/
 
@@ -70,6 +71,11 @@ class _HomePagePatientState extends State<HomePagePatient> {
         await HttpRequestBloodResult.getMonthlyBloodResult(widget.patientId);
     setState(() {
       isLoading = false;
+    });
+    _customLineChartData =
+        CustomLineChartData(bloodListData: dailyBloodResultList);
+    _customLineChartData.dailyBottomTitle.forEach((element) {
+      print("DAILY BOOTM TITLE : ${element.index} -> ${element.text}");
     });
   }
 
@@ -90,8 +96,9 @@ class _HomePagePatientState extends State<HomePagePatient> {
                 children: [
                   SizedBox(
                       width: ResponsiveDesign.getScreenWidth(),
-                      height: ResponsiveDesign.getScreenHeight() / 3,
-                      child: LineChartDaily()),
+                      height: ResponsiveDesign.getScreenHeight() / 2.5,
+                      child: LineChartDaily(
+                          customLineChartData: _customLineChartData)),
                   Container(
                     // color: Colors.redAccent,
                     child: Column(
@@ -130,13 +137,13 @@ class _HomePagePatientState extends State<HomePagePatient> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         // Column(children: checkBoxBloodResultContents,), I dont understand why checkbox is not working in this way.
-                                        getBloodResultCheckboxItem(
+                                        getCheckboxBloodResultItem(
                                             bloodResultCheckbox:
-                                                visibleBloodResultContent
+                                                _checkBoxVisibleBloodResultContent
                                                     .list[0]),
-                                        getBloodResultCheckboxItem(
+                                        getCheckboxBloodResultItem(
                                             bloodResultCheckbox:
-                                                visibleBloodResultContent
+                                                _checkBoxVisibleBloodResultContent
                                                     .list[2]),
                                       ]),
                                   Column(
@@ -144,13 +151,13 @@ class _HomePagePatientState extends State<HomePagePatient> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         // Column(children: checkBoxBloodResultContents,), I dont understand why checkbox is not working in this way.
-                                        getBloodResultCheckboxItem(
+                                        getCheckboxBloodResultItem(
                                             bloodResultCheckbox:
-                                                visibleBloodResultContent
+                                                _checkBoxVisibleBloodResultContent
                                                     .list[1]),
-                                        getBloodResultCheckboxItem(
+                                        getCheckboxBloodResultItem(
                                             bloodResultCheckbox:
-                                                visibleBloodResultContent
+                                                _checkBoxVisibleBloodResultContent
                                                     .list[3]),
                                       ]),
                                 ],
@@ -196,8 +203,8 @@ class _HomePagePatientState extends State<HomePagePatient> {
     );
   }
 
-  Widget getBloodResultCheckboxItem(
-      {required BloodResultCheckbox bloodResultCheckbox}) {
+  Widget getCheckboxBloodResultItem(
+      {required CheckboxBloodResult bloodResultCheckbox}) {
     return SizedBox(
       width: ResponsiveDesign.getScreenWidth() / 2,
       child: CheckboxListTile(

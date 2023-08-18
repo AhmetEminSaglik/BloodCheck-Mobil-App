@@ -1,4 +1,42 @@
+import 'dart:math';
+
 void main() {
+  // testDateTime();
+  // testDoubleNumber();
+  testModeNegative();
+}
+void testModeNegative(){
+  int val=-1;
+  print("Value :$val");
+  print("mod 4 : ${val%4}");
+}
+void testDoubleNumber() {
+  double value1 = 2.11;
+  double value2 = 5.99;
+
+  double result1 = max(value1, 2);
+  double result2 = max(value2, 5);
+
+  print("${value1}  : ${value1.toInt()}");
+  print("${value2}  : ${value2.toInt()}");
+/*
+  print("${value1}  : ${value1.toDouble()}");
+  print("${value2}  : ${value2.toDouble()}");
+
+  print("${value1}  : ${value1.ceilToDouble()}");
+  print("${value2}  : ${value2.ceilToDouble()}");
+
+  print("${value1}  : ${value1.ceil()}");
+  print("${value2}  : ${value2.ceil()}");
+
+  print("${value1}  : ${value1.floor()}");
+  print("${value2}  : ${value2.floor()}");
+
+  print("${value1}  : ${value1.truncate()}");
+  print("${value2}  : ${value2.truncate()}");*/
+}
+
+void testDateTime() {
   List<String> dateTextList = [];
   dateTextList.add("2023-08-15 15:19:30.000");
   dateTextList.add("2023-08-15 15:00:30.000");

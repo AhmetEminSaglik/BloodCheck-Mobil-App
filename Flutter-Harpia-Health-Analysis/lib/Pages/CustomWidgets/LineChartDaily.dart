@@ -6,8 +6,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_harpia_health_analysis/util/ProductColor.dart';
 
 import '../../core/ResponsiveDesign.dart';
+import 'CustomLineChartData.dart';
 
-class LineChartDaily extends StatelessWidget {
+class LineChartDaily extends StatefulWidget {
+  late CustomLineChartData _customLineChartData;
+
+  LineChartDaily({required CustomLineChartData customLineChartData}) {
+    _customLineChartData = customLineChartData;
+  }
+
+  @override
+  State<LineChartDaily> createState() => _LineChartDailyState();
+}
+
+class _LineChartDailyState extends State<LineChartDaily> {
   final List<Color> gradientColors = const [
     CupertinoColors.systemBlue,
     CupertinoColors.systemGreen,
@@ -24,8 +36,11 @@ class LineChartDaily extends StatelessWidget {
           child: Column(
             children: [
               AspectRatio(
-                aspectRatio: 1.70,
-                child: LineChart(lineChartData()),
+                aspectRatio: 1.40,
+                child: Padding(
+                  padding: EdgeInsets.only(right:ResponsiveDesign.getScreenWidth()/10,top:ResponsiveDesign.getScreenWidth()/10),
+                  child: LineChart(lineChartData()),
+                ),
               )
             ],
           ),
@@ -38,9 +53,9 @@ class LineChartDaily extends StatelessWidget {
     return LineChartData(
         borderData: FlBorderData(border: Border.all(color: Colors.white)),
         minX: -1,
-        maxX: 1440,
+        maxX: 144,
         minY: -1,
-        maxY: 150,
+        maxY: 200,
         gridData: FlGridData(
             show: true,
             getDrawingHorizontalLine: (value) {
@@ -86,8 +101,9 @@ class LineChartDaily extends StatelessWidget {
         bottomTitles: SideTitles(showTitles: true),*/
         ),
         lineBarsData: [
-          LineChartBarData(
-              isCurved: true,
+          getLineChartBarData(),
+          /*   LineChartBarData(
+              isCurved: false,
               barWidth: 3,
               isStrokeCapRound: true,
               dotData: FlDotData(show: false),
@@ -99,11 +115,11 @@ class LineChartDaily extends StatelessWidget {
                           .toList())),
               spots: [
                 FlSpot(10, getRandomValueBloodResult(0)),
-                FlSpot(300, getRandomValueBloodResult(0)),
-                FlSpot(600, getRandomValueBloodResult(0)),
-                FlSpot(900, getRandomValueBloodResult(0)),
-                FlSpot(1400, getRandomValueBloodResult(0)),
-              ]),
+                FlSpot(20, getRandomValueBloodResult(0)),
+                FlSpot(30, getRandomValueBloodResult(0)),
+                FlSpot(40, getRandomValueBloodResult(0)),
+                FlSpot(50, getRandomValueBloodResult(0)),
+              ]),*/
 /*          LineChartBarData(
               isCurved: true,
               barWidth: 3,
@@ -120,73 +136,103 @@ class LineChartDaily extends StatelessWidget {
               ])*/
         ]);
   }
-}
 
-Widget bottomTiles(double value, TitleMeta meta) {
-  String text;
-  switch (value.toInt()) {
-    case 20:
-      text = '00:00'; //500
-      break;
-    case 380:
-      text = '06:00';
-      break;
-    case 740:
-      text = '12:00';
-      break;
-    case 1100:
-      text = '18:00';
-      break;
-    default:
-      return Text("");
+  LineChartBarData getLineChartBarData() {
+    List<FlSpot> spotsBloodSugar = [];
+    for (int i = 0; i < widget._customLineChartData.bloodListData.length; i++) {
+      spotsBloodSugar.add(widget._customLineChartData.bloodListSubItems
+          .bloodSugarResultListFlSpot[i]);
+    }
+
+    return LineChartBarData(
+        isCurved: false,
+        barWidth: 3,
+        isStrokeCapRound: true,
+        dotData: FlDotData(show: false),
+        belowBarData: BarAreaData(
+            show: true,
+            gradient: LinearGradient(
+                colors:
+                    gradientColors.map((e) => e.withOpacity(0.3)).toList())),
+        spots: spotsBloodSugar);
   }
-  return Text(
-    text,
-    style: axisTextStyle(),
-    textAlign: TextAlign.left,
-  );
-}
 
-Widget leftTiles(double value, TitleMeta meta) {
-  String text;
-  switch (value.toInt()) {
-    // case 20:
-    //   text = '20';
-    //   break;
-    case 40:
-      text = '40';
-      break;
-    // case 60:
-    //   text = '60';
-    //   break;
-    case 80:
-      text = '80';
-      break;
-    // case 100:
-    //   text = '100';
-    //   break;
-    case 120:
-      text = '120';
-      break;
-    default:
-      return Text("");
+  Widget bottomTiles(double value, TitleMeta meta) {
+    // widget._customLineChartData.dailyBottomTitle[0].index;
+    String text = "";
+    for (int i = 0;
+        i < widget._customLineChartData.dailyBottomTitle.length;
+        i++) {
+      if (value == widget._customLineChartData.dailyBottomTitle[i].index) {
+        text = widget._customLineChartData.dailyBottomTitle[i].text;
+        break;
+      }
+    }
+/*    String text;
+    switch (value.toInt()) {
+      case 20:
+        text = '00:00'; //500
+        break;
+      case 380:
+        text = '06:00';
+        break;
+      case 740:
+        text = '12:00';
+        break;
+      case 1100:
+        text = '18:00';
+        break;
+      default:
+        return Text("");
+    }*/
+    return Text(
+      text,
+      style: axisTextStyle(),
+      textAlign: TextAlign.left,
+    );
   }
-  return Text(
-    text,
-    style: axisTextStyle(),
-    textAlign: TextAlign.left,
-  );
-}
 
-TextStyle axisTextStyle() {
-  return TextStyle(
-      fontSize: 16, fontWeight: FontWeight.bold, color: Colors.red);
-}
+  Widget leftTiles(double value, TitleMeta meta) {
+    String text;
+    switch (value.toInt()) {
+      // case 20:
+      //   text = '20';
+      //   break;
+      case 40:
+        text = '40';
+        break;
+      // case 60:
+      //   text = '60';
+      //   break;
+      case 80:
+        text = '80';
+        break;
+      // case 100:
+      //   text = '100';
+      //   break;
+      case 120:
+        text = '120';
+        break;
+      default:
+        return Text("");
+    }
+    return Text(
+      text,
+      style: axisTextStyle(),
+      textAlign: TextAlign.left,
+    );
+  }
 
-double getRandomValue(int val) {
-  return Random().nextInt(8).toDouble() + val;
-}
+  TextStyle axisTextStyle() {
+    return TextStyle(
+        fontSize: 16, fontWeight: FontWeight.bold, color: Colors.red);
+  }
 
-double getRandomValueBloodResult(int val) {
-  return Random().nextInt(100).toDouble() + val;
+  double getRandomValue(int val) {
+    return Random().nextInt(8).toDouble() + val;
+  }
+
+  double getRandomValueBloodResult(int val) {
+    return Random().nextInt(100).toDouble() + val;
+  }
 }

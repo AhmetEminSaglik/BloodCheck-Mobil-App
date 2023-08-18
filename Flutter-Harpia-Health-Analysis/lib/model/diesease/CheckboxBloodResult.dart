@@ -1,8 +1,8 @@
-class BloodResultCheckbox {
+class CheckboxBloodResult {
   late String _name;
   late bool _showContent;
 
-  BloodResultCheckbox({required String name, required bool showContent}) {
+  CheckboxBloodResult({required String name, required bool showContent}) {
     _name = name;
     _showContent = showContent;
   }

@@ -67,11 +67,13 @@ public class InitialDataLoader implements CommandLineRunner {
             List<Patient> patientList = patientController.getPatientList().getBody().getData();
             Patient patient_17_Days = patientList.get(patientList.size() - 1);
             Patient patient_6_Hours = patientList.get(patientList.size() - 2);
+            Patient patient_6_Month = patientList.get(patientList.size() - 3);
             saveBloodResult_6_Hours(patient_6_Hours);
             saveBloodResult_17_Days_16_Hours(patient_17_Days);
-            for (int i = 0; i < patientList.size() - 2; i++) {
-                saveBloodResultPerMinuteForSixMonth(patientList.get(i));
-            }
+            saveBloodResultPerMinuteForSixMonth(patient_6_Month);
+            /*for (int i = 0; i < patientList.size() - 2; i++) {
+                saveBloodResultPerMinuteForSixMonth(patientList.get(3));
+            }*/
 
         }
 //        new FakeSensors().runFakeSensors(timerController.findAllPatientTimers().getBody().getData(), bloodResultService);
