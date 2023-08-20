@@ -2,7 +2,9 @@ package com.harpia.HarpiaHealthAnalysisWS.controller.diabetic;
 
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.bloodresult.BloodResultParseService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.diabetic.BloodResultService;
+import com.harpia.HarpiaHealthAnalysisWS.business.concretes.InitialDataLoader;
 import com.harpia.HarpiaHealthAnalysisWS.model.bloodresult.BloodResult;
+import com.harpia.HarpiaHealthAnalysisWS.utility.CustomLog;
 import com.harpia.HarpiaHealthAnalysisWS.utility.exception.response.InvalidRequestedBloodResultDateException;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.DataResult;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.SuccessDataResult;
@@ -21,6 +23,7 @@ public class BloodResultController {
     BloodResultService service;
     @Autowired
     BloodResultParseService parseService;
+    private static CustomLog log = new CustomLog(BloodResultController.class);
 
     @GetMapping
     public ResponseEntity<DataResult<BloodResult>> findAllBloodResult() {
@@ -85,6 +88,7 @@ public class BloodResultController {
         int oneWeekTotalMinutes = 60 * 24 * 7;
         List<BloodResult> bloodResultList = findAllBloodResultByPatientIdRequestedMinutes(patientId, oneWeekTotalMinutes).getBody().getData();
         bloodResultList = parseService.parseToWeekly(bloodResultList);
+
         String msg = "BloodResult List belongs to Patient ID " + patientId + " is retrieved for WEEKLY data. Size of List is : " + bloodResultList.size() + '.';
         DataResult dataResult = new SuccessDataResult(bloodResultList, msg);
         return ResponseEntity.status(HttpStatus.OK).body(dataResult);
