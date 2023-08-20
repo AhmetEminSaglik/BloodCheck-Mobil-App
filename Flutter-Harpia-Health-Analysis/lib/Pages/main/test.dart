@@ -3,7 +3,16 @@ import 'dart:math';
 void main() {
   // testDateTime();
   // testDoubleNumber();
-  testModeNegative();
+  // testModeNegative();
+  testDoubleToIntNumbers();
+}
+void testDoubleToIntNumbers(){
+double num1=1.4;
+double num2=1.5;
+
+print(num1.round());
+print(num2.round());
+
 }
 void testModeNegative(){
   int val=-1;
