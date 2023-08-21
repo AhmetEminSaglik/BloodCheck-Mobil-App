@@ -47,7 +47,8 @@ class LineChartDemo1 extends StatelessWidget {
                 return FlLine(color: Colors.black, strokeWidth: 1);
               }),
           borderData: FlBorderData(
-              show: true, border: Border.all(color: Colors.red, width: 3)),
+              show: true,
+              border: Border.all(color: Colors.red, width: 3)),
           lineBarsData: [
             LineChartBarData(
               spots: [

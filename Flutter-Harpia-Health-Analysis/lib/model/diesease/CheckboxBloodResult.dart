@@ -10,7 +10,6 @@ class CheckboxBloodResultSubItem {
   bool get showContent => _showContent;
 
   set showContent(bool value) {
-    print("CheckboxBloodResultSubItem > showcontent : $showContent");
     _showContent = value;
   }
 

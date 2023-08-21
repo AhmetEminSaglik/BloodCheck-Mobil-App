@@ -1,57 +1,53 @@
 import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter_harpia_health_analysis/model/enums/EnumLineChartBottomSideTitles.dart';
+import 'package:flutter_harpia_health_analysis/model/enums/EnumLineChartBottomSideWeeklyTitles.dart';
 
 import '../../model/diesease/BloodResult.dart';
 
-class CustomLineChartData {
+class CustomLineChartDataWeekly {
   List<BloodResult> _bloodListData = [];
   late _BloodListSubItems _bloodListSubItems;
   DateTime now = DateTime.now(); //.subtract(Duration(hours:));
-  List<_BottomSideTitles> _dailyBottomTitle = [];
+  List<_BottomSideTitles> _bottomTitle = [];
 
-  CustomLineChartData({required List<BloodResult> bloodListData}) {
+  CustomLineChartDataWeekly({required List<BloodResult> bloodListData}) {
     _bloodListData = bloodListData;
     _bloodListSubItems = _BloodListSubItems(bloodResultList: bloodListData);
-    _createDailyBottomSideTitles();
+    _createWeeklyBottomSideTitles();
   }
 
-  void _createDailyBottomSideTitles() {
-    int dailyTotalIndexValue = 144;
+  void _createWeeklyBottomSideTitles() {
+    int weeklyTotalIndexValue = 168;
+    int day = now.day;
     int hour = now.hour;
     int minute = now.minute;
-    int passed8HoursCounter = (hour / 8).toInt();
-    hour %= 8;
-    int remainedTime = ((hour * 60 + minute) / 10).toInt();
+    print("before process : day : $day / hour $hour / minute :$minute");
+    int passedDayCounter = (day % 7).toInt();
+    day %= 7;
+    int remainedTime = ((hour * 60 + minute) / 60).toInt();
     print("remainedTime : $remainedTime");
+    print("day  : $day");
     print("hour  : $hour");
-    // print("passed8HoursCounter : $passed8HoursCounter");
-    // print("(passed8HoursCounter - 0)%3) : ${(passed8HoursCounter - 0)%3}");
-    // print("(passed8HoursCounter - 1)%3) : ${(passed8HoursCounter - 1)%3}");
-    // print("(passed8HoursCounter - 2)%3) : ${(passed8HoursCounter - 2)%3}");
-    for (int i = 0; i < 3; i++) {
-      // print("(( passed8HoursCounter-$i)*48) : ${(passed8HoursCounter-i)*48}");
-      _dailyBottomTitle.add(_BottomSideTitles(
-          // index: dailyTotalIndexValue - remainedTime -( passed8HoursCounter-i)*42,
-          // index:((remainedTime+ (i*48)))%144,//((( passed8HoursCounter-i)*48-remainedTime ))%144,
-          // index:(remainedTime+ ((i+1)*48))%144,
-          index: 144 - (remainedTime + ((i) * 48)),
-          text: EnumLineChartBottomSideTitles.getIndexName(
-              (passed8HoursCounter - i) % 3)));
-      // print("0------------ (passed8HoursCounter - i)%3) ${(passed8HoursCounter - i)%3}" );
+    print("minute  : $minute");
+    int weeklyTitleLength = EnumLineChartBottomSideWeeklyTitles.values.length;
+    for (int i = 0; i < weeklyTitleLength; i++) {
+      _bottomTitle.add(_BottomSideTitles(
+          index: weeklyTotalIndexValue - (remainedTime + ((i) * 24)),
+          text: EnumLineChartBottomSideWeeklyTitles.getIndexName(
+              (passedDayCounter - i) % weeklyTitleLength)));
     }
-    print("_dailyBottomTitle length : ${_dailyBottomTitle.length}");
+    print("_bottomTitle length : ${_bottomTitle.length}");
     print(
-        "_dailyBottomTitle 0  : ${_dailyBottomTitle[0]._index} ${_dailyBottomTitle[0].text}");
+        "_bottomTitle 0  : ${_bottomTitle[0]._index} ${_bottomTitle[0].text}");
     print(
-        "_dailyBottomTitle 1  :  ${_dailyBottomTitle[1]._index} ${_dailyBottomTitle[1].text}");
+        "_bottomTitle 1  :  ${_bottomTitle[1]._index} ${_bottomTitle[1].text}");
     print(
-        "_dailyBottomTitle 2  :  ${_dailyBottomTitle[2]._index} ${_dailyBottomTitle[2].text}");
-    // print("_dailyBottomTitle 3  :  ${_dailyBottomTitle[3]._index} ${_dailyBottomTitle[3].text}");
+        "_bottomTitle 2  :  ${_bottomTitle[2]._index} ${_bottomTitle[2].text}");
+    // print("_bottomTitle 3  :  ${_bottomTitle[3]._index} ${_bottomTitle[3].text}");
   }
 
   List<BloodResult> get bloodListData => _bloodListData;
 
-  List<_BottomSideTitles> get dailyBottomTitle => _dailyBottomTitle;
+  List<_BottomSideTitles> get weeklyBottomTitle => _bottomTitle;
 
   _BloodListSubItems get bloodListSubItems => _bloodListSubItems;
 }
@@ -63,7 +59,6 @@ class _BottomSideTitles {
   _BottomSideTitles({required int index, required String text}) {
     _index = index;
     _text = text;
-    print(" _BottomSideTitles GELEN INDEX  DEGERI  : $index");
   }
 
   String get text => _text;
@@ -77,15 +72,18 @@ class _BloodListSubItems {
   List<FlSpot> _bloodPressureResultListFlSpot = [];
   List<FlSpot> _magnesiumResultListFlSpot = [];
   List<FlSpot> _calciumResultListFlSpot = [];
-  late double dailySpotRange;
+  late double weeklySpotRange;
+  int weeklyTotalIndexValue = 168;
 
   _BloodListSubItems({required List<BloodResult> bloodResultList}) {
-    dailySpotRange = (144 / bloodResultList.length).round().toDouble();
-    // print('dailySpotRange  range : $dailySpotRange');
+    weeklySpotRange = (weeklyTotalIndexValue / bloodResultList.length).round().toDouble();
+    // print('weeklySpotRange  range : $weeklySpotRange');
     // print('bloodResultList length : ${bloodResultList.length}');
     for (int i = 0; i < bloodResultList.length; i++) {
-      // print(
-      //     "GELEN DATA : ${bloodResultList[i]}  -->Spot X : ${i * dailySpotRange}");
+      print(
+          "GELEN DATA WEEKLY : ${bloodResultList[i]}  -->Spot X : ${FlSpot(
+              _getItemFlSpotXValue(itemCreatedAt: bloodResultList[i].createdAt),
+              bloodResultList[i].bloodSugar.toDouble())}");
       _bloodSugarResultListFlSpot.add(FlSpot(
           _getItemFlSpotXValue(itemCreatedAt: bloodResultList[i].createdAt),
           bloodResultList[i].bloodSugar.toDouble()));
@@ -110,10 +108,11 @@ class _BloodListSubItems {
 
   double _getItemFlSpotXValue({required DateTime itemCreatedAt}) {
     Duration diff = now.difference(itemCreatedAt);
-    double diffMinutes = 144 - diff.inMinutes / 10;
-    print("--------> DIFFERENCE : $diffMinutes");
-    print("--------> CreatedAt : $itemCreatedAt");
-    return diffMinutes;
+    double diffHours =( weeklyTotalIndexValue - diff.inHours).toDouble();
+    print("--------> diff TIMES  : $diff");
+    print("--------> DIFFERENCE : $diffHours");
+    // print("--------> CreatedAt : $itemCreatedAt");
+    return diffHours;
   }
 
   List<FlSpot> get calciumResultListFlSpot => _calciumResultListFlSpot;

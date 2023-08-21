@@ -1,9 +1,9 @@
 import 'dart:convert';
-
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/VisibleBloodResultSubItems.dart';
+import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/CustomLineChartDataWeekly.dart';
+import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/LineChartDemo1.dart';
+import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/LineChartWeekly.dart';
 import 'package:flutter_harpia_health_analysis/core/ResponsiveDesign.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestDoctor.dart';
 import 'package:flutter_harpia_health_analysis/model/diesease/BloodResult.dart';
@@ -17,9 +17,10 @@ import '../../../../util/CustomAlertDialog.dart';
 import '../../../../util/CustomSnackBar.dart';
 import '../../../../util/PermissionUtils.dart';
 import '../../../../util/ProductColor.dart';
-import '../../../CustomWidgets/CustomLineChartData.dart';
+import '../../../CustomWidgets/CustomLineChartDataDaily.dart';
 import '../../../CustomWidgets/LineChartDaily.dart';
 import '../../../CustomWidgets/CheckBoxVisibleBloodResultContent.dart';
+import '../../../CustomWidgets/LineChartDemo2.dart';
 import '../appbar/AppBarCubit.dart';
 
 class HomePagePatient extends StatefulWidget {
@@ -36,6 +37,32 @@ class HomePagePatient extends StatefulWidget {
 }
 
 class _HomePagePatientState extends State<HomePagePatient> {
+  StatefulWidget? activatedLineChartWidget;
+
+  void updateActivatedLineChart(int selectedRadioValue) {
+    switch (selectedRadioValue) {
+      case 1:
+        activatedLineChartWidget = LineChartDaily(
+          customLineChartData: _customLineChartDataDaily,
+          checkBoxVisibleBloodResultContent: _checkBoxVisibleBloodResultContent,
+        );
+        break;
+      case 2:
+        activatedLineChartWidget = LineChartWeekly(
+          customLineChartData: _customLineChartDataWeekly,
+          checkBoxVisibleBloodResultContent: _checkBoxVisibleBloodResultContent,
+        );
+        break;
+      case 3:
+        activatedLineChartWidget = null;
+        break;
+      case 4:
+        activatedLineChartWidget = null;
+        break;
+    }
+    setState(() {});
+  }
+
   bool visibleAppBar =
       PermissionUtils.letRunForAdmin() || PermissionUtils.letRunForDoctor();
   bool visiblePatientTimer = PermissionUtils.letRunForDoctor();
@@ -48,7 +75,8 @@ class _HomePagePatientState extends State<HomePagePatient> {
   List<BloodResult> monthlyBloodResultList = [];
   CheckBoxVisibleBloodResultContent _checkBoxVisibleBloodResultContent =
       CheckBoxVisibleBloodResultContent();
-  late CustomLineChartData _customLineChartData;
+  late CustomLineChartDataDaily _customLineChartDataDaily;
+  late CustomLineChartDataWeekly _customLineChartDataWeekly;
 
   // List<Widget> checkBoxBloodResultContents = [];
 
@@ -56,7 +84,6 @@ class _HomePagePatientState extends State<HomePagePatient> {
   void initState() {
     super.initState();
     retrieveBloodResultData();
-    // fillCheckboxContents();
   }
 
 /*
@@ -77,25 +104,31 @@ class _HomePagePatientState extends State<HomePagePatient> {
     setState(() {
       isLoading = false;
     });
-    _customLineChartData =
-        CustomLineChartData(bloodListData: dailyBloodResultList);
-    _customLineChartData.dailyBottomTitle.forEach((element) {
-      print("DAILY BOOTM TITLE : ${element.index} -> ${element.text}");
-    });
+    _customLineChartDataDaily =
+        CustomLineChartDataDaily(bloodListData: dailyBloodResultList);
+    // _customLineChartDataDaily.bottomTitle.forEach((element) {});
+
+    _customLineChartDataWeekly =
+        CustomLineChartDataWeekly(bloodListData: weeklyBloodResultList);
+    // _customLineChartDataWeekly.bottomTitle.forEach((element) {});
+
+    updateActivatedLineChart(1);
   }
 
   bool showBloodSugar = true;
   bool showBloodPressure = false;
-  int radioValue = 0;
+  int radioValue = 1;
 
   @override
   Widget build(BuildContext context) {
-    print("---------> tekradan calisti :  VisibleItems : $_checkBoxVisibleBloodResultContent}");
+    // print(
+    //     "---------> tekradan calisti :  VisibleItems : $_checkBoxVisibleBloodResultContent}");
     return Scaffold(
       appBar: visibleAppBar ? getAppBar() : null,
       backgroundColor:
           isLoading ? ProductColor.bodyBackground : ProductColor.white,
       body: isLoading
+          // ? const LoadingScreenWidget()
           ? const LoadingScreenWidget()
           : SingleChildScrollView(
               child: Column(
@@ -193,11 +226,7 @@ class _HomePagePatientState extends State<HomePagePatient> {
                   SizedBox(
                       width: ResponsiveDesign.getScreenWidth(),
                       height: ResponsiveDesign.getScreenHeight() / 2.5,
-                      child: LineChartDaily(
-                        customLineChartData: _customLineChartData,
-                        checkBoxVisibleBloodResultContent:
-                            _checkBoxVisibleBloodResultContent,
-                      )),
+                      child: activatedLineChartWidget),
                 ],
               ),
             ),
@@ -222,10 +251,8 @@ class _HomePagePatientState extends State<HomePagePatient> {
             horizontal: ResponsiveDesign.getScreenWidth() / 100,
           ),
           onChanged: (int? value) {
-            setState(() {
-              radioValue = value!;
-            });
-            print("$name is selected");
+            radioValue = value!;
+            updateActivatedLineChart(radioValue);
           },
         ),
       ),
@@ -249,37 +276,11 @@ class _HomePagePatientState extends State<HomePagePatient> {
           controlAffinity: ListTileControlAffinity.leading,
           value: bloodResultSubItemCheckbox.showContent,
           onChanged: (bool? condition) {
-            print(
-                "SetState Calisti : ${bloodResultSubItemCheckbox.name} VALUE : $condition");
             bloodResultSubItemCheckbox.showContent = condition!;
-            setState(() {
-              print(
-                  " ${bloodResultSubItemCheckbox.name}} : CONDITION : ${bloodResultSubItemCheckbox.showContent}");
-            });
+            updateActivatedLineChart(radioValue);
           }),
     );
   }
-
-/*  SizedBox getBloodResultItemCheckbox(
-      {required String name, required bool value}) {
-    return SizedBox(
-      width: ResponsiveDesign.getScreenWidth() / 2,
-      child: CheckboxListTile(
-          title: Text(
-            name,
-            style: TextStyle(fontSize: ResponsiveDesign.getScreenWidth() / 20),
-          ),
-          controlAffinity: ListTileControlAffinity.leading,
-          value: value,
-          onChanged: (bool? condition) {
-            print("SetState Calisti : $name  VALUE : $value");
-              showBloodSugar = condition!;
-            setState(() {
-            print(" $name : CONDITION : $condition");
-            });
-          }),
-    );
-  }*/
 
   Widget _getPatientTimerButton() {
     if (visiblePatientTimer) {
@@ -315,17 +316,6 @@ class _HomePagePatientState extends State<HomePagePatient> {
       ScaffoldMessenger.of(context)
           .showSnackBar(CustomSnackBar.getSnackBar(msg));
     }
-    // }
-/*print("resp $resp");
-    resp((value) => {
-      print("result  $value")*/ /*
-          response = value,
-          if (response.result)
-            {
-              response.patientTimer.patientId = widget.patientId,
-              sendRequestToSavePatientTimer(respAlertDialog.patientTimer),
-            }
-       */ /* });*/
   }
 
   void sendRequestToSavePatientTimer(PatientTimer patientTimer) async {
@@ -380,18 +370,3 @@ AppBar getAppBar() {
     }),
   );
 }
-/*Future<void> printDiseaseList() async {
-  var http = HttpRequestDisease();
-  // print('patient Id :');
-  if ((SharedPref.sp.getInt(EnumUserProp.ID.name) ??
-      -1) == EnumUserRole.PATIENT) {
-    var patientId = SharedPref.sp.getInt(EnumUserProp.ID.name) ?? -1;
-    print('patient Id : $patientId');
-
-    List<Disease> list = await http
-        .getDiseaseListOfPatientid(patientId); //.then((value) => {list = value}
-    list.forEach((e) {
-      print("disease : $e");
-    });
-  }
-}*/
