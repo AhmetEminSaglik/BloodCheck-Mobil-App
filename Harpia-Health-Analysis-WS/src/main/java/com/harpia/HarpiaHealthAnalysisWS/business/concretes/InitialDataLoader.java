@@ -73,7 +73,7 @@ public class InitialDataLoader implements CommandLineRunner {
             saveBloodResult_2_Data(patient_2_Data);
             saveBloodResult_6_Hours_Saved_5_Hours_Before(patient_6_Hours);
             saveBloodResult_17_Days_16_Hours(patient_17_Days);
-            saveBloodResultPerMinuteForSixMonth(patient_6_Month);
+//            saveBloodResultPerMinuteForSixMonth(patient_6_Month);
             /*for (int i = 0; i < patientList.size() - 2; i++) {
                 saveBloodResultPerMinuteForSixMonth(patientList.get(3));
             }*/
@@ -99,6 +99,7 @@ public class InitialDataLoader implements CommandLineRunner {
         List<BloodResult> bloodResultList = new ArrayList<>();
         BloodResult br1 = new BloodResult(1);
         BloodResult br2 = new BloodResult(2);
+        BloodResult br3 = new BloodResult(3);
 
 //        br1.setId(10l);
         br1.setCreatedAt(LocalDateTime.now().minusHours(2));
@@ -110,13 +111,23 @@ public class InitialDataLoader implements CommandLineRunner {
         br1.setPatientId(patient.getId());
         bloodResultList.add(br1);
 //        br2.setId(20l);
-        br2.setCreatedAt(LocalDateTime.now().minusHours(6));
+        br2.setCreatedAt(LocalDateTime.now().minusHours(2).minusMinutes(30));
         br2.setBloodPressure(random.nextInt(150) + 50);
         br2.setBloodSugar(random.nextInt(150) + 50);
         br2.setCalcium(random.nextInt(150) + 50);
         br2.setMagnesium(random.nextInt(150) + 50);
         br2.setPatientId(patient.getId());
         bloodResultList.add(br2);
+/*
+        br3.setCreatedAt(LocalDateTime.now().minusDays(2));
+        br3.setBloodPressure(random.nextInt(150) + 50);
+        br3.setBloodSugar(random.nextInt(150) + 50);
+        br3.setCalcium(random.nextInt(150) + 50);
+        br3.setMagnesium(random.nextInt(150) + 50);
+
+        br3.setPatientId(patient.getId());
+        bloodResultList.add(br3);*/
+
         log.info("bloodResultList size: " + bloodResultList.size());
         Collections.reverse(bloodResultList);
         bloodResultList.forEach(e -> {

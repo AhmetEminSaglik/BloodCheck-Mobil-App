@@ -35,9 +35,6 @@ class _ListviewBuilderDoctorState extends State<ListviewBuilderDoctor> {
 
   @override
   Widget build(BuildContext context) {
-    /*context
-        .read<AppBarCubit>()
-        .setTitleRoleNameWithPageListSize(doctorList.length);*/
     return Scaffold(
         backgroundColor: ProductColor.bodyBackground,
         body: RefreshIndicator(
@@ -82,8 +79,7 @@ Widget getBodyDoctorListview(List<Doctor> doctorList) {
                     routePage: HomePageDoctor(doctorId: doctorList[index].id));
               },
               child: Card(
-                color: CustomListViewItemColor.getBackgroundColor(
-                    colorindex: 2, index: index),
+                color: CustomListViewItemColor.getBackgroundColor(index: index),
                 shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(15))),
                 child: Container(

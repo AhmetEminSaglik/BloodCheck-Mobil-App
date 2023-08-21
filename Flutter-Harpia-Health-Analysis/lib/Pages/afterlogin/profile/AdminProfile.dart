@@ -6,9 +6,9 @@ class AdminProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-      backgroundColor: ProductColor.bodyBackground,
-        body: Center(
+    return Scaffold(
+        backgroundColor: ProductColor.bodyBackground,
+        body: const Center(
             child: Text("Admin Profile Body", style: TextStyle(fontSize: 35))));
   }
 }

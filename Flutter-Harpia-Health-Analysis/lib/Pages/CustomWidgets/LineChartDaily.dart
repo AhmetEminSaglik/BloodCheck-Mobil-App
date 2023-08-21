@@ -80,24 +80,17 @@ class _LineChartDailyState extends State<LineChartDaily> {
         gridData: FlGridData(
             show: true,
             getDrawingHorizontalLine: (value) {
-              // return FlLine(color: Colors.green, strokeWidth: 1);
               return value == 0
                   ? FlLine(color: Colors.black, strokeWidth: 3)
                   : FlLine(strokeWidth: 0);
             },
             getDrawingVerticalLine: (value) {
-              // return FlLine(color: Colors.black, strokeWidth: 1);
-              // print("VLAUE : $value");
               return value == 0
                   ? FlLine(color: Colors.black, strokeWidth: 3)
                   : FlLine(strokeWidth: 0);
             }),
-        /*  gridData: FlGridData(
-          show: false
-        ),*/
         titlesData: FlTitlesData(
           leftTitles: AxisTitles(
-            // axisNameWidget: CustomWidget(),
             sideTitles: SideTitles(
                 reservedSize: ResponsiveDesign.getScreenWidth() / 10,
                 showTitles: true,
@@ -105,8 +98,6 @@ class _LineChartDailyState extends State<LineChartDaily> {
                 getTitlesWidget: leftTiles),
           ),
           bottomTitles: AxisTitles(
-            // axisNameSize: 1000,
-            // axisNameWidget: CustomWidget(),
             sideTitles: SideTitles(
                 reservedSize: ResponsiveDesign.getScreenHeight() / 40,
                 interval: 1,
@@ -117,9 +108,6 @@ class _LineChartDailyState extends State<LineChartDaily> {
               const AxisTitles(sideTitles: SideTitles(showTitles: false)),
           rightTitles:
               const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-
-          /*leftTitles: SideTitles(showTitles: true),
-        bottomTitles: SideTitles(showTitles: true),*/
         ),
         lineBarsData: [
           isVisibleBloodSugar
@@ -137,11 +125,6 @@ class _LineChartDailyState extends State<LineChartDaily> {
 
   LineChartBarData _getBloodSugarLineChartBarData() {
     List<FlSpot> spotsBloodSugar = [];
-    // for (int i = 0; i < widget._customLineChartData.bloodListData.length; i++) {
-    //   spotsBloodSugar.add(widget._customLineChartData.bloodListSubItems
-    //       .bloodSugarResultListFlSpot[i]);
-    //   print("bloodSugar SPot : ${spotsBloodSugar[i]}");
-    // }
     for (FlSpot tmp in widget
         ._customLineChartData.bloodListSubItems.bloodSugarResultListFlSpot) {
       spotsBloodSugar.add(tmp);
@@ -199,7 +182,6 @@ class _LineChartDailyState extends State<LineChartDaily> {
   }
 
   Widget bottomTiles(double value, TitleMeta meta) {
-    // widget._customLineChartData.dailyBottomTitle[0].index;
     String text = "";
     for (int i = 0; i < widget._customLineChartData.bottomTitle.length; i++) {
       if (value == widget._customLineChartData.bottomTitle[i].index) {
@@ -217,21 +199,12 @@ class _LineChartDailyState extends State<LineChartDaily> {
   Widget leftTiles(double value, TitleMeta meta) {
     String text;
     switch (value.toInt()) {
-      // case 20:
-      //   text = '20';
-      //   break;
       case 40:
         text = '40';
         break;
-      // case 60:
-      //   text = '60';
-      //   break;
       case 80:
         text = '80';
         break;
-      // case 100:
-      //   text = '100';
-      //   break;
       case 120:
         text = '120';
         break;
@@ -246,7 +219,7 @@ class _LineChartDailyState extends State<LineChartDaily> {
   }
 
   TextStyle axisTextStyle() {
-    return TextStyle(
+    return const TextStyle(
         fontSize: 16, fontWeight: FontWeight.bold, color: Colors.red);
   }
 

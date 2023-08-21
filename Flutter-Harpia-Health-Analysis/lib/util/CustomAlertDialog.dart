@@ -56,7 +56,8 @@ class CustomAlertDialog {
       required BuildContext context}) {
     return AlertDialog(
       backgroundColor: ProductColor.alertBoxBackgroundColor,
-      title: Text("Setup Patient Timer",style: TextStyle(color: ProductColor.white)),
+      title: Text("Setup Patient Timer",
+          style: TextStyle(color: ProductColor.white)),
       content: SizedBox(
         height: ResponsiveDesign.getScreenHeight() / 6,
         child: patientTimerWidget,
@@ -72,7 +73,8 @@ class CustomAlertDialog {
                 child: Text(
                   "Cancel",
                   style: TextStyle(
-                      fontSize: ResponsiveDesign.getScreenWidth() / 20,color: ProductColor.white),
+                      fontSize: ResponsiveDesign.getScreenWidth() / 20,
+                      color: ProductColor.white),
                 )),
             Spacer(),
             TextButton(
@@ -86,7 +88,8 @@ class CustomAlertDialog {
                 child: Text(
                   "Ok",
                   style: TextStyle(
-                      fontSize: ResponsiveDesign.getScreenWidth() / 20,color: ProductColor.white),
+                      fontSize: ResponsiveDesign.getScreenWidth() / 20,
+                      color: ProductColor.white),
                 )),
           ],
         )

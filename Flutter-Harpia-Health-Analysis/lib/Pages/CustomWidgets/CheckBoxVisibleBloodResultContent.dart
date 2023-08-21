@@ -2,7 +2,6 @@ import 'package:flutter_harpia_health_analysis/model/diesease/CheckboxBloodResul
 import 'package:flutter_harpia_health_analysis/model/diesease/EnumBloodResultContent.dart';
 
 class CheckBoxVisibleBloodResultContent {
-  // List<CheckboxBloodResultSubItem> list = [];
  Map<String,CheckboxBloodResultSubItem> subItemMap=Map();
 
   CheckBoxVisibleBloodResultContent() {
@@ -10,6 +9,7 @@ class CheckBoxVisibleBloodResultContent {
     subItemMap.putIfAbsent(EnumBloodResultContent.BLOOD_PRESSURE.name, () => CheckboxBloodResultSubItem(name: EnumBloodResultContent.BLOOD_PRESSURE.name, showContent: true));
     subItemMap.putIfAbsent(EnumBloodResultContent.CALCIUM.name, () => CheckboxBloodResultSubItem(name: EnumBloodResultContent.CALCIUM.name, showContent: true));
     subItemMap.putIfAbsent(EnumBloodResultContent.MAGNESIUM.name, () => CheckboxBloodResultSubItem(name: EnumBloodResultContent.MAGNESIUM.name, showContent: true));
+    // List<CheckboxBloodResultSubItem> list = [];
     /*
     list.add(CheckboxBloodResultSubItem(
         name: EnumBloodResultContent.BLOOD_SUGAR.name, showContent: true));

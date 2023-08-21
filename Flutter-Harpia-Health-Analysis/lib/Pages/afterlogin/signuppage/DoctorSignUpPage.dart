@@ -147,9 +147,8 @@ class _SignUpButton extends StatelessWidget {
           password: pass,
           totalPatientNumber: -11);
       request.signUp(doctor).then((resp) async {
-        // debugPrint(resp.body);
         Map<String, dynamic> jsonData = json.decode(resp.body);
-        // print("res.body : ${resp.body}");
+
         var respEntity = ResponseEntity.fromJson(jsonData);
         if (!respEntity.success) {
           showAlertDialogInvalidUsername(

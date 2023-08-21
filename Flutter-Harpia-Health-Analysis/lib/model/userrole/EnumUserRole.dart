@@ -1,7 +1,6 @@
 enum EnumUserRole {
 
   ADMIN(roleId: 1,roleName: "Admin"),
-  /*HEALTHCARE_PERSONEL(roleId: 2,roleName: "HealthCare Personel"),*/
   DOCTOR(roleId: 2,roleName: "Doctor"),
   PATIENT(roleId: 3,roleName: "Patient");
 

@@ -7,28 +7,31 @@ void main() {
   // testDoubleToIntNumbers();
   testDoubleToInt2();
 }
-void testDoubleToInt2(){
-  double num1=1.4;
-  double num2=1;
-  double num3=1.9;
+
+void testDoubleToInt2() {
+  double num1 = 1.4;
+  double num2 = 1;
+  double num3 = 1.9;
 
   print(num1.toInt());
   print(num2.toInt());
   print(num3.toInt());
 }
-void testDoubleToIntNumbers(){
-double num1=1.4;
-double num2=1.5;
 
-print(num1.round());
-print(num2.round());
+void testDoubleToIntNumbers() {
+  double num1 = 1.4;
+  double num2 = 1.5;
 
+  print(num1.round());
+  print(num2.round());
 }
-void testModeNegative(){
-  int val=-1;
+
+void testModeNegative() {
+  int val = -1;
   print("Value :$val");
-  print("mod 4 : ${val%4}");
+  print("mod 4 : ${val % 4}");
 }
+
 void testDoubleNumber() {
   double value1 = 2.11;
   double value2 = 5.99;

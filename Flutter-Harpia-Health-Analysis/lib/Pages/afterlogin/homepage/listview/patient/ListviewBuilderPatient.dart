@@ -44,18 +44,16 @@ class _ListviewBuilderPatientState extends State<ListviewBuilderPatient> {
 
   @override
   Widget build(BuildContext context) {
-    /*context
-        .read<AppBarCubit>()
-        .setTitleRoleNameWithPageListSize(patientList.length);*/
     return Scaffold(
         backgroundColor: ProductColor.bodyBackground,
         body: RefreshIndicator(
-            onRefresh: () async {
-              retrivePatientList();
-            },
-            child: isLoading
-            ? Center(child: CircularProgressIndicator())
-        : getBodyForPatientListView(patientList),));
+          onRefresh: () async {
+            retrivePatientList();
+          },
+          child: isLoading
+              ? Center(child: CircularProgressIndicator())
+              : getBodyForPatientListView(patientList),
+        ));
   }
 }
 
@@ -85,7 +83,6 @@ Widget getBodyForPatientListView(List<Patient> patientList) {
           itemBuilder: (context, index) {
             return InkWell(
               onTap: () {
-                // print("Click Item : ${patientList[index]}");
                 navigateToPatientChartPage(
                     context: context,
                     routePage: HomePagePatient(
@@ -94,8 +91,7 @@ Widget getBodyForPatientListView(List<Patient> patientList) {
                             "${patientList[index].name} ${patientList[index].lastname}"));
               },
               child: Card(
-                color: CustomListViewItemColor.getBackgroundColor(
-                    colorindex: 2, index: index),
+                color: CustomListViewItemColor.getBackgroundColor(index: index),
                 shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(15))
                     /*borderRadius: BorderRadius.only(
@@ -150,7 +146,7 @@ class ListViewItemText extends StatelessWidget {
       child: Text(
         text,
         style: TextStyle(
-          fontSize:ResponsiveDesign.getScreenHeight() / 50,
+          fontSize: ResponsiveDesign.getScreenHeight() / 50,
           // isBold
           //     ? ResponsiveDesign.getScreenHeight() / 50
           //     : ResponsiveDesign.getScreenHeight() / 47,

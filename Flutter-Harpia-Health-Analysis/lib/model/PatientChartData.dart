@@ -1,7 +1,5 @@
 import 'dart:ffi';
 
-import 'package:flutter_harpia_health_analysis/model/user/Patient.dart';
-
 class PatientChartData {
   Long _patient_id;
 

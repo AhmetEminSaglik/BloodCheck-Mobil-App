@@ -30,12 +30,10 @@ class _DoctorDrawerState extends State<DoctorDrawer> {
         padding: EdgeInsets.zero,
         children: [
           const DrawerHeader(child: Text("DOCTOR Drawer Header")),
-          // DrawerHeader(child: Text("Header")),
           _buildDrawerListTile(
               context: context, title: "HomePage", selectedIndex: 0),
           _buildDrawerListTile(
               context: context, title: "Profile", selectedIndex: 1),
-          // _buildDrawerListTileSafeLogout(context: context, title: title, selectedIndex: selectedIndex)
           SafeLogoutDrawerItem(),
         ],
       ),

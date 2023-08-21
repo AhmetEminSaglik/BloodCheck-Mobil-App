@@ -7,7 +7,7 @@ import '../../model/diesease/BloodResult.dart';
 class CustomLineChartDataMonthly {
   List<BloodResult> _bloodListData = [];
   late _BloodListSubItems _bloodListSubItems;
-  DateTime now = DateTime.now().add(Duration(days:3));
+  DateTime now = DateTime.now().add(Duration(days: 3));
   List<_BottomSideTitles> _bottomTitle = [];
 
   CustomLineChartDataMonthly({required List<BloodResult> bloodListData}) {
@@ -22,11 +22,12 @@ class CustomLineChartDataMonthly {
     int hour = now.hour;
     int passedWeekCounter = (day / 7).toInt();
     day %= 7;
-    double remainedTime = ((day*24+ hour) / 24);
+    double remainedTime = ((day * 24 + hour) / 24);
     int monthlyTitleLength = EnumLineChartBottomSideMonthlyTitles.values.length;
     for (int i = 0; i <= monthlyTitleLength; i++) {
       _bottomTitle.add(_BottomSideTitles(
-          index: (monthlyTotalIndexValue - (remainedTime + ((i) * 6*7))).toInt(), // test each 6 hours and one week is 7 days. ==> 6*7
+          index: (monthlyTotalIndexValue - (remainedTime + ((i) * 6 * 7)))
+              .toInt(), // test each 6 hours and one week is 7 days. ==> 6*7
           text: EnumLineChartBottomSideMonthlyTitles.getIndexName(
               (passedWeekCounter - i) % monthlyTitleLength)));
     }
@@ -63,12 +64,9 @@ class _BloodListSubItems {
   int monthlyTotalIndexValue = 168;
 
   _BloodListSubItems({required List<BloodResult> bloodResultList}) {
-    monthlySpotRange = (monthlyTotalIndexValue / bloodResultList.length).round().toDouble();
+    monthlySpotRange =
+        (monthlyTotalIndexValue / bloodResultList.length).round().toDouble();
     for (int i = 0; i < bloodResultList.length; i++) {
-      // print(
-      //     "GELEN DATA Monthly : ${bloodResultList[i]}  -->Spot X : ${FlSpot(
-      //         _getItemFlSpotXValue(itemCreatedAt: bloodResultList[i].createdAt),
-      //         bloodResultList[i].bloodSugar.toDouble())}");
       _bloodSugarResultListFlSpot.add(FlSpot(
           _getItemFlSpotXValue(itemCreatedAt: bloodResultList[i].createdAt),
           bloodResultList[i].bloodSugar.toDouble()));
@@ -89,7 +87,8 @@ class _BloodListSubItems {
 
   double _getItemFlSpotXValue({required DateTime itemCreatedAt}) {
     Duration diff = now.difference(itemCreatedAt);
-    double diffHours =( monthlyTotalIndexValue - diff.inHours/4).toDouble(); // each 4 hours, add a new bloodResult Data
+    double diffHours = (monthlyTotalIndexValue - diff.inHours / 4)
+        .toDouble(); // each 4 hours, add a new bloodResult Data
     return diffHours;
   }
 

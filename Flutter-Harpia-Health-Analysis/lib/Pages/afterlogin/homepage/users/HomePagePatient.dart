@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/CustomLineChartDataMonthly.dart';
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/CustomLineChartDataWeekly.dart';
-import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/LineChartDemo1.dart';
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/LineChartMonthly.dart';
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/LineChartWeekly.dart';
 import 'package:flutter_harpia_health_analysis/core/ResponsiveDesign.dart';
@@ -22,7 +21,6 @@ import '../../../../util/ProductColor.dart';
 import '../../../CustomWidgets/CustomLineChartDataDaily.dart';
 import '../../../CustomWidgets/LineChartDaily.dart';
 import '../../../CustomWidgets/CheckBoxVisibleBloodResultContent.dart';
-import '../../../CustomWidgets/LineChartDemo2.dart';
 import '../appbar/AppBarCubit.dart';
 
 class HomePagePatient extends StatefulWidget {

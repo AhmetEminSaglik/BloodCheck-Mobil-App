@@ -7,9 +7,9 @@ class PatientProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       backgroundColor: ProductColor.bodyBackground,
-      body: Center(
+      body: const Center(
           child: Text("Patient Profile Body", style: TextStyle(fontSize: 35))),
     );
   }

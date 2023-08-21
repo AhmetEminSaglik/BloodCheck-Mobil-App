@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,7 +5,6 @@ import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestPatient.da
 import 'package:flutter_harpia_health_analysis/model/diesease/EnumDiabeticType.dart';
 import 'package:flutter_harpia_health_analysis/model/userrole/EnumUserRole.dart';
 import 'package:flutter_harpia_health_analysis/util/CustomAlertDialog.dart';
-import 'package:flutter_harpia_health_analysis/util/SharedPref.dart';
 import '../../../business/factory/UserFactory.dart';
 import '../../../core/ResponsiveDesign.dart';
 import '../../../httprequest/HttpRequestDoctor.dart';
@@ -14,7 +12,6 @@ import '../../../httprequest/ResponseEntity.dart';
 import '../../../model/user/Doctor.dart';
 import '../../../model/user/Patient.dart';
 import '../../../model/user/User.dart';
-import '../../../util/CustomSnackBar.dart';
 import '../../../util/ProductColor.dart';
 import 'dart:convert';
 
@@ -26,7 +23,6 @@ class PatientSignUpPage extends StatefulWidget {
 }
 
 final _formKey = GlobalKey<FormState>();
-// final _diseaseKey = GlobalKey<FormFieldState>();
 
 class DoctorPicklistItem {
   int index;
@@ -147,13 +143,6 @@ class _DoctorDropdownMenuButtonState extends State<_DoctorDropdownMenuButton> {
     });
   }
 
-  /*DropdownMenuItem<int> buildMenuItem(int id) => DropdownMenuItem(
-      value: id,
-      child: Text(
-        items[id].name,
-        style: TextStyle(fontSize: ResponsiveDesign.getScreenWidth() / 23),
-      ));*/
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -193,7 +182,6 @@ class _DoctorDropdownMenuButtonState extends State<_DoctorDropdownMenuButton> {
                       if (widget.selectedDoctorId > 0) {
                         validateItemWithAlertDialog(
                             selectedItemIndex: widget.selectedDoctorId);
-                        // print("confirmed : $isDiabeticTypeConfirmed");
                       }
                     });
                   },
@@ -281,7 +269,6 @@ class _DiabeticTypeDropdownMenuButtonState
                   decoration: InputDecoration(enabledBorder: InputBorder.none),
                   iconSize: ResponsiveDesign.getScreenWidth() / 15,
                   value: widget.selectedDiabeticTypeValue,
-                  //widget.selectedDiabeticTypeValue,
                   items: items.map(buildMenuItem).toList(),
                   onChanged: (value) {
                     setState(() {
@@ -290,7 +277,6 @@ class _DiabeticTypeDropdownMenuButtonState
                         validateItemWithAlertDialog(
                             selectedItemIndex:
                                 widget.selectedDiabeticTypeValue);
-                        // print("confirmed : $isDiabeticTypeConfirmed");
                       }
                     });
                   },

@@ -18,7 +18,6 @@ class _HomePageAdminState extends State<HomePageAdmin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.cyan,
       body: IndexedStack(
         index: selectedIndex,
         children: pageList,

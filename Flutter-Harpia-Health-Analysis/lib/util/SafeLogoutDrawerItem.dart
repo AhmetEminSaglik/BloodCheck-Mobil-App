@@ -3,10 +3,6 @@ import 'package:flutter_harpia_health_analysis/Pages/main/harpia-health-analysis
 import 'package:flutter_harpia_health_analysis/util/SharedPref.dart';
 
 class SafeLogoutDrawerItem extends StatefulWidget {
-  // const SafeLogOutUtil({required this.context});
-  //
-  // final BuildContext context;
-
   @override
   State<SafeLogoutDrawerItem> createState() => _SafeLogoutDrawerItemState();
 }
@@ -23,8 +19,7 @@ class _SafeLogoutDrawerItemState extends State<SafeLogoutDrawerItem> {
       onTap: () {
         setState(() {
           SafeLogOut.clearSharedPref();
-          Navigator.of(context).popUntil(
-              (route) => route.isFirst);
+          Navigator.of(context).popUntil((route) => route.isFirst);
         });
       },
     );

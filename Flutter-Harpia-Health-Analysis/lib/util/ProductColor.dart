@@ -24,9 +24,9 @@ class ProductColor {
   static const _alertBoxBackgroundColor = _bodyBackground;
   static const _appBarBackgroundColor = _redAccent;
   static const _fLSpotColorBloodSugar = Color(0xFFF3003B);
-  static const _fLSpotColorBloodPressure = Color(0xFF900DB4);
+  static const _fLSpotColorBloodPressure = Color(0xFFBA13E8);
   static const _fLSpotColorMagnesium = Color(0xFF2630DE);
-  static const _fLSpotColorCalcium = Color(0xFF12EFCE);
+  static const _fLSpotColorCalcium = Color(0xFF0C806E);
 
   static get darkBlue => _darkBlue;
 

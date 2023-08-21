@@ -38,17 +38,6 @@ class HttpRequestBloodResult {
     Uri url = Uri.parse("$_baseUrl/patient/$patientId/monthly");
     return _sendBloodResultRequestToUrl(url);
   }
-  /*static Future<List<BloodResult>> getBloodResultDataOfPatientId(int patientId) async {
-    Uri url = Uri.parse("$_baseUrl/patient/$patientId");
-    print("URL : $url");
-    var resp = await http.get(url);
-    // log(resp.body);
-    Map<String, dynamic> jsonData = json.decode(resp.body);
-    var respEntity = ResponseEntity.fromJson(jsonData);
-    List<BloodResult> bloodResultList =
-    BloodResultFactory.createBloodResultList(respEntity.data);
-    return bloodResultList;
-  }*/
 
   Future<http.Response> signUp(Patient user) async {
     Uri url = Uri.parse(_baseUrl);

@@ -46,7 +46,7 @@ class Admin extends User {
   }
 
   String toString() {
-    return "Admin{" +
+    return  "Admin{" +
         "id=$id" +
         ", roleId=$roleId" +
         ", name='$name'" +

@@ -15,21 +15,7 @@ class SharedPrefUtils {
 }
 
 class CustomListViewItemColor {
-  static Color getBackgroundColor(
-      {required int colorindex, required int index}) {
-    if (colorindex == 1) {
-      return index % 2 == 0 ? Colors.cyanAccent : Colors.tealAccent;
-    } else if (colorindex == 2) {
-      // return index % 2 == 0 ? ProductColor.white : Colors.orangeAccent;
-      return index % 2 == 0 ? ProductColor.white : ProductColor.darkWhite;
-    } else if (colorindex == 3) {
-      return index % 2 == 0 ? Colors.white54 : Colors.white70;
-    } else if (colorindex == 4) {
-      return index % 2 == 0 ? Colors.white : Colors.blueGrey;
-    }
-    return Colors.black;
+  static Color getBackgroundColor({required int index}) {
+    return index % 2 == 0 ? Colors.cyanAccent : Colors.tealAccent;
   }
 }
-
-
-

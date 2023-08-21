@@ -22,23 +22,14 @@ class CustomLineChartDataDaily {
     int passed8HoursCounter = (hour / 8).toInt();
     hour %= 8;
     int remainedTime = ((hour * 60 + minute) / 10).toInt();
-    // print("remainedTime : $remainedTime");
-    // print("hour  : $hour");
-    int dailyTitleLength=EnumLineChartBottomSideDailyTitles.values.length;
+    int dailyTitleLength = EnumLineChartBottomSideDailyTitles.values.length;
     for (int i = 0; i < dailyTitleLength; i++) {
       _bottomTitle.add(_BottomSideTitles(
-          index: dailyTotalIndexValue - (remainedTime + ((i) * 6*8)), // 6 : 60/10, 8 : reset in each 8 hours
+          index: dailyTotalIndexValue - (remainedTime + ((i) * 6 * 8)),
+          // 6 : 60/10, 8 : reset in each 8 hours
           text: EnumLineChartBottomSideDailyTitles.getIndexName(
               (passed8HoursCounter - i) % dailyTitleLength)));
     }
-    // print("_bottomTitle length : ${_bottomTitle.length}");
-    // print(
-    //     "_bottomTitle 0  : ${_bottomTitle[0]._index} ${_bottomTitle[0].text}");
-    // print(
-    //     "_bottomTitle 1  :  ${_bottomTitle[1]._index} ${_bottomTitle[1].text}");
-    // print(
-    //     "_bottomTitle 2  :  ${_bottomTitle[2]._index} ${_bottomTitle[2].text}");
-    // print("_bottomTitle 3  :  ${_bottomTitle[3]._index} ${_bottomTitle[3].text}");
   }
 
   List<BloodResult> get bloodListData => _bloodListData;
@@ -73,14 +64,9 @@ class _BloodListSubItems {
   int dailyTotalIndexValue = 144;
 
   _BloodListSubItems({required List<BloodResult> bloodResultList}) {
-    dailySpotRange = (dailyTotalIndexValue / bloodResultList.length).round().toDouble();
-    // print('dailySpotRange  range : $dailySpotRange');
-    // print('bloodResultList length : ${bloodResultList.length}');
+    dailySpotRange =
+        (dailyTotalIndexValue / bloodResultList.length).round().toDouble();
     for (int i = 0; i < bloodResultList.length; i++) {
-      // print(
-      //     "GELEN DATA  DAILY : ${bloodResultList[i]}  -->Spot X : ${FlSpot(
-      //         _getItemFlSpotXValue(itemCreatedAt: bloodResultList[i].createdAt),
-      //         bloodResultList[i].bloodSugar.toDouble())}");
       _bloodSugarResultListFlSpot.add(FlSpot(
           _getItemFlSpotXValue(itemCreatedAt: bloodResultList[i].createdAt),
           bloodResultList[i].bloodSugar.toDouble()));
@@ -96,18 +82,12 @@ class _BloodListSubItems {
       _magnesiumResultListFlSpot.add(FlSpot(
           _getItemFlSpotXValue(itemCreatedAt: bloodResultList[i].createdAt),
           bloodResultList[i].magnesium.toDouble()));
-
-      // _bloodPressureResultListFlSpot.add(FlSpot(x, bloodResultList[i].bloodPresure.toDouble()));
-      // _magnesiumResultListFlSpot.add(FlSpot(x, y));
-      // _calciumResultListFlSpot.add(FlSpot(x, y));
     }
   }
 
   double _getItemFlSpotXValue({required DateTime itemCreatedAt}) {
     Duration diff = now.difference(itemCreatedAt);
     double diffMinutes = dailyTotalIndexValue - diff.inMinutes / 10;
-    // print("--------> DIFFERENCE : $diffMinutes");
-    // print("--------> CreatedAt : $itemCreatedAt");
     return diffMinutes;
   }
 
