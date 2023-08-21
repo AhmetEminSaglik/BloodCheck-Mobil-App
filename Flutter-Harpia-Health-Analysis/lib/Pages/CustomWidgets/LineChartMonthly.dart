@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/CustomLineChartDataMonthly.dart';
+import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/CustomLineChartDataWeekly.dart';
 import 'package:flutter_harpia_health_analysis/model/diesease/EnumBloodResultContent.dart';
 import 'package:flutter_harpia_health_analysis/util/ProductColor.dart';
 
@@ -10,12 +12,12 @@ import '../../core/ResponsiveDesign.dart';
 import 'CheckBoxVisibleBloodResultContent.dart';
 import 'CustomLineChartDataDaily.dart';
 
-class LineChartDaily extends StatefulWidget {
-  late CustomLineChartDataDaily _customLineChartData;
+class LineChartMonthly extends StatefulWidget {
+  late CustomLineChartDataMonthly _customLineChartData;
   late CheckBoxVisibleBloodResultContent _checkBoxVisibleBloodResultContent;
 
-  LineChartDaily(
-      {required CustomLineChartDataDaily customLineChartData,
+  LineChartMonthly(
+      {required CustomLineChartDataMonthly customLineChartData,
       required CheckBoxVisibleBloodResultContent
           checkBoxVisibleBloodResultContent}) {
     _customLineChartData = customLineChartData;
@@ -23,10 +25,10 @@ class LineChartDaily extends StatefulWidget {
   }
 
   @override
-  State<LineChartDaily> createState() => _LineChartDailyState();
+  State<LineChartMonthly> createState() => _LineChartMonthlyState();
 }
 
-class _LineChartDailyState extends State<LineChartDaily> {
+class _LineChartMonthlyState extends State<LineChartMonthly> {
   late bool isVisibleBloodSugar;
   late bool isVisibleBloodPressure;
   late bool isVisibleCalcium;
@@ -74,7 +76,7 @@ class _LineChartDailyState extends State<LineChartDaily> {
     return LineChartData(
         borderData: FlBorderData(border: Border.all(color: Colors.white)),
         minX: -1,
-        maxX: 144,
+        maxX: 168,
         minY: -1,
         maxY: 200,
         gridData: FlGridData(
@@ -179,7 +181,6 @@ class _LineChartDailyState extends State<LineChartDaily> {
     List<FlSpot> spotsBloodPressure = [];
     for (FlSpot tmp in widget
         ._customLineChartData.bloodListSubItems.calciumResultListFlSpot) {
-      // print("gelen calcium degeri : $tmp}");
       spotsBloodPressure.add(tmp);
     }
 
@@ -194,16 +195,18 @@ class _LineChartDailyState extends State<LineChartDaily> {
         isCurved: false,
         barWidth: 2,
         isStrokeCapRound: true,
-        dotData: FlDotData(show: true),
+        dotData: FlDotData(show: false),
         spots: spotValues);
   }
 
   Widget bottomTiles(double value, TitleMeta meta) {
     // widget._customLineChartData.dailyBottomTitle[0].index;
     String text = "";
-    for (int i = 0; i < widget._customLineChartData.bottomTitle.length; i++) {
-      if (value == widget._customLineChartData.bottomTitle[i].index) {
-        text = widget._customLineChartData.bottomTitle[i].text;
+    for (int i = 0;
+        i < widget._customLineChartData.monthlyBottomTitle.length;
+        i++) {
+      if (value == widget._customLineChartData.monthlyBottomTitle[i].index) {
+        text = widget._customLineChartData.monthlyBottomTitle[i].text;
         break;
       }
     }

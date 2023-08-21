@@ -1,5 +1,5 @@
 import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter_harpia_health_analysis/model/enums/EnumLineChartBottomSideTitles.dart';
+import 'package:flutter_harpia_health_analysis/model/enums/linechart/bottomtitles/EnumLineChartBottomSideTitles.dart';
 
 import '../../model/diesease/BloodResult.dart';
 
@@ -22,8 +22,8 @@ class CustomLineChartDataDaily {
     int passed8HoursCounter = (hour / 8).toInt();
     hour %= 8;
     int remainedTime = ((hour * 60 + minute) / 10).toInt();
-    print("remainedTime : $remainedTime");
-    print("hour  : $hour");
+    // print("remainedTime : $remainedTime");
+    // print("hour  : $hour");
     int dailyTitleLength=EnumLineChartBottomSideDailyTitles.values.length;
     for (int i = 0; i < dailyTitleLength; i++) {
       _bottomTitle.add(_BottomSideTitles(
@@ -31,13 +31,13 @@ class CustomLineChartDataDaily {
           text: EnumLineChartBottomSideDailyTitles.getIndexName(
               (passed8HoursCounter - i) % dailyTitleLength)));
     }
-    print("_bottomTitle length : ${_bottomTitle.length}");
-    print(
-        "_bottomTitle 0  : ${_bottomTitle[0]._index} ${_bottomTitle[0].text}");
-    print(
-        "_bottomTitle 1  :  ${_bottomTitle[1]._index} ${_bottomTitle[1].text}");
-    print(
-        "_bottomTitle 2  :  ${_bottomTitle[2]._index} ${_bottomTitle[2].text}");
+    // print("_bottomTitle length : ${_bottomTitle.length}");
+    // print(
+    //     "_bottomTitle 0  : ${_bottomTitle[0]._index} ${_bottomTitle[0].text}");
+    // print(
+    //     "_bottomTitle 1  :  ${_bottomTitle[1]._index} ${_bottomTitle[1].text}");
+    // print(
+    //     "_bottomTitle 2  :  ${_bottomTitle[2]._index} ${_bottomTitle[2].text}");
     // print("_bottomTitle 3  :  ${_bottomTitle[3]._index} ${_bottomTitle[3].text}");
   }
 
@@ -55,7 +55,7 @@ class _BottomSideTitles {
   _BottomSideTitles({required int index, required String text}) {
     _index = index;
     _text = text;
-    print(" _BottomSideTitles GELEN INDEX  DEGERI  : $index");
+    // print(" _BottomSideTitles GELEN INDEX  DEGERI  : $index");
   }
 
   String get text => _text;
@@ -77,10 +77,10 @@ class _BloodListSubItems {
     // print('dailySpotRange  range : $dailySpotRange');
     // print('bloodResultList length : ${bloodResultList.length}');
     for (int i = 0; i < bloodResultList.length; i++) {
-      print(
-          "GELEN DATA  DAILY : ${bloodResultList[i]}  -->Spot X : ${FlSpot(
-              _getItemFlSpotXValue(itemCreatedAt: bloodResultList[i].createdAt),
-              bloodResultList[i].bloodSugar.toDouble())}");
+      // print(
+      //     "GELEN DATA  DAILY : ${bloodResultList[i]}  -->Spot X : ${FlSpot(
+      //         _getItemFlSpotXValue(itemCreatedAt: bloodResultList[i].createdAt),
+      //         bloodResultList[i].bloodSugar.toDouble())}");
       _bloodSugarResultListFlSpot.add(FlSpot(
           _getItemFlSpotXValue(itemCreatedAt: bloodResultList[i].createdAt),
           bloodResultList[i].bloodSugar.toDouble()));

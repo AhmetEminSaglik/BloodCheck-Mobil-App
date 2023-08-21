@@ -1,3 +1,4 @@
+/*
 import 'dart:math';
 
 import 'package:fl_chart/fl_chart.dart';
@@ -73,3 +74,4 @@ class LineChartDemo2 extends StatelessWidget {
 double getRandomValue(int val) {
   return Random().nextInt(8).toDouble() + val;
 }
+*/

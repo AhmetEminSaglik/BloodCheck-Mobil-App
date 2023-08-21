@@ -123,10 +123,16 @@ class _LineChartWeeklyState extends State<LineChartWeekly> {
         bottomTitles: SideTitles(showTitles: true),*/
         ),
         lineBarsData: [
-          isVisibleBloodSugar ? _getBloodSugarLineChartBarData() : LineChartBarData(),
-          isVisibleBloodPressure ? _getBloodPressureLineChartBarData() : LineChartBarData(),
+          isVisibleBloodSugar
+              ? _getBloodSugarLineChartBarData()
+              : LineChartBarData(),
+          isVisibleBloodPressure
+              ? _getBloodPressureLineChartBarData()
+              : LineChartBarData(),
           isVisibleCalcium ? _getCalciumLineChartBarData() : LineChartBarData(),
-          isVisibleMagnesium ? _getMagnesiumLineChartBarData(): LineChartBarData(),
+          isVisibleMagnesium
+              ? _getMagnesiumLineChartBarData()
+              : LineChartBarData(),
         ]);
   }
 
@@ -242,7 +248,7 @@ class _LineChartWeeklyState extends State<LineChartWeekly> {
   }
 
   TextStyle axisTextStyle() {
-    return TextStyle(
+    return const TextStyle(
         fontSize: 16, fontWeight: FontWeight.bold, color: Colors.red);
   }
 

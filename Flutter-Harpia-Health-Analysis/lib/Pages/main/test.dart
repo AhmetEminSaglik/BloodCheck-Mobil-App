@@ -4,7 +4,17 @@ void main() {
   // testDateTime();
   // testDoubleNumber();
   // testModeNegative();
-  testDoubleToIntNumbers();
+  // testDoubleToIntNumbers();
+  testDoubleToInt2();
+}
+void testDoubleToInt2(){
+  double num1=1.4;
+  double num2=1;
+  double num3=1.9;
+
+  print(num1.toInt());
+  print(num2.toInt());
+  print(num3.toInt());
 }
 void testDoubleToIntNumbers(){
 double num1=1.4;

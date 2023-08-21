@@ -1,3 +1,4 @@
+/*
 import 'dart:math';
 
 import 'package:fl_chart/fl_chart.dart';
@@ -35,8 +36,10 @@ class LineChartDemo1 extends StatelessWidget {
                 )
             )
 
-            /*leftTitles: SideTitles(showTitles: true),
-        bottomTitles: SideTitles(showTitles: true),*/
+            */
+/*leftTitles: SideTitles(showTitles: true),
+        bottomTitles: SideTitles(showTitles: true),*//*
+
           ),
           gridData: FlGridData(
               show: true,
@@ -146,3 +149,4 @@ Widget leftTiles(double value, TitleMeta meta) {
 double getRandomValue() {
   return Random().nextInt(8).toDouble()+1;
 }
+*/

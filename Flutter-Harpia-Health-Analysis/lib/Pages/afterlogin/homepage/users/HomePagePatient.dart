@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/CustomLineChartDataMonthly.dart';
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/CustomLineChartDataWeekly.dart';
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/LineChartDemo1.dart';
+import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/LineChartMonthly.dart';
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/LineChartWeekly.dart';
 import 'package:flutter_harpia_health_analysis/core/ResponsiveDesign.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestDoctor.dart';
@@ -27,10 +29,12 @@ class HomePagePatient extends StatefulWidget {
   final String displayNamePatientPage;
   final int patientId;
 
-  const HomePagePatient(
-      {super.key,
-      required this.displayNamePatientPage,
-      required this.patientId});
+  const HomePagePatient
+
+  (
+  {super.key,
+  required this.displayNamePatientPage,
+  required this.patientId});
 
   @override
   State<HomePagePatient> createState() => _HomePagePatientState();
@@ -54,7 +58,10 @@ class _HomePagePatientState extends State<HomePagePatient> {
         );
         break;
       case 3:
-        activatedLineChartWidget = null;
+        activatedLineChartWidget = LineChartMonthly(
+            customLineChartData: _customLineChartDataMonthly,
+            checkBoxVisibleBloodResultContent:
+            _checkBoxVisibleBloodResultContent);
         break;
       case 4:
         activatedLineChartWidget = null;
@@ -74,9 +81,10 @@ class _HomePagePatientState extends State<HomePagePatient> {
   List<BloodResult> weeklyBloodResultList = [];
   List<BloodResult> monthlyBloodResultList = [];
   CheckBoxVisibleBloodResultContent _checkBoxVisibleBloodResultContent =
-      CheckBoxVisibleBloodResultContent();
+  CheckBoxVisibleBloodResultContent();
   late CustomLineChartDataDaily _customLineChartDataDaily;
   late CustomLineChartDataWeekly _customLineChartDataWeekly;
+  late CustomLineChartDataMonthly _customLineChartDataMonthly;
 
   // List<Widget> checkBoxBloodResultContents = [];
 
@@ -96,21 +104,21 @@ class _HomePagePatientState extends State<HomePagePatient> {
 
   void retrieveBloodResultData() async {
     dailyBloodResultList =
-        await HttpRequestBloodResult.getDailyBloodResult(widget.patientId);
+    await HttpRequestBloodResult.getDailyBloodResult(widget.patientId);
     weeklyBloodResultList =
-        await HttpRequestBloodResult.getWeeklyBloodResult(widget.patientId);
+    await HttpRequestBloodResult.getWeeklyBloodResult(widget.patientId);
     monthlyBloodResultList =
-        await HttpRequestBloodResult.getMonthlyBloodResult(widget.patientId);
+    await HttpRequestBloodResult.getMonthlyBloodResult(widget.patientId);
     setState(() {
       isLoading = false;
     });
     _customLineChartDataDaily =
         CustomLineChartDataDaily(bloodListData: dailyBloodResultList);
-    // _customLineChartDataDaily.bottomTitle.forEach((element) {});
 
     _customLineChartDataWeekly =
         CustomLineChartDataWeekly(bloodListData: weeklyBloodResultList);
-    // _customLineChartDataWeekly.bottomTitle.forEach((element) {});
+    _customLineChartDataMonthly =
+        CustomLineChartDataMonthly(bloodListData: monthlyBloodResultList);
 
     updateActivatedLineChart(1);
   }
@@ -125,113 +133,127 @@ class _HomePagePatientState extends State<HomePagePatient> {
     //     "---------> tekradan calisti :  VisibleItems : $_checkBoxVisibleBloodResultContent}");
     return Scaffold(
       appBar: visibleAppBar ? getAppBar() : null,
-      backgroundColor:
-          isLoading ? ProductColor.bodyBackground : ProductColor.white,
+      // backgroundColor:ProductColor.bodyBackground,
+      backgroundColor:isLoading ? ProductColor.bodyBackground : ProductColor.white,
       body: isLoading
-          // ? const LoadingScreenWidget()
+      // ? const LoadingScreenWidget()
           ? const LoadingScreenWidget()
           : SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              // color: Colors.redAccent,
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    // crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Column(
+                        children: [
+                          getBloodResultRadioButtonTime(
+                              name: "Daily", itemValue: 1),
+                          getBloodResultRadioButtonTime(
+                              name: "Monthly", itemValue: 3),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          getBloodResultRadioButtonTime(
+                              name: "Weekly", itemValue: 2),
+                          getBloodResultRadioButtonTime(
+                              name: "6 Month", itemValue: 4),
+                        ],
+                      )
+                    ],
+                  ),
                   Container(
-                    // color: Colors.redAccent,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          // crossAxisAlignment: CrossAxisAlignment.stretch,
+                    // color: Colors.cyan,
+                      width: ResponsiveDesign.getScreenWidth(),
+                      child: Center(
+                        child: Row(
                           children: [
                             Column(
-                              children: [
-                                getBloodResultRadioButtonTime(
-                                    name: "Daily", itemValue: 1),
-                                getBloodResultRadioButtonTime(
-                                    name: "Monthly", itemValue: 3),
-                              ],
-                            ),
+                                crossAxisAlignment:
+                                CrossAxisAlignment.start,
+                                children: [
+                                  // Column(children: checkBoxBloodResultContents,), I dont understand why checkbox is not working in this way.
+                                  getCheckboxBloodResultItem(
+                                    bloodResultSubItemCheckbox:
+                                    _checkBoxVisibleBloodResultContent
+                                        .subItemMap[
+                                    EnumBloodResultContent
+                                        .BLOOD_SUGAR.name]!,
+                                    itemColor: ProductColor
+                                        .fLSpotColorBloodSugar,
+                                  ),
+                                  getCheckboxBloodResultItem(
+                                    bloodResultSubItemCheckbox:
+                                    _checkBoxVisibleBloodResultContent
+                                        .subItemMap[
+                                    EnumBloodResultContent
+                                        .CALCIUM.name]!,
+                                    itemColor:
+                                    ProductColor.fLSpotColorCalcium,
+                                  ),
+                                ]),
                             Column(
-                              children: [
-                                getBloodResultRadioButtonTime(
-                                    name: "Weekly", itemValue: 2),
-                                getBloodResultRadioButtonTime(
-                                    name: "6 Month", itemValue: 4),
-                              ],
-                            )
+                                crossAxisAlignment:
+                                CrossAxisAlignment.start,
+                                children: [
+                                  // Column(children: checkBoxBloodResultContents,), I dont understand why checkbox is not working in this way.
+                                  getCheckboxBloodResultItem(
+                                    bloodResultSubItemCheckbox:
+                                    _checkBoxVisibleBloodResultContent
+                                        .subItemMap[
+                                    EnumBloodResultContent
+                                        .BLOOD_PRESSURE.name]!,
+                                    itemColor: ProductColor
+                                        .fLSpotColorBloodPressure,
+                                  ),
+                                  getCheckboxBloodResultItem(
+                                    bloodResultSubItemCheckbox:
+                                    _checkBoxVisibleBloodResultContent
+                                        .subItemMap[
+                                    EnumBloodResultContent
+                                        .MAGNESIUM.name]!,
+                                    itemColor:
+                                    ProductColor.fLSpotColorMagnesium,
+                                  ),
+                                ]),
                           ],
                         ),
-                        Container(
-                            // color: Colors.cyan,
-                            width: ResponsiveDesign.getScreenWidth(),
-                            child: Center(
-                              child: Row(
-                                children: [
-                                  Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        // Column(children: checkBoxBloodResultContents,), I dont understand why checkbox is not working in this way.
-                                        getCheckboxBloodResultItem(
-                                          bloodResultSubItemCheckbox:
-                                              _checkBoxVisibleBloodResultContent
-                                                      .subItemMap[
-                                                  EnumBloodResultContent
-                                                      .BLOOD_SUGAR.name]!,
-                                          itemColor: ProductColor
-                                              .fLSpotColorBloodSugar,
-                                        ),
-                                        getCheckboxBloodResultItem(
-                                          bloodResultSubItemCheckbox:
-                                              _checkBoxVisibleBloodResultContent
-                                                      .subItemMap[
-                                                  EnumBloodResultContent
-                                                      .CALCIUM.name]!,
-                                          itemColor:
-                                              ProductColor.fLSpotColorCalcium,
-                                        ),
-                                      ]),
-                                  Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        // Column(children: checkBoxBloodResultContents,), I dont understand why checkbox is not working in this way.
-                                        getCheckboxBloodResultItem(
-                                          bloodResultSubItemCheckbox:
-                                              _checkBoxVisibleBloodResultContent
-                                                      .subItemMap[
-                                                  EnumBloodResultContent
-                                                      .BLOOD_PRESSURE.name]!,
-                                          itemColor: ProductColor
-                                              .fLSpotColorBloodPressure,
-                                        ),
-                                        getCheckboxBloodResultItem(
-                                          bloodResultSubItemCheckbox:
-                                              _checkBoxVisibleBloodResultContent
-                                                      .subItemMap[
-                                                  EnumBloodResultContent
-                                                      .MAGNESIUM.name]!,
-                                          itemColor:
-                                              ProductColor.fLSpotColorMagnesium,
-                                        ),
-                                      ]),
-                                ],
-                              ),
-                            )),
-                      ],
-                    ),
-                  ),
-                  // SizedBox(width: 450, height: 300, child: LineChartDemo1()),
-                  // SizedBox(width: 450, height: 300, child: LineChartDemo2()),
-                  _getPatientTimerButton(),
-                  SizedBox(
-                      width: ResponsiveDesign.getScreenWidth(),
-                      height: ResponsiveDesign.getScreenHeight() / 2.5,
-                      child: activatedLineChartWidget),
+                      )),
                 ],
               ),
             ),
+            // SizedBox(width: 450, height: 300, child: LineChartDemo1()),
+            // SizedBox(width: 450, height: 300, child: LineChartDemo2()),
+            _getPatientTimerButton(),
+            _getPatientTimerButton(),
+                  SizedBox(
+                      width: ResponsiveDesign.getScreenWidth(),
+                      height: ResponsiveDesign.getScreenHeight() / 2.5,
+                      child: activatedLineChartWidget ??
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Here is not completed yet.",
+                                style: TextStyle(
+                                    fontSize:
+                                        ResponsiveDesign.getScreenWidth() / 15),
+                              ),
+                              const CircularProgressIndicator(),
+                            ],
+                          )),
+          ],
+        ),
+      ),
     );
   }
+
 
   Padding getBloodResultRadioButtonTime(
       {required String name, required int itemValue}) {
@@ -300,7 +322,8 @@ class _HomePagePatientState extends State<HomePagePatient> {
     //     result: false, patientTimer: PatientTimer());
     var resp = await showDialog(
         context: context,
-        builder: (builder) => CustomAlertDialog.getAlertDialogSetUpPatientTimer(
+        builder: (builder) =>
+            CustomAlertDialog.getAlertDialogSetUpPatientTimer(
               patientTimerWidget: PatientTimerWidget(),
               context: context,
             ));
@@ -339,8 +362,10 @@ class _HomePagePatientState extends State<HomePagePatient> {
 class VisibleBloodResultSubItems {}
 
 class LoadingScreenWidget extends StatelessWidget {
-  const LoadingScreenWidget({
-    super.key,
+  const LoadingScreenWidget
+
+  ({
+  super.key,
   });
 
   @override

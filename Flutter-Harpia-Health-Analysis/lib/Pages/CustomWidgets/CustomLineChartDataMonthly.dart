@@ -1,53 +1,40 @@
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter_harpia_health_analysis/model/enums/linechart/bottomtitles/EnumLineChartBottomSideMonthlyTitles.dart';
 import 'package:flutter_harpia_health_analysis/model/enums/linechart/bottomtitles/EnumLineChartBottomSideWeeklyTitles.dart';
 
 import '../../model/diesease/BloodResult.dart';
 
-class CustomLineChartDataWeekly {
+class CustomLineChartDataMonthly {
   List<BloodResult> _bloodListData = [];
   late _BloodListSubItems _bloodListSubItems;
-  DateTime now = DateTime.now(); //.subtract(Duration(hours:));
+  DateTime now = DateTime.now().add(Duration(days:3));
   List<_BottomSideTitles> _bottomTitle = [];
 
-  CustomLineChartDataWeekly({required List<BloodResult> bloodListData}) {
+  CustomLineChartDataMonthly({required List<BloodResult> bloodListData}) {
     _bloodListData = bloodListData;
     _bloodListSubItems = _BloodListSubItems(bloodResultList: bloodListData);
     _createWeeklyBottomSideTitles();
   }
 
   void _createWeeklyBottomSideTitles() {
-    int weeklyTotalIndexValue = 168;
+    int monthlyTotalIndexValue = 180;
     int day = now.day;
     int hour = now.hour;
-    int minute = now.minute;
-    // print("before process : day : $day / hour $hour / minute :$minute");
-    int passedDayCounter = (day % 7).toInt();
+    int passedWeekCounter = (day / 7).toInt();
     day %= 7;
-    int remainedTime = ((hour * 60 + minute) / 60).toInt();
-    // print("remainedTime : $remainedTime");
-    // print("day  : $day");
-    // print("hour  : $hour");
-    // print("minute  : $minute");
-    int weeklyTitleLength = EnumLineChartBottomSideWeeklyTitles.values.length;
-    for (int i = 0; i < weeklyTitleLength; i++) {
+    double remainedTime = ((day*24+ hour) / 24);
+    int monthlyTitleLength = EnumLineChartBottomSideMonthlyTitles.values.length;
+    for (int i = 0; i <= monthlyTitleLength; i++) {
       _bottomTitle.add(_BottomSideTitles(
-          index: weeklyTotalIndexValue - (remainedTime + ((i) * 24)), //24 : reset each 24 hours
-          text: EnumLineChartBottomSideWeeklyTitles.getIndexName(
-              (passedDayCounter - i) % weeklyTitleLength)));
+          index: (monthlyTotalIndexValue - (remainedTime + ((i) * 6*7))).toInt(), // test each 6 hours and one week is 7 days. ==> 6*7
+          text: EnumLineChartBottomSideMonthlyTitles.getIndexName(
+              (passedWeekCounter - i) % monthlyTitleLength)));
     }
-    // print("_bottomTitle length : ${_bottomTitle.length}");
-    // print(
-    //     "_bottomTitle 0  : ${_bottomTitle[0]._index} ${_bottomTitle[0].text}");
-    // print(
-    //     "_bottomTitle 1  :  ${_bottomTitle[1]._index} ${_bottomTitle[1].text}");
-    // print(
-    //     "_bottomTitle 2  :  ${_bottomTitle[2]._index} ${_bottomTitle[2].text}");
-    // print("_bottomTitle 3  :  ${_bottomTitle[3]._index} ${_bottomTitle[3].text}");
   }
 
   List<BloodResult> get bloodListData => _bloodListData;
 
-  List<_BottomSideTitles> get weeklyBottomTitle => _bottomTitle;
+  List<_BottomSideTitles> get monthlyBottomTitle => _bottomTitle;
 
   _BloodListSubItems get bloodListSubItems => _bloodListSubItems;
 }
@@ -72,17 +59,16 @@ class _BloodListSubItems {
   List<FlSpot> _bloodPressureResultListFlSpot = [];
   List<FlSpot> _magnesiumResultListFlSpot = [];
   List<FlSpot> _calciumResultListFlSpot = [];
-  late double weeklySpotRange;
-  int weeklyTotalIndexValue = 168;
+  late double monthlySpotRange;
+  int monthlyTotalIndexValue = 168;
 
   _BloodListSubItems({required List<BloodResult> bloodResultList}) {
-    weeklySpotRange =
-        (weeklyTotalIndexValue / bloodResultList.length).round().toDouble();
-    // print('weeklySpotRange  range : $weeklySpotRange');
-    // print('bloodResultList length : ${bloodResultList.length}');
+    monthlySpotRange = (monthlyTotalIndexValue / bloodResultList.length).round().toDouble();
     for (int i = 0; i < bloodResultList.length; i++) {
       // print(
-      //     "GELEN DATA WEEKLY : ${bloodResultList[i]}  -->Spot X : ${FlSpot(_getItemFlSpotXValue(itemCreatedAt: bloodResultList[i].createdAt), bloodResultList[i].bloodSugar.toDouble())}");
+      //     "GELEN DATA Monthly : ${bloodResultList[i]}  -->Spot X : ${FlSpot(
+      //         _getItemFlSpotXValue(itemCreatedAt: bloodResultList[i].createdAt),
+      //         bloodResultList[i].bloodSugar.toDouble())}");
       _bloodSugarResultListFlSpot.add(FlSpot(
           _getItemFlSpotXValue(itemCreatedAt: bloodResultList[i].createdAt),
           bloodResultList[i].bloodSugar.toDouble()));
@@ -98,19 +84,12 @@ class _BloodListSubItems {
       _magnesiumResultListFlSpot.add(FlSpot(
           _getItemFlSpotXValue(itemCreatedAt: bloodResultList[i].createdAt),
           bloodResultList[i].magnesium.toDouble()));
-
-      // _bloodPressureResultListFlSpot.add(FlSpot(x, bloodResultList[i].bloodPresure.toDouble()));
-      // _magnesiumResultListFlSpot.add(FlSpot(x, y));
-      // _calciumResultListFlSpot.add(FlSpot(x, y));
     }
   }
 
   double _getItemFlSpotXValue({required DateTime itemCreatedAt}) {
     Duration diff = now.difference(itemCreatedAt);
-    double diffHours = (weeklyTotalIndexValue - diff.inHours).toDouble();
-    // print("--------> diff TIMES  : $diff");
-    // print("--------> DIFFERENCE : $diffHours");
-    // print("--------> CreatedAt : $itemCreatedAt");
+    double diffHours =( monthlyTotalIndexValue - diff.inHours/4).toDouble(); // each 4 hours, add a new bloodResult Data
     return diffHours;
   }
 
