@@ -20,10 +20,13 @@ class ProductColor {
   static const _darkWhite = Colors.white70;
   static const _redAccent = Colors.redAccent;
   static const _bodyBackground = Colors.cyan;
-  static const _bodyBackgroundLight =Color(0xffb4ead8);
+  static const _bodyBackgroundLight = Color(0xffb4ead8);
   static const _alertBoxBackgroundColor = _bodyBackground;
-
   static const _appBarBackgroundColor = _redAccent;
+  static const _fLSpotColorBloodSugar = Color(0xFFF3003B);
+  static const _fLSpotColorBloodPressure = Color(0xFF900DB4);
+  static const _fLSpotColorMagnesium = Color(0xFF2630DE);
+  static const _fLSpotColorCalcium = Color(0xFF12EFCE);
 
   static get darkBlue => _darkBlue;
 
@@ -44,4 +47,12 @@ class ProductColor {
   static get bodyBackgroundLight => _bodyBackgroundLight;
 
   static get alertBoxBackgroundColor => _alertBoxBackgroundColor;
+
+  static get fLSpotColorBloodSugar => _fLSpotColorBloodSugar;
+
+  static get fLSpotColorBloodPressure => _fLSpotColorBloodPressure;
+
+  static get fLSpotColorCalcium => _fLSpotColorCalcium;
+
+  static get fLSpotColorMagnesium => _fLSpotColorMagnesium;
 }

@@ -24,6 +24,10 @@ public class BloodResult {
     private int bloodSugar;
     @Column(name = "blood_pressure")
     private int bloodPressure;
+    @Column(name = "calcium")
+    private int calcium;
+    @Column(name = "magnesium")
+    private int magnesium;
     @Column(name = "created_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime createdAt = LocalDateTime.now();
 
@@ -38,6 +42,8 @@ public class BloodResult {
                 ", patientId=" + patientId +
                 ", bloodSugar=" + bloodSugar +
                 ", bloodPressure=" + bloodPressure +
+                ", calcium=" + calcium +
+                ", magnesium=" + magnesium +
                 ", createdAt=" + createdAt +
                 '}';
     }
@@ -72,6 +78,22 @@ public class BloodResult {
 
     public void setBloodPressure(int bloodPressure) {
         this.bloodPressure = bloodPressure;
+    }
+
+    public int getCalcium() {
+        return calcium;
+    }
+
+    public void setCalcium(int calcium) {
+        this.calcium = calcium;
+    }
+
+    public int getMagnesium() {
+        return magnesium;
+    }
+
+    public void setMagnesium(int magnesium) {
+        this.magnesium = magnesium;
     }
 
     public LocalDateTime getCreatedAt() {

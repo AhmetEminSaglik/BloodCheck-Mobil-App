@@ -1,8 +1,8 @@
-class CheckboxBloodResult {
+class CheckboxBloodResultSubItem {
   late String _name;
   late bool _showContent;
 
-  CheckboxBloodResult({required String name, required bool showContent}) {
+  CheckboxBloodResultSubItem({required String name, required bool showContent}) {
     _name = name;
     _showContent = showContent;
   }
@@ -10,6 +10,7 @@ class CheckboxBloodResult {
   bool get showContent => _showContent;
 
   set showContent(bool value) {
+    print("CheckboxBloodResultSubItem > showcontent : $showContent");
     _showContent = value;
   }
 

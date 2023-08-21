@@ -81,16 +81,27 @@ class _BloodListSubItems {
 
   _BloodListSubItems({required List<BloodResult> bloodResultList}) {
     dailySpotRange = (144 / bloodResultList.length).round().toDouble();
-    print('dailySpotRange  range : $dailySpotRange');
-    print('bloodResultList length : ${bloodResultList.length}');
+    // print('dailySpotRange  range : $dailySpotRange');
+    // print('bloodResultList length : ${bloodResultList.length}');
     for (int i = 0; i < bloodResultList.length; i++) {
-      print(
-          "GELEN DATA : ${bloodResultList[i]}  -->Spot X : ${i * dailySpotRange}");
-      _bloodSugarResultListFlSpot.add(
-          // FlSpot(i * dailySpotRange, bloodResultList[i].bloodSugar.toDouble())
-          FlSpot(
-              _getItemFlSpotXValue(itemCreatedAt: bloodResultList[i].createdAt),
-              bloodResultList[i].bloodSugar.toDouble()));
+      // print(
+      //     "GELEN DATA : ${bloodResultList[i]}  -->Spot X : ${i * dailySpotRange}");
+      _bloodSugarResultListFlSpot.add(FlSpot(
+          _getItemFlSpotXValue(itemCreatedAt: bloodResultList[i].createdAt),
+          bloodResultList[i].bloodSugar.toDouble()));
+
+      _bloodPressureResultListFlSpot.add(FlSpot(
+          _getItemFlSpotXValue(itemCreatedAt: bloodResultList[i].createdAt),
+          bloodResultList[i].bloodPresure.toDouble()));
+
+      _calciumResultListFlSpot.add(FlSpot(
+          _getItemFlSpotXValue(itemCreatedAt: bloodResultList[i].createdAt),
+          bloodResultList[i].calcium.toDouble()));
+
+      _magnesiumResultListFlSpot.add(FlSpot(
+          _getItemFlSpotXValue(itemCreatedAt: bloodResultList[i].createdAt),
+          bloodResultList[i].magnesium.toDouble()));
+
       // _bloodPressureResultListFlSpot.add(FlSpot(x, bloodResultList[i].bloodPresure.toDouble()));
       // _magnesiumResultListFlSpot.add(FlSpot(x, y));
       // _calciumResultListFlSpot.add(FlSpot(x, y));
@@ -99,7 +110,7 @@ class _BloodListSubItems {
 
   double _getItemFlSpotXValue({required DateTime itemCreatedAt}) {
     Duration diff = now.difference(itemCreatedAt);
-    double diffMinutes = 144-diff.inMinutes/10;
+    double diffMinutes = 144 - diff.inMinutes / 10;
     print("--------> DIFFERENCE : $diffMinutes");
     print("--------> CreatedAt : $itemCreatedAt");
     return diffMinutes;

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/VisibleBloodResultSubItems.dart';
 import 'package:flutter_harpia_health_analysis/core/ResponsiveDesign.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestDoctor.dart';
 import 'package:flutter_harpia_health_analysis/model/diesease/BloodResult.dart';
@@ -11,6 +12,7 @@ import 'package:flutter_harpia_health_analysis/model/specialitem/doctor/PatientT
 import '../../../../httprequest/HttpRequestBloodResult.dart';
 import '../../../../httprequest/ResponseEntity.dart';
 import '../../../../model/diesease/CheckboxBloodResult.dart';
+import '../../../../model/diesease/EnumBloodResultContent.dart';
 import '../../../../util/CustomAlertDialog.dart';
 import '../../../../util/CustomSnackBar.dart';
 import '../../../../util/PermissionUtils.dart';
@@ -38,6 +40,9 @@ class _HomePagePatientState extends State<HomePagePatient> {
       PermissionUtils.letRunForAdmin() || PermissionUtils.letRunForDoctor();
   bool visiblePatientTimer = PermissionUtils.letRunForDoctor();
   bool isLoading = true;
+
+  // List<bool> isVisibleBloodResultSubItems=[];
+  // IsVisibleBloodResultSubItem visibleSubItem = IsVisibleBloodResultSubItem();
   List<BloodResult> dailyBloodResultList = [];
   List<BloodResult> weeklyBloodResultList = [];
   List<BloodResult> monthlyBloodResultList = [];
@@ -85,6 +90,7 @@ class _HomePagePatientState extends State<HomePagePatient> {
 
   @override
   Widget build(BuildContext context) {
+    print("---------> tekradan calisti :  VisibleItems : $_checkBoxVisibleBloodResultContent}");
     return Scaffold(
       appBar: visibleAppBar ? getAppBar() : null,
       backgroundColor:
@@ -94,11 +100,6 @@ class _HomePagePatientState extends State<HomePagePatient> {
           : SingleChildScrollView(
               child: Column(
                 children: [
-                  SizedBox(
-                      width: ResponsiveDesign.getScreenWidth(),
-                      height: ResponsiveDesign.getScreenHeight() / 2.5,
-                      child: LineChartDaily(
-                          customLineChartData: _customLineChartData)),
                   Container(
                     // color: Colors.redAccent,
                     child: Column(
@@ -138,13 +139,23 @@ class _HomePagePatientState extends State<HomePagePatient> {
                                       children: [
                                         // Column(children: checkBoxBloodResultContents,), I dont understand why checkbox is not working in this way.
                                         getCheckboxBloodResultItem(
-                                            bloodResultCheckbox:
-                                                _checkBoxVisibleBloodResultContent
-                                                    .list[0]),
+                                          bloodResultSubItemCheckbox:
+                                              _checkBoxVisibleBloodResultContent
+                                                      .subItemMap[
+                                                  EnumBloodResultContent
+                                                      .BLOOD_SUGAR.name]!,
+                                          itemColor: ProductColor
+                                              .fLSpotColorBloodSugar,
+                                        ),
                                         getCheckboxBloodResultItem(
-                                            bloodResultCheckbox:
-                                                _checkBoxVisibleBloodResultContent
-                                                    .list[2]),
+                                          bloodResultSubItemCheckbox:
+                                              _checkBoxVisibleBloodResultContent
+                                                      .subItemMap[
+                                                  EnumBloodResultContent
+                                                      .CALCIUM.name]!,
+                                          itemColor:
+                                              ProductColor.fLSpotColorCalcium,
+                                        ),
                                       ]),
                                   Column(
                                       crossAxisAlignment:
@@ -152,13 +163,23 @@ class _HomePagePatientState extends State<HomePagePatient> {
                                       children: [
                                         // Column(children: checkBoxBloodResultContents,), I dont understand why checkbox is not working in this way.
                                         getCheckboxBloodResultItem(
-                                            bloodResultCheckbox:
-                                                _checkBoxVisibleBloodResultContent
-                                                    .list[1]),
+                                          bloodResultSubItemCheckbox:
+                                              _checkBoxVisibleBloodResultContent
+                                                      .subItemMap[
+                                                  EnumBloodResultContent
+                                                      .BLOOD_PRESSURE.name]!,
+                                          itemColor: ProductColor
+                                              .fLSpotColorBloodPressure,
+                                        ),
                                         getCheckboxBloodResultItem(
-                                            bloodResultCheckbox:
-                                                _checkBoxVisibleBloodResultContent
-                                                    .list[3]),
+                                          bloodResultSubItemCheckbox:
+                                              _checkBoxVisibleBloodResultContent
+                                                      .subItemMap[
+                                                  EnumBloodResultContent
+                                                      .MAGNESIUM.name]!,
+                                          itemColor:
+                                              ProductColor.fLSpotColorMagnesium,
+                                        ),
                                       ]),
                                 ],
                               ),
@@ -169,6 +190,14 @@ class _HomePagePatientState extends State<HomePagePatient> {
                   // SizedBox(width: 450, height: 300, child: LineChartDemo1()),
                   // SizedBox(width: 450, height: 300, child: LineChartDemo2()),
                   _getPatientTimerButton(),
+                  SizedBox(
+                      width: ResponsiveDesign.getScreenWidth(),
+                      height: ResponsiveDesign.getScreenHeight() / 2.5,
+                      child: LineChartDaily(
+                        customLineChartData: _customLineChartData,
+                        checkBoxVisibleBloodResultContent:
+                            _checkBoxVisibleBloodResultContent,
+                      )),
                 ],
               ),
             ),
@@ -203,23 +232,29 @@ class _HomePagePatientState extends State<HomePagePatient> {
     );
   }
 
-  Widget getCheckboxBloodResultItem(
-      {required CheckboxBloodResult bloodResultCheckbox}) {
+  Widget getCheckboxBloodResultItem({
+    required CheckboxBloodResultSubItem bloodResultSubItemCheckbox,
+    required Color itemColor,
+  }) {
     return SizedBox(
       width: ResponsiveDesign.getScreenWidth() / 2,
       child: CheckboxListTile(
+          activeColor: itemColor,
           title: Text(
-            bloodResultCheckbox.name,
-            style: TextStyle(fontSize: ResponsiveDesign.getScreenWidth() / 22),
+            bloodResultSubItemCheckbox.name,
+            style: TextStyle(
+                fontSize: ResponsiveDesign.getScreenWidth() / 22,
+                color: itemColor),
           ),
           controlAffinity: ListTileControlAffinity.leading,
-          value: bloodResultCheckbox.showContent,
+          value: bloodResultSubItemCheckbox.showContent,
           onChanged: (bool? condition) {
             print(
-                "SetState Calisti : ${bloodResultCheckbox.name} VALUE : $condition");
-            bloodResultCheckbox.showContent = condition!;
+                "SetState Calisti : ${bloodResultSubItemCheckbox.name} VALUE : $condition");
+            bloodResultSubItemCheckbox.showContent = condition!;
             setState(() {
-              print(" ${bloodResultCheckbox.name}} : CONDITION : $condition");
+              print(
+                  " ${bloodResultSubItemCheckbox.name}} : CONDITION : ${bloodResultSubItemCheckbox.showContent}");
             });
           }),
     );
@@ -310,6 +345,8 @@ class _HomePagePatientState extends State<HomePagePatient> {
     }
   }
 }
+
+class VisibleBloodResultSubItems {}
 
 class LoadingScreenWidget extends StatelessWidget {
   const LoadingScreenWidget({

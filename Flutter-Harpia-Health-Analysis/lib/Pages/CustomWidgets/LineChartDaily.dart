@@ -3,16 +3,23 @@ import 'dart:math';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_harpia_health_analysis/model/diesease/EnumBloodResultContent.dart';
 import 'package:flutter_harpia_health_analysis/util/ProductColor.dart';
 
 import '../../core/ResponsiveDesign.dart';
+import 'CheckBoxVisibleBloodResultContent.dart';
 import 'CustomLineChartData.dart';
 
 class LineChartDaily extends StatefulWidget {
   late CustomLineChartData _customLineChartData;
+  late CheckBoxVisibleBloodResultContent _checkBoxVisibleBloodResultContent;
 
-  LineChartDaily({required CustomLineChartData customLineChartData}) {
+  LineChartDaily(
+      {required CustomLineChartData customLineChartData,
+      required CheckBoxVisibleBloodResultContent
+          checkBoxVisibleBloodResultContent}) {
     _customLineChartData = customLineChartData;
+    _checkBoxVisibleBloodResultContent = checkBoxVisibleBloodResultContent;
   }
 
   @override
@@ -20,13 +27,25 @@ class LineChartDaily extends StatefulWidget {
 }
 
 class _LineChartDailyState extends State<LineChartDaily> {
-  final List<Color> gradientColors = const [
-    CupertinoColors.systemBlue,
-    CupertinoColors.systemGreen,
-  ];
+  late bool isVisibleBloodSugar;
+  late bool isVisibleBloodPressure;
+  late bool isVisibleCalcium;
+  late bool isVisibleMagnesium;
+
+  void updateVisibleValues() {
+    isVisibleBloodSugar = widget._checkBoxVisibleBloodResultContent
+        .subItemMap[EnumBloodResultContent.BLOOD_SUGAR.name]!.showContent;
+    isVisibleBloodPressure = widget._checkBoxVisibleBloodResultContent
+        .subItemMap[EnumBloodResultContent.BLOOD_PRESSURE.name]!.showContent;
+    isVisibleCalcium = widget._checkBoxVisibleBloodResultContent
+        .subItemMap[EnumBloodResultContent.CALCIUM.name]!.showContent;
+    isVisibleMagnesium = widget._checkBoxVisibleBloodResultContent
+        .subItemMap[EnumBloodResultContent.MAGNESIUM.name]!.showContent;
+  }
 
   @override
   Widget build(BuildContext context) {
+    updateVisibleValues();
     return Scaffold(
       // backgroundColor:ProductColor.bodyBackgroundLight,
       body: Padding(
@@ -38,7 +57,9 @@ class _LineChartDailyState extends State<LineChartDaily> {
               AspectRatio(
                 aspectRatio: 1.40,
                 child: Padding(
-                  padding: EdgeInsets.only(right:ResponsiveDesign.getScreenWidth()/10,top:ResponsiveDesign.getScreenWidth()/10),
+                  padding: EdgeInsets.only(
+                      right: ResponsiveDesign.getScreenWidth() / 10,
+                      top: ResponsiveDesign.getScreenWidth() / 10),
                   child: LineChart(lineChartData()),
                 ),
               )
@@ -101,7 +122,16 @@ class _LineChartDailyState extends State<LineChartDaily> {
         bottomTitles: SideTitles(showTitles: true),*/
         ),
         lineBarsData: [
-          getLineChartBarData(),
+          isVisibleBloodSugar
+              ? _getBloodSugarLineChartBarData()
+              : LineChartBarData(),
+          isVisibleBloodPressure
+              ? _getBloodPressureLineChartBarData()
+              : LineChartBarData(),
+          isVisibleCalcium ? _getCalciumLineChartBarData() : LineChartBarData(),
+          isVisibleMagnesium
+              ? _getMagnesiumLineChartBarData()
+              : LineChartBarData(),
           /*   LineChartBarData(
               isCurved: false,
               barWidth: 3,
@@ -137,24 +167,66 @@ class _LineChartDailyState extends State<LineChartDaily> {
         ]);
   }
 
-  LineChartBarData getLineChartBarData() {
+  LineChartBarData _getBloodSugarLineChartBarData() {
     List<FlSpot> spotsBloodSugar = [];
-    for (int i = 0; i < widget._customLineChartData.bloodListData.length; i++) {
-      spotsBloodSugar.add(widget._customLineChartData.bloodListSubItems
-          .bloodSugarResultListFlSpot[i]);
+    // for (int i = 0; i < widget._customLineChartData.bloodListData.length; i++) {
+    //   spotsBloodSugar.add(widget._customLineChartData.bloodListSubItems
+    //       .bloodSugarResultListFlSpot[i]);
+    //   print("bloodSugar SPot : ${spotsBloodSugar[i]}");
+    // }
+    for (FlSpot tmp in widget
+        ._customLineChartData.bloodListSubItems.bloodSugarResultListFlSpot) {
+      spotsBloodSugar.add(tmp);
     }
 
+    return _getLineChartBarDataForSubBloodResultItem(
+        spotValues: spotsBloodSugar, color: ProductColor.fLSpotColorBloodSugar);
+  }
+
+  LineChartBarData _getBloodPressureLineChartBarData() {
+    List<FlSpot> spotsBloodPressure = [];
+    for (FlSpot tmp in widget
+        ._customLineChartData.bloodListSubItems.bloodPressureResultListFlSpot) {
+      spotsBloodPressure.add(tmp);
+    }
+
+    return _getLineChartBarDataForSubBloodResultItem(
+        spotValues: spotsBloodPressure,
+        color: ProductColor.fLSpotColorBloodPressure);
+  }
+
+  LineChartBarData _getMagnesiumLineChartBarData() {
+    List<FlSpot> spotsBloodPressure = [];
+    for (FlSpot tmp in widget
+        ._customLineChartData.bloodListSubItems.magnesiumResultListFlSpot) {
+      spotsBloodPressure.add(tmp);
+    }
+
+    return _getLineChartBarDataForSubBloodResultItem(
+        spotValues: spotsBloodPressure,
+        color: ProductColor.fLSpotColorMagnesium);
+  }
+
+  LineChartBarData _getCalciumLineChartBarData() {
+    List<FlSpot> spotsBloodPressure = [];
+    for (FlSpot tmp in widget
+        ._customLineChartData.bloodListSubItems.calciumResultListFlSpot) {
+      spotsBloodPressure.add(tmp);
+    }
+
+    return _getLineChartBarDataForSubBloodResultItem(
+        spotValues: spotsBloodPressure, color: ProductColor.fLSpotColorCalcium);
+  }
+
+  LineChartBarData _getLineChartBarDataForSubBloodResultItem(
+      {required List<FlSpot> spotValues, required Color color}) {
     return LineChartBarData(
+        color: color,
         isCurved: false,
-        barWidth: 3,
+        barWidth: 2,
         isStrokeCapRound: true,
         dotData: FlDotData(show: false),
-        belowBarData: BarAreaData(
-            show: true,
-            gradient: LinearGradient(
-                colors:
-                    gradientColors.map((e) => e.withOpacity(0.3)).toList())),
-        spots: spotsBloodSugar);
+        spots: spotValues);
   }
 
   Widget bottomTiles(double value, TitleMeta meta) {

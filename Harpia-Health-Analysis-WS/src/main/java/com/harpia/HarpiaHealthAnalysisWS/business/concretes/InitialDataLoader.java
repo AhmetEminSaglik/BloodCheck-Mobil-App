@@ -93,7 +93,7 @@ public class InitialDataLoader implements CommandLineRunner {
     }
 
     void saveBloodResult_2_Data(Patient patient) {
-        log.info("SAVELENECEK PATIENT ID : "+patient);
+        log.info("SAVELENECEK PATIENT ID : " + patient);
         PatientTimer patientTimer = timerController.findPatientTimerByPatientId(patient.getId()).getBody().getData();
         log.info(patientTimer.toString());
         List<BloodResult> bloodResultList = new ArrayList<>();
@@ -104,17 +104,24 @@ public class InitialDataLoader implements CommandLineRunner {
         br1.setCreatedAt(LocalDateTime.now().minusHours(2));
         br1.setBloodPressure(random.nextInt(150) + 50);
         br1.setBloodSugar(random.nextInt(150) + 50);
+        br1.setCalcium(random.nextInt(150) + 50);
+        br1.setMagnesium(random.nextInt(150) + 50);
+
         br1.setPatientId(patient.getId());
         bloodResultList.add(br1);
 //        br2.setId(20l);
         br2.setCreatedAt(LocalDateTime.now().minusHours(6));
         br2.setBloodPressure(random.nextInt(150) + 50);
         br2.setBloodSugar(random.nextInt(150) + 50);
+        br2.setCalcium(random.nextInt(150) + 50);
+        br2.setMagnesium(random.nextInt(150) + 50);
         br2.setPatientId(patient.getId());
         bloodResultList.add(br2);
         log.info("bloodResultList size: " + bloodResultList.size());
         Collections.reverse(bloodResultList);
-        bloodResultList.forEach(e->{log.info("RECORD : "+e);});
+        bloodResultList.forEach(e -> {
+            log.info("RECORD : " + e);
+        });
 //        log.info(" br1 : "+br1);
 //        log.info(" br2 : "+br2);
         bloodResultService.saveList(bloodResultList);
@@ -132,6 +139,8 @@ public class InitialDataLoader implements CommandLineRunner {
             BloodResult bloodResult = new BloodResult(createdTime);
             bloodResult.setBloodPressure(random.nextInt(150) + 50);
             bloodResult.setBloodSugar(random.nextInt(150) + 50);
+            bloodResult.setMagnesium(random.nextInt(150) + 50);
+            bloodResult.setCalcium(random.nextInt(150) + 50);
             bloodResult.setPatientId(patient.getId());
             bloodResultList.add(bloodResult);
             minutesCounter++;
@@ -156,21 +165,23 @@ public class InitialDataLoader implements CommandLineRunner {
         int sensorTestTime = 6 * 60;
         int createdTime = 0;//useMinute * minutesCounter;
         List<BloodResult> bloodResultList = new ArrayList<>();
-        log.info("NOW : "+ LocalDateTime.now());
+        log.info("NOW : " + LocalDateTime.now());
         while (createdTime < maxMinutes) {
             BloodResult bloodResult = new BloodResult(createdTime);
             bloodResult.setBloodPressure(random.nextInt(150) + 50);
             bloodResult.setBloodSugar(random.nextInt(150) + 50);
+            bloodResult.setMagnesium(random.nextInt(150) + 50);
+            bloodResult.setCalcium(random.nextInt(150) + 50);
             bloodResult.setPatientId(patient.getId());
             bloodResultList.add(bloodResult);
-            bloodResult.setCreatedAt(LocalDateTime.now().minusHours(3*minutesCounter+5));
+            bloodResult.setCreatedAt(LocalDateTime.now().minusHours(3 * minutesCounter + 5));
             minutesCounter++;
             createdTime = sensorTestTime * minutesCounter;
         }
 
         Collections.reverse(bloodResultList);
         log.info("bloodResultList size: " + bloodResultList.size());
-        bloodResultList.forEach(e->log.info(e.toString()));
+        bloodResultList.forEach(e -> log.info(e.toString()));
         bloodResultService.saveList(bloodResultList);
     }
 
@@ -190,6 +201,8 @@ public class InitialDataLoader implements CommandLineRunner {
             BloodResult bloodResult = new BloodResult(createdTime);
             bloodResult.setBloodPressure(random.nextInt(150) + 50);
             bloodResult.setBloodSugar(random.nextInt(150) + 50);
+            bloodResult.setMagnesium(random.nextInt(150) + 50);
+            bloodResult.setCalcium(random.nextInt(150) + 50);
             bloodResult.setPatientId(patient.getId());
             bloodResultList.add(bloodResult);
             minutesCounter++;

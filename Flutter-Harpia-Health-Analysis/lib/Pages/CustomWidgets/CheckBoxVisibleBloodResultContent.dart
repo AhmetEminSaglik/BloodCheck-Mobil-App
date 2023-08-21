@@ -2,16 +2,29 @@ import 'package:flutter_harpia_health_analysis/model/diesease/CheckboxBloodResul
 import 'package:flutter_harpia_health_analysis/model/diesease/EnumBloodResultContent.dart';
 
 class CheckBoxVisibleBloodResultContent {
-  List<CheckboxBloodResult> list = [];
+  // List<CheckboxBloodResultSubItem> list = [];
+ Map<String,CheckboxBloodResultSubItem> subItemMap=Map();
 
   CheckBoxVisibleBloodResultContent() {
-    list.add(CheckboxBloodResult(
-        name: EnumBloodResultContent.BLOOD_SUGAR.name, showContent: false));
-    list.add(CheckboxBloodResult(
-        name: EnumBloodResultContent.BLOOD_PRESSURE.name, showContent: false));
-    list.add(CheckboxBloodResult(
+    subItemMap.putIfAbsent(EnumBloodResultContent.BLOOD_SUGAR.name, () => CheckboxBloodResultSubItem(name: EnumBloodResultContent.BLOOD_SUGAR.name, showContent: true));
+    subItemMap.putIfAbsent(EnumBloodResultContent.BLOOD_PRESSURE.name, () => CheckboxBloodResultSubItem(name: EnumBloodResultContent.BLOOD_PRESSURE.name, showContent: true));
+    subItemMap.putIfAbsent(EnumBloodResultContent.CALCIUM.name, () => CheckboxBloodResultSubItem(name: EnumBloodResultContent.CALCIUM.name, showContent: true));
+    subItemMap.putIfAbsent(EnumBloodResultContent.MAGNESIUM.name, () => CheckboxBloodResultSubItem(name: EnumBloodResultContent.MAGNESIUM.name, showContent: true));
+    /*
+    list.add(CheckboxBloodResultSubItem(
+        name: EnumBloodResultContent.BLOOD_SUGAR.name, showContent: true));
+    list.add(CheckboxBloodResultSubItem(
+        name: EnumBloodResultContent.BLOOD_PRESSURE.name, showContent: true));
+    list.add(CheckboxBloodResultSubItem(
         name: EnumBloodResultContent.CALCIUM.name, showContent: true));
-    list.add(CheckboxBloodResult(
+    list.add(CheckboxBloodResultSubItem(
         name: EnumBloodResultContent.MAGNESIUM.name, showContent: true));
-  }
+ */ }
+
+ @override
+  String toString() {
+    String text="\n";
+ subItemMap.forEach((key, value) { text+="${key} ${value.showContent} \n";});
+  return 'CheckBoxVisibleBloodResultContent{subItemMap: $text}';
+ }
 }
