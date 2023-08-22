@@ -1,6 +1,6 @@
 enum EnumDiabeticType {
 
-  TIP_1(id: 1, name: "Tip 1"),
+  TIP_1(id: 1, name: "TIP 1"),
   TIP_2(id:2,name: "TIP 2"),
   HIPOGLISEMI(id:3,name: "Hipoglisemi"),
   HIPERGLISEMI(id:4, name:"Hiperglisemi");

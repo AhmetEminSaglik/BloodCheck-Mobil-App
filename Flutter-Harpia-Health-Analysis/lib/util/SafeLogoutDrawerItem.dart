@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_harpia_health_analysis/Pages/main/harpia-health-analysis-main.dart';
+import 'package:flutter_harpia_health_analysis/main.dart';
 import 'package:flutter_harpia_health_analysis/util/SharedPref.dart';
 
 class SafeLogoutDrawerItem extends StatefulWidget {

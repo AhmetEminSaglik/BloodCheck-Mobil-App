@@ -1,18 +1,20 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/appbar/AppBarCubit.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/drawer/DrawerCubit.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/users/HomePage.dart';
+import 'package:flutter_harpia_health_analysis/business/factory/UserFactory.dart';
 import 'package:flutter_harpia_health_analysis/core/ResponsiveDesign.dart';
+import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestUser.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/ResponseEntity.dart';
 import 'package:flutter_harpia_health_analysis/model/user/User.dart';
-import 'package:flutter_harpia_health_analysis/business/factory/UserFactory.dart';
 import 'package:flutter_harpia_health_analysis/util/CustomSnackBar.dart';
 import 'package:flutter_harpia_health_analysis/util/ProductColor.dart';
 import 'package:flutter_harpia_health_analysis/util/SharedPref.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestUser.dart';
-import 'dart:convert';
-import 'package:flutter_bloc/flutter_bloc.dart';
+// import '../../firebase_options.dart';
 
 class LoginPage extends StatefulWidget {
   final String title;
@@ -32,6 +34,24 @@ class _LoginPageState extends State<LoginPage> {
 
   TextEditingController tfUsername = TextEditingController();
   TextEditingController tfPassword = TextEditingController();
+/*
+  @override
+  void initState() {
+    super.initState();
+    // doFirebaseProcess();
+    getFirebaseToken();
+  }
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+  Future<void> getFirebaseToken() async {
+    String? token = await _firebaseMessaging.getToken();
+    print("---->>>>> Firebase Token: $token");
+  }*/
+
+  /*void doFirebaseProcess() async {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  }*/
 
   @override
   Widget build(BuildContext context) {

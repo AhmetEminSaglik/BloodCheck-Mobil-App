@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/appbar/AppBarCubit.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/drawer/DrawerCubit.dart';
-import '../../core/ResponsiveDesign.dart';
-import '../login/LoginPage.dart';
+import 'core/ResponsiveDesign.dart';
+import 'Pages/login/LoginPage.dart';
 
 void main() {
   runApp(const MyApp());
