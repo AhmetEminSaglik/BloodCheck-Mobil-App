@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/appbar/AppBarCubit.dart';
@@ -14,7 +15,12 @@ import 'package:flutter_harpia_health_analysis/util/CustomSnackBar.dart';
 import 'package:flutter_harpia_health_analysis/util/ProductColor.dart';
 import 'package:flutter_harpia_health_analysis/util/SharedPref.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-// import '../../firebase_options.dart';
+
+/*
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:firebase_core/firebase_core.dart';
+import '../../firebase_options.dart';
+*/
 
 class LoginPage extends StatefulWidget {
   final String title;
@@ -34,24 +40,43 @@ class _LoginPageState extends State<LoginPage> {
 
   TextEditingController tfUsername = TextEditingController();
   TextEditingController tfPassword = TextEditingController();
-/*
+
   @override
   void initState() {
     super.initState();
     // doFirebaseProcess();
-    getFirebaseToken();
+    // getFirebaseToken();
+    // doProcess();
+    getData();
   }
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
-  Future<void> getFirebaseToken() async {
-    String? token = await _firebaseMessaging.getToken();
-    print("---->>>>> Firebase Token: $token");
-  }*/
 
-  /*void doFirebaseProcess() async {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
-  }*/
+  getData() {
+    FirebaseMessaging.instance
+        .getToken()
+        .then((value) => print("Token : $value"));
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print('Got a message whilst in the foreground!');
+      print('Message data: ${message.data}');
+
+      if (message.notification != null) {
+        print('Message also contained a notification: ${message.notification}');
+      }
+    });
+
+    FirebaseMessaging.onBackgroundMessage((message) {
+    return backgroundHandler(message);
+    });
+  }
+
+  Future<void> backgroundHandler(RemoteMessage message) async {
+    print('Got a message whilst in the background!');
+    print('Message data: ${message.data}');
+
+    if (message.notification != null) {
+      print('Message also contained a notification: ${message.notification}');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
