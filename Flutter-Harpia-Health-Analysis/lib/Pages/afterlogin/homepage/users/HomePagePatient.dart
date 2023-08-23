@@ -101,6 +101,7 @@ class _HomePagePatientState extends State<HomePagePatient> {
   }*/
 
   void retrieveBloodResultData() async {
+    print("DATA RETRIEVED ");
     dailyBloodResultList =
     await HttpRequestBloodResult.getDailyBloodResult(widget.patientId);
     weeklyBloodResultList =
@@ -117,7 +118,7 @@ class _HomePagePatientState extends State<HomePagePatient> {
         CustomLineChartDataWeekly(bloodListData: weeklyBloodResultList);
     _customLineChartDataMonthly =
         CustomLineChartDataMonthly(bloodListData: monthlyBloodResultList);
-
+print("Data's retrieved agian : daily item ${dailyBloodResultList[0]} / ${dailyBloodResultList[dailyBloodResultList.length-1]}");
     updateActivatedLineChart(1);
   }
 
@@ -133,122 +134,134 @@ class _HomePagePatientState extends State<HomePagePatient> {
       appBar: visibleAppBar ? getAppBar() : null,
       // backgroundColor:ProductColor.bodyBackground,
       backgroundColor:isLoading ? ProductColor.bodyBackground : ProductColor.white,
-      body: isLoading
-      // ? const LoadingScreenWidget()
-          ? const LoadingScreenWidget()
-          : SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              // color: Colors.redAccent,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    // crossAxisAlignment: CrossAxisAlignment.stretch,
+      body:
+      RefreshIndicator(
+          onRefresh: () async {
+            retrieveBloodResultData();
+            print("RefreshIndicator CALISTI");
+          },
+
+          child:/* isLoading
+              ? Center(child: CircularProgressIndicator())
+              : getBodyDoctorListview(doctorList),*/
+          isLoading
+          // ? const LoadingScreenWidget()
+              ? const LoadingScreenWidget()
+              : SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: Column(
+              children: [
+                Container(
+                  // color: Colors.redAccent,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Column(
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        // crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          getBloodResultRadioButtonTime(
-                              name: "Daily", itemValue: 1),
-                          getBloodResultRadioButtonTime(
-                              name: "Monthly", itemValue: 3),
+                          Column(
+                            children: [
+                              getBloodResultRadioButtonTime(
+                                  name: "Daily", itemValue: 1),
+                              getBloodResultRadioButtonTime(
+                                  name: "Monthly", itemValue: 3),
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              getBloodResultRadioButtonTime(
+                                  name: "Weekly", itemValue: 2),
+                              getBloodResultRadioButtonTime(
+                                  name: "6 Month", itemValue: 4),
+                            ],
+                          )
                         ],
                       ),
-                      Column(
-                        children: [
-                          getBloodResultRadioButtonTime(
-                              name: "Weekly", itemValue: 2),
-                          getBloodResultRadioButtonTime(
-                              name: "6 Month", itemValue: 4),
-                        ],
-                      )
+                      Container(
+                        // color: Colors.cyan,
+                          width: ResponsiveDesign.getScreenWidth(),
+                          child: Center(
+                            child: Row(
+                              children: [
+                                Column(
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                    children: [
+                                      // Column(children: checkBoxBloodResultContents,), I dont understand why checkbox is not working in this way.
+                                      getCheckboxBloodResultItem(
+                                        bloodResultSubItemCheckbox:
+                                        _checkBoxVisibleBloodResultContent
+                                            .subItemMap[
+                                        EnumBloodResultContent
+                                            .BLOOD_SUGAR.name]!,
+                                        itemColor: ProductColor
+                                            .fLSpotColorBloodSugar,
+                                      ),
+                                      getCheckboxBloodResultItem(
+                                        bloodResultSubItemCheckbox:
+                                        _checkBoxVisibleBloodResultContent
+                                            .subItemMap[
+                                        EnumBloodResultContent
+                                            .CALCIUM.name]!,
+                                        itemColor:
+                                        ProductColor.fLSpotColorCalcium,
+                                      ),
+                                    ]),
+                                Column(
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                    children: [
+                                      // Column(children: checkBoxBloodResultContents,), I dont understand why checkbox is not working in this way.
+                                      getCheckboxBloodResultItem(
+                                        bloodResultSubItemCheckbox:
+                                        _checkBoxVisibleBloodResultContent
+                                            .subItemMap[
+                                        EnumBloodResultContent
+                                            .BLOOD_PRESSURE.name]!,
+                                        itemColor: ProductColor
+                                            .fLSpotColorBloodPressure,
+                                      ),
+                                      getCheckboxBloodResultItem(
+                                        bloodResultSubItemCheckbox:
+                                        _checkBoxVisibleBloodResultContent
+                                            .subItemMap[
+                                        EnumBloodResultContent
+                                            .MAGNESIUM.name]!,
+                                        itemColor:
+                                        ProductColor.fLSpotColorMagnesium,
+                                      ),
+                                    ]),
+                              ],
+                            ),
+                          )),
                     ],
                   ),
-                  Container(
-                    // color: Colors.cyan,
-                      width: ResponsiveDesign.getScreenWidth(),
-                      child: Center(
-                        child: Row(
+                ),
+                // SizedBox(width: 450, height: 300, child: LineChartDemo1()),
+                // SizedBox(width: 450, height: 300, child: LineChartDemo2()),
+                _getPatientTimerButton(),
+                _getPatientTimerButton(),
+                SizedBox(
+                    width: ResponsiveDesign.getScreenWidth(),
+                    height: ResponsiveDesign.getScreenHeight() / 2.5,
+                    child: activatedLineChartWidget ??
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Column(
-                                crossAxisAlignment:
-                                CrossAxisAlignment.start,
-                                children: [
-                                  // Column(children: checkBoxBloodResultContents,), I dont understand why checkbox is not working in this way.
-                                  getCheckboxBloodResultItem(
-                                    bloodResultSubItemCheckbox:
-                                    _checkBoxVisibleBloodResultContent
-                                        .subItemMap[
-                                    EnumBloodResultContent
-                                        .BLOOD_SUGAR.name]!,
-                                    itemColor: ProductColor
-                                        .fLSpotColorBloodSugar,
-                                  ),
-                                  getCheckboxBloodResultItem(
-                                    bloodResultSubItemCheckbox:
-                                    _checkBoxVisibleBloodResultContent
-                                        .subItemMap[
-                                    EnumBloodResultContent
-                                        .CALCIUM.name]!,
-                                    itemColor:
-                                    ProductColor.fLSpotColorCalcium,
-                                  ),
-                                ]),
-                            Column(
-                                crossAxisAlignment:
-                                CrossAxisAlignment.start,
-                                children: [
-                                  // Column(children: checkBoxBloodResultContents,), I dont understand why checkbox is not working in this way.
-                                  getCheckboxBloodResultItem(
-                                    bloodResultSubItemCheckbox:
-                                    _checkBoxVisibleBloodResultContent
-                                        .subItemMap[
-                                    EnumBloodResultContent
-                                        .BLOOD_PRESSURE.name]!,
-                                    itemColor: ProductColor
-                                        .fLSpotColorBloodPressure,
-                                  ),
-                                  getCheckboxBloodResultItem(
-                                    bloodResultSubItemCheckbox:
-                                    _checkBoxVisibleBloodResultContent
-                                        .subItemMap[
-                                    EnumBloodResultContent
-                                        .MAGNESIUM.name]!,
-                                    itemColor:
-                                    ProductColor.fLSpotColorMagnesium,
-                                  ),
-                                ]),
+                            Text(
+                              "Here is not completed yet.",
+                              style: TextStyle(
+                                  fontSize:
+                                  ResponsiveDesign.getScreenWidth() / 15),
+                            ),
+                            const CircularProgressIndicator(),
                           ],
-                        ),
-                      )),
-                ],
-              ),
+                        )),
+              ],
             ),
-            // SizedBox(width: 450, height: 300, child: LineChartDemo1()),
-            // SizedBox(width: 450, height: 300, child: LineChartDemo2()),
-            _getPatientTimerButton(),
-            _getPatientTimerButton(),
-                  SizedBox(
-                      width: ResponsiveDesign.getScreenWidth(),
-                      height: ResponsiveDesign.getScreenHeight() / 2.5,
-                      child: activatedLineChartWidget ??
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Here is not completed yet.",
-                                style: TextStyle(
-                                    fontSize:
-                                        ResponsiveDesign.getScreenWidth() / 15),
-                              ),
-                              const CircularProgressIndicator(),
-                            ],
-                          )),
-          ],
+          )
         ),
-      ),
     );
   }
 
