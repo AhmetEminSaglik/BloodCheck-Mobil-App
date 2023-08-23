@@ -13,6 +13,8 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await FcmTokenUtils.createToken();
   print("Created TOKEN :  ${FcmTokenUtils.getToken()}");
+  FcmTokenUtils.listenFcm();
+  FcmTokenUtils.listenBackground();
   runApp(const MyApp());
 }
 
