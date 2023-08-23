@@ -47,8 +47,7 @@ class FcmTokenUtils {
     print("map : $map ");
     FcmMessage message = FcmMessageFactory.createFcmMessage(map);
     print("FcmMessage : $message");
-    // CustomNotification.showNotification(data);
-
+    CustomNotificationUtil.showNotification(message.fcmData.msgTitle,message.fcmData.msg);
     return data;
   }
 

@@ -103,7 +103,7 @@ public class FakeSensors {
         return new Runnable() {
             @Override
             public void run() {
-                log.info("Counter : "+counter);
+                log.info("Counter : " + counter);
                 if (counter % 3 == 0) {
                     rangeBound = LowRangeBound;// low
                 } else if (counter % 3 == 1) {
@@ -139,8 +139,15 @@ public class FakeSensors {
                 fcmMessage = getFcmMessageLowBoundRange(msg);
             }
             if (bloodResult.getBloodPressure() > HighRangeBound) {
-                log.info("getBloodPressure is TOO HIGHa : " + bloodResult.getBloodPressure());
-                String msg = "Blood Pressure : " + bloodResult.getBloodPressure() + "\nBlood Sugar : " + bloodResult.getBloodSugar();
+                log.info("getBloodPressure is TOO HIGH : " + bloodResult.getBloodPressure());
+                String msg = "Blood Pressure : " + bloodResult.getBloodPressure() + "\nBlood Sugar : " + bloodResult.getBloodSugar() +
+                        "\nAAAAAAAA : " + bloodResult.getBloodPressure() + "\nBlood Sugar : " + bloodResult.getBloodSugar() +
+                        "\nBBBBBBB : " + bloodResult.getBloodPressure() + "\nBlood Sugar : " + bloodResult.getBloodSugar() +
+                        "\nCCCCCCCCCC : " + bloodResult.getBloodPressure() + "\nBlood Sugar : " + bloodResult.getBloodSugar() +
+                        "\nDDDDDDDD : " + bloodResult.getBloodPressure() + "\nBlood Sugar : " + bloodResult.getBloodSugar() +
+                        "\nEEEEEEE : " + bloodResult.getBloodPressure() + "\nBlood Sugar : " + bloodResult.getBloodSugar() +
+                        "\nFFFFFFFFF : " + bloodResult.getBloodPressure() + "\nBlood Sugar : " + bloodResult.getBloodSugar() +
+                        "\nGGGGGGGG : " + bloodResult.getBloodPressure() + "\nBlood Sugar : " + bloodResult.getBloodSugar();
                 fcmMessage = getFcmMessageHighBoundRange(msg);
             }
             if (fcmMessage != null) {
@@ -159,7 +166,9 @@ public class FakeSensors {
 
     FcmMessage getFcmMessageLowBoundRange(String text) {
         FcmData fcmData = new FcmData();
-        fcmData.setDl("Low BR (DL)");
+//        fcmData.setMsgTitle("DANGEROUS : Some Blood Result is too LOW");
+        fcmData.setMsgTitle("DANGEROUS-LOW-Blood-Result");
+        fcmData.setMsg(text);
         fcmData.setUrl("https://cdn-icons-png.flaticon.com/512/504/504276.png");
 
         FcmNotification fcmNotification = new FcmNotification();
@@ -176,7 +185,8 @@ public class FakeSensors {
 
     FcmMessage getFcmMessageHighBoundRange(String text) {
         FcmData fcmData = new FcmData();
-        fcmData.setDl("HIGH BR (DL)");
+        fcmData.setMsgTitle("DANGEROUS-HIGH-Blood-Result");
+        fcmData.setMsg(text);
         fcmData.setUrl("https://cdn-icons-png.flaticon.com/512/504/504276.png");
 
         FcmNotification fcmNotification = new FcmNotification();

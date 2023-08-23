@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/appbar/AppBarCubit.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/drawer/DrawerCubit.dart';
 import 'package:flutter_harpia_health_analysis/firebase_options.dart';
+import 'package:flutter_harpia_health_analysis/util/CustomNotification.dart';
 import 'package:flutter_harpia_health_analysis/util/FcmTokenUtils.dart';
 import 'core/ResponsiveDesign.dart';
 import 'Pages/login/LoginPage.dart';
@@ -13,12 +14,14 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await FcmTokenUtils.createToken();
-  print("Created TOKEN :  ${FcmTokenUtils.getToken()}");
+  // print("Created TOKEN :  ${FcmTokenUtils.getToken()}");
   FcmTokenUtils.listenFcm();
-  // FcmTokenUtils.listenBackground();
+  FcmTokenUtils.listenBackground();
   runApp(const MyApp());
+  CustomNotificationUtil.initialize();
 }
-void test(){
+
+void test() {
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     // print('Got a message whilst in the foreground!');
     print('--> Got a message whilst in the foreground!$message');
