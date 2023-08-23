@@ -18,14 +18,14 @@ public class PatientTimerManager implements PatientTimerService {
         return repoSitory.save(patientTimer);
     }
 
-    @Override
+  /*  @Override
     public PatientTimer update(PatientTimer newTimer) {
-        PatientTimer newPatientTimer = repoSitory.findByPatientId(newTimer.getPatientId());
-        newPatientTimer.setHours(newTimer.getHours());
-        newPatientTimer.setMinutes(newTimer.getMinutes());
-        return repoSitory.save(newPatientTimer);
+//        PatientTimer newPatientTimer = repoSitory.findByPatientId(newTimer.getPatientId());
+//        newPatientTimer.setHours(newTimer.getHours());
+//        newPatientTimer.setMinutes(newTimer.getMinutes());
+        return repoSitory.save(newTimer);
     }
-
+*/
     @Override
     public PatientTimer findByPatientId(long patientId) {
         return repoSitory.findByPatientId(patientId);

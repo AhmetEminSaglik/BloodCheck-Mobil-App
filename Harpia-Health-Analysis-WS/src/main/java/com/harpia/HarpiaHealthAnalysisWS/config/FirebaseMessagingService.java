@@ -1,3 +1,4 @@
+/*
 package com.harpia.HarpiaHealthAnalysisWS.config;
 
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -34,4 +35,4 @@ public class FirebaseMessagingService {
         return firebaseMessaging.send(message);
     }
 
-}
+}*/

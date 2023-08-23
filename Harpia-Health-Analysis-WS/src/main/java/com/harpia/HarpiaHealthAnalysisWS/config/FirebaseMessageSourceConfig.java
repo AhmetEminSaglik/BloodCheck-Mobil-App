@@ -1,3 +1,4 @@
+/*
 package com.harpia.HarpiaHealthAnalysisWS.config;
 
 import com.google.auth.oauth2.GoogleCredentials;
@@ -15,7 +16,9 @@ public class FirebaseMessageSourceConfig {
     @Bean
     FirebaseMessaging firebaseMessaging() throws IOException {
         GoogleCredentials googleCredentials = GoogleCredentials
-                .fromStream(new ClassPathResource("firebase-notification-harpia.json").getInputStream());
+                .fromStream(new ClassPathResource("firebase-notification-harpia.json").getInputStream());*/
+/**//*
+
         FirebaseOptions firebaseOptions = FirebaseOptions
                 .builder()
                 .setCredentials(googleCredentials)
@@ -23,7 +26,8 @@ public class FirebaseMessageSourceConfig {
         FirebaseApp app = FirebaseApp.initializeApp(firebaseOptions, "my-app");
         return FirebaseMessaging.getInstance(app);
     }
-   /* @Bean
+   */
+/* @Bean
     public ReloadableResourceBundleMessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
         messageSource.setBasename("classpath:i18n/messages");
@@ -57,5 +61,7 @@ public class FirebaseMessageSourceConfig {
             // Use standard credentials chain. Useful when running inside GKE
             return GoogleCredentials.getApplicationDefault();
         }
-    }*/
+    }*//*
+
 }
+*/

@@ -36,6 +36,7 @@ public class PatientTimerController {
             newPatientTimer.setHours(patientTimer.getHours());
             newPatientTimer.setMinutes(patientTimer.getMinutes());
             newPatientTimer = service.save(newPatientTimer);
+//            newPatientTimer = service.update(newPatientTimer);
             msg = "Patient Timer is updated";
 
         }

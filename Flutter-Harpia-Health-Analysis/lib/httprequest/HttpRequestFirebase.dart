@@ -3,21 +3,24 @@ import 'package:flutter_harpia_health_analysis/httprequest/BaseHttpRequest.dart'
 import 'package:flutter_harpia_health_analysis/util/HttpUtil.dart';
 import 'package:http/http.dart' as http;
 
-class HttpRequestUser {
-  static const String _classUrl = "/users";
+import '../model/firebase/FcmToken.dart';
+
+class HttpRequestFirebase {
+  static const String _classUrl = "/firebase/token";
   static final String _baseUrl = BaseHttpRequestConfig.baseUrl + _classUrl;
 
-  Future<http.Response> login(String username, String password) async {
-    Uri url = Uri.parse("$_baseUrl/login");
+  static void saveToken(FcmToken fcmToken) async {
+    Uri url = Uri.parse(_baseUrl);
     print("URL : ${url}");
+    print("REQUEST TOKEN :  : ${fcmToken.token}");
+
     // var requestData = {"username": username, "password": password};
     Map<String, dynamic> requestData = {
-      "username": username,
-      "password": password,
+      "patientId": fcmToken.patientId,
+      "token": fcmToken.token,
     };
     var resp = await http.post(url,
         headers: HttpUtil.header, body: jsonEncode(requestData));
-    print("resp : $resp");
-    return resp;
+    print(" RESP Result : ${resp.body}");
   }
 }

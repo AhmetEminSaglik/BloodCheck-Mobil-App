@@ -1,3 +1,4 @@
+/*
 package com.harpia.HarpiaHealthAnalysisWS.config;
 
 import com.google.firebase.messaging.FirebaseMessagingException;
@@ -14,8 +15,8 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/send-notification")
-public class FirebaseController {
-    private static CustomLog log = new CustomLog(FirebaseController.class);
+public class FcmTokenController {
+    private static CustomLog log = new CustomLog(FcmTokenController.class);
 
     @Autowired
     FirebaseMessagingService firebaseService;
@@ -23,8 +24,10 @@ public class FirebaseController {
     PatientController patientController;
 
     @GetMapping
-    public String sendNotification(/*@RequestBody Note note,
-            @RequestParam String token @RequestParam String token*/) throws FirebaseMessagingException {
+    public String sendNotification(*/
+/*@RequestBody Note note,
+            @RequestParam String token @RequestParam String token*//*
+) throws FirebaseMessagingException {
 //        Map<String,Patient> map = new HashMap<>();
 //        map.put("patient",getPatient());
 //        Note note = new Note();
@@ -52,3 +55,4 @@ public class FirebaseController {
         return patientList.stream().findFirst().get();
     }
 }
+*/

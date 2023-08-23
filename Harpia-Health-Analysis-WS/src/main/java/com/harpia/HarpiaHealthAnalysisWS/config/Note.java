@@ -1,3 +1,4 @@
+/*
 package com.harpia.HarpiaHealthAnalysisWS.config;
 
 import com.harpia.HarpiaHealthAnalysisWS.model.users.Patient;
@@ -13,3 +14,4 @@ public class Note {
     private String image;
 
 }
+*/

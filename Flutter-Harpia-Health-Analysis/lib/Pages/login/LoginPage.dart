@@ -10,8 +10,10 @@ import 'package:flutter_harpia_health_analysis/business/factory/UserFactory.dart
 import 'package:flutter_harpia_health_analysis/core/ResponsiveDesign.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestUser.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/ResponseEntity.dart';
+import 'package:flutter_harpia_health_analysis/model/firebase/FcmToken.dart';
 import 'package:flutter_harpia_health_analysis/model/user/User.dart';
 import 'package:flutter_harpia_health_analysis/util/CustomSnackBar.dart';
+import 'package:flutter_harpia_health_analysis/util/FcmTokenUtils.dart';
 import 'package:flutter_harpia_health_analysis/util/ProductColor.dart';
 import 'package:flutter_harpia_health_analysis/util/SharedPref.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -32,6 +34,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  late String token;
   var formKey = GlobalKey<FormState>();
 
   Future<void> setUserDataSharedPref() async {
@@ -41,15 +44,48 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController tfUsername = TextEditingController();
   TextEditingController tfPassword = TextEditingController();
 
-  @override
-  void initState() {
-    super.initState();
-    // doFirebaseProcess();
-    // getFirebaseToken();
-    // doProcess();
-    getData();
+  // @override
+  // void initState() {
+  //   super.initState();
+    // getData();
+    // FcmTokenUtils.createToken();
+    // print(FcmTokenUtils.getToken());
+    // listenFcm();
+    // listenBackground();
+  // }
+
+  /* createToken() async {
+    token = (await FirebaseMessaging.instance.getToken())!;
+    print("TOKENT : $token");
+  }*/
+
+/*  listenFcm() {
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print('Got a message whilst in the foreground!');
+      print('Message data: ${message.data}');
+
+      if (message.notification != null) {
+        print('Message also contained a notification: ${message.notification}');
+      }
+    });
+  }*/
+
+/*  listenBackground() {
+    FirebaseMessaging.onBackgroundMessage((message) {
+      return backgroundHandler(message);
+    });
   }
 
+  Future<void> backgroundHandler(RemoteMessage message) async {
+    print('Got a message whilst in the background!');
+    print('Message data: ${message.data}');
+
+    if (message.notification != null) {
+      print('Message also contained a notification: ${message.notification}');
+    }
+  }*/
+
+/*
   getData() {
     FirebaseMessaging.instance
         .getToken()
@@ -77,6 +113,7 @@ class _LoginPageState extends State<LoginPage> {
       print('Message also contained a notification: ${message.notification}');
     }
   }
+*/
 
   @override
   Widget build(BuildContext context) {

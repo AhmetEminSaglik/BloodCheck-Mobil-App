@@ -1,7 +1,9 @@
 package com.harpia.HarpiaHealthAnalysisWS.business.concretes;
 
+import com.harpia.HarpiaHealthAnalysisWS.business.FakeSensors;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.diabetic.BloodResultService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.diabetic.DiabeticService;
+import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.firebase.FcmTokenService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.user.UserRoleService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.user.UserService;
 import com.harpia.HarpiaHealthAnalysisWS.controller.timer.PatientTimerController;
@@ -51,6 +53,8 @@ public class InitialDataLoader implements CommandLineRunner {
     private DiabeticService diabeticService;
     @Autowired
     private PatientTimerController timerController;
+    @Autowired
+    private FcmTokenService fcmTokenService;
 
     private static CustomLog log = new CustomLog(InitialDataLoader.class);
     private static Random random = new Random();
@@ -70,16 +74,19 @@ public class InitialDataLoader implements CommandLineRunner {
             Patient patient_6_Hours = patientList.get(patientList.size() - 2);
             Patient patient_17_Days = patientList.get(patientList.size() - 3);
             Patient patient_6_Month = patientList.get(patientList.size() - 4);
+
             saveBloodResult_2_Data(patient_2_Data);
             saveBloodResult_6_Hours_Saved_5_Hours_Before(patient_6_Hours);
             saveBloodResult_17_Days_16_Hours(patient_17_Days);
+
+
 //            saveBloodResultPerMinuteForSixMonth(patient_6_Month);
             /*for (int i = 0; i < patientList.size() - 2; i++) {
                 saveBloodResultPerMinuteForSixMonth(patientList.get(3));
             }*/
 
         }
-//        new FakeSensors().runFakeSensors(timerController.findAllPatientTimers().getBody().getData(), bloodResultService);
+        new FakeSensors(fcmTokenService).runFakeSensors(timerController.findAllPatientTimers().getBody().getData(), bloodResultService);
     }
 
 
