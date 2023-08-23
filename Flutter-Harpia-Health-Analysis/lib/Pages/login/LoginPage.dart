@@ -283,7 +283,7 @@ class _LoginButton extends StatelessWidget {
         child: ElevatedButton(
             onPressed: () {
               loginProcess(context);
-              CustomNotification.showNotification("DEMO ");
+              // CustomNotification.showNotification("DEMO ");
 
             },
             style: ButtonStyle(

@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 public class FakeSensors {
     ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
     Random random = new Random();
-    private static CustomLog log = new CustomLog(SignupUser.class);
+    private static CustomLog log = new CustomLog(FakeSensors.class);
     FcmTokenService fcmTokenService;
 
     public FakeSensors(FcmTokenService fcmTokenService) {
@@ -37,7 +37,7 @@ public class FakeSensors {
 
     public void runFakeSensors(List<PatientTimer> patientTimerList, BloodResultService bloodResultService) {
 
-        addRunnableToExecutorServiceFor5Seconds(getBloodResultAndSaveToDBPer5Seconds(bloodResultService));
+        addRunnableToExecutorServiceFor10Seconds(getBloodResultAndSaveToDBPer10Seconds(bloodResultService));
 
 //        System.out.println("BLOOD RESULT SERVICE :" + bloodResultService);
 //        System.out.println("PATITENT TIMER LIST SIZE :" + patientTimerList.size());
@@ -95,15 +95,15 @@ public class FakeSensors {
     static int counter = 0;
     static int rangeBound = 0;
     static int LowRangeBound = 10;
-    static int NormalRangeBound = 90;
-    static int HighRangeBound = 150;
+    static int NormalRangeBound = 100;
+    static int HighRangeBound = 200;
 //    static int rangeBoundHigh = 0;
 
-    Runnable getBloodResultAndSaveToDBPer5Seconds(BloodResultService bloodResultService) {
+    Runnable getBloodResultAndSaveToDBPer10Seconds(BloodResultService bloodResultService) {
         return new Runnable() {
             @Override
             public void run() {
-                counter++;
+                log.info("Counter : "+counter);
                 if (counter % 3 == 0) {
                     rangeBound = LowRangeBound;// low
                 } else if (counter % 3 == 1) {
@@ -112,12 +112,14 @@ public class FakeSensors {
                     rangeBound = HighRangeBound;// high
                 }
                 BloodResult bloodResult = new BloodResult();
-                bloodResult.setBloodPressure(random.nextInt(30) + rangeBound + 110);
-                bloodResult.setBloodSugar(random.nextInt(30) + rangeBound + 110);
+                bloodResult.setBloodPressure(random.nextInt(30) + rangeBound + 10);
+                bloodResult.setBloodSugar(random.nextInt(30) + rangeBound + 10);
                 bloodResult.setPatientId(6); // patient id
                 bloodResultService.save(bloodResult);
                 log.info("Runnabledayiz : BloodResult : " + bloodResult);
                 sendFcmNotificationOutOfBoundsBloodResult(bloodResult);
+                counter++;
+
             }
         };
     }
@@ -132,24 +134,25 @@ public class FakeSensors {
         log.info("gelen  BloodPressure : " + bloodResult.getBloodPressure());
         try {
             if (bloodResult.getBloodPressure() < NormalRangeBound) {
+                log.info("getBloodPressure is TOO LOW : " + bloodResult.getBloodPressure());
                 String msg = "Blood Pressure : " + bloodResult.getBloodPressure() + "\nBlood Sugar : " + bloodResult.getBloodSugar();
                 fcmMessage = getFcmMessageLowBoundRange(msg);
             }
             if (bloodResult.getBloodPressure() > HighRangeBound) {
+                log.info("getBloodPressure is TOO HIGHa : " + bloodResult.getBloodPressure());
                 String msg = "Blood Pressure : " + bloodResult.getBloodPressure() + "\nBlood Sugar : " + bloodResult.getBloodSugar();
                 fcmMessage = getFcmMessageHighBoundRange(msg);
             }
-
             if (fcmMessage != null) {
                 log.info("NOTIFICATION GONDERILECEK : " + bloodResult);
                 log.info("FcmMessage : " + fcmMessage);
                 fcmService.sendFcmNotification(fcmMessage);
             } else {
+                log.info("getBloodPressure is GOOD : " + bloodResult.getBloodPressure());
                 log.info("fcmMessage IS : " + fcmMessage);
             }
-
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error("EXCEPTION : " + e.getMessage());
         }
 
     }
@@ -167,7 +170,7 @@ public class FakeSensors {
         fcmMessage.setNotification(fcmNotification);
         fcmMessage.setData(fcmData);
         log.warn(" 1111 BU MU BOS : fcmTokenService " + fcmTokenService);
-        fcmMessage.setToken(fcmTokenService.findByPatientId(6).getToken());
+        fcmMessage.setTo(fcmTokenService.findByPatientId(6).getToken());
         return fcmMessage;
     }
 
@@ -187,7 +190,7 @@ public class FakeSensors {
         log.info(" fcmTokenService.findByPatientId(6).getToken() : " + fcmTokenService.findByPatientId(6).getToken());
         log.info(" fcmMessage.setToken(fcmTokenService.findByPatientId(6).getToken()) : " + fcmTokenService.findByPatientId(6).getToken());
         log.info(" fcmMessage : " + fcmMessage);
-        fcmMessage.setToken(fcmTokenService.findByPatientId(6).getToken());
+        fcmMessage.setTo(fcmTokenService.findByPatientId(6).getToken());
         return fcmMessage;
     }
 
@@ -196,8 +199,8 @@ public class FakeSensors {
         executorService.scheduleAtFixedRate(runnable, 0, patientTimer.getMinutes(), TimeUnit.MINUTES);
     }
 
-    void addRunnableToExecutorServiceFor5Seconds(Runnable runnable) {
-        executorService.scheduleAtFixedRate(runnable, 0, 2, TimeUnit.SECONDS);
+    void addRunnableToExecutorServiceFor10Seconds(Runnable runnable) {
+        executorService.scheduleAtFixedRate(runnable, 0, 10, TimeUnit.SECONDS);
     }
 
 

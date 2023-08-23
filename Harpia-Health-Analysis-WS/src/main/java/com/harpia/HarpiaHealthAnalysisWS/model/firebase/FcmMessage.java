@@ -2,16 +2,16 @@ package com.harpia.HarpiaHealthAnalysisWS.model.firebase;
 
 public class FcmMessage {
 
-    private String token;
+    private String to;
     private FcmNotification notification;
     private FcmData data;
 
-    public String getToken() {
-        return token;
+    public String getTo() {
+        return to;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setTo(String to) {
+        this.to = to;
     }
 
     public FcmNotification getNotification() {
@@ -33,7 +33,7 @@ public class FcmMessage {
     @Override
     public String toString() {
         return "FcmMessage{" +
-                "token='" + token + '\'' +
+                "to='" + to + '\'' +
                 ", notification=" + notification +
                 ", data=" + data +
                 '}';
