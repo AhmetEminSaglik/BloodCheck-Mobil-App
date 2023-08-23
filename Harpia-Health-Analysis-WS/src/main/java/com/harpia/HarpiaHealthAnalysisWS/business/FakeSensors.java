@@ -103,23 +103,27 @@ public class FakeSensors {
         return new Runnable() {
             @Override
             public void run() {
-                log.info("Counter : " + counter);
-                if (counter % 3 == 0) {
-                    rangeBound = LowRangeBound;// low
-                } else if (counter % 3 == 1) {
-                    rangeBound = NormalRangeBound;// normal
-                } else {
-                    rangeBound = HighRangeBound;// high
-                }
-                BloodResult bloodResult = new BloodResult();
-                bloodResult.setBloodPressure(random.nextInt(30) + rangeBound + 10);
-                bloodResult.setBloodSugar(random.nextInt(30) + rangeBound + 10);
-                bloodResult.setPatientId(6); // patient id
-                bloodResultService.save(bloodResult);
-                log.info("Runnabledayiz : BloodResult : " + bloodResult);
-                sendFcmNotificationOutOfBoundsBloodResult(bloodResult);
-                counter++;
+                if (fcmTokenService.findByPatientId(6) != null) {
+                    log.info("Counter : " + counter);
+                    if (counter % 3 == 0) {
+                        rangeBound = LowRangeBound;// low
+                    } else if (counter % 3 == 1) {
+                        rangeBound = NormalRangeBound;// normal
+                    } else {
+                        rangeBound = HighRangeBound;// high
+                    }
+                    BloodResult bloodResult = new BloodResult();
+                    bloodResult.setBloodPressure(random.nextInt(30) + rangeBound + 10);
+                    bloodResult.setBloodSugar(random.nextInt(30) + rangeBound + 10);
+                    bloodResult.setPatientId(6); // patient id
+                    bloodResultService.save(bloodResult);
+                    log.info("Runnabledayiz : BloodResult : " + bloodResult);
+                    sendFcmNotificationOutOfBoundsBloodResult(bloodResult);
+                    counter++;
 
+                } else {
+                    log.info("Waiting patient to login");
+                }
             }
         };
     }
