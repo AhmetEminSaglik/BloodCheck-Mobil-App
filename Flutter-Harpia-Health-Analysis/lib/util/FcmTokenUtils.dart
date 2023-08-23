@@ -1,4 +1,8 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_harpia_health_analysis/model/firebase/FcmMessage.dart';
+import 'package:flutter_harpia_health_analysis/util/CustomNotification.dart';
+
+import '../business/factory/FcmMessageFactory.dart';
 
 class FcmTokenUtils {
   static late String _token;
@@ -11,15 +15,41 @@ class FcmTokenUtils {
     return _token;
   }
 
-  static listenFcm() {
+  static listenFcm()  {
+    try{
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print('Got a message whilst in the foreground!');
-      print('Message data: ${message.data}');
+      // print('Got a message whilst in the foreground!');
+      print('--> Got a message whilst in the foreground!$message');
+      print('----> Message data: ${message.data}');
 
+
+      // CustomNotification.showNotification(message.data);
+      parseMapToString(message.data);
       if (message.notification != null) {
         print('Message also contained a notification: ${message.notification}');
       }
     });
+    }
+    catch(e){
+      print("exception : $e");
+
+    }
+  }
+
+  static String parseMapToString(Map<String, dynamic> map) {
+    String data = "";
+    for (var entry in map.entries) {
+      print("entry.key : ${entry.key}");
+      print("entry.value : ${entry.value}");
+      data += entry.value;
+    }
+    print("DATA : $data ");
+    print("map : $map ");
+    FcmMessage message = FcmMessageFactory.createFcmMessage(map);
+    print("FcmMessage : $message");
+    CustomNotification.showNotification(data);
+
+    return data;
   }
 
   static listenBackground() {

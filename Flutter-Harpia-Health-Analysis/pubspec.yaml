@@ -30,6 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_local_notifications: ^13.0.0
   shared_preferences: ^2.0.11
   http: ^1.1.0
   fl_chart: ^0.63.0

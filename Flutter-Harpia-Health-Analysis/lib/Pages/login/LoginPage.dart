@@ -18,6 +18,8 @@ import 'package:flutter_harpia_health_analysis/util/ProductColor.dart';
 import 'package:flutter_harpia_health_analysis/util/SharedPref.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../util/CustomNotification.dart';
+
 /*
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -281,6 +283,8 @@ class _LoginButton extends StatelessWidget {
         child: ElevatedButton(
             onPressed: () {
               loginProcess(context);
+              CustomNotification.showNotification("DEMO ");
+
             },
             style: ButtonStyle(
                 backgroundColor:
