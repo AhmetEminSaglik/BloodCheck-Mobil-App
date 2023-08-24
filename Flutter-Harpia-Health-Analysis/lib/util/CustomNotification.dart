@@ -29,14 +29,7 @@ class CustomNotificationUtil {
         priority: Priority.high,
         importance: Importance.max,
         color: ProductColor.redAccent,
-        styleInformation: const DefaultStyleInformation(true, true)
-    );
-    // var si=DefaultStyleInformation();
-    // var si1=DefaultStyleInformation();
-    // si1.
-    // var si2=InboxStyleInformation();
-    // si1.
-print("title $title" );
+        styleInformation: const DefaultStyleInformation(true, true));
     var iosNotificationDetail = const DarwinNotificationDetails();
     var notificationDetail = NotificationDetails(
         android: androidNotificationDetail, iOS: iosNotificationDetail);

@@ -45,6 +45,10 @@ dependencies:
   cupertino_icons: ^1.0.2
   firebase_messaging:
   firebase_analytics:
+  flutter_foreground_task: ^6.1.0
+  flutter_background: ^1.2.0
+
+#  permission_handler: ^10.4.3
 #  firebase_app_check: ^0.1.5+2
 #  firebase_auth: ^4.7.3
 #  cloud_firestore: ^4.8.5

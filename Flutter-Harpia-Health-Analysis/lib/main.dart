@@ -14,7 +14,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await FcmTokenUtils.createToken();
-  // print("Created TOKEN :  ${FcmTokenUtils.getToken()}");
+  print("Created TOKEN :  ${FcmTokenUtils.getToken()}");
   FcmTokenUtils.listenFcm();
   FcmTokenUtils?.listenBackground();
   runApp(const MyApp());

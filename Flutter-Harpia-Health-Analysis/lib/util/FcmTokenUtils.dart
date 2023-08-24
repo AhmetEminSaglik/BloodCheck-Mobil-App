@@ -63,6 +63,10 @@ class FcmTokenUtils {
 
     if (message.notification != null) {
       print('Message also contained a notification: ${message.notification}');
+      final title = message.notification?.title ?? "Title is Null";
+      final body = message.notification?.body ?? "Body is Null";
+
+      CustomNotificationUtil.showNotification(title,body);
     }
   }
 }
