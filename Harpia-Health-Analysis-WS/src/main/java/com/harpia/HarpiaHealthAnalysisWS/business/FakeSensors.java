@@ -1,8 +1,10 @@
 package com.harpia.HarpiaHealthAnalysisWS.business;
 
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.diabetic.BloodResultService;
+import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.firebase.FcmNotificationService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.firebase.FcmTokenService;
 import com.harpia.HarpiaHealthAnalysisWS.business.concretes.firebase.FcmManager;
+import com.harpia.HarpiaHealthAnalysisWS.business.concretes.firebase.FcmNotificationManager;
 import com.harpia.HarpiaHealthAnalysisWS.business.concretes.signup.SignupUser;
 import com.harpia.HarpiaHealthAnalysisWS.model.bloodresult.BloodResult;
 import com.harpia.HarpiaHealthAnalysisWS.model.firebase.FcmData;
@@ -14,7 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -103,7 +107,9 @@ public class FakeSensors {
         return new Runnable() {
             @Override
             public void run() {
+
                 if (fcmTokenService.findByPatientId(6) != null) {
+
                     log.info("Counter : " + counter);
                     if (counter % 3 == 0) {
                         rangeBound = LowRangeBound;// low
@@ -168,10 +174,14 @@ public class FakeSensors {
 
     }
 
+    FcmNotificationService fcmNotificationService = new FcmNotificationManager();
+
     FcmMessage getFcmMessageLowBoundRange(String text) {
         FcmData fcmData = new FcmData();
 //        fcmData.setMsgTitle("DANGEROUS : Some Blood Result is too LOW");
-        fcmData.setMsgTitle("DANGEROUS-LOW-Blood-Result");
+        String textDangerous = "DANGEROUS";
+        textDangerous = fcmNotificationService.generateTextWithHtmlColor(textDangerous, Color.BLUE);
+        fcmData.setMsgTitle(textDangerous + "-LOW-Blood-Result");
         fcmData.setMsg(text);
         fcmData.setUrl("https://cdn-icons-png.flaticon.com/512/504/504276.png");
 
@@ -188,8 +198,12 @@ public class FakeSensors {
     }
 
     FcmMessage getFcmMessageHighBoundRange(String text) {
+        String textDangerous = "DANGEROUS";
+
+        textDangerous = fcmNotificationService.generateTextWithHtmlColor(textDangerous, Color.RED);
+
         FcmData fcmData = new FcmData();
-        fcmData.setMsgTitle("DANGEROUS-HIGH-Blood-Result");
+        fcmData.setMsgTitle(textDangerous + "-HIGH-Blood-Result");
         fcmData.setMsg(text);
         fcmData.setUrl("https://cdn-icons-png.flaticon.com/512/504/504276.png");
 
@@ -200,11 +214,10 @@ public class FakeSensors {
 
         fcmMessage.setNotification(fcmNotification);
         fcmMessage.setData(fcmData);
-        log.warn(" 2222 BU MU BOS : fcmTokenService " + fcmTokenService);
-        log.info(" fcmTokenService.findByPatientId(6).getToken() : " + fcmTokenService.findByPatientId(6).getToken());
-        log.info(" fcmMessage.setToken(fcmTokenService.findByPatientId(6).getToken()) : " + fcmTokenService.findByPatientId(6).getToken());
-        log.info(" fcmMessage : " + fcmMessage);
         fcmMessage.setTo(fcmTokenService.findByPatientId(6).getToken());
+
+
+//        fcmMessage.getData().setMsgTitle(fcmNotificationService.generateTextWithHtmlColor(fcmMessage.getData().getMsgTitle(), Color.RED));
         return fcmMessage;
     }
 
