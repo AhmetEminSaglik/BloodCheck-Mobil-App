@@ -192,7 +192,6 @@ public class FakeSensors {
 
         fcmMessage.setNotification(fcmNotification);
         fcmMessage.setData(fcmData);
-        log.warn(" 1111 BU MU BOS : fcmTokenService " + fcmTokenService);
         fcmMessage.setTo(fcmTokenService.findByPatientId(6).getToken());
         return fcmMessage;
     }
@@ -227,7 +226,7 @@ public class FakeSensors {
     }
 
     void addRunnableToExecutorServiceFor10Seconds(Runnable runnable) {
-        executorService.scheduleAtFixedRate(runnable, 0, 10, TimeUnit.SECONDS);
+        executorService.scheduleAtFixedRate(runnable, 0, 3, TimeUnit.SECONDS);
     }
 
 

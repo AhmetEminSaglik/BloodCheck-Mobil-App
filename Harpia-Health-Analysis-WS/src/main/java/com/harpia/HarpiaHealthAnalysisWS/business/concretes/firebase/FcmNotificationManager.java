@@ -13,7 +13,7 @@ public class FcmNotificationManager implements FcmNotificationService {
     @Override
     public String generateTextWithHtmlColor(String notificationTitle, Color color) {
         String cssColor = rgbToCssColor(color.getRed(), color.getGreen(), color.getBlue());
-        String generatedText = "<span style='color:" + cssColor + "'>" + notificationTitle + "<span/>";
+        String generatedText = "<p style='color:" + cssColor + "'>" + notificationTitle + "<p/>";
 //        log.info("generatedText : " + generatedText);
         return generatedText;
     }
