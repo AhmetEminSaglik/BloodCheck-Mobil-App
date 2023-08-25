@@ -16,7 +16,7 @@ void main() async {
   await FcmTokenUtils.createToken();
   print("Created TOKEN :  ${FcmTokenUtils.getToken()}");
   FcmTokenUtils.listenFcm();
-  FcmTokenUtils?.listenBackground();
+  // FcmTokenUtils?.listenBackground();
   runApp(const MyApp());
   CustomNotificationUtil.initialize();
 }

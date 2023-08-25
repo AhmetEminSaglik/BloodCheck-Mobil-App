@@ -49,7 +49,7 @@ class HttpRequestDoctor {
   static Future<http.Response> savePatientTimer(
       PatientTimer patientTimer) async {
     Uri url =
-        Uri.parse("${BaseHttpRequestConfig.baseUrl}/timers/doctors/patients");
+        Uri.parse("${BaseHttpRequestConfig.baseUrl}/timers");
     print("URL : ${url}");
     Map<String, dynamic> requestData = {
       "hours": patientTimer.hours,

@@ -1,7 +1,17 @@
 class PatientTimer {
-  int _hours = 0;
-  int _minutes = 0;
-  int _patientId = -1;
+  late int _hours;
+  late int _minutes;
+  late int _patientId;
+
+  PatientTimer({int hours = 0, int minutes = 0, int patientId = -1}) {
+    _hours = hours;
+    _minutes = minutes;
+    _patientId = patientId;
+  }
+
+  // PatientTimer({required hours,required minutes,required patientId});
+
+  // PatientTimer();
 
   int get hours => _hours;
 
@@ -19,6 +29,14 @@ class PatientTimer {
 
   set patientId(int value) {
     _patientId = value;
+  }
+
+  factory PatientTimer.fromJson(Map<String, dynamic> json) {
+    return PatientTimer(
+      hours: json["hours"] as int,
+      minutes: json["minutes"] as int,
+      patientId: json["patientId"] as int,
+    );
   }
 
   @override
