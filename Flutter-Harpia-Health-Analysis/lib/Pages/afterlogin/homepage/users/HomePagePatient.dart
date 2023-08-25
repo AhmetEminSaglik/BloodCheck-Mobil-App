@@ -1,8 +1,10 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/CustomLineChartDataMonthly.dart';
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/CustomLineChartDataWeekly.dart';
+import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/LineChartEmpty.dart';
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/LineChartMonthly.dart';
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/LineChartWeekly.dart';
 import 'package:flutter_harpia_health_analysis/core/ResponsiveDesign.dart';
@@ -39,6 +41,7 @@ class HomePagePatient extends StatefulWidget {
 }
 
 class _HomePagePatientState extends State<HomePagePatient> {
+  LineChartEmpty lineChartEmpty = LineChartEmpty();
   StatefulWidget? activatedLineChartWidget;
   bool visibleAppBar =
       PermissionUtils.letRunForAdmin() || PermissionUtils.letRunForDoctor();
@@ -48,6 +51,7 @@ class _HomePagePatientState extends State<HomePagePatient> {
   List<BloodResult> weeklyBloodResultList = [];
   List<BloodResult> monthlyBloodResultList = [];
   PatientTimer patientTimer = PatientTimer();
+  // bool listDataIsEmpty = false;
   final CheckBoxVisibleBloodResultContent _checkBoxVisibleBloodResultContent =
       CheckBoxVisibleBloodResultContent();
   late CustomLineChartDataDaily _customLineChartDataDaily;
@@ -57,28 +61,45 @@ class _HomePagePatientState extends State<HomePagePatient> {
   void updateActivatedLineChart(int selectedRadioValue) {
     switch (selectedRadioValue) {
       case 1:
-        activatedLineChartWidget = LineChartDaily(
-          customLineChartData: _customLineChartDataDaily,
-          checkBoxVisibleBloodResultContent: _checkBoxVisibleBloodResultContent,
-        );
+        if (!assignEmptyLineChart(dailyBloodResultList)) {
+          activatedLineChartWidget = LineChartDaily(
+            customLineChartData: _customLineChartDataDaily,
+            checkBoxVisibleBloodResultContent:
+                _checkBoxVisibleBloodResultContent,
+          );
+        }
         break;
       case 2:
-        activatedLineChartWidget = LineChartWeekly(
-          customLineChartData: _customLineChartDataWeekly,
-          checkBoxVisibleBloodResultContent: _checkBoxVisibleBloodResultContent,
-        );
+        if (!assignEmptyLineChart(weeklyBloodResultList)) {
+          activatedLineChartWidget = LineChartWeekly(
+            customLineChartData: _customLineChartDataWeekly,
+            checkBoxVisibleBloodResultContent:
+                _checkBoxVisibleBloodResultContent,
+          );
+        }
         break;
       case 3:
-        activatedLineChartWidget = LineChartMonthly(
-            customLineChartData: _customLineChartDataMonthly,
-            checkBoxVisibleBloodResultContent:
-                _checkBoxVisibleBloodResultContent);
+        if (!assignEmptyLineChart(monthlyBloodResultList)) {
+          activatedLineChartWidget = LineChartMonthly(
+              customLineChartData: _customLineChartDataMonthly,
+              checkBoxVisibleBloodResultContent:
+                  _checkBoxVisibleBloodResultContent);
+        }
         break;
       case 4:
         activatedLineChartWidget = null;
         break;
     }
     setState(() {});
+  }
+
+  bool assignEmptyLineChart(List list) {
+    if (list.isEmpty) {
+      activatedLineChartWidget = lineChartEmpty;
+      // listDataIsEmpty = true;
+      return true;
+    }
+    return false;
   }
 
   // List<Widget> checkBoxBloodResultContents = [];
@@ -88,6 +109,7 @@ class _HomePagePatientState extends State<HomePagePatient> {
     super.initState();
     retrieveBloodResultData();
     retrievePatientTimerData();
+    activatedLineChartWidget = lineChartEmpty;
   }
 
   void retrievePatientTimerData() async {
@@ -96,13 +118,18 @@ class _HomePagePatientState extends State<HomePagePatient> {
   }
 
   void retrieveBloodResultData() async {
-    print("DATA RETRIEVED ");
+    // print("DATA RETRIEVED patient Id : ${widget.patientId}");
     dailyBloodResultList =
         await HttpRequestBloodResult.getDailyBloodResult(widget.patientId);
     weeklyBloodResultList =
         await HttpRequestBloodResult.getWeeklyBloodResult(widget.patientId);
     monthlyBloodResultList =
         await HttpRequestBloodResult.getMonthlyBloodResult(widget.patientId);
+
+    // print("DATA RETRIEVED dailyBloodResultList size :${dailyBloodResultList.length} ");
+    // print("DATA RETRIEVED weeklyBloodResultList size :${weeklyBloodResultList.length} ");
+    // print("DATA RETRIEVED monthlyBloodResultList size :${monthlyBloodResultList.length} ");
+
     setState(() {
       isLoading = false;
     });
@@ -149,13 +176,16 @@ class _HomePagePatientState extends State<HomePagePatient> {
                           Container(
                             height: ResponsiveDesign.getScreenHeight() / 9,
                             color: ProductColor.bodyBackground,
-                            child: Column(
-                              children: [
-                                SensorTimerText(patientTimer: patientTimer),
-                                SensorNextMeasurementText(
-                                    dailyBloodResultList: dailyBloodResultList,
-                                    patientTimer: patientTimer),
-                              ],
+                            child: SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  SensorTimerText(patientTimer: patientTimer),
+                                  SensorNextMeasurementText(
+                                      dailyBloodResultList:
+                                          dailyBloodResultList,
+                                      patientTimer: patientTimer),
+                                ],
+                              ),
                             ),
                           ),
 
@@ -252,31 +282,45 @@ class _HomePagePatientState extends State<HomePagePatient> {
                           ),
                           // SizedBox(width: 450, height: 300, child: LineChartDemo1()),
                           // SizedBox(width: 450, height: 300, child: LineChartDemo2()),
-                          _getPatientTimerButton(),
+                          // _getPatientTimerButton(),
                           _getPatientTimerButton(),
                           SizedBox(
                               width: ResponsiveDesign.getScreenWidth(),
-                              height: ResponsiveDesign.getScreenHeight() / 2.5,
-                              child: activatedLineChartWidget ??
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        "Here is not completed yet.",
-                                        style: TextStyle(
-                                            fontSize: ResponsiveDesign
-                                                    .getScreenWidth() /
-                                                15),
-                                      ),
-                                      const CircularProgressIndicator(),
-                                    ],
-                                  )),
+                              height: ResponsiveDesign.getScreenHeight() / 2,
+                              child: Container(
+                                // width: 500,
+                                // height: 500,
+                                // color: Colors.red,
+                                child: activatedLineChartWidget ??
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        // getNotFoundRecordedDataText(),
+                                        Text(
+                                          "Here is not completed yet.",
+                                          style: TextStyle(
+                                              fontSize: ResponsiveDesign
+                                                      .getScreenWidth() /
+                                                  15),
+                                        ),
+                                        // const CircularProgressIndicator(),
+                                      ],
+                                    ),
+                              )),
                         ],
                       ),
                     )),
     );
   }
 
+  /* Text getNotFoundRecordedDataText() {
+    if (listDataIsEmpty) {
+      return Text("Not Found Any Recorded Data");
+    }
+    return Text("");
+  }
+*/
   Padding getBloodResultRadioButtonTime(
       {required String name, required int itemValue}) {
     return Padding(
@@ -354,6 +398,9 @@ class _HomePagePatientState extends State<HomePagePatient> {
       print("patientId : ${widget.patientId}");
       resp.patientTimer.patientId = widget.patientId;
       sendRequestToSavePatientTimer(resp.patientTimer);
+      retrievePatientTimerData();
+      setState(() {
+      });
     } else {
       String msg = "Patient Timer setup is cancelled";
       print(msg);
@@ -390,6 +437,13 @@ class SensorNextMeasurementText extends StatelessWidget {
   final List<BloodResult> dailyBloodResultList;
   final PatientTimer patientTimer;
 
+  String _getStringDataToShow() {
+    if (dailyBloodResultList.length > 0) {
+      return "Next Time : ${PatientTimerUtils.calculateSensorNextMeasurementTime(lastCreatedAt: dailyBloodResultList[0].createdAt, patientTimer: patientTimer)}";
+    }
+    return "Not found record Blood Result";
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -404,7 +458,8 @@ class SensorNextMeasurementText extends StatelessWidget {
         // color: ProductColor.white,
         child: Center(
           child: Text(
-              "Next Time : ${PatientTimerUtils.calculateSensorNextMeasurementTime(lastCreatedAt: dailyBloodResultList[0].createdAt, patientTimer: patientTimer)}",
+              /*"Next Time : ${PatientTimerUtils.calculateSensorNextMeasurementTime(lastCreatedAt: dailyBloodResultList[0].createdAt, patientTimer: patientTimer)}"*/
+              _getStringDataToShow(),
               style: TextStyle(
                   fontSize: ResponsiveDesign.getScreenWidth() / 20,
                   // color: ProductColor.bodyBackground,
