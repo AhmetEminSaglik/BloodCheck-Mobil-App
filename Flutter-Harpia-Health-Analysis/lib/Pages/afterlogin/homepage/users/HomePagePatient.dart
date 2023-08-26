@@ -2,11 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/CustomLineChartDataMonthly.dart';
-import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/CustomLineChartDataWeekly.dart';
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/LineChartEmpty.dart';
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/LineChartMonthly.dart';
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/LineChartWeekly.dart';
+import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/linechart/data/BaseLineChartData.dart';
+import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/linechart/data/LineChartDataDaily.dart';
 import 'package:flutter_harpia_health_analysis/core/ResponsiveDesign.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestDoctor.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestPatient.dart';
@@ -22,9 +22,10 @@ import '../../../../util/CustomAlertDialog.dart';
 import '../../../../util/CustomSnackBar.dart';
 import '../../../../util/PermissionUtils.dart';
 import '../../../../util/ProductColor.dart';
-import '../../../CustomWidgets/CustomLineChartDataDaily.dart';
 import '../../../CustomWidgets/LineChartDaily.dart';
 import '../../../CustomWidgets/CheckBoxVisibleBloodResultContent.dart';
+import '../../../CustomWidgets/linechart/data/LineChartDataMonthly.dart';
+import '../../../CustomWidgets/linechart/data/LineChartDataWeekly.dart';
 import '../appbar/AppBarCubit.dart';
 
 class HomePagePatient extends StatefulWidget {
@@ -43,6 +44,7 @@ class HomePagePatient extends StatefulWidget {
 class _HomePagePatientState extends State<HomePagePatient> {
   LineChartEmpty lineChartEmpty = LineChartEmpty();
   StatefulWidget? activatedLineChartWidget;
+  late BaseLineChartData _baseLineChartData;
   bool visibleAppBar =
       PermissionUtils.letRunForAdmin() || PermissionUtils.letRunForDoctor();
   bool visiblePatientTimer = PermissionUtils.letRunForDoctor();
@@ -51,28 +53,36 @@ class _HomePagePatientState extends State<HomePagePatient> {
   List<BloodResult> weeklyBloodResultList = [];
   List<BloodResult> monthlyBloodResultList = [];
   PatientTimer patientTimer = PatientTimer();
+
   // bool listDataIsEmpty = false;
   final CheckBoxVisibleBloodResultContent _checkBoxVisibleBloodResultContent =
       CheckBoxVisibleBloodResultContent();
-  late CustomLineChartDataDaily _customLineChartDataDaily;
-  late CustomLineChartDataWeekly _customLineChartDataWeekly;
-  late CustomLineChartDataMonthly _customLineChartDataMonthly;
+  late BaseLineChartData _lineChartDataDaily;
+  late BaseLineChartData _lineChartDataWeekly;
+  late BaseLineChartData _lineChartDataMonthly;
 
   void updateActivatedLineChart(int selectedRadioValue) {
+    print("ILK GIRIS : $selectedRadioValue}");
     switch (selectedRadioValue) {
       case 1:
         if (!assignEmptyLineChart(dailyBloodResultList)) {
           activatedLineChartWidget = LineChartDaily(
-            customLineChartData: _customLineChartDataDaily,
+            baseLineChartData: _lineChartDataDaily,
             checkBoxVisibleBloodResultContent:
                 _checkBoxVisibleBloodResultContent,
           );
         }
+        // _baseLineChartData =
+        //     LineChartDataDaily2(bloodResultList: dailyBloodResultList);
+        //
+        // print("DAILY  : $_baseLineChartData");
+        // print("dailyBloodResultList : ${dailyBloodResultList.length}");
+
         break;
       case 2:
         if (!assignEmptyLineChart(weeklyBloodResultList)) {
           activatedLineChartWidget = LineChartWeekly(
-            customLineChartData: _customLineChartDataWeekly,
+            baseLineChartData: _lineChartDataWeekly,
             checkBoxVisibleBloodResultContent:
                 _checkBoxVisibleBloodResultContent,
           );
@@ -81,7 +91,7 @@ class _HomePagePatientState extends State<HomePagePatient> {
       case 3:
         if (!assignEmptyLineChart(monthlyBloodResultList)) {
           activatedLineChartWidget = LineChartMonthly(
-              customLineChartData: _customLineChartDataMonthly,
+              baseLineChartData: _lineChartDataMonthly,
               checkBoxVisibleBloodResultContent:
                   _checkBoxVisibleBloodResultContent);
         }
@@ -126,6 +136,9 @@ class _HomePagePatientState extends State<HomePagePatient> {
     monthlyBloodResultList =
         await HttpRequestBloodResult.getMonthlyBloodResult(widget.patientId);
 
+    _lineChartDataDaily= LineChartDataDaily(bloodResultList:dailyBloodResultList);
+    _lineChartDataWeekly= LineChartDataWeekly(bloodResultList:weeklyBloodResultList);
+    _lineChartDataMonthly= LineChartDataMonthly(bloodResultList:monthlyBloodResultList);
     // print("DATA RETRIEVED dailyBloodResultList size :${dailyBloodResultList.length} ");
     // print("DATA RETRIEVED weeklyBloodResultList size :${weeklyBloodResultList.length} ");
     // print("DATA RETRIEVED monthlyBloodResultList size :${monthlyBloodResultList.length} ");
@@ -133,15 +146,16 @@ class _HomePagePatientState extends State<HomePagePatient> {
     setState(() {
       isLoading = false;
     });
-    _customLineChartDataDaily =
-        CustomLineChartDataDaily(bloodListData: dailyBloodResultList);
-
-    _customLineChartDataWeekly =
-        CustomLineChartDataWeekly(bloodListData: weeklyBloodResultList);
-    _customLineChartDataMonthly =
-        CustomLineChartDataMonthly(bloodListData: monthlyBloodResultList);
-    print(
-        "Data's retrieved agian : daily item ${dailyBloodResultList[0]} / ${dailyBloodResultList[dailyBloodResultList.length - 1]}");
+    //
+    // _customLineChartDataDaily =
+    //     CustomLineChartDataDaily(bloodListData: dailyBloodResultList);
+    //
+    // _customLineChartDataWeekly =
+    //     CustomLineChartDataWeekly(bloodListData: weeklyBloodResultList);
+    // _customLineChartDataMonthly =
+    //     CustomLineChartDataMonthly(bloodListData: monthlyBloodResultList);
+    // print(
+    //     "Data's retrieved agian : daily item ${dailyBloodResultList[0]} / ${dailyBloodResultList[dailyBloodResultList.length - 1]}");
     updateActivatedLineChart(1);
   }
 
@@ -399,8 +413,7 @@ class _HomePagePatientState extends State<HomePagePatient> {
       resp.patientTimer.patientId = widget.patientId;
       sendRequestToSavePatientTimer(resp.patientTimer);
       retrievePatientTimerData();
-      setState(() {
-      });
+      setState(() {});
     } else {
       String msg = "Patient Timer setup is cancelled";
       print(msg);

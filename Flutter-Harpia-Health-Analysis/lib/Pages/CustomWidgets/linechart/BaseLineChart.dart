@@ -1,33 +1,35 @@
+/*
 import 'dart:math';
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/linechart/data/BaseLineChartData.dart';
-import 'package:flutter_harpia_health_analysis/model/diesease/EnumBloodResultContent.dart';
-import 'package:flutter_harpia_health_analysis/util/ProductColor.dart';
 
-import '../../core/ResponsiveDesign.dart';
-import 'CheckBoxVisibleBloodResultContent.dart';
-import 'CustomLineChartDataDaily.dart';
+import '../../../core/ResponsiveDesign.dart';
+import '../../../model/diesease/EnumBloodResultContent.dart';
+import '../../../util/ProductColor.dart';
+import '../CheckBoxVisibleBloodResultContent.dart';
+import 'data/BaseLineChartData.dart';
 
-class LineChartDaily extends StatefulWidget {
+abstract class BaseLineChart extends StatefulWidget {
   late BaseLineChartData _baseLineChartData;
   late CheckBoxVisibleBloodResultContent _checkBoxVisibleBloodResultContent;
+  late LineChartData _lineChartData;
 
-  LineChartDaily(
-      {required BaseLineChartData baseLineChartData,
-      required CheckBoxVisibleBloodResultContent
-          checkBoxVisibleBloodResultContent}) {
+  BaseLineChart(
+      {required baseLineChartData,
+      required checkBoxVisibleBloodResultContent,
+      required lineChartData}) {
     _baseLineChartData = baseLineChartData;
     _checkBoxVisibleBloodResultContent = checkBoxVisibleBloodResultContent;
+    _lineChartData = lineChartData;
   }
 
   @override
-  State<LineChartDaily> createState() => _LineChartDailyState();
+  State<BaseLineChart> createState() => _BaseLineChartState();
 }
 
-class _LineChartDailyState extends State<LineChartDaily> {
+class _BaseLineChartState extends State<BaseLineChart> {
   late bool isVisibleBloodSugar;
   late bool isVisibleBloodPressure;
   late bool isVisibleCalcium;
@@ -61,7 +63,7 @@ class _LineChartDailyState extends State<LineChartDaily> {
                   padding: EdgeInsets.only(
                       right: ResponsiveDesign.getScreenWidth() / 10,
                       top: ResponsiveDesign.getScreenWidth() / 10),
-                  child: LineChart(lineChartData()),
+                  child: LineChart(widget._lineChartData),
                 ),
               )
             ],
@@ -244,3 +246,4 @@ class _LineChartDailyState extends State<LineChartDaily> {
     return Random().nextInt(100).toDouble() + val;
   }
 }
+*/
