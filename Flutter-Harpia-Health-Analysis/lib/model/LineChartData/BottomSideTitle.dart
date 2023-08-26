@@ -10,4 +10,9 @@ class BottomSideTitle {
   String get text => _text;
 
   int get index => _index;
+
+  @override
+  String toString() {
+    return 'BottomSideTitle{_index: $_index, _text: $_text}';
+  }
 }

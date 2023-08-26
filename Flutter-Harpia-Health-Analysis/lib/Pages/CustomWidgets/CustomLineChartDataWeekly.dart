@@ -1,3 +1,4 @@
+/*
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter_harpia_health_analysis/model/enums/linechart/bottomtitles/EnumLineChartBottomSideWeeklyTitles.dart';
 
@@ -103,3 +104,4 @@ class _BloodListSubItems {
 
   List<FlSpot> get bloodSugarResultListFlSpot => _bloodSugarResultListFlSpot;
 }
+*/

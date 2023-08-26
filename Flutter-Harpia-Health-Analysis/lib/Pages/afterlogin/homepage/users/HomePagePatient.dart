@@ -139,9 +139,9 @@ class _HomePagePatientState extends State<HomePagePatient> {
     _lineChartDataDaily= LineChartDataDaily(bloodResultList:dailyBloodResultList);
     _lineChartDataWeekly= LineChartDataWeekly(bloodResultList:weeklyBloodResultList);
     _lineChartDataMonthly= LineChartDataMonthly(bloodResultList:monthlyBloodResultList);
-    // print("DATA RETRIEVED dailyBloodResultList size :${dailyBloodResultList.length} ");
-    // print("DATA RETRIEVED weeklyBloodResultList size :${weeklyBloodResultList.length} ");
-    // print("DATA RETRIEVED monthlyBloodResultList size :${monthlyBloodResultList.length} ");
+    print("DATA RETRIEVED dailyBloodResultList size :${dailyBloodResultList.length} ");
+    print("DATA RETRIEVED weeklyBloodResultList size :${weeklyBloodResultList.length} ");
+    print("DATA RETRIEVED monthlyBloodResultList size :${monthlyBloodResultList.length} ");
 
     setState(() {
       isLoading = false;

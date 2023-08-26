@@ -11,20 +11,27 @@ class LineChartDataMonthly extends BaseLineChartData {
 
   @override
   void createBottomSideTitles() {
-    int monthlyTotalIndexValue = 180;
-    int day = now.day;
+
+    // print("---->  $rangeTotalIndexValue");
+    int monthlyTotalIndexValue = rangeTotalIndexValue;
+    double day = now.day.toDouble();
     int hour = now.hour;
-    int passedWeekCounter = (day / 7).toInt();
-    day %= 7;
+    double weekValue=30/4;
+    int passedWeekCounter = (day / weekValue).toInt();
+    day %= weekValue;
     double remainedTime = ((day * 24 + hour) / 24);
     int monthlyTitleLength = EnumLineChartBottomSideMonthlyTitles.values.length;
     for (int i = 0; i <= monthlyTitleLength; i++) {
-      bottomTitle.add(BottomSideTitle(
-          index: (monthlyTotalIndexValue - (remainedTime + ((i) * 6 * 7)))
+      BottomSideTitle bottomSideTitle =BottomSideTitle(
+          index: (monthlyTotalIndexValue - (remainedTime + ((i) * 6 * weekValue)))
               .toInt(), // test each 6 hours and one week is 7 days. ==> 6*7
           text: EnumLineChartBottomSideMonthlyTitles.getIndexName(
-              (passedWeekCounter - i) % monthlyTitleLength)));
+              (passedWeekCounter - i) % monthlyTitleLength));
+      print("bottomSidetitle : $bottomSideTitle");
+
+      bottomTitle.add(bottomSideTitle);
     }
+      print("bottomSidetitle : $bottomTitle");
   }
 
   @override
@@ -38,6 +45,13 @@ class LineChartDataMonthly extends BaseLineChartData {
     Duration diff = now.difference(itemCreatedAt);
     double diffHours = (rangeTotalIndexValue - diff.inHours / 4)
         .toDouble(); // each 4 hours, add a new bloodResult Data
+    print("MONTHLY rangeTotalIndexValue : $rangeTotalIndexValue");
+    print("MONTHLY diffHours : $diffHours");
+
+    /*   Duration diff = now.difference(itemCreatedAt);
+    double diffHours = (monthlyTotalIndexValue - diff.inHours / 4)
+        .toDouble(); // each 4 hours, add a new bloodResult Data
+    return diffHours;*/
     return diffHours;
   }
 

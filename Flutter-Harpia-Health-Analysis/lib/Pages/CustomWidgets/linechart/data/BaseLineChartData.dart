@@ -31,9 +31,9 @@ abstract class BaseLineChartData {
 
   // void setBloodListSubItemsFlSpotValue();
   void setBloodListSubItemsFlSpotValue() {
-    print("gelen bloodList.length : ${bloodResultList.length}");
+    // print("gelen bloodList.length : ${bloodResultList.length}");
     bloodListSubItemsFlSpot.bloodResultList.forEach((tmp) {
-      print("For each on item : ${tmp}");
+      // print("For each on item : ${tmp}");
       bloodListSubItemsFlSpot.bloodSugarList
           .add(getFlSpotOfItem(tmp.bloodSugar, tmp.createdAt));
       bloodListSubItemsFlSpot.bloodPressureList
@@ -43,9 +43,9 @@ abstract class BaseLineChartData {
       bloodListSubItemsFlSpot.calciumList
           .add(getFlSpotOfItem(tmp.calcium, tmp.createdAt));
     });
-    print("bloodListSubItemsFlSpot.bloodSugarList  :");
+    // print("bloodListSubItemsFlSpot.bloodSugarList  :");
     bloodListSubItemsFlSpot.bloodSugarList.forEach((element) {
-      print("elemtn : $element");
+      // print("elemtn : $element");
     });
   }
 

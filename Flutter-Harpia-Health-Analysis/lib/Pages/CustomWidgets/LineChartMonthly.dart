@@ -76,7 +76,7 @@ class _LineChartMonthlyState extends State<LineChartMonthly> {
     return LineChartData(
         borderData: FlBorderData(border: Border.all(color: Colors.white)),
         minX: -1,
-        maxX: 168,
+        maxX: 180,
         minY: -1,
         maxY: 200,
         gridData: FlGridData(

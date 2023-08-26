@@ -52,6 +52,8 @@ class LineChartDataDaily extends BaseLineChartData {
   double getItemFlSpotXValue({required DateTime itemCreatedAt}) {
     Duration diff = now.difference(itemCreatedAt);
     double diffMinutes = rangeTotalIndexValue - diff.inMinutes / 10;
+    print("DAILY rangeTotalIndexValue : $rangeTotalIndexValue");
+    print("DAILY diffMinutes : $diffMinutes");
     return diffMinutes;
   }
 

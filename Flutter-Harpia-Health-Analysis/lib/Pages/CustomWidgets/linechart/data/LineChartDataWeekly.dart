@@ -37,6 +37,8 @@ class LineChartDataWeekly extends BaseLineChartData {
   double getItemFlSpotXValue({required DateTime itemCreatedAt}) {
     Duration diff = now.difference(itemCreatedAt);
     double diffHours = (rangeTotalIndexValue - diff.inHours).toDouble();
+    print("WEEKLY rangeTotalIndexValue : $rangeTotalIndexValue");
+    print("WEEKLY diffHours : $diffHours");
     return diffHours;
   }
 
