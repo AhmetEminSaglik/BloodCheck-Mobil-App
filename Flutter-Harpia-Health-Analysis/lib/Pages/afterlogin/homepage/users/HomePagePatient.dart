@@ -5,8 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/LineChartEmpty.dart';
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/LineChartMonthly.dart';
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/LineChartWeekly.dart';
-import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/linechart/data/BaseLineChartData.dart';
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/linechart/data/LineChartDataDaily.dart';
+import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/linechart/data/LineChartDataMonthly.dart';
+import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/linechart/data/LineChartDataWeekly.dart';
 import 'package:flutter_harpia_health_analysis/core/ResponsiveDesign.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestDoctor.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestPatient.dart';
@@ -24,8 +25,7 @@ import '../../../../util/PermissionUtils.dart';
 import '../../../../util/ProductColor.dart';
 import '../../../CustomWidgets/LineChartDaily.dart';
 import '../../../CustomWidgets/CheckBoxVisibleBloodResultContent.dart';
-import '../../../CustomWidgets/linechart/data/LineChartDataMonthly.dart';
-import '../../../CustomWidgets/linechart/data/LineChartDataWeekly.dart';
+import '../../../CustomWidgets/linechart/data/BaseLineChartData.dart';
 import '../appbar/AppBarCubit.dart';
 
 class HomePagePatient extends StatefulWidget {
@@ -44,7 +44,7 @@ class HomePagePatient extends StatefulWidget {
 class _HomePagePatientState extends State<HomePagePatient> {
   LineChartEmpty lineChartEmpty = LineChartEmpty();
   StatefulWidget? activatedLineChartWidget;
-  late BaseLineChartData _baseLineChartData;
+  late BaseLineChartPreData _baseLineChartPreData;
   bool visibleAppBar =
       PermissionUtils.letRunForAdmin() || PermissionUtils.letRunForDoctor();
   bool visiblePatientTimer = PermissionUtils.letRunForDoctor();
@@ -57,9 +57,9 @@ class _HomePagePatientState extends State<HomePagePatient> {
   // bool listDataIsEmpty = false;
   final CheckBoxVisibleBloodResultContent _checkBoxVisibleBloodResultContent =
       CheckBoxVisibleBloodResultContent();
-  late BaseLineChartData _lineChartDataDaily;
-  late BaseLineChartData _lineChartDataWeekly;
-  late BaseLineChartData _lineChartDataMonthly;
+  late BaseLineChartPreData _lineChartDataDaily;
+  late BaseLineChartPreData _lineChartDataWeekly;
+  late BaseLineChartPreData _lineChartDataMonthly;
 
   void updateActivatedLineChart(int selectedRadioValue) {
     print("ILK GIRIS : $selectedRadioValue}");
@@ -67,22 +67,22 @@ class _HomePagePatientState extends State<HomePagePatient> {
       case 1:
         if (!assignEmptyLineChart(dailyBloodResultList)) {
           activatedLineChartWidget = LineChartDaily(
-            baseLineChartData: _lineChartDataDaily,
+            baseLineChartPreData: _lineChartDataDaily,
             checkBoxVisibleBloodResultContent:
                 _checkBoxVisibleBloodResultContent,
           );
         }
-        // _baseLineChartData =
+        // _baseLineChartPreData =
         //     LineChartDataDaily2(bloodResultList: dailyBloodResultList);
         //
-        // print("DAILY  : $_baseLineChartData");
+        // print("DAILY  : $_baseLineChartPreData");
         // print("dailyBloodResultList : ${dailyBloodResultList.length}");
 
         break;
       case 2:
         if (!assignEmptyLineChart(weeklyBloodResultList)) {
           activatedLineChartWidget = LineChartWeekly(
-            baseLineChartData: _lineChartDataWeekly,
+            baseLineChartPreData: _lineChartDataWeekly,
             checkBoxVisibleBloodResultContent:
                 _checkBoxVisibleBloodResultContent,
           );
@@ -91,7 +91,7 @@ class _HomePagePatientState extends State<HomePagePatient> {
       case 3:
         if (!assignEmptyLineChart(monthlyBloodResultList)) {
           activatedLineChartWidget = LineChartMonthly(
-              baseLineChartData: _lineChartDataMonthly,
+              baseLineChartPreData: _lineChartDataMonthly,
               checkBoxVisibleBloodResultContent:
                   _checkBoxVisibleBloodResultContent);
         }
@@ -136,9 +136,9 @@ class _HomePagePatientState extends State<HomePagePatient> {
     monthlyBloodResultList =
         await HttpRequestBloodResult.getMonthlyBloodResult(widget.patientId);
 
-    _lineChartDataDaily= LineChartDataDaily(bloodResultList:dailyBloodResultList);
-    _lineChartDataWeekly= LineChartDataWeekly(bloodResultList:weeklyBloodResultList);
-    _lineChartDataMonthly= LineChartDataMonthly(bloodResultList:monthlyBloodResultList);
+    _lineChartDataDaily= LineChartPreDataDaily(bloodResultList:dailyBloodResultList);
+    _lineChartDataWeekly= LineChartPreDataWeekly(bloodResultList:weeklyBloodResultList);
+    _lineChartDataMonthly= LineChartPreDataMonthly(bloodResultList:monthlyBloodResultList);
     print("DATA RETRIEVED dailyBloodResultList size :${dailyBloodResultList.length} ");
     print("DATA RETRIEVED weeklyBloodResultList size :${weeklyBloodResultList.length} ");
     print("DATA RETRIEVED monthlyBloodResultList size :${monthlyBloodResultList.length} ");
@@ -270,20 +270,20 @@ class _HomePagePatientState extends State<HomePagePatient> {
                                                 // Column(children: checkBoxBloodResultContents,), I dont understand why checkbox is not working in this way.
                                                 getCheckboxBloodResultItem(
                                                   bloodResultSubItemCheckbox:
-                                                      _checkBoxVisibleBloodResultContent
-                                                              .subItemMap[
-                                                          EnumBloodResultContent
-                                                              .BLOOD_PRESSURE
-                                                              .name]!,
+                                                  _checkBoxVisibleBloodResultContent
+                                                      .subItemMap[
+                                                  EnumBloodResultContent
+                                                      .BLOOD_PRESSURE
+                                                      .name]!,
                                                   itemColor: ProductColor
                                                       .fLSpotColorBloodPressure,
                                                 ),
                                                 getCheckboxBloodResultItem(
                                                   bloodResultSubItemCheckbox:
-                                                      _checkBoxVisibleBloodResultContent
-                                                              .subItemMap[
-                                                          EnumBloodResultContent
-                                                              .MAGNESIUM.name]!,
+                                                  _checkBoxVisibleBloodResultContent
+                                                      .subItemMap[
+                                                  EnumBloodResultContent
+                                                      .MAGNESIUM.name]!,
                                                   itemColor: ProductColor
                                                       .fLSpotColorMagnesium,
                                                 ),

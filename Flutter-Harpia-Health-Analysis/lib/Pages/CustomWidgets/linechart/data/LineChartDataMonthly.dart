@@ -1,43 +1,34 @@
-import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/linechart/data/BaseLineChartData.dart';
-
 import '../../../../model/LineChartData/BottomSideTitle.dart';
 import '../../../../model/enums/linechart/bottomtitles/EnumLineChartBottomSideMonthlyTitles.dart';
-import '../../../../model/enums/linechart/bottomtitles/EnumLineChartBottomSideTitles.dart';
-import '../../../../model/enums/linechart/bottomtitles/EnumLineChartBottomSideWeeklyTitles.dart';
+import 'BaseLineChartData.dart';
 
-class LineChartDataMonthly extends BaseLineChartData {
-  LineChartDataMonthly({required super.bloodResultList})
+class LineChartPreDataMonthly extends BaseLineChartPreData {
+  LineChartPreDataMonthly({required super.bloodResultList})
       : super(rangeTotalIndexValue: 180);
 
   @override
   void createBottomSideTitles() {
-
     // print("---->  $rangeTotalIndexValue");
     int monthlyTotalIndexValue = rangeTotalIndexValue;
     double day = now.day.toDouble();
     int hour = now.hour;
-    double weekValue=30/4;
+    double weekValue = 30 / 4;
     int passedWeekCounter = (day / weekValue).toInt();
     day %= weekValue;
     double remainedTime = ((day * 24 + hour) / 24);
     int monthlyTitleLength = EnumLineChartBottomSideMonthlyTitles.values.length;
     for (int i = 0; i <= monthlyTitleLength; i++) {
-      BottomSideTitle bottomSideTitle =BottomSideTitle(
-          index: (monthlyTotalIndexValue - (remainedTime + ((i) * 6 * weekValue)))
-              .toInt(), // test each 6 hours and one week is 7 days. ==> 6*7
+      bottomTitle.add(BottomSideTitle(
+          index:(monthlyTotalIndexValue - (remainedTime + ((i) * 6 * weekValue))).toInt(), // test each 6 hours and one week is 7 days. ==> 6*7
           text: EnumLineChartBottomSideMonthlyTitles.getIndexName(
-              (passedWeekCounter - i) % monthlyTitleLength));
-      print("bottomSidetitle : $bottomSideTitle");
-
-      bottomTitle.add(bottomSideTitle);
+              (passedWeekCounter - i) % monthlyTitleLength)));
     }
-      print("bottomSidetitle : $bottomTitle");
   }
 
   @override
   String toString() {
     // TODO: implement toString
-    return "LineChartDataMonthly";
+    return "LineChartPreDataMonthly";
   }
 
   @override

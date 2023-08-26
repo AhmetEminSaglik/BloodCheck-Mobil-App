@@ -4,14 +4,14 @@ import 'package:flutter_harpia_health_analysis/model/LineChartData/BottomSideTit
 import '../../../../model/LineChartData/BloodListSubItemsFlSpot.dart';
 import '../../../../model/diesease/BloodResult.dart';
 
-abstract class BaseLineChartData {
+abstract class BaseLineChartPreData {
   List<BloodResult> _bloodResultList = [];
   late BloodListSubItemsFlSpot _bloodListSubItemsFlSpot;
   List<BottomSideTitle> bottomTitle = [];
   DateTime now = DateTime.now(); //.subtract(Duration(hours:));
   late int _rangeTotalIndexValue;
 
-  BaseLineChartData(
+  BaseLineChartPreData(
       {required List<BloodResult> bloodResultList,
       required int rangeTotalIndexValue}) {
     _rangeTotalIndexValue = rangeTotalIndexValue;
@@ -78,7 +78,7 @@ abstract class BaseLineChartData {
   @override
   String toString() {
     // TODO: implement toString
-    return "BaseLineChartData  :";
+    return "BaseLineChartPreData  :";
   }
 
 /*void _createDailyBottomSideTitles() {

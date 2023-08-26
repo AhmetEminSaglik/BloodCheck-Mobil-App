@@ -3,24 +3,21 @@ import 'dart:math';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/CustomLineChartDataWeekly.dart';
 import 'package:flutter_harpia_health_analysis/model/diesease/EnumBloodResultContent.dart';
 import 'package:flutter_harpia_health_analysis/util/ProductColor.dart';
-
 import '../../core/ResponsiveDesign.dart';
 import 'CheckBoxVisibleBloodResultContent.dart';
-import 'CustomLineChartDataDaily.dart';
 import 'linechart/data/BaseLineChartData.dart';
 
 class LineChartWeekly extends StatefulWidget {
-  late BaseLineChartData _baseLineChartData;
+  late BaseLineChartPreData _baseLineChartPreData;
   late CheckBoxVisibleBloodResultContent _checkBoxVisibleBloodResultContent;
 
   LineChartWeekly(
-      {required BaseLineChartData baseLineChartData,
+      {required BaseLineChartPreData baseLineChartPreData,
       required CheckBoxVisibleBloodResultContent
           checkBoxVisibleBloodResultContent}) {
-    _baseLineChartData = baseLineChartData;
+    _baseLineChartPreData = baseLineChartPreData;
     _checkBoxVisibleBloodResultContent = checkBoxVisibleBloodResultContent;
   }
 
@@ -145,7 +142,7 @@ class _LineChartWeeklyState extends State<LineChartWeekly> {
     //   print("bloodSugar SPot : ${spotsBloodSugar[i]}");
     // }
     for (FlSpot tmp
-        in widget._baseLineChartData.bloodListSubItemsFlSpot.bloodSugarList) {
+        in widget._baseLineChartPreData.bloodListSubItemsFlSpot.bloodSugarList) {
       spotsBloodSugar.add(tmp);
     }
 
@@ -156,7 +153,7 @@ class _LineChartWeeklyState extends State<LineChartWeekly> {
   LineChartBarData _getBloodPressureLineChartBarData() {
     List<FlSpot> spotsBloodPressure = [];
     for (FlSpot tmp in widget
-        ._baseLineChartData.bloodListSubItemsFlSpot.bloodPressureList) {
+        ._baseLineChartPreData.bloodListSubItemsFlSpot.bloodPressureList) {
       spotsBloodPressure.add(tmp);
     }
 
@@ -168,7 +165,7 @@ class _LineChartWeeklyState extends State<LineChartWeekly> {
   LineChartBarData _getMagnesiumLineChartBarData() {
     List<FlSpot> spotsBloodPressure = [];
     for (FlSpot tmp
-        in widget._baseLineChartData.bloodListSubItemsFlSpot.magnesiumList) {
+        in widget._baseLineChartPreData.bloodListSubItemsFlSpot.magnesiumList) {
       spotsBloodPressure.add(tmp);
     }
 
@@ -180,7 +177,7 @@ class _LineChartWeeklyState extends State<LineChartWeekly> {
   LineChartBarData _getCalciumLineChartBarData() {
     List<FlSpot> spotsBloodPressure = [];
     for (FlSpot tmp
-        in widget._baseLineChartData.bloodListSubItemsFlSpot.calciumList) {
+        in widget._baseLineChartPreData.bloodListSubItemsFlSpot.calciumList) {
       spotsBloodPressure.add(tmp);
     }
 
@@ -203,10 +200,10 @@ class _LineChartWeeklyState extends State<LineChartWeekly> {
     // widget._customLineChartData.dailyBottomTitle[0].index;
     String text = "";
     for (int i = 0;
-        i < widget._baseLineChartData.bottomTitle.length;
+        i < widget._baseLineChartPreData.bottomTitle.length;
         i++) {
-      if (value == widget._baseLineChartData.bottomTitle[i].index) {
-        text = widget._baseLineChartData.bottomTitle[i].text;
+      if (value == widget._baseLineChartPreData.bottomTitle[i].index) {
+        text = widget._baseLineChartPreData.bottomTitle[i].text;
         break;
       }
     }

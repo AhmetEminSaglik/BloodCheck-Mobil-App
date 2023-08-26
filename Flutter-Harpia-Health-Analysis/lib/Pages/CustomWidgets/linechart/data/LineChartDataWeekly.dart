@@ -1,11 +1,9 @@
-import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/linechart/data/BaseLineChartData.dart';
-
 import '../../../../model/LineChartData/BottomSideTitle.dart';
-import '../../../../model/enums/linechart/bottomtitles/EnumLineChartBottomSideTitles.dart';
 import '../../../../model/enums/linechart/bottomtitles/EnumLineChartBottomSideWeeklyTitles.dart';
+import 'BaseLineChartData.dart';
 
-class LineChartDataWeekly extends BaseLineChartData {
-  LineChartDataWeekly({required super.bloodResultList})
+class LineChartPreDataWeekly extends BaseLineChartPreData {
+  LineChartPreDataWeekly({required super.bloodResultList})
       : super(rangeTotalIndexValue: 168);
 
   @override
@@ -30,7 +28,7 @@ class LineChartDataWeekly extends BaseLineChartData {
   @override
   String toString() {
     // TODO: implement toString
-    return "LineChartDataWeekly";
+    return "LineChartPreDataWeekly";
   }
 
   @override

@@ -12,14 +12,14 @@ import 'CheckBoxVisibleBloodResultContent.dart';
 import 'CustomLineChartDataDaily.dart';
 
 class LineChartDaily extends StatefulWidget {
-  late BaseLineChartData _baseLineChartData;
+  late BaseLineChartPreData _baseLineChartPreData;
   late CheckBoxVisibleBloodResultContent _checkBoxVisibleBloodResultContent;
 
   LineChartDaily(
-      {required BaseLineChartData baseLineChartData,
+      {required BaseLineChartPreData baseLineChartPreData,
       required CheckBoxVisibleBloodResultContent
           checkBoxVisibleBloodResultContent}) {
-    _baseLineChartData = baseLineChartData;
+    _baseLineChartPreData = baseLineChartPreData;
     _checkBoxVisibleBloodResultContent = checkBoxVisibleBloodResultContent;
   }
 
@@ -56,7 +56,7 @@ class _LineChartDailyState extends State<LineChartDaily> {
           child: Column(
             children: [
               AspectRatio(
-                aspectRatio: 1.40,
+                aspectRatio: 1.30,
                 child: Padding(
                   padding: EdgeInsets.only(
                       right: ResponsiveDesign.getScreenWidth() / 10,
@@ -128,7 +128,7 @@ class _LineChartDailyState extends State<LineChartDaily> {
     List<FlSpot> spotsBloodSugar = [];
     for (FlSpot tmp in widget
         // ._customLineChartData.bloodListSubItems.bloodSugarResultListFlSpot) {
-        ._baseLineChartData
+        ._baseLineChartPreData
         .bloodListSubItemsFlSpot
         .bloodSugarList) {
       spotsBloodSugar.add(tmp);
@@ -142,7 +142,7 @@ class _LineChartDailyState extends State<LineChartDaily> {
     List<FlSpot> spotsBloodPressure = [];
     for (FlSpot tmp in widget
         // ._customLineChartData.bloodListSubItems.bloodPressureResultListFlSpot) {
-        ._baseLineChartData
+        ._baseLineChartPreData
         .bloodListSubItemsFlSpot
         .bloodPressureList) {
       spotsBloodPressure.add(tmp);
@@ -157,7 +157,7 @@ class _LineChartDailyState extends State<LineChartDaily> {
     List<FlSpot> spotsBloodPressure = [];
     for (FlSpot tmp in widget
         // ._customLineChartData.bloodListSubItems.magnesiumResultListFlSpot) {
-        ._baseLineChartData
+        ._baseLineChartPreData
         .bloodListSubItemsFlSpot
         .magnesiumList) {
       spotsBloodPressure.add(tmp);
@@ -172,7 +172,7 @@ class _LineChartDailyState extends State<LineChartDaily> {
     List<FlSpot> spotsBloodPressure = [];
     for (FlSpot tmp in widget
         // ._customLineChartData.bloodListSubItems.calciumResultListFlSpot) {
-        ._baseLineChartData
+        ._baseLineChartPreData
         .bloodListSubItemsFlSpot
         .calciumList) {
       // print("gelen calcium degeri : $tmp}");
@@ -196,9 +196,9 @@ class _LineChartDailyState extends State<LineChartDaily> {
 
   Widget bottomTiles(double value, TitleMeta meta) {
     String text = "";
-    for (int i = 0; i < widget._baseLineChartData.bottomTitle.length; i++) {
-      if (value == widget._baseLineChartData.bottomTitle[i].index) {
-        text = widget._baseLineChartData.bottomTitle[i].text;
+    for (int i = 0; i < widget._baseLineChartPreData.bottomTitle.length; i++) {
+      if (value == widget._baseLineChartPreData.bottomTitle[i].index) {
+        text = widget._baseLineChartPreData.bottomTitle[i].text;
         break;
       }
     }
