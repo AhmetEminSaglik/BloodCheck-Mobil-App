@@ -181,7 +181,7 @@ public class FakeSensors {
 //        fcmData.setMsgTitle("DANGEROUS : Some Blood Result is too LOW");
         String textDangerous = "DANGEROUS";
         textDangerous = fcmNotificationService.generateTextWithHtmlColor(textDangerous, Color.BLUE);
-        fcmData.setMsgTitle(textDangerous + "-LOW-Blood-Result");
+        fcmData.setMsgTitle(textDangerous + " - LOW");
         fcmData.setMsg(text);
         fcmData.setUrl("https://cdn-icons-png.flaticon.com/512/504/504276.png");
 
@@ -202,7 +202,7 @@ public class FakeSensors {
         textDangerous = fcmNotificationService.generateTextWithHtmlColor(textDangerous, Color.RED);
 
         FcmData fcmData = new FcmData();
-        fcmData.setMsgTitle(textDangerous + "-HIGH-Blood-Result");
+        fcmData.setMsgTitle(textDangerous + " - HIGH");
         fcmData.setMsg(text);
         fcmData.setUrl("https://cdn-icons-png.flaticon.com/512/504/504276.png");
 

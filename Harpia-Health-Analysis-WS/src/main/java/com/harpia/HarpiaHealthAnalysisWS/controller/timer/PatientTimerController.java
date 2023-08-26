@@ -17,7 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/timers/doctors/patients")
+//@RequestMapping("/timers/doctors/patients")
+@RequestMapping("/timers")
 @CrossOrigin
 public class PatientTimerController {
     private static CustomLog log = new CustomLog(PatientTimerController.class);
@@ -46,7 +47,7 @@ public class PatientTimerController {
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/patients/{id}")
     public ResponseEntity<DataResult<PatientTimer>> findPatientTimerByPatientId(@PathVariable long id) {
         PatientTimer timer = service.findByPatientId(id);
         String msg = "PatientTimer belongs to Patient ID " + id + " is retrived";
