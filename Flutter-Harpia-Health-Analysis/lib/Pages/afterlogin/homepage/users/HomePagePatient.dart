@@ -2,9 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/LineChartEmpty.dart';
-import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/LineChartMonthly.dart';
-import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/LineChartWeekly.dart';
+import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/linechart/LineChartDaily.dart';
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/linechart/predata/LineChartPreDataDaily.dart';
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/linechart/predata/LineChartPreDataMonthly.dart';
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/linechart/predata/LineChartPreDataWeekly.dart';
@@ -23,8 +21,9 @@ import '../../../../util/CustomAlertDialog.dart';
 import '../../../../util/CustomSnackBar.dart';
 import '../../../../util/PermissionUtils.dart';
 import '../../../../util/ProductColor.dart';
-import '../../../CustomWidgets/LineChartDaily.dart';
 import '../../../CustomWidgets/CheckBoxVisibleBloodResultContent.dart';
+import '../../../CustomWidgets/linechart/BaseLineChart.dart';
+import '../../../CustomWidgets/linechart/LineChartWeekly.dart';
 import '../../../CustomWidgets/linechart/predata/BaseLineChartPreData.dart';
 import '../appbar/AppBarCubit.dart';
 
@@ -42,9 +41,12 @@ class HomePagePatient extends StatefulWidget {
 }
 
 class _HomePagePatientState extends State<HomePagePatient> {
-  LineChartEmpty lineChartEmpty = LineChartEmpty();
-  StatefulWidget? activatedLineChartWidget;
-  late BaseLineChartPreData _baseLineChartPreData;
+  // LineChartEmpty lineChartEmpty = LineChartEmpty();
+
+  // StatefulWidget? activatedLineChartWidget;
+  late BaseLineChart activatedBaseLineChart;
+
+  // late BaseLineChartPreData _baseLineChartPreData;
   bool visibleAppBar =
       PermissionUtils.letRunForAdmin() || PermissionUtils.letRunForDoctor();
   bool visiblePatientTimer = PermissionUtils.letRunForDoctor();
@@ -53,25 +55,33 @@ class _HomePagePatientState extends State<HomePagePatient> {
   List<BloodResult> weeklyBloodResultList = [];
   List<BloodResult> monthlyBloodResultList = [];
   PatientTimer patientTimer = PatientTimer();
+  double aspectRadio = 1.50;
 
   // bool listDataIsEmpty = false;
   final CheckBoxVisibleBloodResultContent _checkBoxVisibleBloodResultContent =
       CheckBoxVisibleBloodResultContent();
-  late BaseLineChartPreData _lineChartDataDaily;
-  late BaseLineChartPreData _lineChartDataWeekly;
-  late BaseLineChartPreData _lineChartDataMonthly;
+  late BaseLineChartPreData _lineChartPreDataDaily;
+  late BaseLineChartPreData _lineChartPreDataWeekly;
+  late BaseLineChartPreData _lineChartPreDataMonthly;
 
   void updateActivatedLineChart(int selectedRadioValue) {
     print("ILK GIRIS : $selectedRadioValue}");
     switch (selectedRadioValue) {
       case 1:
+        activatedBaseLineChart = LineChartDaily(
+            baseLineChartPreData: _lineChartPreDataDaily,
+            checkBoxVisibleBloodResultContent:
+                _checkBoxVisibleBloodResultContent,
+            aspectRadio: aspectRadio);
+        print("AES updateActivatedLineChart GELDI $activatedBaseLineChart");
+        /*TODO burasi statelesswidget olarak eklencek
         if (!assignEmptyLineChart(dailyBloodResultList)) {
           activatedLineChartWidget = LineChartDaily(
             baseLineChartPreData: _lineChartDataDaily,
             checkBoxVisibleBloodResultContent:
                 _checkBoxVisibleBloodResultContent,
           );
-        }
+        }*/
         // _baseLineChartPreData =
         //     LineChartDataDaily2(bloodResultList: dailyBloodResultList);
         //
@@ -80,24 +90,38 @@ class _HomePagePatientState extends State<HomePagePatient> {
 
         break;
       case 2:
-        if (!assignEmptyLineChart(weeklyBloodResultList)) {
+        activatedBaseLineChart = LineChartWeekly(
+            baseLineChartPreData: _lineChartPreDataWeekly,
+            checkBoxVisibleBloodResultContent:
+                _checkBoxVisibleBloodResultContent,
+            aspectRadio: aspectRadio);
+        // print("AES updateActivatedLineChart GELDI $activatedBaseLineChart");
+        /*    TODO burasi statelesswidget olarak eklencek
+           if (!assignEmptyLineChart(weeklyBloodResultList)) {
           activatedLineChartWidget = LineChartWeekly(
             baseLineChartPreData: _lineChartDataWeekly,
             checkBoxVisibleBloodResultContent:
                 _checkBoxVisibleBloodResultContent,
           );
-        }
+        }*/
         break;
       case 3:
-        if (!assignEmptyLineChart(monthlyBloodResultList)) {
+        activatedBaseLineChart = LineChartWeekly(
+            baseLineChartPreData: _lineChartPreDataMonthly,
+            checkBoxVisibleBloodResultContent:
+                _checkBoxVisibleBloodResultContent,
+            aspectRadio: aspectRadio);
+        /*TODO burasi statelesswidget olarak eklencek
+      if (!assignEmptyLineChart(monthlyBloodResultList)) {
           activatedLineChartWidget = LineChartMonthly(
               baseLineChartPreData: _lineChartDataMonthly,
               checkBoxVisibleBloodResultContent:
                   _checkBoxVisibleBloodResultContent);
-        }
+        }*/
         break;
       case 4:
-        activatedLineChartWidget = null;
+        /*TODO burasi statelesswidget olarak eklencek
+          activatedLineChartWidget = null;*/
         break;
     }
     setState(() {});
@@ -105,7 +129,8 @@ class _HomePagePatientState extends State<HomePagePatient> {
 
   bool assignEmptyLineChart(List list) {
     if (list.isEmpty) {
-      activatedLineChartWidget = lineChartEmpty;
+      /*TODO burasi statelesswidget olarak eklencek
+      activatedLineChartWidget = lineChartEmpty;*/
       // listDataIsEmpty = true;
       return true;
     }
@@ -119,7 +144,7 @@ class _HomePagePatientState extends State<HomePagePatient> {
     super.initState();
     retrieveBloodResultData();
     retrievePatientTimerData();
-    activatedLineChartWidget = lineChartEmpty;
+    //  activatedLineChartWidget = lineChartEmpty;
   }
 
   void retrievePatientTimerData() async {
@@ -128,7 +153,7 @@ class _HomePagePatientState extends State<HomePagePatient> {
   }
 
   void retrieveBloodResultData() async {
-    // print("DATA RETRIEVED patient Id : ${widget.patientId}");
+    print("DATA RETRIEVED patient Id : ${widget.patientId}");
     dailyBloodResultList =
         await HttpRequestBloodResult.getDailyBloodResult(widget.patientId);
     weeklyBloodResultList =
@@ -136,12 +161,19 @@ class _HomePagePatientState extends State<HomePagePatient> {
     monthlyBloodResultList =
         await HttpRequestBloodResult.getMonthlyBloodResult(widget.patientId);
 
-    _lineChartDataDaily= LineChartPreDataDaily(bloodResultList:dailyBloodResultList);
-    _lineChartDataWeekly= LineChartPreDataWeekly(bloodResultList:weeklyBloodResultList);
-    _lineChartDataMonthly= LineChartPreDataMonthly(bloodResultList:monthlyBloodResultList);
-    print("DATA RETRIEVED dailyBloodResultList size :${dailyBloodResultList.length} ");
-    print("DATA RETRIEVED weeklyBloodResultList size :${weeklyBloodResultList.length} ");
-    print("DATA RETRIEVED monthlyBloodResultList size :${monthlyBloodResultList.length} ");
+    _lineChartPreDataDaily =
+        LineChartPreDataDaily(bloodResultList: dailyBloodResultList);
+    _lineChartPreDataWeekly =
+        LineChartPreDataWeekly(bloodResultList: weeklyBloodResultList);
+    _lineChartPreDataMonthly =
+        LineChartPreDataMonthly(bloodResultList: monthlyBloodResultList);
+    print(
+        "DATA RETRIEVED dailyBloodResultList size :${dailyBloodResultList.length} ");
+    print(
+        "DATA RETRIEVED weeklyBloodResultList size :${weeklyBloodResultList.length} ");
+    print(
+        "DATA RETRIEVED monthlyBloodResultList size :${monthlyBloodResultList.length} ");
+    updateActivatedLineChart(1);
 
     setState(() {
       isLoading = false;
@@ -156,7 +188,6 @@ class _HomePagePatientState extends State<HomePagePatient> {
     //     CustomLineChartDataMonthly(bloodListData: monthlyBloodResultList);
     // print(
     //     "Data's retrieved agian : daily item ${dailyBloodResultList[0]} / ${dailyBloodResultList[dailyBloodResultList.length - 1]}");
-    updateActivatedLineChart(1);
   }
 
   bool showBloodSugar = true;
@@ -270,20 +301,20 @@ class _HomePagePatientState extends State<HomePagePatient> {
                                                 // Column(children: checkBoxBloodResultContents,), I dont understand why checkbox is not working in this way.
                                                 getCheckboxBloodResultItem(
                                                   bloodResultSubItemCheckbox:
-                                                  _checkBoxVisibleBloodResultContent
-                                                      .subItemMap[
-                                                  EnumBloodResultContent
-                                                      .BLOOD_PRESSURE
-                                                      .name]!,
+                                                      _checkBoxVisibleBloodResultContent
+                                                              .subItemMap[
+                                                          EnumBloodResultContent
+                                                              .BLOOD_PRESSURE
+                                                              .name]!,
                                                   itemColor: ProductColor
                                                       .fLSpotColorBloodPressure,
                                                 ),
                                                 getCheckboxBloodResultItem(
                                                   bloodResultSubItemCheckbox:
-                                                  _checkBoxVisibleBloodResultContent
-                                                      .subItemMap[
-                                                  EnumBloodResultContent
-                                                      .MAGNESIUM.name]!,
+                                                      _checkBoxVisibleBloodResultContent
+                                                              .subItemMap[
+                                                          EnumBloodResultContent
+                                                              .MAGNESIUM.name]!,
                                                   itemColor: ProductColor
                                                       .fLSpotColorMagnesium,
                                                 ),
@@ -305,7 +336,8 @@ class _HomePagePatientState extends State<HomePagePatient> {
                                 // width: 500,
                                 // height: 500,
                                 // color: Colors.red,
-                                child: activatedLineChartWidget ??
+                                // child: activatedLineChartWidget ??
+                                child: activatedBaseLineChart ??
                                     Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,

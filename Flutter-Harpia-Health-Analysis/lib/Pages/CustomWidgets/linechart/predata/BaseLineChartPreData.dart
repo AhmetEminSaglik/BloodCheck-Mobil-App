@@ -6,7 +6,7 @@ import '../../../../model/diesease/BloodResult.dart';
 
 abstract class BaseLineChartPreData {
   List<BloodResult> _bloodResultList = [];
-  late BloodListSubItemsFlSpot _bloodListSubItemsFlSpot;
+  BloodListSubItemsFlSpot _bloodListSubItemsFlSpot=BloodListSubItemsFlSpot(bloodResultList: []);
   List<BottomSideTitle> bottomTitle = [];
   DateTime now = DateTime.now(); //.subtract(Duration(hours:));
   late int _rangeTotalIndexValue;

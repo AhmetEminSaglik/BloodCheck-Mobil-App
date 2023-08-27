@@ -1,47 +1,67 @@
-import 'dart:math';
-
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/linechart/predata/BaseLineChartPreData.dart';
-import 'package:flutter_harpia_health_analysis/model/diesease/EnumBloodResultContent.dart';
-import 'package:flutter_harpia_health_analysis/util/ProductColor.dart';
 
-import '../../core/ResponsiveDesign.dart';
-import 'CheckBoxVisibleBloodResultContent.dart';
-import 'delete/CustomLineChartDataDaily.dart';
+import '../../../core/ResponsiveDesign.dart';
+import '../../../model/diesease/EnumBloodResultContent.dart';
+import '../../../util/ProductColor.dart';
+import '../CheckBoxVisibleBloodResultContent.dart';
 
-class LineChartDailyOld extends StatefulWidget {
+abstract class BaseLineChart extends StatelessWidget {
+  late double _aspectRadio;
   late BaseLineChartPreData _baseLineChartPreData;
   late CheckBoxVisibleBloodResultContent _checkBoxVisibleBloodResultContent;
 
-  LineChartDailyOld(
-      {required BaseLineChartPreData baseLineChartPreData,
-      required CheckBoxVisibleBloodResultContent
-          checkBoxVisibleBloodResultContent}) {
-    _baseLineChartPreData = baseLineChartPreData;
-    _checkBoxVisibleBloodResultContent = checkBoxVisibleBloodResultContent;
-  }
-
-  @override
-  State<LineChartDailyOld> createState() => _LineChartDailyOldState();
-}
-
-class _LineChartDailyOldState extends State<LineChartDailyOld> {
   late bool isVisibleBloodSugar;
   late bool isVisibleBloodPressure;
   late bool isVisibleCalcium;
   late bool isVisibleMagnesium;
+  bool _showFlDotData = false;
+
+  BaseLineChart(
+      {required BaseLineChartPreData baseLineChartPreData,
+      required CheckBoxVisibleBloodResultContent
+          checkBoxVisibleBloodResultContent,
+      double aspectRadio = 1.40}) {
+    _baseLineChartPreData = baseLineChartPreData;
+    _checkBoxVisibleBloodResultContent = checkBoxVisibleBloodResultContent;
+    _aspectRadio = aspectRadio;
+  }
 
   void updateVisibleValues() {
-    isVisibleBloodSugar = widget._checkBoxVisibleBloodResultContent
+    isVisibleBloodSugar = _checkBoxVisibleBloodResultContent
         .subItemMap[EnumBloodResultContent.BLOOD_SUGAR.name]!.showContent;
-    isVisibleBloodPressure = widget._checkBoxVisibleBloodResultContent
+    isVisibleBloodPressure = _checkBoxVisibleBloodResultContent
         .subItemMap[EnumBloodResultContent.BLOOD_PRESSURE.name]!.showContent;
-    isVisibleCalcium = widget._checkBoxVisibleBloodResultContent
+    isVisibleCalcium = _checkBoxVisibleBloodResultContent
         .subItemMap[EnumBloodResultContent.CALCIUM.name]!.showContent;
-    isVisibleMagnesium = widget._checkBoxVisibleBloodResultContent
+    isVisibleMagnesium = _checkBoxVisibleBloodResultContent
         .subItemMap[EnumBloodResultContent.MAGNESIUM.name]!.showContent;
+  }
+
+  Widget showDataNotFoundText() {
+    if (_baseLineChartPreData.bloodResultList.isEmpty) {
+      return Padding(
+        padding: EdgeInsets.only(top: ResponsiveDesign.getScreenHeight() / 50),
+        child: Container(
+          color: ProductColor.redAccent,
+          height: ResponsiveDesign.getScreenHeight() / 15,
+          width: ResponsiveDesign.getScreenWidth() -
+              ResponsiveDesign.getScreenWidth() / 5,
+          child: Center(
+            child: Text(
+              "Not Found Any Data",
+              style:
+                  TextStyle(fontSize: ResponsiveDesign.getScreenWidth() / 16
+                  ,fontWeight: FontWeight.bold),
+            ),
+          ),
+        ),
+      );
+    }
+    // return const Text("-");
+    return Container();
   }
 
   @override
@@ -49,29 +69,43 @@ class _LineChartDailyOldState extends State<LineChartDailyOld> {
     updateVisibleValues();
     return Scaffold(
       // backgroundColor:ProductColor.bodyBackgroundLight,
-      body: Padding(
-        padding: EdgeInsets.all(ResponsiveDesign.getScreenHeight() / 100),
-        child: Container(
-          // color: Colors.red,
-          child: Column(
-            children: [
-              AspectRatio(
-                aspectRatio: 1.30,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                      right: ResponsiveDesign.getScreenWidth() / 10,
-                      top: ResponsiveDesign.getScreenWidth() / 10),
-                  child: LineChart(lineChartData()),
-                ),
-              )
-            ],
+      body: Column(
+        children: [
+          showDataNotFoundText(),
+          Padding(
+            padding: EdgeInsets.all(ResponsiveDesign.getScreenHeight() / 100),
+            child: Container(
+              // color: Colors.red,
+              child: Column(
+                children: [
+                  AspectRatio(
+                    aspectRatio: _aspectRadio, //1.30,
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                          right: ResponsiveDesign.getScreenWidth() / 10,
+                          top: ResponsiveDesign.getScreenWidth() / 10),
+                      child: LineChart(
+                          getLineChartData()), //LineChart(lineChartData()),
+                    ),
+                  )
+                ],
+              ),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
 
-  LineChartData lineChartData() {
+  LineChartData getLineChartData();
+
+  bool get showFlDotData => _showFlDotData;
+
+  set showFlDotData(bool value) {
+    _showFlDotData = value;
+  }
+
+  /*LineChartData lineChartData() {
     return LineChartData(
         borderData: FlBorderData(border: Border.all(color: Colors.white)),
         minX: -1,
@@ -122,15 +156,13 @@ class _LineChartDailyOldState extends State<LineChartDailyOld> {
               ? _getMagnesiumLineChartBarData()
               : LineChartBarData(),
         ]);
-  }
+  }*/
 
-  LineChartBarData _getBloodSugarLineChartBarData() {
+  LineChartBarData getBloodSugarLineChartBarData() {
     List<FlSpot> spotsBloodSugar = [];
-    for (FlSpot tmp in widget
+    for (FlSpot tmp in
         // ._customLineChartData.bloodListSubItems.bloodSugarResultListFlSpot) {
-        ._baseLineChartPreData
-        .bloodListSubItemsFlSpot
-        .bloodSugarList) {
+        _baseLineChartPreData.bloodListSubItemsFlSpot.bloodSugarList) {
       spotsBloodSugar.add(tmp);
     }
 
@@ -138,13 +170,11 @@ class _LineChartDailyOldState extends State<LineChartDailyOld> {
         spotValues: spotsBloodSugar, color: ProductColor.fLSpotColorBloodSugar);
   }
 
-  LineChartBarData _getBloodPressureLineChartBarData() {
+  LineChartBarData getBloodPressureLineChartBarData() {
     List<FlSpot> spotsBloodPressure = [];
-    for (FlSpot tmp in widget
+    for (FlSpot tmp in
         // ._customLineChartData.bloodListSubItems.bloodPressureResultListFlSpot) {
-        ._baseLineChartPreData
-        .bloodListSubItemsFlSpot
-        .bloodPressureList) {
+        _baseLineChartPreData.bloodListSubItemsFlSpot.bloodPressureList) {
       spotsBloodPressure.add(tmp);
     }
 
@@ -153,13 +183,11 @@ class _LineChartDailyOldState extends State<LineChartDailyOld> {
         color: ProductColor.fLSpotColorBloodPressure);
   }
 
-  LineChartBarData _getMagnesiumLineChartBarData() {
+  LineChartBarData getMagnesiumLineChartBarData() {
     List<FlSpot> spotsBloodPressure = [];
-    for (FlSpot tmp in widget
+    for (FlSpot tmp in
         // ._customLineChartData.bloodListSubItems.magnesiumResultListFlSpot) {
-        ._baseLineChartPreData
-        .bloodListSubItemsFlSpot
-        .magnesiumList) {
+        _baseLineChartPreData.bloodListSubItemsFlSpot.magnesiumList) {
       spotsBloodPressure.add(tmp);
     }
 
@@ -168,13 +196,11 @@ class _LineChartDailyOldState extends State<LineChartDailyOld> {
         color: ProductColor.fLSpotColorMagnesium);
   }
 
-  LineChartBarData _getCalciumLineChartBarData() {
+  LineChartBarData getCalciumLineChartBarData() {
     List<FlSpot> spotsBloodPressure = [];
-    for (FlSpot tmp in widget
+    for (FlSpot tmp in
         // ._customLineChartData.bloodListSubItems.calciumResultListFlSpot) {
-        ._baseLineChartPreData
-        .bloodListSubItemsFlSpot
-        .calciumList) {
+        _baseLineChartPreData.bloodListSubItemsFlSpot.calciumList) {
       // print("gelen calcium degeri : $tmp}");
       spotsBloodPressure.add(tmp);
     }
@@ -190,15 +216,15 @@ class _LineChartDailyOldState extends State<LineChartDailyOld> {
         isCurved: false,
         barWidth: 2,
         isStrokeCapRound: true,
-        dotData: FlDotData(show: true),
+        dotData: FlDotData(show: _showFlDotData),
         spots: spotValues);
   }
 
   Widget bottomTiles(double value, TitleMeta meta) {
     String text = "";
-    for (int i = 0; i < widget._baseLineChartPreData.bottomTitle.length; i++) {
-      if (value == widget._baseLineChartPreData.bottomTitle[i].index) {
-        text = widget._baseLineChartPreData.bottomTitle[i].text;
+    for (int i = 0; i < _baseLineChartPreData.bottomTitle.length; i++) {
+      if (value == _baseLineChartPreData.bottomTitle[i].index) {
+        text = _baseLineChartPreData.bottomTitle[i].text;
         break;
       }
     }
@@ -212,17 +238,23 @@ class _LineChartDailyOldState extends State<LineChartDailyOld> {
   Widget leftTiles(double value, TitleMeta meta) {
     String text;
     switch (value.toInt()) {
-      case 40:
-        text = '40';
+      case 10:
+        text = '10';
         break;
-      case 80:
-        text = '80';
+      case 50:
+        text = '50';
         break;
-      case 120:
-        text = '120';
+      case 100:
+        text = '100';
+        break;
+      case 150:
+        text = '150';
+        break;
+      case 200:
+        text = '200';
         break;
       default:
-        return Text("");
+        return const Text("");
     }
     return Text(
       text,
@@ -234,13 +266,5 @@ class _LineChartDailyOldState extends State<LineChartDailyOld> {
   TextStyle axisTextStyle() {
     return const TextStyle(
         fontSize: 16, fontWeight: FontWeight.bold, color: Colors.red);
-  }
-
-  double getRandomValue(int val) {
-    return Random().nextInt(8).toDouble() + val;
-  }
-
-  double getRandomValueBloodResult(int val) {
-    return Random().nextInt(100).toDouble() + val;
   }
 }
