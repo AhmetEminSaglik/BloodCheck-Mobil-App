@@ -9,11 +9,11 @@ import '../../core/ResponsiveDesign.dart';
 import 'CheckBoxVisibleBloodResultContent.dart';
 import 'linechart/predata/BaseLineChartPreData.dart';
 
-class LineChartMonthly extends StatefulWidget {
+class LineChartMonthlyOld extends StatefulWidget {
   late BaseLineChartPreData _baseLineChartPreData;
   late CheckBoxVisibleBloodResultContent _checkBoxVisibleBloodResultContent;
 
-  LineChartMonthly(
+  LineChartMonthlyOld(
       {required BaseLineChartPreData baseLineChartPreData,
       required CheckBoxVisibleBloodResultContent
           checkBoxVisibleBloodResultContent}) {
@@ -22,10 +22,10 @@ class LineChartMonthly extends StatefulWidget {
   }
 
   @override
-  State<LineChartMonthly> createState() => _LineChartMonthlyState();
+  State<LineChartMonthlyOld> createState() => _LineChartMonthlyOldState();
 }
 
-class _LineChartMonthlyState extends State<LineChartMonthly> {
+class _LineChartMonthlyOldState extends State<LineChartMonthlyOld> {
   late bool isVisibleBloodSugar;
   late bool isVisibleBloodPressure;
   late bool isVisibleCalcium;
