@@ -150,6 +150,7 @@ class _HomePagePatientState extends State<HomePagePatient> {
   void retrievePatientTimerData() async {
     patientTimer =
         await HttpRequestPatient.retrievePatientTimer(widget.patientId);
+    print("retrievePatientTimerData > patientTimer  : $patientTimer ");
   }
 
   void retrieveBloodResultData() async {
@@ -429,7 +430,7 @@ class _HomePagePatientState extends State<HomePagePatient> {
   }
 
   void showAlertDialogSetUpPatientTimer() async {
-    PatientTimer timer = PatientTimer();
+    // PatientTimer timer = PatientTimer();
     // PatientTimerAlertBoxRespond response = PatientTimerAlertBoxRespond(
     //     result: false, patientTimer: PatientTimer());
     var resp = await showDialog(
@@ -441,10 +442,12 @@ class _HomePagePatientState extends State<HomePagePatient> {
     // if (resp is PatientTimerAlertBoxRespond) {
     //   print("resp.result ${resp.result}");
     if (resp != null && resp.result) {
-      print("patientId : ${widget.patientId}");
+      // print("patientId : ${widget.patientId}");
       resp.patientTimer.patientId = widget.patientId;
       sendRequestToSavePatientTimer(resp.patientTimer);
-      retrievePatientTimerData();
+      // print("Savelenecek data : ${resp.patientTimer}");
+      patientTimer=resp.patientTimer;
+      // retrievePatientTimerData();
       setState(() {});
     } else {
       String msg = "Patient Timer setup is cancelled";

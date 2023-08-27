@@ -48,12 +48,12 @@ abstract class BaseLineChart extends StatelessWidget {
           color: ProductColor.redAccent,
           height: ResponsiveDesign.getScreenHeight() / 15,
           width: ResponsiveDesign.getScreenWidth() -
-              ResponsiveDesign.getScreenWidth() / 5,
+              ResponsiveDesign.getScreenWidth() / 3.5,
           child: Center(
             child: Text(
               "Not Found Any Data",
               style:
-                  TextStyle(fontSize: ResponsiveDesign.getScreenWidth() / 16
+                  TextStyle(fontSize: ResponsiveDesign.getScreenWidth() / 17
                   ,fontWeight: FontWeight.bold),
             ),
           ),
