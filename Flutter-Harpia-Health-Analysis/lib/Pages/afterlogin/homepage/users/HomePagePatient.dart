@@ -5,9 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/LineChartEmpty.dart';
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/LineChartMonthly.dart';
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/LineChartWeekly.dart';
-import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/linechart/data/LineChartDataDaily.dart';
-import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/linechart/data/LineChartDataMonthly.dart';
-import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/linechart/data/LineChartDataWeekly.dart';
+import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/linechart/predata/LineChartPreDataDaily.dart';
+import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/linechart/predata/LineChartPreDataMonthly.dart';
+import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/linechart/predata/LineChartPreDataWeekly.dart';
 import 'package:flutter_harpia_health_analysis/core/ResponsiveDesign.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestDoctor.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestPatient.dart';
@@ -25,7 +25,7 @@ import '../../../../util/PermissionUtils.dart';
 import '../../../../util/ProductColor.dart';
 import '../../../CustomWidgets/LineChartDaily.dart';
 import '../../../CustomWidgets/CheckBoxVisibleBloodResultContent.dart';
-import '../../../CustomWidgets/linechart/data/BaseLineChartData.dart';
+import '../../../CustomWidgets/linechart/predata/BaseLineChartPreData.dart';
 import '../appbar/AppBarCubit.dart';
 
 class HomePagePatient extends StatefulWidget {
@@ -423,7 +423,7 @@ class _HomePagePatientState extends State<HomePagePatient> {
   }
 
   void sendRequestToSavePatientTimer(PatientTimer patientTimer) async {
-    // print("savelenecekd data : $patientTimer");
+    // print("savelenecekd predata : $patientTimer");
     var resp = await HttpRequestDoctor.savePatientTimer(patientTimer);
     Map<String, dynamic> jsonData = json.decode(resp.body);
     var respEntity = ResponseEntity.fromJson(jsonData);

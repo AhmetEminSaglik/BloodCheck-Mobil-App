@@ -20,10 +20,10 @@ class FcmTokenUtils {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       // print('Got a message whilst in the foreground!');
       print('--> Got a message whilst in the foreground!$message');
-      print('----> Message data: ${message.data}');
+      print('----> Message predata: ${message.data}');
 
 
-      // CustomNotification.showNotification(message.data);
+      // CustomNotification.showNotification(message.predata);
       parseMapToString(message.data);
       if (message.notification != null) {
         print('Message also contained a notification: ${message.notification}');
@@ -59,7 +59,7 @@ class FcmTokenUtils {
 
   static Future<void> _backgroundHandler(RemoteMessage message) async {
     print('Got a message whilst in the background!');
-    print('Message data: ${message.data}');
+    print('Message predata: ${message.data}');
 
     if (message.notification != null) {
       print('Message also contained a notification: ${message.notification}');

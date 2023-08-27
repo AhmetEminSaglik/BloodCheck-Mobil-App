@@ -1,6 +1,6 @@
 import '../../../../model/LineChartData/BottomSideTitle.dart';
 import '../../../../model/enums/linechart/bottomtitles/EnumLineChartBottomSideMonthlyTitles.dart';
-import 'BaseLineChartData.dart';
+import 'BaseLineChartPreData.dart';
 
 class LineChartPreDataMonthly extends BaseLineChartPreData {
   LineChartPreDataMonthly({required super.bloodResultList})

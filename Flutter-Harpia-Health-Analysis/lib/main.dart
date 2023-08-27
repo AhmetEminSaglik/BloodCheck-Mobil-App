@@ -25,10 +25,10 @@ void test() {
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     // print('Got a message whilst in the foreground!');
     print('--> Got a message whilst in the foreground!$message');
-    print('----> Message data: ${message.data}');
+    print('----> Message predata: ${message.data}');
 
-    // CustomNotification.showNotification(message.data);
-    // parseMapToString(message.data);
+    // CustomNotification.showNotification(message.predata);
+    // parseMapToString(message.predata);
     if (message.notification != null) {
       print('Message also contained a notification: ${message.notification}');
     }

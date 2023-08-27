@@ -7,7 +7,7 @@ import 'package:flutter_harpia_health_analysis/model/diesease/EnumBloodResultCon
 import 'package:flutter_harpia_health_analysis/util/ProductColor.dart';
 import '../../core/ResponsiveDesign.dart';
 import 'CheckBoxVisibleBloodResultContent.dart';
-import 'linechart/data/BaseLineChartData.dart';
+import 'linechart/predata/BaseLineChartPreData.dart';
 
 class LineChartWeekly extends StatefulWidget {
   late BaseLineChartPreData _baseLineChartPreData;

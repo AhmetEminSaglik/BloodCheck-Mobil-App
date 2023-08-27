@@ -244,8 +244,8 @@ public class InitialDataLoader implements CommandLineRunner {
 //        Patient patient = patientList.get(patientList.size() - 1);
         PatientTimer patientTimer = timerController.findPatientTimerByPatientId(patient.getId()).getBody().getData();
         log.info(patientTimer.toString());
-//        final int maxMinutes = (24 * 17 + 16) * 60;
-        final int maxMinutes = (24 * 29) * 60;
+        final int maxMinutes = (24 * 17 + 16) * 60;
+//        final int maxMinutes = (24 * 29) * 60;
         int minutesCounter = 0;
         int sensorTestTime = 60 + 17;
         int createdTime = 0;//useMinute * minutesCounter;

@@ -1,6 +1,6 @@
 import '../../../../model/LineChartData/BottomSideTitle.dart';
 import '../../../../model/enums/linechart/bottomtitles/EnumLineChartBottomSideWeeklyTitles.dart';
-import 'BaseLineChartData.dart';
+import 'BaseLineChartPreData.dart';
 
 class LineChartPreDataWeekly extends BaseLineChartPreData {
   LineChartPreDataWeekly({required super.bloodResultList})

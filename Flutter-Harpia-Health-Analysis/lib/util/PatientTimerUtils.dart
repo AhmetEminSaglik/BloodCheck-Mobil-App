@@ -28,7 +28,9 @@ class PatientTimerUtils {
         Duration(hours: patientTimer.hours, minutes: patientTimer.minutes);
     lastCreatedAt = lastCreatedAt.add(duration);
     String nextTimeText = "${_get2DigitStringValue(lastCreatedAt.hour)}:";
-    nextTimeText += "${_get2DigitStringValue(lastCreatedAt.minute)}";
+    nextTimeText += "${_get2DigitStringValue(lastCreatedAt.minute)} - ";
+    nextTimeText +=
+        "${_get2DigitStringValue(lastCreatedAt.day)}.${_get2DigitStringValue(lastCreatedAt.month)}.${lastCreatedAt.year}";
     return nextTimeText;
   }
 }

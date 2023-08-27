@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/linechart/data/BaseLineChartData.dart';
+import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/linechart/predata/BaseLineChartPreData.dart';
 import 'package:flutter_harpia_health_analysis/model/diesease/EnumBloodResultContent.dart';
 import 'package:flutter_harpia_health_analysis/util/ProductColor.dart';
 
