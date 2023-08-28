@@ -98,7 +98,7 @@ abstract class BaseLineChart extends StatelessWidget {
       body: Padding(
         padding: EdgeInsets.only(
           left:  ResponsiveDesign.getScreenWidth() / 30,
-            right: ResponsiveDesign.getScreenWidth() / 10,
+            right: ResponsiveDesign.getScreenWidth() / 30,
             top: ResponsiveDesign.getScreenWidth() / 10,
             bottom: ResponsiveDesign.getScreenWidth() / 10,
         ),

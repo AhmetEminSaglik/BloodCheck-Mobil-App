@@ -24,9 +24,9 @@ class DetailLineChartPage extends StatelessWidget {
                   ResponsiveDesign.getScreenWidth() / 4,
               height: ResponsiveDesign.getScreenHeight() -
                   ResponsiveDesign.getScreenHeight() / 4,*/
-              width: ResponsiveDesign.getScreenWidth(),
-              height: ResponsiveDesign.getScreenHeight() -
-                  ResponsiveDesign.getScreenHeight() / 7,
+              width: ResponsiveDesign.getCertainWidth(),
+              height: ResponsiveDesign.getCertainHeight() -
+                  ResponsiveDesign.getCertainHeight() / 7,
               child: baseLineChart),
         ),
       ),

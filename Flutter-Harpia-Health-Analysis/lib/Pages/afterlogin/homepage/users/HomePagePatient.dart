@@ -334,11 +334,17 @@ class _HomePagePatientState extends State<HomePagePatient> {
                                               40),
                                     )),
                               ),
-                              Container(
-                                  // width: ResponsiveDesign.getScreenWidth(),
-                                  height:
-                                      ResponsiveDesign.getScreenHeight() / 2,
-                                  child: activatedBaseLineChart),
+                              Padding(
+                                padding:  EdgeInsets.only(
+                                  left: ResponsiveDesign.getScreenWidth() / 50,
+                                  right: ResponsiveDesign.getScreenWidth() / 10,
+                                ),
+                                child: Container(
+                                    // width: ResponsiveDesign.getScreenWidth(),
+                                    height:
+                                        ResponsiveDesign.getScreenHeight() / 2,
+                                    child: activatedBaseLineChart),
+                              ),
                             ],
                           )),
                         ],

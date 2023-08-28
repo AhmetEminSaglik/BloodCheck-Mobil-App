@@ -29,6 +29,13 @@ class ResponsiveDesign {
 
   }
 
+  static double getCertainWidth(){
+    return _screenWidth;
+  }
+  static double getCertainHeight(){
+    return _screenHeight;
+  }
+
   static bool _IsDataNull(double data) {
     if (data == 0) {
       print("--> $data IS NULL");
