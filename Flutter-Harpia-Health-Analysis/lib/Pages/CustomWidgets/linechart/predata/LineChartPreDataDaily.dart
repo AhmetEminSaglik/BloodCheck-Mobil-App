@@ -1,4 +1,4 @@
-import '../../../../model/LineChartData/BottomSideTitle.dart';
+import '../../../../model/LineChartData/LineChartSideTitle.dart';
 import '../../../../model/enums/linechart/bottomtitles/EnumLineChartBottomSideTitles.dart';
 import 'BaseLineChartPreData.dart';
 
@@ -17,13 +17,16 @@ class LineChartPreDataDaily extends BaseLineChartPreData {
     int dailyTitleLength = EnumLineChartBottomSideDailyTitles.values.length;
 
     for (int i = 0; i < dailyTitleLength; i++) {
-      bottomTitle.add(BottomSideTitle(
+      bottomTitle.add(LineChartSideTitle(
           index: dailyTotalIndexValue - (remainedTime + ((i) * 6 * 8)),
           // 6 : 60/10, 8 : reset in each 8 hours
           text: EnumLineChartBottomSideDailyTitles.getIndexName(
               (passed8HoursCounter - i) % dailyTitleLength)));
     }
   }
+
+  /*@override
+  void createLeftSideTitles() {}*/
 
   @override
   String toString() {
@@ -57,7 +60,7 @@ class LineChartPreDataDaily extends BaseLineChartPreData {
 
 /*  void test(int titleLength, int remainedTime,int bottomTotalIndexValue, int resetTime, int passedCompletedTimeCounter){
   for (int i = 0; i < titleLength; i++) {
-  bottomTitle.add(BottomSideTitles(
+  bottomTitle.add(LineChartSideTitles(
   index: bottomTotalIndexValue - (remainedTime + ((i) * resetTime)),
   // 6 : 60/10, 8 : reset in each 8 hours
   text: EnumLineChartBottomSideDailyTitles.getIndexName(

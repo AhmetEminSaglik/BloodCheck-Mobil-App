@@ -1,8 +1,8 @@
-class BottomSideTitle {
+class LineChartSideTitle {
   late int _index;
   late String _text;
 
-  BottomSideTitle({required int index, required String text}) {
+  LineChartSideTitle({required int index, required String text}) {
     _index = index;
     _text = text;
   }
@@ -13,6 +13,6 @@ class BottomSideTitle {
 
   @override
   String toString() {
-    return 'BottomSideTitle{_index: $_index, _text: $_text}';
+    return 'LineChartSideTitle{_index: $_index, _text: $_text}';
   }
 }

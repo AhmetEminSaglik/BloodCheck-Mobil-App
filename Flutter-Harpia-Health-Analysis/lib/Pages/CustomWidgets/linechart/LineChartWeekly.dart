@@ -21,7 +21,7 @@ class LineChartWeekly extends BaseLineChart {
         minX: -1,
         maxX: rangeIndex,
         minY: -1,
-        maxY: 200,
+        maxY: baseLineChartPreData.lineChartMaxY.toDouble() + 1,
         gridData: FlGridData(
             show: true,
             getDrawingHorizontalLine: (value) {
@@ -40,14 +40,14 @@ class LineChartWeekly extends BaseLineChart {
                 reservedSize: ResponsiveDesign.getScreenWidth() / 10,
                 showTitles: true,
                 interval: 1,
-                getTitlesWidget: leftTiles),
+                getTitlesWidget: getLeftSideTiles),
           ),
           bottomTitles: AxisTitles(
             sideTitles: SideTitles(
                 reservedSize: ResponsiveDesign.getScreenHeight() / 40,
                 interval: 1,
                 showTitles: true,
-                getTitlesWidget: bottomTiles),
+                getTitlesWidget: getBottomSideTiles),
           ),
           topTitles:
               const AxisTitles(sideTitles: SideTitles(showTitles: false)),

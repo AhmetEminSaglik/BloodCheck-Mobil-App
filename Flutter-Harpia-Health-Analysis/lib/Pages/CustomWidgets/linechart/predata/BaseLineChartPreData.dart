@@ -1,15 +1,22 @@
 import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter_harpia_health_analysis/model/LineChartData/BottomSideTitle.dart';
-
+import 'package:flutter_harpia_health_analysis/model/LineChartData/LineChartSideTitle.dart';
+import 'dart:math';
 import '../../../../model/LineChartData/BloodListSubItemsFlSpot.dart';
 import '../../../../model/diesease/BloodResult.dart';
 
 abstract class BaseLineChartPreData {
   List<BloodResult> _bloodResultList = [];
-  BloodListSubItemsFlSpot _bloodListSubItemsFlSpot=BloodListSubItemsFlSpot(bloodResultList: []);
-  List<BottomSideTitle> bottomTitle = [];
+  BloodListSubItemsFlSpot _bloodListSubItemsFlSpot =
+      BloodListSubItemsFlSpot(bloodResultList: []);
+  List<LineChartSideTitle> bottomTitle = [];
+  List<LineChartSideTitle> leftTitle = [];
+
   DateTime now = DateTime.now(); //.subtract(Duration(hours:));
   late int _rangeTotalIndexValue;
+
+  late double _lineChartMinY;
+  late double _lineChartMaxY;
+  late int _minY, _maxY;
 
   BaseLineChartPreData(
       {required List<BloodResult> bloodResultList,
@@ -26,14 +33,20 @@ abstract class BaseLineChartPreData {
       // ScaffoldMessenger.of(context as BuildContext).showSnackBar(
       //     CustomSnackBar.getSnackBar("Not Found Any Blood Result Data"));
     }
+
+    createLeftSideTitles();
     createBottomSideTitles();
   }
 
   // void setBloodListSubItemsFlSpotValue();
   void setBloodListSubItemsFlSpotValue() {
-    // print("gelen bloodList.length : ${bloodResultList.length}");
+    // maxY = bloodListSubItemsFlSpot.bloodResultList[0].bloodSugar.toDouble();
+    // minY = bloodListSubItemsFlSpot.bloodResultList[0].bloodSugar.toDouble();
+
+    List<int> yIndexValue = [];
     bloodListSubItemsFlSpot.bloodResultList.forEach((tmp) {
       // print("For each on item : ${tmp}");
+
       bloodListSubItemsFlSpot.bloodSugarList
           .add(getFlSpotOfItem(tmp.bloodSugar, tmp.createdAt));
       bloodListSubItemsFlSpot.bloodPressureList
@@ -42,7 +55,16 @@ abstract class BaseLineChartPreData {
           .add(getFlSpotOfItem(tmp.magnesium, tmp.createdAt));
       bloodListSubItemsFlSpot.calciumList
           .add(getFlSpotOfItem(tmp.calcium, tmp.createdAt));
+
+      yIndexValue.add(tmp.bloodSugar);
+      yIndexValue.add(tmp.bloodPresure);
+      yIndexValue.add(tmp.calcium);
+      yIndexValue.add(tmp.magnesium);
     });
+    _minY = yIndexValue.reduce(min);
+    _maxY = yIndexValue.reduce(max);
+    _lineChartMaxY = _maxY + 25;
+    _lineChartMinY = _minY - 25;
     // print("bloodListSubItemsFlSpot.bloodSugarList  :");
     bloodListSubItemsFlSpot.bloodSugarList.forEach((element) {
       // print("elemtn : $element");
@@ -50,6 +72,28 @@ abstract class BaseLineChartPreData {
   }
 
   void createBottomSideTitles();
+
+  void createLeftSideTitles() {
+    if (bloodResultList.isEmpty) {
+      _lineChartMinY = 0;
+      _minY = 25;
+      _maxY = 75;
+      _lineChartMaxY = 100;
+    }
+    int average = (_minY + _maxY) ~/ 2;
+    leftTitle.add(LineChartSideTitle(
+        index: _lineChartMinY.toInt(),
+        text: _lineChartMinY.toInt().toString()));
+    leftTitle.add(LineChartSideTitle(index: _minY, text: _minY.toString()));
+    leftTitle.add(LineChartSideTitle(index: average, text: average.toString()));
+    leftTitle.add(LineChartSideTitle(index: _maxY, text: _maxY.toString()));
+    leftTitle.add(LineChartSideTitle(
+        index: _lineChartMaxY.toInt(),
+        text: _lineChartMaxY.toInt().toString()));
+    // leftTitle.add(LineChartSideTitle(index: 50, text:" text 50 "));
+    // leftTitle.add(LineChartSideTitle(index: 100, text:" text 100 "));
+    // leftTitle.add(LineChartSideTitle(index: 150, text:" text 150 "));
+  }
 
   FlSpot getFlSpotOfItem(int itemValue, DateTime createdAt) {
     return FlSpot(
@@ -71,6 +115,8 @@ abstract class BaseLineChartPreData {
 
   int get rangeTotalIndexValue => _rangeTotalIndexValue;
 
+  double get lineChartMinY => _lineChartMinY;
+
   /*
   set bloodResultList(List<BloodResult> value) {
     _bloodResultList = value;
@@ -81,7 +127,9 @@ abstract class BaseLineChartPreData {
     return "BaseLineChartPreData  :";
   }
 
-/*void _createDailyBottomSideTitles() {
+  double get lineChartMaxY => _lineChartMaxY;
+
+/*void _createDailyLineChartSideTitles() {
     int dailyTotalIndexValue = 144;
     int hour = now.hour;
     int minute = now.minute;
@@ -90,7 +138,7 @@ abstract class BaseLineChartPreData {
     int remainedTime = ((hour * 60 + minute) / 10).toInt();
     int dailyTitleLength = EnumLineChartBottomSideDailyTitles.values.length;
     for (int i = 0; i < dailyTitleLength; i++) {
-      _bottomTitle.add(_BottomSideTitles(
+      _bottomTitle.add(_LineChartSideTitles(
           index: dailyTotalIndexValue - (remainedTime + ((i) * 6 * 8)),
           // 6 : 60/10, 8 : reset in each 8 hours
           text: EnumLineChartBottomSideDailyTitles.getIndexName(
@@ -100,14 +148,14 @@ abstract class BaseLineChartPreData {
 }
 
 /*
-class _BottomSideTitles {
+class _LineChartSideTitles {
   late int _index;
   late String _text;
 
-  _BottomSideTitles({required int index, required String text}) {
+  _LineChartSideTitles({required int index, required String text}) {
     _index = index;
     _text = text;
-    // print(" _BottomSideTitles GELEN INDEX  DEGERI  : $index");
+    // print(" _LineChartSideTitles GELEN INDEX  DEGERI  : $index");
   }
 
   String get text => _text;

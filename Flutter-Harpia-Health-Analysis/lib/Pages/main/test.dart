@@ -5,7 +5,14 @@ void main() {
   // testDoubleNumber();
   // testModeNegative();
   // testDoubleToIntNumbers();
-  testDoubleToInt2();
+  // testDoubleToInt2();
+  testMathMinMax();
+}
+
+void testMathMinMax(){
+  print([1,2,8,6].reduce(max)); // 8
+  print([1,2,8,6].reduce(min)); // 1
+
 }
 
 void testDoubleToInt2() {

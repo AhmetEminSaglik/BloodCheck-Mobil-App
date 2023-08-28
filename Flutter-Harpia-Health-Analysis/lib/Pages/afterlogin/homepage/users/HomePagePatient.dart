@@ -59,8 +59,9 @@ class _HomePagePatientState extends State<HomePagePatient> {
   List<BloodResult> monthlyBloodResultList = [];
   PatientTimer patientTimer = PatientTimer();
   final double smallLineChartAspectRadio = 2.5;
-  final double smallLineChartHeight =ResponsiveDesign.getScreenHeight();
-  final double bigLineChartHeight =100;//ResponsiveDesign.getScreenHeight()-ResponsiveDesign.getScreenHeight()/3;
+  final double smallLineChartHeight = ResponsiveDesign.getScreenHeight();
+  final double bigLineChartHeight =
+      100; //ResponsiveDesign.getScreenHeight()-ResponsiveDesign.getScreenHeight()/3;
   double bigLineChartAspectRadio = 1.8;
 
   // bool listDataIsEmpty = false;4
@@ -70,6 +71,7 @@ class _HomePagePatientState extends State<HomePagePatient> {
   late BaseLineChartPreData _lineChartPreDataWeekly;
   late BaseLineChartPreData _lineChartPreDataMonthly;
   late BaseLineChartPreData _lineChartPreData6Monthly;
+  bool isDataFound = false;
 
   void updateActivatedLineChart(int selectedRadioValue) {
     switch (selectedRadioValue) {
@@ -145,6 +147,13 @@ class _HomePagePatientState extends State<HomePagePatient> {
         LineChartPreDataWeekly(bloodResultList: weeklyBloodResultList);
     _lineChartPreDataMonthly =
         LineChartPreDataMonthly(bloodResultList: monthlyBloodResultList);
+
+    if (dailyBloodResultList.isNotEmpty ||
+        weeklyBloodResultList.isNotEmpty ||
+        monthlyBloodResultList.isNotEmpty) {
+      isDataFound = true;
+    }
+
     print(
         "DATA RETRIEVED dailyBloodResultList size :${dailyBloodResultList.length} ");
     print(
@@ -310,39 +319,47 @@ class _HomePagePatientState extends State<HomePagePatient> {
                           SizedBox(
                               child: Column(
                             children: [
-                              Container(
-                                width: ResponsiveDesign.getScreenWidth() -
-                                    ResponsiveDesign.getScreenWidth() / 3,
-                                height: ResponsiveDesign.getScreenHeight() / 20,
-                                child: ElevatedButton(
-                                    onPressed: () {
-                                      activatedBaseLineChart.aspectRadio=bigLineChartAspectRadio;
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  DetailLineChartPage(
-                                                    baseLineChart:
-                                                        activatedBaseLineChart,
-                                                  )));
-                                    },
-                                    child: Text(
-                                      "Detail LineChart",
-                                      style: TextStyle(
-                                          fontSize: ResponsiveDesign
-                                                  .getScreenHeight() /
-                                              40),
-                                    )),
-                              ),
+                              isDataFound
+                                  ? Container(
+                                      width: ResponsiveDesign.getScreenWidth() -
+                                          ResponsiveDesign.getScreenWidth() / 3,
+                                      height:
+                                          ResponsiveDesign.getScreenHeight() /
+                                              20,
+                                      child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                              backgroundColor:
+                                                  ProductColor.redAccent),
+                                          onPressed: () {
+                                            activatedBaseLineChart.aspectRadio =
+                                                bigLineChartAspectRadio;
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        DetailLineChartPage(
+                                                          baseLineChart:
+                                                              activatedBaseLineChart,
+                                                        )));
+                                          },
+                                          child: Text(
+                                            "Detail LineChart",
+                                            style: TextStyle(
+                                                fontSize: ResponsiveDesign
+                                                        .getScreenHeight() /
+                                                    37,
+                                                color: ProductColor.black),
+                                          )))
+                                  : Container(),
                               Padding(
-                                padding:  EdgeInsets.only(
+                                padding: EdgeInsets.only(
                                   left: ResponsiveDesign.getScreenWidth() / 50,
                                   right: ResponsiveDesign.getScreenWidth() / 10,
                                 ),
                                 child: Container(
                                     // width: ResponsiveDesign.getScreenWidth(),
-                                    height:
-                                        ResponsiveDesign.getScreenHeight() / 2,
+                                    height: ResponsiveDesign.getScreenHeight() /
+                                        2.55,
                                     child: activatedBaseLineChart),
                               ),
                             ],

@@ -40,7 +40,7 @@ abstract class BaseLineChart extends StatelessWidget {
         .subItemMap[EnumBloodResultContent.MAGNESIUM.name]!.showContent;
   }
 
-  Widget showDataNotFoundText() {
+  Widget showDataIsNotFoundText() {
     if (_baseLineChartPreData.bloodResultList.isEmpty) {
       return Padding(
         padding: EdgeInsets.only(top: ResponsiveDesign.getScreenHeight() / 50),
@@ -51,7 +51,7 @@ abstract class BaseLineChart extends StatelessWidget {
               ResponsiveDesign.getScreenWidth() / 3.5,
           child: Center(
             child: Text(
-              "Not Found Any Data",
+              "Data Is Not Found",
               style: TextStyle(
                   fontSize: ResponsiveDesign.getScreenWidth() / 17,
                   fontWeight: FontWeight.bold),
@@ -90,23 +90,32 @@ abstract class BaseLineChart extends StatelessWidget {
   }
 
   @override
-
   Widget build(BuildContext context) {
     updateVisibleValues();
     return Scaffold(
       // backgroundColor:ProductColor.bodyBackgroundLight,
-      body: Padding(
-        padding: EdgeInsets.only(
-          left:  ResponsiveDesign.getScreenWidth() / 30,
-            right: ResponsiveDesign.getScreenWidth() / 30,
-            top: ResponsiveDesign.getScreenWidth() / 10,
-            bottom: ResponsiveDesign.getScreenWidth() / 10,
-        ),
-        child: LineChart(
-            getLineChartData()), //LineChart(lineChartData()),
+      body: Column(
+        children: [
+          showDataIsNotFoundText(),
+          showExtraMsgTopOfLineChart(msg: _extraMsg),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.only(
+                left: ResponsiveDesign.getScreenWidth() / 30,
+                right: ResponsiveDesign.getScreenWidth() / 30,
+                top: ResponsiveDesign.getScreenWidth() / 10,
+                bottom: ResponsiveDesign.getScreenWidth() / 10,
+              ),
+              child:
+              LineChart(getLineChartData()
+              ), //LineChart(lineChartData()),
+            ),
+          ),
+        ],
       ),
     );
   }
+
 /*  @override
 
   Widget build(BuildContext context) {
@@ -155,6 +164,7 @@ abstract class BaseLineChart extends StatelessWidget {
     _extraMsg = value;
   }
 
+  BaseLineChartPreData get baseLineChartPreData => _baseLineChartPreData;
 
   double get aspectRadio => _aspectRadio;
 
@@ -277,7 +287,7 @@ abstract class BaseLineChart extends StatelessWidget {
         spots: spotValues);
   }
 
-  Widget bottomTiles(double value, TitleMeta meta) {
+  Widget getBottomSideTiles(double value, TitleMeta meta) {
     String text = "";
     for (int i = 0; i < _baseLineChartPreData.bottomTitle.length; i++) {
       if (value == _baseLineChartPreData.bottomTitle[i].index) {
@@ -292,7 +302,22 @@ abstract class BaseLineChart extends StatelessWidget {
     );
   }
 
-  Widget leftTiles(double value, TitleMeta meta) {
+  Widget getLeftSideTiles(double value, TitleMeta meta) {
+    String text = "";
+    for (int i = 0; i < _baseLineChartPreData.leftTitle.length; i++) {
+      if (value == _baseLineChartPreData.leftTitle[i].index) {
+        text = _baseLineChartPreData.leftTitle[i].text;
+        break;
+      }
+    }
+    return Text(
+      text,
+      style: axisTextStyle(),
+      textAlign: TextAlign.left,
+    );
+  }
+
+  /*Widget leftTiles(double value, TitleMeta meta) {
     String text;
     switch (value.toInt()) {
       case 10:
@@ -318,7 +343,7 @@ abstract class BaseLineChart extends StatelessWidget {
       style: axisTextStyle(),
       textAlign: TextAlign.left,
     );
-  }
+  }*/
 
   TextStyle axisTextStyle() {
     return const TextStyle(

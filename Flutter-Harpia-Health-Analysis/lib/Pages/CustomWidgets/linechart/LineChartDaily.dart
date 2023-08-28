@@ -14,16 +14,15 @@ class LineChartDaily extends BaseLineChart {
       double aspectRadio = 1.40})
       : super(aspectRadio: aspectRadio);
 
-
   @override
   LineChartData getLineChartData() {
-    showFlDotData=true;
+    showFlDotData = true;
     return LineChartData(
         borderData: FlBorderData(border: Border.all(color: Colors.white)),
         minX: -1,
         maxX: rangeIndex,
-        minY: -1,
-        maxY: 200,
+        minY: -1,//baseLineChartPreData.lineChartMinY,
+        maxY: baseLineChartPreData.lineChartMaxY.toDouble()+1,
         gridData: FlGridData(
             show: true,
             getDrawingHorizontalLine: (value) {
@@ -42,14 +41,14 @@ class LineChartDaily extends BaseLineChart {
                 reservedSize: ResponsiveDesign.getScreenWidth() / 10,
                 showTitles: true,
                 interval: 1,
-                getTitlesWidget: leftTiles),
+                getTitlesWidget: getLeftSideTiles),
           ),
           bottomTitles: AxisTitles(
             sideTitles: SideTitles(
                 reservedSize: ResponsiveDesign.getScreenHeight() / 40,
                 interval: 1,
                 showTitles: true,
-                getTitlesWidget: bottomTiles),
+                getTitlesWidget: getBottomSideTiles),
           ),
           topTitles:
               const AxisTitles(sideTitles: SideTitles(showTitles: false)),
