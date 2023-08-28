@@ -18,11 +18,13 @@ class LineChartDaily extends BaseLineChart {
   LineChartData getLineChartData() {
     showFlDotData = true;
     return LineChartData(
+        // baselineY:baseLineChartPreData.lineChartMinY-1,
         borderData: FlBorderData(border: Border.all(color: Colors.white)),
         minX: -1,
         maxX: rangeIndex,
-        minY: -1,//baseLineChartPreData.lineChartMinY,
-        maxY: baseLineChartPreData.lineChartMaxY.toDouble()+1,
+        // minY: baseLineChartPreData.lineChartMinY,
+        minY: -1,
+        maxY: baseLineChartPreData.lineChartMaxY.toDouble() + 1,
         gridData: FlGridData(
             show: true,
             getDrawingHorizontalLine: (value) {

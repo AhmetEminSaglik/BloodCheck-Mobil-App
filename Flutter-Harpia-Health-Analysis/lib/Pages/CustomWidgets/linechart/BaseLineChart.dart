@@ -53,8 +53,9 @@ abstract class BaseLineChart extends StatelessWidget {
             child: Text(
               "Data Is Not Found",
               style: TextStyle(
-                  fontSize: ResponsiveDesign.getScreenWidth() / 17,
-                  fontWeight: FontWeight.bold),
+                fontSize: ResponsiveDesign.getScreenWidth() / 17,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ),
@@ -96,8 +97,16 @@ abstract class BaseLineChart extends StatelessWidget {
       // backgroundColor:ProductColor.bodyBackgroundLight,
       body: Column(
         children: [
-          showDataIsNotFoundText(),
-          showExtraMsgTopOfLineChart(msg: _extraMsg),
+          Padding(
+            padding:
+                EdgeInsets.only(left: ResponsiveDesign.getCertainWidth() / 10),
+            child: Column(
+              children: [
+                showDataIsNotFoundText(),
+                showExtraMsgTopOfLineChart(msg: _extraMsg),
+              ],
+            ),
+          ),
           Expanded(
             child: Padding(
               padding: EdgeInsets.only(
@@ -107,8 +116,7 @@ abstract class BaseLineChart extends StatelessWidget {
                 bottom: ResponsiveDesign.getScreenWidth() / 10,
               ),
               child:
-              LineChart(getLineChartData()
-              ), //LineChart(lineChartData()),
+                  LineChart(getLineChartData()), //LineChart(lineChartData()),
             ),
           ),
         ],

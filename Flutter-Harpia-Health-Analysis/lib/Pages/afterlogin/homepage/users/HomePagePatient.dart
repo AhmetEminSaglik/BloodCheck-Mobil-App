@@ -348,7 +348,8 @@ class _HomePagePatientState extends State<HomePagePatient> {
                                                 fontSize: ResponsiveDesign
                                                         .getScreenHeight() /
                                                     37,
-                                                color: ProductColor.black),
+                                                color: ProductColor.black,
+                                            fontWeight: FontWeight.bold),
                                           )))
                                   : Container(),
                               Padding(
@@ -356,7 +357,7 @@ class _HomePagePatientState extends State<HomePagePatient> {
                                   left: ResponsiveDesign.getScreenWidth() / 50,
                                   right: ResponsiveDesign.getScreenWidth() / 10,
                                 ),
-                                child: Container(
+                                child: SizedBox(
                                     // width: ResponsiveDesign.getScreenWidth(),
                                     height: ResponsiveDesign.getScreenHeight() /
                                         2.55,
