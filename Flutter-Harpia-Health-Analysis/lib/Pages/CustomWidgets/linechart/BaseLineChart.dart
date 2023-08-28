@@ -12,12 +12,12 @@ abstract class BaseLineChart extends StatelessWidget {
   late double _aspectRadio;
   late BaseLineChartPreData _baseLineChartPreData;
   late CheckBoxVisibleBloodResultContent _checkBoxVisibleBloodResultContent;
-
   late bool isVisibleBloodSugar;
   late bool isVisibleBloodPressure;
   late bool isVisibleCalcium;
   late bool isVisibleMagnesium;
   bool _showFlDotData = false;
+  String _extraMsg = "";
 
   BaseLineChart(
       {required BaseLineChartPreData baseLineChartPreData,
@@ -52,9 +52,34 @@ abstract class BaseLineChart extends StatelessWidget {
           child: Center(
             child: Text(
               "Not Found Any Data",
-              style:
-                  TextStyle(fontSize: ResponsiveDesign.getScreenWidth() / 17
-                  ,fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  fontSize: ResponsiveDesign.getScreenWidth() / 17,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+        ),
+      );
+    }
+    // return const Text("-");
+    return Container();
+  }
+
+  Widget showExtraMsgTopOfLineChart({String msg = "Default  Msg"}) {
+    print("showExtraMsgTopOfLineChart : GELDI MSG :$msg ");
+    if (msg.isNotEmpty) {
+      return Padding(
+        padding: EdgeInsets.only(top: ResponsiveDesign.getScreenHeight() / 50),
+        child: Container(
+          color: ProductColor.redAccent,
+          height: ResponsiveDesign.getScreenHeight() / 15,
+          width: ResponsiveDesign.getScreenWidth() -
+              ResponsiveDesign.getScreenWidth() / 3.5,
+          child: Center(
+            child: Text(
+              msg,
+              style: TextStyle(
+                  fontSize: ResponsiveDesign.getScreenWidth() / 17,
+                  fontWeight: FontWeight.bold),
             ),
           ),
         ),
@@ -65,6 +90,25 @@ abstract class BaseLineChart extends StatelessWidget {
   }
 
   @override
+
+  Widget build(BuildContext context) {
+    updateVisibleValues();
+    return Scaffold(
+      // backgroundColor:ProductColor.bodyBackgroundLight,
+      body: Padding(
+        padding: EdgeInsets.only(
+          left:  ResponsiveDesign.getScreenWidth() / 30,
+            right: ResponsiveDesign.getScreenWidth() / 10,
+            top: ResponsiveDesign.getScreenWidth() / 10,
+            bottom: ResponsiveDesign.getScreenWidth() / 10,
+        ),
+        child: LineChart(
+            getLineChartData()), //LineChart(lineChartData()),
+      ),
+    );
+  }
+/*  @override
+
   Widget build(BuildContext context) {
     updateVisibleValues();
     return Scaffold(
@@ -72,30 +116,30 @@ abstract class BaseLineChart extends StatelessWidget {
       body: Column(
         children: [
           showDataNotFoundText(),
+          showExtraMsgTopOfLineChart(msg: _extraMsg),
           Padding(
-            padding: EdgeInsets.all(ResponsiveDesign.getScreenHeight() / 100),
+            padding: EdgeInsets.only(top: ResponsiveDesign.getScreenHeight() / 55),
             child: Container(
-              // color: Colors.red,
-              child: Column(
-                children: [
-                  AspectRatio(
-                    aspectRatio: _aspectRadio, //1.30,
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          right: ResponsiveDesign.getScreenWidth() / 10,
-                          top: ResponsiveDesign.getScreenWidth() / 10),
-                      child: LineChart(
-                          getLineChartData()), //LineChart(lineChartData()),
-                    ),
-                  )
-                ],
+              color: Colors.lightGreenAccent,
+              // height: 100,
+              // width:  ResponsiveDesign.getScreenWidth(),
+              width:  ResponsiveDesign.getScreenWidth(),
+              child: AspectRatio(
+                aspectRatio: _aspectRadio, //1.30,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                      right: ResponsiveDesign.getScreenWidth() / 10,
+                      top: ResponsiveDesign.getScreenWidth() / 10),
+                  child: LineChart(
+                      getLineChartData()), //LineChart(lineChartData()),
+                ),
               ),
             ),
           ),
         ],
       ),
     );
-  }
+  }*/
 
   LineChartData getLineChartData();
 
@@ -103,6 +147,19 @@ abstract class BaseLineChart extends StatelessWidget {
 
   set showFlDotData(bool value) {
     _showFlDotData = value;
+  }
+
+  String get extraMsg => _extraMsg;
+
+  set extraMsg(String value) {
+    _extraMsg = value;
+  }
+
+
+  double get aspectRadio => _aspectRadio;
+
+  set aspectRadio(double value) {
+    _aspectRadio = value;
   }
 
   /*LineChartData lineChartData() {

@@ -3,9 +3,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/linechart/LineChartDaily.dart';
+import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/linechart/LineChartMonthly.dart';
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/linechart/predata/LineChartPreDataDaily.dart';
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/linechart/predata/LineChartPreDataMonthly.dart';
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/linechart/predata/LineChartPreDataWeekly.dart';
+import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/users/DetailLineChartPage.dart';
 import 'package:flutter_harpia_health_analysis/core/ResponsiveDesign.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestDoctor.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestPatient.dart';
@@ -23,6 +25,7 @@ import '../../../../util/PermissionUtils.dart';
 import '../../../../util/ProductColor.dart';
 import '../../../CustomWidgets/CheckBoxVisibleBloodResultContent.dart';
 import '../../../CustomWidgets/linechart/BaseLineChart.dart';
+import '../../../CustomWidgets/linechart/LineChart6Monthly.dart';
 import '../../../CustomWidgets/linechart/LineChartWeekly.dart';
 import '../../../CustomWidgets/linechart/predata/BaseLineChartPreData.dart';
 import '../appbar/AppBarCubit.dart';
@@ -55,73 +58,47 @@ class _HomePagePatientState extends State<HomePagePatient> {
   List<BloodResult> weeklyBloodResultList = [];
   List<BloodResult> monthlyBloodResultList = [];
   PatientTimer patientTimer = PatientTimer();
-  double aspectRadio = 1.50;
+  final double smallLineChartAspectRadio = 2.5;
+  final double smallLineChartHeight =ResponsiveDesign.getScreenHeight();
+  final double bigLineChartHeight =100;//ResponsiveDesign.getScreenHeight()-ResponsiveDesign.getScreenHeight()/3;
+  double bigLineChartAspectRadio = 1.8;
 
-  // bool listDataIsEmpty = false;
+  // bool listDataIsEmpty = false;4
   final CheckBoxVisibleBloodResultContent _checkBoxVisibleBloodResultContent =
       CheckBoxVisibleBloodResultContent();
   late BaseLineChartPreData _lineChartPreDataDaily;
   late BaseLineChartPreData _lineChartPreDataWeekly;
   late BaseLineChartPreData _lineChartPreDataMonthly;
+  late BaseLineChartPreData _lineChartPreData6Monthly;
 
   void updateActivatedLineChart(int selectedRadioValue) {
-    print("ILK GIRIS : $selectedRadioValue}");
     switch (selectedRadioValue) {
       case 1:
         activatedBaseLineChart = LineChartDaily(
             baseLineChartPreData: _lineChartPreDataDaily,
             checkBoxVisibleBloodResultContent:
                 _checkBoxVisibleBloodResultContent,
-            aspectRadio: aspectRadio);
-        print("AES updateActivatedLineChart GELDI $activatedBaseLineChart");
-        /*TODO burasi statelesswidget olarak eklencek
-        if (!assignEmptyLineChart(dailyBloodResultList)) {
-          activatedLineChartWidget = LineChartDaily(
-            baseLineChartPreData: _lineChartDataDaily,
-            checkBoxVisibleBloodResultContent:
-                _checkBoxVisibleBloodResultContent,
-          );
-        }*/
-        // _baseLineChartPreData =
-        //     LineChartDataDaily2(bloodResultList: dailyBloodResultList);
-        //
-        // print("DAILY  : $_baseLineChartPreData");
-        // print("dailyBloodResultList : ${dailyBloodResultList.length}");
-
+            aspectRadio: smallLineChartAspectRadio);
         break;
       case 2:
         activatedBaseLineChart = LineChartWeekly(
             baseLineChartPreData: _lineChartPreDataWeekly,
             checkBoxVisibleBloodResultContent:
                 _checkBoxVisibleBloodResultContent,
-            aspectRadio: aspectRadio);
-        // print("AES updateActivatedLineChart GELDI $activatedBaseLineChart");
-        /*    TODO burasi statelesswidget olarak eklencek
-           if (!assignEmptyLineChart(weeklyBloodResultList)) {
-          activatedLineChartWidget = LineChartWeekly(
-            baseLineChartPreData: _lineChartDataWeekly,
-            checkBoxVisibleBloodResultContent:
-                _checkBoxVisibleBloodResultContent,
-          );
-        }*/
+            aspectRadio: smallLineChartAspectRadio);
         break;
       case 3:
-        activatedBaseLineChart = LineChartWeekly(
+        activatedBaseLineChart = LineChartMonthly(
             baseLineChartPreData: _lineChartPreDataMonthly,
             checkBoxVisibleBloodResultContent:
                 _checkBoxVisibleBloodResultContent,
-            aspectRadio: aspectRadio);
-        /*TODO burasi statelesswidget olarak eklencek
-      if (!assignEmptyLineChart(monthlyBloodResultList)) {
-          activatedLineChartWidget = LineChartMonthly(
-              baseLineChartPreData: _lineChartDataMonthly,
-              checkBoxVisibleBloodResultContent:
-                  _checkBoxVisibleBloodResultContent);
-        }*/
+            aspectRadio: smallLineChartAspectRadio);
         break;
       case 4:
-        /*TODO burasi statelesswidget olarak eklencek
-          activatedLineChartWidget = null;*/
+        activatedBaseLineChart = LineChart6Monthly(
+          baseLineChartPreData: _lineChartPreDataMonthly,
+          checkBoxVisibleBloodResultContent: _checkBoxVisibleBloodResultContent,
+        );
         break;
     }
     setState(() {});
@@ -331,30 +308,39 @@ class _HomePagePatientState extends State<HomePagePatient> {
                           // _getPatientTimerButton(),
                           _getPatientTimerButton(),
                           SizedBox(
-                              width: ResponsiveDesign.getScreenWidth(),
-                              height: ResponsiveDesign.getScreenHeight() / 2,
-                              child: Container(
-                                // width: 500,
-                                // height: 500,
-                                // color: Colors.red,
-                                // child: activatedLineChartWidget ??
-                                child: activatedBaseLineChart ??
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        // getNotFoundRecordedDataText(),
-                                        Text(
-                                          "Here is not completed yet.",
-                                          style: TextStyle(
-                                              fontSize: ResponsiveDesign
-                                                      .getScreenWidth() /
-                                                  15),
-                                        ),
-                                        // const CircularProgressIndicator(),
-                                      ],
-                                    ),
-                              )),
+                              child: Column(
+                            children: [
+                              Container(
+                                width: ResponsiveDesign.getScreenWidth() -
+                                    ResponsiveDesign.getScreenWidth() / 3,
+                                height: ResponsiveDesign.getScreenHeight() / 20,
+                                child: ElevatedButton(
+                                    onPressed: () {
+                                      activatedBaseLineChart.aspectRadio=bigLineChartAspectRadio;
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  DetailLineChartPage(
+                                                    baseLineChart:
+                                                        activatedBaseLineChart,
+                                                  )));
+                                    },
+                                    child: Text(
+                                      "Detail LineChart",
+                                      style: TextStyle(
+                                          fontSize: ResponsiveDesign
+                                                  .getScreenHeight() /
+                                              40),
+                                    )),
+                              ),
+                              Container(
+                                  // width: ResponsiveDesign.getScreenWidth(),
+                                  height:
+                                      ResponsiveDesign.getScreenHeight() / 2,
+                                  child: activatedBaseLineChart),
+                            ],
+                          )),
                         ],
                       ),
                     )),
@@ -446,19 +432,17 @@ class _HomePagePatientState extends State<HomePagePatient> {
       resp.patientTimer.patientId = widget.patientId;
       sendRequestToSavePatientTimer(resp.patientTimer);
       // print("Savelenecek data : ${resp.patientTimer}");
-      patientTimer=resp.patientTimer;
+      patientTimer = resp.patientTimer;
       // retrievePatientTimerData();
       setState(() {});
     } else {
       String msg = "Patient Timer setup is cancelled";
-      print(msg);
       ScaffoldMessenger.of(context)
           .showSnackBar(CustomSnackBar.getSnackBar(msg));
     }
   }
 
   void sendRequestToSavePatientTimer(PatientTimer patientTimer) async {
-    // print("savelenecekd predata : $patientTimer");
     var resp = await HttpRequestDoctor.savePatientTimer(patientTimer);
     Map<String, dynamic> jsonData = json.decode(resp.body);
     var respEntity = ResponseEntity.fromJson(jsonData);
