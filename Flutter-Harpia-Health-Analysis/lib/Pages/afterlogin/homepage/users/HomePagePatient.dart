@@ -187,6 +187,18 @@ class _HomePagePatientState extends State<HomePagePatient> {
     // print(
     //     "Data's retrieved agian : daily item ${dailyBloodResultList[0]} / ${dailyBloodResultList[dailyBloodResultList.length - 1]}");
   }
+  @override
+  void deactivate() {
+    // TODO: implement deactivate
+    super.deactivate();
+    context.read<FcmNotificationCubit>().deactivateFcmNotifyPermission();
+  }
+  /*@override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    context.read<FcmNotificationCubit>().deactivateFcmNotifyPermission();
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -210,6 +222,7 @@ class _HomePagePatientState extends State<HomePagePatient> {
                 physics: const AlwaysScrollableScrollPhysics(),
                 child: Column(
                   children: [
+                    Text("counter $counter"),
                     Container(
                       height: ResponsiveDesign.getScreenHeight() / 9,
                       color: ProductColor.bodyBackground,

@@ -1,6 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_harpia_health_analysis/model/firebase/FcmData.dart';
 import 'package:flutter_harpia_health_analysis/model/firebase/FcmMessage.dart';
 import 'package:flutter_harpia_health_analysis/model/firebase/FcmNotificationCubit.dart';
 import 'package:flutter_harpia_health_analysis/util/CustomNotification.dart';
@@ -18,20 +19,26 @@ class FcmTokenUtils {
     return _token;
   }
 
-
   static listenFcm(BuildContext context) {
     try {
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
         // print('Got a message whilst in the foreground!');
         print('--> LISTEN GELDI data ! ${message.data}');
 
-          context.read<FcmNotificationCubit>().activateUpdatePatientLineChart();
+        context.read<FcmNotificationCubit>().activateUpdatePatientLineChart();
 
         // print('--> Got a message whilst in the foreground!$message');
         print('----> Message predata: ${message.data}');
 
         // CustomNotification.showNotification(message.predata);
-        parseMapToString(message.data);
+        FcmData fcmData = parseMapToFcmData(message.data);
+        if (fcmData.showNotification) {
+          print("---> fcmdata.showNotification : ${fcmData.showNotification}");
+          CustomNotificationUtil.showNotification(
+              fcmData.msgTitle, fcmData.msg);
+        } else {
+          print("---> fcmdata showNotification is FALSE : $fcmData");
+        }
         if (message.notification != null) {
           print(
               'Message also contained a notification: ${message.notification}');
@@ -42,7 +49,7 @@ class FcmTokenUtils {
     }
   }
 
-  static String parseMapToString(Map<String, dynamic> map) {
+  static FcmData parseMapToFcmData(Map<String, dynamic> map) {
     String data = "";
     for (var entry in map.entries) {
       print("entry.key : ${entry.key}");
@@ -52,10 +59,11 @@ class FcmTokenUtils {
     print("DATA : $data ");
     print("map : $map ");
     FcmMessage message = FcmMessageFactory.createFcmMessage(map);
-    print("FcmMessage : $message");
+    return message.fcmData;
+    /* print("FcmMessage : $message");
     CustomNotificationUtil.showNotification(
         message.fcmData.msgTitle, message.fcmData.msg);
-    return data;
+    return data;*/
   }
 
   static listenBackground() {

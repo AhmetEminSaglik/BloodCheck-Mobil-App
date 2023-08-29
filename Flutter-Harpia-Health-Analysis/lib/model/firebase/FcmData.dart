@@ -35,4 +35,6 @@ class FcmData {
   String get msgTitle => _msgTitle;
 
   String get url => _url;
+
+  bool get showNotification => _showNotification;
 }

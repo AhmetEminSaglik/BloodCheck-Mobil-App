@@ -14,7 +14,7 @@ class FcmNotificationCubit extends Cubit<bool> {
 
   void deactivateFcmNotifyPermission() {
     letPermissionFcmNotifyPatientPage = false;
-    emit(letPermissionFcmNotifyPatientPage);
+    // emit(letPermissionFcmNotifyPatientPage);
   }
 
   void activateUpdatePatientLineChart() {
