@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 public class CustomLog {
     static final String prefix = "---AES-DEV.-MODE---> :";
-    private final Logger log;//= LoggerFactory.getLogger(BloodResultParseManager.class);
+    private final Logger log;
 
     public CustomLog(Class clazz) {
         log = LoggerFactory.getLogger(clazz);

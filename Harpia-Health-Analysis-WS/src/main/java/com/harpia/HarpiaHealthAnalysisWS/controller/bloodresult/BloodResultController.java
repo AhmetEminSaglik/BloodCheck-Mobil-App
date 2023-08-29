@@ -1,8 +1,7 @@
-package com.harpia.HarpiaHealthAnalysisWS.controller.diabetic;
+package com.harpia.HarpiaHealthAnalysisWS.controller.bloodresult;
 
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.bloodresult.BloodResultParseService;
-import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.diabetic.BloodResultService;
-import com.harpia.HarpiaHealthAnalysisWS.business.concretes.InitialDataLoader;
+import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.bloodresult.BloodResultService;
 import com.harpia.HarpiaHealthAnalysisWS.model.bloodresult.BloodResult;
 import com.harpia.HarpiaHealthAnalysisWS.utility.CustomLog;
 import com.harpia.HarpiaHealthAnalysisWS.utility.exception.response.InvalidRequestedBloodResultDateException;
@@ -74,7 +73,6 @@ public class BloodResultController {
 
     @GetMapping("/patient/{patientId}/daily")
     public ResponseEntity<DataResult<List<BloodResult>>> retrieveDailyData(@PathVariable int patientId) {
-//        List<BloodResult> bloodResultList = findSixMonthBloodResultData(patientId).getBody().getData();
         int oneDayTotalMinutes = 60 * 24;
         List<BloodResult> bloodResultList = findAllBloodResultByPatientIdRequestedMinutes(patientId, oneDayTotalMinutes).getBody().getData();
         bloodResultList = parseService.parseToDaily(bloodResultList);
@@ -96,7 +94,6 @@ public class BloodResultController {
 
     @GetMapping("/patient/{patientId}/monthly")
     public ResponseEntity<DataResult<List<BloodResult>>> retrieveMonthlyData(@PathVariable int patientId) {
-//        List<BloodResult> bloodResultList = findSixMonthBloodResultData(patientId).getBody().getData();
         int oneMonthTotalMinutes = 60 * 24 * 30;
         List<BloodResult> bloodResultList = findAllBloodResultByPatientIdRequestedMinutes(patientId, oneMonthTotalMinutes).getBody().getData();
         bloodResultList = parseService.parseToMonthly(bloodResultList);

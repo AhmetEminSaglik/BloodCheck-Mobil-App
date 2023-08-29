@@ -4,7 +4,6 @@ public class FcmData {
     String url;
     String msgTitle;
     String msg;
-//    String dl;
 
     public String getUrl() {
         return url;
@@ -29,19 +28,13 @@ public class FcmData {
     public void setMsg(String msg) {
         this.msg = msg;
     }
-//    public String getDl() {
-//        return dl;
-//    }
-//
-//    public void setDl(String dl) {
-//        this.dl = dl;
-//    }
-/*
+
     @Override
     public String toString() {
         return "FcmData{" +
                 "url='" + url + '\'' +
-                ", dl='" + dl + '\'' +
+                ", msgTitle='" + msgTitle + '\'' +
+                ", msg='" + msg + '\'' +
                 '}';
-    }*/
+    }
 }

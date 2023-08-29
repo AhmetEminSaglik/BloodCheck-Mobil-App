@@ -1,18 +1,6 @@
 import 'package:flutter/material.dart';
 
 class ProductColor {
-/*  static bool _darkThemeActivated = false;
-
-  static void updateTheme({required bool darkThemeActivated}) {
-    _darkThemeActivated = darkThemeActivated;
-  }
-
-  static get backgroundColor =>
-      {_darkThemeActivated ? _productWhite : _productBlack};
-
-  static get textColor =>
-      {_darkThemeActivated ? _productWhite : _productBlack};*/
-
   static const _darkBlue = Color(0xff18344a);
   static const _black = Color(0xFF29293A);
   static const _white = Colors.white;

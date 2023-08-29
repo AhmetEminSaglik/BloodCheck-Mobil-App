@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter_harpia_health_analysis/exceptions/UnknowUserRoleIdException.dart';
 import 'package:flutter_harpia_health_analysis/model/user/Admin.dart';
 import 'package:flutter_harpia_health_analysis/model/user/Doctor.dart';

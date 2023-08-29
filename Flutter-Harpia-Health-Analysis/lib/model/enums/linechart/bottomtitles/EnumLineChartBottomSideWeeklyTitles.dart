@@ -1,11 +1,4 @@
 enum EnumLineChartBottomSideWeeklyTitles{
-/*  SUNDAY(id: 0, name: "SUN"),
-  MONDAY(id: 1, name: "MON"),
-  TUESDAY(id: 2, name: "TUES"),
-  WEDNESDAY(id: 3, name: "WED"),
-  THURSDAY(id: 4, name: "THURS"),
-  FRIDAY(id: 5, name: "FRI"),
-  SATURDAY(id: 6, name: "SAT");*/
   MONDAY(id: 0, name: "MON"),
   TUESDAY(id: 1, name: "TUE"),
   WEDNESDAY(id: 2, name: "WED"),

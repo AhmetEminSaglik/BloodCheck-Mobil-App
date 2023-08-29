@@ -5,6 +5,6 @@ class UnknowUserRoleIdException implements Exception {
 
   @override
   String toString() {
-    return "Unknow-Disease-Type-Exception: $msg";
+    return "Unknow-User-Role-Type-Exception: $msg";
   }
 }

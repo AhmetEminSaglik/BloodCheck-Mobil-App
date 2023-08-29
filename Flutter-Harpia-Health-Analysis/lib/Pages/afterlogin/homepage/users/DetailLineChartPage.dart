@@ -8,8 +8,7 @@ import '../appbar/AppBarCubit.dart';
 class DetailLineChartPage extends StatelessWidget {
   late final BaseLineChart baseLineChart;
 
-  DetailLineChartPage({required this.baseLineChart}); // bool visibleAppBar =
-  //     PermissionUtils.letRunForAdmin() || PermissionUtils.letRunForDoctor();
+  DetailLineChartPage({required this.baseLineChart});
 
   @override
   Widget build(BuildContext context) {

@@ -25,29 +25,10 @@ class LineChartPreDataDaily extends BaseLineChartPreData {
     }
   }
 
-  /*@override
-  void createLeftSideTitles() {}*/
-
   @override
   String toString() {
     return "LineChartPreDataDaily";
   }
-
-/*
-  @override
-  void setBloodListSubItemsFlSpotValue() {
-    bloodListSubItemsFlSpot.bloodResultList.forEach((tmp) {
-      bloodListSubItemsFlSpot.bloodSugarList
-          .add(getFlSpotOfItem(tmp.bloodSugar, tmp.createdAt));
-      bloodListSubItemsFlSpot.bloodPressureList
-          .add(getFlSpotOfItem(tmp.bloodPresure, tmp.createdAt));
-      bloodListSubItemsFlSpot.magnesiumList
-          .add(getFlSpotOfItem(tmp.magnesium, tmp.createdAt));
-      bloodListSubItemsFlSpot.calciumList
-          .add(getFlSpotOfItem(tmp.calcium, tmp.createdAt));
-    });
-  }
-*/
 
   @override
   double getItemFlSpotXValue({required DateTime itemCreatedAt}) {
@@ -57,14 +38,4 @@ class LineChartPreDataDaily extends BaseLineChartPreData {
     print("DAILY diffMinutes : $diffMinutes");
     return diffMinutes;
   }
-
-/*  void test(int titleLength, int remainedTime,int bottomTotalIndexValue, int resetTime, int passedCompletedTimeCounter){
-  for (int i = 0; i < titleLength; i++) {
-  bottomTitle.add(LineChartSideTitles(
-  index: bottomTotalIndexValue - (remainedTime + ((i) * resetTime)),
-  // 6 : 60/10, 8 : reset in each 8 hours
-  text: EnumLineChartBottomSideDailyTitles.getIndexName(
-  (passedCompletedTimeCounter - i) % titleLength)));
-  }
-  }*/
 }

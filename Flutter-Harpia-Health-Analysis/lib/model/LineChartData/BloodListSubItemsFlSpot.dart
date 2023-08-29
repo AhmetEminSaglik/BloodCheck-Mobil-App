@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 
-import '../diesease/BloodResult.dart';
+import '../bloodresult/BloodResult.dart';
+
 
 class BloodListSubItemsFlSpot {
   DateTime now = DateTime.now();

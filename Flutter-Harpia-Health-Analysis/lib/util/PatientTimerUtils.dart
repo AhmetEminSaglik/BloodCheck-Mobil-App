@@ -3,17 +3,10 @@ import 'package:flutter_harpia_health_analysis/model/specialitem/doctor/PatientT
 class PatientTimerUtils {
   static String getReadableFormat(PatientTimer timer) {
     String timeText = "";
-    timeText = _get2DigitStringValue(timer.hours) + ":";
+    timeText = "${_get2DigitStringValue(timer.hours)}:";
     timeText += _get2DigitStringValue(timer.minutes);
     return timeText;
   }
-
-  /*static String getHoursReadableFormat(PatientTimer patientTimer){
-    return _get2DigitStringValue(patientTimer.hours);
-  }
-  static String getMinutesReadableFormat(PatientTimer patientTimer){
-    return _get2DigitStringValue(patientTimer.minutes);
-  }*/
 
   static String _get2DigitStringValue(int val) {
     if (val ~/ 10 == 0) {

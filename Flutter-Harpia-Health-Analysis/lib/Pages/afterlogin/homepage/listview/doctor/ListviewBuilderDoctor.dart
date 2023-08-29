@@ -4,9 +4,7 @@ import 'package:flutter_harpia_health_analysis/model/user/Doctor.dart';
 import 'package:flutter_harpia_health_analysis/util/ProductColor.dart';
 import '../../../../../core/ResponsiveDesign.dart';
 import '../../../../../httprequest/HttpRequestDoctor.dart';
-import '../../../../../util/Utils.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../appbar/AppBarCubit.dart';
+import '../../../../../util/ListViewUtilItemColor.dart';
 
 class ListviewBuilderDoctor extends StatefulWidget {
   @override
@@ -79,7 +77,7 @@ Widget getBodyDoctorListview(List<Doctor> doctorList) {
                     routePage: HomePageDoctor(doctorId: doctorList[index].id));
               },
               child: Card(
-                color: CustomListViewItemColor.getBackgroundColor(index: index),
+                color: ListViewUtilItemColor.getBackgroundColor(index: index),
                 shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(15))),
                 child: Container(

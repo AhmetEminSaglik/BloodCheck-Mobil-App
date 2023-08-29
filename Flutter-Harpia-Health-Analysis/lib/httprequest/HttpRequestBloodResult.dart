@@ -1,11 +1,10 @@
 import 'dart:convert';
-import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_harpia_health_analysis/business/factory/BloodResultFactory.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/BaseHttpRequest.dart';
-import 'package:flutter_harpia_health_analysis/model/diesease/BloodResult.dart';
 import 'package:http/http.dart' as http;
-
+import '../model/bloodresult/BloodResult.dart';
 import '../model/user/Patient.dart';
 import '../util/HttpUtil.dart';
 import 'ResponseEntity.dart';
@@ -43,12 +42,8 @@ class HttpRequestBloodResult {
     Uri url = Uri.parse(_baseUrl);
     print("URL : $url");
     Map<String, dynamic> requestData = user.toJson();
-    print("to json  $requestData");
     var resp = await http.post(url,
         headers: HttpUtil.header, body: jsonEncode(requestData));
-    print('requestData : $requestData');
-    print('resp : $resp');
-    print('resp.body : ${resp.body}');
     return resp;
   }
 }

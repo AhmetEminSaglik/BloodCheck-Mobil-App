@@ -1,7 +1,7 @@
 import 'dart:convert';
+import 'package:flutter_harpia_health_analysis/business/factory/UserFactory.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/BaseHttpRequest.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/ResponseEntity.dart';
-import 'package:flutter_harpia_health_analysis/business/factory/UserFactory.dart';
 import 'package:flutter_harpia_health_analysis/model/specialitem/doctor/PatientTimer.dart';
 import 'package:flutter_harpia_health_analysis/model/user/Doctor.dart';
 import 'package:flutter_harpia_health_analysis/model/user/Patient.dart';
@@ -37,12 +37,8 @@ class HttpRequestDoctor {
     Uri url = Uri.parse("$_baseUrl");
     print("URL : $url");
     Map<String, dynamic> requestData = user.toJson();
-    print("to json  $requestData");
     var resp = await http.post(url,
         headers: HttpUtil.header, body: jsonEncode(requestData));
-    print('requestData : $requestData');
-    print('resp : $resp');
-    print('resp.body : ${resp.body}');
     return resp;
   }
 

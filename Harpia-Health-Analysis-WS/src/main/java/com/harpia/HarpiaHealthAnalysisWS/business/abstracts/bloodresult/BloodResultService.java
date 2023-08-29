@@ -1,4 +1,4 @@
-package com.harpia.HarpiaHealthAnalysisWS.business.abstracts.diabetic;
+package com.harpia.HarpiaHealthAnalysisWS.business.abstracts.bloodresult;
 
 import com.harpia.HarpiaHealthAnalysisWS.model.bloodresult.BloodResult;
 

@@ -7,8 +7,6 @@ import java.util.List;
 public interface PatientTimerService {
     PatientTimer save(PatientTimer patientTimer);
 
-//    PatientTimer update(PatientTimer patientTimer);
-
     PatientTimer findByPatientId(long patientId);
 
     List<PatientTimer> findAll();

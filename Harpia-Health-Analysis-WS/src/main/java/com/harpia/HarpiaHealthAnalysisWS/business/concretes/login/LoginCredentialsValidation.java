@@ -56,7 +56,7 @@ public class LoginCredentialsValidation implements LoginValidationService, Login
             log.info(error);
             return new ErrorDataResult<>(null, error);
         }
-        log.info("User Object is retrived by username and password from Database : " + user);
+        log.info("User Object is retrieved by username and password from Database : " + user);
         return new SuccessDataResult<>(user, "Login Successfull.");
     }
 }

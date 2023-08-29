@@ -1,7 +1,6 @@
 package com.harpia.HarpiaHealthAnalysisWS.business.concretes;
 
-import com.harpia.HarpiaHealthAnalysisWS.business.FakeSensors;
-import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.diabetic.BloodResultService;
+import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.bloodresult.BloodResultService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.diabetic.DiabeticService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.firebase.FcmTokenService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.user.UserRoleService;

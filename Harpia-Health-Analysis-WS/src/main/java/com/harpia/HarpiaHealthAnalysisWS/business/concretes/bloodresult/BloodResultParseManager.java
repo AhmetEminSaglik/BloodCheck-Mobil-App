@@ -16,19 +16,16 @@ public class BloodResultParseManager implements BloodResultParseService {
 
     @Override
     public List<BloodResult> parseToDaily(List<BloodResult> list) {
-//        LocalDateTime endTime = LocalDateTime.now().minusDays(1);
         return getSelectedDataToShow(list, 10);
     }
 
     @Override
     public List<BloodResult> parseToWeekly(List<BloodResult> list) {
-//        LocalDateTime endTime = LocalDateTime.now().minusDays(7);
         return getSelectedDataToShow(list, 60);
     }
 
     @Override
     public List<BloodResult> parseToMonthly(List<BloodResult> list) {
-//        LocalDateTime endTime = LocalDateTime.now().minusDays(30);
         return getSelectedDataToShow(list, 60 * 4);
     }
 
@@ -59,37 +56,27 @@ public class BloodResultParseManager implements BloodResultParseService {
         List<List<BloodResult>> brGroupList = new ArrayList<>();
         List<BloodResult> brGroup = new ArrayList<>();
         List<BloodResult> selectedData = new ArrayList<>();
-
-//        list.forEach(e -> log.info(e.toString()));
         int counterTimeMinus = 1;
         LocalDateTime startTime = LocalDateTime.now();
         LocalDateTime endTime = LocalDateTime.now().minusMinutes(tmpMinute * counterTimeMinus);
         for (int i = 0; i < list.size(); i++) {
-//            log.info("i : "+i+" / startTime : "+startTime+" / endTime "+endTime);
             if (list.get(i).getCreatedAt().isEqual(startTime) ||
                     list.get(i).getCreatedAt().isBefore(startTime) &&
                             list.get(i).getCreatedAt().isAfter(endTime)
             ) {
-//                log.info("IF  GIRDI > item : "+list.get(i));
                 brGroup.add(list.get(i));
                 if (i == list.size() - 1) {
-//                    log.info("IF > IF > : "+list.get(i));
                     brGroupList.add(brGroup);
                 }
             } else {
-//                log.info("ELSE >  : "+list.get(i));
                 i--;
                 counterTimeMinus++;
                 if (brGroup.size() > 0) {
-//                    log.info("ELSE > IF : "+list.get(i));
                     brGroupList.add(brGroup);
                     brGroup = new ArrayList<>();
                 }
                 startTime = endTime;
                 endTime = startTime.minusMinutes(tmpMinute);
-//                if (counterTimeMinus > 150) {
-//                    return null;
-//                }
             }
         }
         brGroupList.forEach(group -> {

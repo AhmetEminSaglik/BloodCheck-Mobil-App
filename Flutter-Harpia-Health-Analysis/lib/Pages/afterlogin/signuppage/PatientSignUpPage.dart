@@ -1,14 +1,13 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestPatient.dart';
-import 'package:flutter_harpia_health_analysis/model/diesease/EnumDiabeticType.dart';
 import 'package:flutter_harpia_health_analysis/model/userrole/EnumUserRole.dart';
 import 'package:flutter_harpia_health_analysis/util/CustomAlertDialog.dart';
 import '../../../business/factory/UserFactory.dart';
 import '../../../core/ResponsiveDesign.dart';
 import '../../../httprequest/HttpRequestDoctor.dart';
 import '../../../httprequest/ResponseEntity.dart';
+import '../../../model/enums/diabetic/EnumDiabeticType.dart';
 import '../../../model/user/Doctor.dart';
 import '../../../model/user/Patient.dart';
 import '../../../model/user/User.dart';

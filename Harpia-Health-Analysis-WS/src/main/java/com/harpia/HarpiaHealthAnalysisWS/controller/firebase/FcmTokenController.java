@@ -22,7 +22,6 @@ public class FcmTokenController {
 
     @PostMapping
     public ResponseEntity<DataResult<FcmToken>> save(@RequestBody FcmToken newFcmToken) {
-        log.warn(" 3333 BU MU BOS : tokenService " + service);
         FcmToken fcmToken = service.findByPatientId(newFcmToken.getPatientId());
         DataResult dataResult;
         if (fcmToken == null) {
@@ -44,7 +43,6 @@ public class FcmTokenController {
 
     @GetMapping("/patient/{id}")
     public ResponseEntity<DataResult<FcmToken>> findTokenByPatientId(@PathVariable long id) {
-        log.warn(" 1111 BU MU BOS : tokenService " + service);
         FcmToken fcmToken = service.findByPatientId(id);
         String msg = "FcmToken is retrived by patient ID=" + id;
         DataResult dataResult = new SuccessDataResult(fcmToken, msg);

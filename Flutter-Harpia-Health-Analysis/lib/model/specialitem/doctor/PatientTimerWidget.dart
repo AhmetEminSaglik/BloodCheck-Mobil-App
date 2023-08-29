@@ -18,7 +18,6 @@ class PatientTimerWidget extends StatefulWidget {
   PatientTimer get patientTimer => _patientTimer;
   /*TODO Istenirse patient'indirek kayitli timeri cekilir ve ekrana o bastirilir.
      *  Eger bunu eklersem, doctor sureyi degistirmeyi kaydetmeye calistigi zamanda zaten kayitli degil istek atmam, server gereksiz mesgul olmaz.
-  *
   * */
 }
 
@@ -35,7 +34,6 @@ class _PatientTimerWidgetState extends State<PatientTimerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    // minuteCont.
     animateItemToRequestedIndex(
         showAnimatin: false, cont: minuteCont, index: 10);
     animateItemToRequestedIndex(showAnimatin: false, cont: hourCont, index: 10);

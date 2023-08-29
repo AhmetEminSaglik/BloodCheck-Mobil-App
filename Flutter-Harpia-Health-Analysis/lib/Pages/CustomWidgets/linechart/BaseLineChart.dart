@@ -1,10 +1,8 @@
 import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/linechart/predata/BaseLineChartPreData.dart';
-
 import '../../../core/ResponsiveDesign.dart';
-import '../../../model/diesease/EnumBloodResultContent.dart';
+import '../../../model/enums/bloodresult/EnumBloodResultContent.dart';
 import '../../../util/ProductColor.dart';
 import '../CheckBoxVisibleBloodResultContent.dart';
 
@@ -61,7 +59,6 @@ abstract class BaseLineChart extends StatelessWidget {
         ),
       );
     }
-    // return const Text("-");
     return Container();
   }
 
@@ -86,7 +83,6 @@ abstract class BaseLineChart extends StatelessWidget {
         ),
       );
     }
-    // return const Text("-");
     return Container();
   }
 
@@ -124,40 +120,6 @@ abstract class BaseLineChart extends StatelessWidget {
     );
   }
 
-/*  @override
-
-  Widget build(BuildContext context) {
-    updateVisibleValues();
-    return Scaffold(
-      // backgroundColor:ProductColor.bodyBackgroundLight,
-      body: Column(
-        children: [
-          showDataNotFoundText(),
-          showExtraMsgTopOfLineChart(msg: _extraMsg),
-          Padding(
-            padding: EdgeInsets.only(top: ResponsiveDesign.getScreenHeight() / 55),
-            child: Container(
-              color: Colors.lightGreenAccent,
-              // height: 100,
-              // width:  ResponsiveDesign.getScreenWidth(),
-              width:  ResponsiveDesign.getScreenWidth(),
-              child: AspectRatio(
-                aspectRatio: _aspectRadio, //1.30,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                      right: ResponsiveDesign.getScreenWidth() / 10,
-                      top: ResponsiveDesign.getScreenWidth() / 10),
-                  child: LineChart(
-                      getLineChartData()), //LineChart(lineChartData()),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }*/
-
   LineChartData getLineChartData();
 
   bool get showFlDotData => _showFlDotData;
@@ -180,64 +142,10 @@ abstract class BaseLineChart extends StatelessWidget {
     _aspectRadio = value;
   }
 
-  /*LineChartData lineChartData() {
-    return LineChartData(
-        borderData: FlBorderData(border: Border.all(color: Colors.white)),
-        minX: -1,
-        maxX: 144,
-        minY: -1,
-        maxY: 200,
-        gridData: FlGridData(
-            show: true,
-            getDrawingHorizontalLine: (value) {
-              return value == 0
-                  ? FlLine(color: Colors.black, strokeWidth: 3)
-                  : FlLine(strokeWidth: 0);
-            },
-            getDrawingVerticalLine: (value) {
-              return value == 0
-                  ? FlLine(color: Colors.black, strokeWidth: 3)
-                  : FlLine(strokeWidth: 0);
-            }),
-        titlesData: FlTitlesData(
-          leftTitles: AxisTitles(
-            sideTitles: SideTitles(
-                reservedSize: ResponsiveDesign.getScreenWidth() / 10,
-                showTitles: true,
-                interval: 1,
-                getTitlesWidget: leftTiles),
-          ),
-          bottomTitles: AxisTitles(
-            sideTitles: SideTitles(
-                reservedSize: ResponsiveDesign.getScreenHeight() / 40,
-                interval: 1,
-                showTitles: true,
-                getTitlesWidget: bottomTiles),
-          ),
-          topTitles:
-              const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-          rightTitles:
-              const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-        ),
-        lineBarsData: [
-          isVisibleBloodSugar
-              ? _getBloodSugarLineChartBarData()
-              : LineChartBarData(),
-          isVisibleBloodPressure
-              ? _getBloodPressureLineChartBarData()
-              : LineChartBarData(),
-          isVisibleCalcium ? _getCalciumLineChartBarData() : LineChartBarData(),
-          isVisibleMagnesium
-              ? _getMagnesiumLineChartBarData()
-              : LineChartBarData(),
-        ]);
-  }*/
-
   LineChartBarData getBloodSugarLineChartBarData() {
     List<FlSpot> spotsBloodSugar = [];
-    for (FlSpot tmp in
-        // ._customLineChartData.bloodListSubItems.bloodSugarResultListFlSpot) {
-        _baseLineChartPreData.bloodListSubItemsFlSpot.bloodSugarList) {
+    for (FlSpot tmp
+        in _baseLineChartPreData.bloodListSubItemsFlSpot.bloodSugarList) {
       spotsBloodSugar.add(tmp);
     }
 
@@ -247,9 +155,8 @@ abstract class BaseLineChart extends StatelessWidget {
 
   LineChartBarData getBloodPressureLineChartBarData() {
     List<FlSpot> spotsBloodPressure = [];
-    for (FlSpot tmp in
-        // ._customLineChartData.bloodListSubItems.bloodPressureResultListFlSpot) {
-        _baseLineChartPreData.bloodListSubItemsFlSpot.bloodPressureList) {
+    for (FlSpot tmp
+        in _baseLineChartPreData.bloodListSubItemsFlSpot.bloodPressureList) {
       spotsBloodPressure.add(tmp);
     }
 
@@ -260,9 +167,8 @@ abstract class BaseLineChart extends StatelessWidget {
 
   LineChartBarData getMagnesiumLineChartBarData() {
     List<FlSpot> spotsBloodPressure = [];
-    for (FlSpot tmp in
-        // ._customLineChartData.bloodListSubItems.magnesiumResultListFlSpot) {
-        _baseLineChartPreData.bloodListSubItemsFlSpot.magnesiumList) {
+    for (FlSpot tmp
+        in _baseLineChartPreData.bloodListSubItemsFlSpot.magnesiumList) {
       spotsBloodPressure.add(tmp);
     }
 
@@ -273,10 +179,8 @@ abstract class BaseLineChart extends StatelessWidget {
 
   LineChartBarData getCalciumLineChartBarData() {
     List<FlSpot> spotsBloodPressure = [];
-    for (FlSpot tmp in
-        // ._customLineChartData.bloodListSubItems.calciumResultListFlSpot) {
-        _baseLineChartPreData.bloodListSubItemsFlSpot.calciumList) {
-      // print("gelen calcium degeri : $tmp}");
+    for (FlSpot tmp
+        in _baseLineChartPreData.bloodListSubItemsFlSpot.calciumList) {
       spotsBloodPressure.add(tmp);
     }
 
@@ -324,34 +228,6 @@ abstract class BaseLineChart extends StatelessWidget {
       textAlign: TextAlign.left,
     );
   }
-
-  /*Widget leftTiles(double value, TitleMeta meta) {
-    String text;
-    switch (value.toInt()) {
-      case 10:
-        text = '10';
-        break;
-      case 50:
-        text = '50';
-        break;
-      case 100:
-        text = '100';
-        break;
-      case 150:
-        text = '150';
-        break;
-      case 200:
-        text = '200';
-        break;
-      default:
-        return const Text("");
-    }
-    return Text(
-      text,
-      style: axisTextStyle(),
-      textAlign: TextAlign.left,
-    );
-  }*/
 
   TextStyle axisTextStyle() {
     return const TextStyle(

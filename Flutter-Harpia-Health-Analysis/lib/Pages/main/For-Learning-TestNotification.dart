@@ -103,7 +103,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Notification"),
+        title: const Text("Notification"),
         backgroundColor: Theme.of(context).colorScheme.primary,
       ),
       body: Center(
@@ -114,12 +114,12 @@ class _HomePageState extends State<HomePage> {
                 onPressed: () {
                   showNotification();
                 },
-                child: Text("Create Notification")),
+                child: const Text("Create Notification")),
             ElevatedButton(
                 onPressed: () {
                   showDelayedNotification();
                 },
-                child: Text("Create Notification-LATE")),
+                child: const Text("Create Notification-LATE")),
           ],
         ),
       ),

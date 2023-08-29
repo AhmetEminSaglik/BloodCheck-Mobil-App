@@ -37,11 +37,8 @@ public class PatientTimerController {
             newPatientTimer.setHours(patientTimer.getHours());
             newPatientTimer.setMinutes(patientTimer.getMinutes());
             newPatientTimer = service.save(newPatientTimer);
-//            newPatientTimer = service.update(newPatientTimer);
             msg = "Patient Timer is updated";
-
         }
-//        timer = service.save(timer);
         DataResult result = new SuccessDataResult(newPatientTimer, msg);
         log.info("RESULT : " + result);
         return ResponseEntity.status(HttpStatus.CREATED).body(result);

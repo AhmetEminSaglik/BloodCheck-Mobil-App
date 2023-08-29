@@ -1,5 +1,4 @@
 import 'package:fl_chart/fl_chart.dart';
-import 'package:fl_chart/src/chart/line_chart/line_chart_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/linechart/BaseLineChart.dart';
 
@@ -18,11 +17,9 @@ class LineChartDaily extends BaseLineChart {
   LineChartData getLineChartData() {
     showFlDotData = true;
     return LineChartData(
-        // baselineY:baseLineChartPreData.lineChartMinY-1,
         borderData: FlBorderData(border: Border.all(color: Colors.white)),
         minX: -1,
         maxX: rangeIndex,
-        // minY: baseLineChartPreData.lineChartMinY,
         minY: -1,
         maxY: baseLineChartPreData.lineChartMaxY.toDouble() + 1,
         gridData: FlGridData(

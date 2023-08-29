@@ -27,14 +27,4 @@ class FcmData {
   String get msgTitle => _msgTitle;
 
   String get url => _url;
-
-/*
-  @override
-  String toString() {
-    return 'FcmData{_url: $_url, _dl: $_dl}';
-  }
-
-  String get dl => _dl;
-
-  String get url => _url;*/
 }

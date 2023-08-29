@@ -9,10 +9,6 @@ class PatientTimer {
     _patientId = patientId;
   }
 
-  // PatientTimer({required hours,required minutes,required patientId});
-
-  // PatientTimer();
-
   int get hours => _hours;
 
   set hours(int value) {

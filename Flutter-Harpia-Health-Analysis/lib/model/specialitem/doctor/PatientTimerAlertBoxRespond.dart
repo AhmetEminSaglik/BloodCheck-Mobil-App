@@ -4,10 +4,6 @@ class PatientTimerAlertBoxRespond {
   late bool _result;
   late PatientTimer _patientTimer;
 
-/*  PatientTimerAlertBoxRespond({required result}) {
-    _result = _result;
-  }*/
-
   PatientTimerAlertBoxRespond({required result, required patientTimer}) {
     _result = result;
     _patientTimer = patientTimer;

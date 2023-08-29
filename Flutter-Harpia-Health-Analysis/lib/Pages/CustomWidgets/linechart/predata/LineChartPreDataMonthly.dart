@@ -8,7 +8,6 @@ class LineChartPreDataMonthly extends BaseLineChartPreData {
 
   @override
   void createBottomSideTitles() {
-    // print("---->  $rangeTotalIndexValue");
     int monthlyTotalIndexValue = rangeTotalIndexValue;
     double day = now.day.toDouble();
     int hour = now.hour;
@@ -26,9 +25,6 @@ class LineChartPreDataMonthly extends BaseLineChartPreData {
               (passedWeekCounter - i) % monthlyTitleLength)));
     }
   }
-/*
-  @override
-  void createLeftSideTitles() {}*/
 
   @override
   String toString() {
@@ -41,23 +37,6 @@ class LineChartPreDataMonthly extends BaseLineChartPreData {
     Duration diff = now.difference(itemCreatedAt);
     double diffHours = (rangeTotalIndexValue - diff.inHours / 4)
         .toDouble(); // each 4 hours, add a new bloodResult Data
-    print("MONTHLY rangeTotalIndexValue : $rangeTotalIndexValue");
-    print("MONTHLY diffHours : $diffHours");
-
-    /*   Duration diff = now.difference(itemCreatedAt);
-    double diffHours = (monthlyTotalIndexValue - diff.inHours / 4)
-        .toDouble(); // each 4 hours, add a new bloodResult Data
-    return diffHours;*/
     return diffHours;
   }
-
-/*  void test(int titleLength, int remainedTime,int bottomTotalIndexValue, int resetTime, int passedCompletedTimeCounter){
-  for (int i = 0; i < titleLength; i++) {
-  bottomTitle.add(LineChartSideTitles(
-  index: bottomTotalIndexValue - (remainedTime + ((i) * resetTime)),
-  // 6 : 60/10, 8 : reset in each 8 hours
-  text: EnumLineChartBottomSideDailyTitles.getIndexName(
-  (passedCompletedTimeCounter - i) % titleLength)));
-  }
-  }*/
 }

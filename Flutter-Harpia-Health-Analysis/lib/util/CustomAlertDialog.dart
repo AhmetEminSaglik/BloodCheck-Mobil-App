@@ -1,13 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_harpia_health_analysis/core/ResponsiveDesign.dart';
 import 'package:flutter_harpia_health_analysis/model/specialitem/doctor/PatientTimer.dart';
 import 'package:flutter_harpia_health_analysis/model/specialitem/doctor/PatientTimerAlertBoxRespond.dart';
 import 'package:flutter_harpia_health_analysis/model/userrole/EnumUserRole.dart';
 import 'package:flutter_harpia_health_analysis/util/ProductColor.dart';
-
 import '../model/specialitem/doctor/PatientTimerWidget.dart';
-import '../model/user/User.dart';
 
 class CustomAlertDialog {
   static AlertDialog getAlertDialogUserSignUp(

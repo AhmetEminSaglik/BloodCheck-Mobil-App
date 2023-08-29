@@ -35,77 +35,6 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController tfUsername = TextEditingController();
   TextEditingController tfPassword = TextEditingController();
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  // getData();
-  // FcmTokenUtils.createToken();
-  // print(FcmTokenUtils.getToken());
-  // listenFcm();
-  // listenBackground();
-  // }
-
-  /* createToken() async {
-    token = (await FirebaseMessaging.instance.getToken())!;
-    print("TOKENT : $token");
-  }*/
-
-/*  listenFcm() {
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print('Got a message whilst in the foreground!');
-      print('Message predata: ${message.predata}');
-
-      if (message.notification != null) {
-        print('Message also contained a notification: ${message.notification}');
-      }
-    });
-  }*/
-
-/*  listenBackground() {
-    FirebaseMessaging.onBackgroundMessage((message) {
-      return backgroundHandler(message);
-    });
-  }
-
-  Future<void> backgroundHandler(RemoteMessage message) async {
-    print('Got a message whilst in the background!');
-    print('Message predata: ${message.predata}');
-
-    if (message.notification != null) {
-      print('Message also contained a notification: ${message.notification}');
-    }
-  }*/
-
-/*
-  getData() {
-    FirebaseMessaging.instance
-        .getToken()
-        .then((value) => print("Token : $value"));
-
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print('Got a message whilst in the foreground!');
-      print('Message predata: ${message.predata}');
-
-      if (message.notification != null) {
-        print('Message also contained a notification: ${message.notification}');
-      }
-    });
-
-    FirebaseMessaging.onBackgroundMessage((message) {
-    return backgroundHandler(message);
-    });
-  }
-
-  Future<void> backgroundHandler(RemoteMessage message) async {
-    print('Got a message whilst in the background!');
-    print('Message predata: ${message.predata}');
-
-    if (message.notification != null) {
-      print('Message also contained a notification: ${message.notification}');
-    }
-  }
-*/
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -230,7 +159,6 @@ class _InputTextFormField extends StatelessWidget {
         if (data.length > _TextFieldInputLength.max) {
           return "Please enter ${_TextFieldInputLength.max} or less  character";
         }
-        // return null;
       },
       decoration: InputDecoration(
           labelText: hint,

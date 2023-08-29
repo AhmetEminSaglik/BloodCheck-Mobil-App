@@ -1,6 +1,3 @@
-
-import 'dart:ffi';
-
 import 'User.dart';
 
 class Doctor extends User {

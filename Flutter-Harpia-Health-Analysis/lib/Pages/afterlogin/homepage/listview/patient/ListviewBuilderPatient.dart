@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestDoctor.dart';
-import 'package:flutter_harpia_health_analysis/util/Utils.dart';
 import '../../../../../core/ResponsiveDesign.dart';
 import '../../../../../httprequest/HttpRequestPatient.dart';
-import '../../../../../model/diesease/EnumDiabeticType.dart';
+import '../../../../../model/enums/diabetic/EnumDiabeticType.dart';
 import '../../../../../model/user/Patient.dart';
+import '../../../../../util/ListViewUtilItemColor.dart';
 import '../../../../../util/ProductColor.dart';
 import '../../users/HomePagePatient.dart';
 
@@ -91,7 +91,7 @@ Widget getBodyForPatientListView(List<Patient> patientList) {
                             "${patientList[index].name} ${patientList[index].lastname}"));
               },
               child: Card(
-                color: CustomListViewItemColor.getBackgroundColor(index: index),
+                color: ListViewUtilItemColor.getBackgroundColor(index: index),
                 shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(15))
                     /*borderRadius: BorderRadius.only(

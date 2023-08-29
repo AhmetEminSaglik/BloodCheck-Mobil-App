@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/linechart/LineChartDaily.dart';
@@ -11,14 +10,14 @@ import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/users/D
 import 'package:flutter_harpia_health_analysis/core/ResponsiveDesign.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestDoctor.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestPatient.dart';
-import 'package:flutter_harpia_health_analysis/model/diesease/BloodResult.dart';
 import 'package:flutter_harpia_health_analysis/model/specialitem/doctor/PatientTimer.dart';
 import 'package:flutter_harpia_health_analysis/model/specialitem/doctor/PatientTimerWidget.dart';
 import 'package:flutter_harpia_health_analysis/util/PatientTimerUtils.dart';
 import '../../../../httprequest/HttpRequestBloodResult.dart';
 import '../../../../httprequest/ResponseEntity.dart';
-import '../../../../model/diesease/CheckboxBloodResult.dart';
-import '../../../../model/diesease/EnumBloodResultContent.dart';
+import '../../../../model/bloodresult/BloodResult.dart';
+import '../../../../model/bloodresult/CheckboxBloodResultSubItem.dart';
+import '../../../../model/enums/bloodresult/EnumBloodResultContent.dart';
 import '../../../../util/CustomAlertDialog.dart';
 import '../../../../util/CustomSnackBar.dart';
 import '../../../../util/PermissionUtils.dart';

@@ -1,4 +1,5 @@
-import 'package:flutter_harpia_health_analysis/model/diesease/BloodResult.dart';
+
+import '../../model/bloodresult/BloodResult.dart';
 
 class BloodResultFactory {
   static List<BloodResult> createBloodResultList(List<dynamic> json) {

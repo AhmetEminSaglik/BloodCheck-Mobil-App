@@ -1,6 +1,6 @@
-package com.harpia.HarpiaHealthAnalysisWS.business.concretes.diabetic;
+package com.harpia.HarpiaHealthAnalysisWS.business.concretes.bloodresult;
 
-import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.diabetic.BloodResultService;
+import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.bloodresult.BloodResultService;
 import com.harpia.HarpiaHealthAnalysisWS.dataaccess.diabetic.BloodResultRepository;
 import com.harpia.HarpiaHealthAnalysisWS.model.bloodresult.BloodResult;
 import org.springframework.beans.factory.annotation.Autowired;

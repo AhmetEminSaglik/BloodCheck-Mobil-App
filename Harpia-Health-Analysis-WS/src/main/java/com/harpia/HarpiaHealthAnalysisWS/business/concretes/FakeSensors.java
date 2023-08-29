@@ -1,19 +1,16 @@
-package com.harpia.HarpiaHealthAnalysisWS.business;
+package com.harpia.HarpiaHealthAnalysisWS.business.concretes;
 
-import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.diabetic.BloodResultService;
+import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.bloodresult.BloodResultService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.firebase.FcmNotificationService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.firebase.FcmTokenService;
 import com.harpia.HarpiaHealthAnalysisWS.business.concretes.firebase.FcmManager;
 import com.harpia.HarpiaHealthAnalysisWS.business.concretes.firebase.FcmNotificationManager;
-import com.harpia.HarpiaHealthAnalysisWS.business.concretes.signup.SignupUser;
 import com.harpia.HarpiaHealthAnalysisWS.model.bloodresult.BloodResult;
 import com.harpia.HarpiaHealthAnalysisWS.model.firebase.FcmData;
 import com.harpia.HarpiaHealthAnalysisWS.model.firebase.FcmMessage;
 import com.harpia.HarpiaHealthAnalysisWS.model.firebase.FcmNotification;
 import com.harpia.HarpiaHealthAnalysisWS.model.timer.PatientTimer;
 import com.harpia.HarpiaHealthAnalysisWS.utility.CustomLog;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.awt.*;

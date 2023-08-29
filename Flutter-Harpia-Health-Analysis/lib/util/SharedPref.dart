@@ -1,4 +1,4 @@
-import 'package:flutter_harpia_health_analysis/model/EnumUserProp.dart';
+import 'package:flutter_harpia_health_analysis/model/enums/user/EnumUserProp.dart';
 import 'package:flutter_harpia_health_analysis/model/firebase/FcmToken.dart';
 import 'package:flutter_harpia_health_analysis/model/userrole/EnumUserRole.dart';
 import 'package:flutter_harpia_health_analysis/util/FcmTokenUtils.dart';
@@ -13,9 +13,9 @@ class SharedPref {
 
   static Future<void> setLoginDataUser(User user) async {
     await initiliazeSharedPref();
-    // _printSP();
+    _printSP();
     _addDataToSP(user);
-    // _printSP();
+    _printSP();
   }
 
   static Future<SharedPreferences> initiliazeSharedPref() async {
@@ -34,7 +34,8 @@ class SharedPref {
     _sp.setString(EnumUserProp.LASTNAME.name, user.lastname);
 
     if (SharedPrefUtils.getRoleId() == EnumUserRole.PATIENT.roleId) {
-      FcmToken fcmToken = FcmToken(patientId: SharedPrefUtils.getUserId(),
+      FcmToken fcmToken = FcmToken(
+          patientId: SharedPrefUtils.getUserId(),
           token: FcmTokenUtils.getToken());
       HttpRequestFirebase.saveToken(fcmToken);
     }

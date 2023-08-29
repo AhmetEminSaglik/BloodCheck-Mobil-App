@@ -25,14 +25,6 @@ class LineChartPreDataWeekly extends BaseLineChartPreData {
     }
   }
 
-/* @override
-  void createLeftSideTitles() {
-    leftTitle.add(LineChartSideTitle(index: 50, text:" text 50 "));
-    leftTitle.add(LineChartSideTitle(index: 100, text:" text 100 "));
-    leftTitle.add(LineChartSideTitle(index: 150, text:" text 150 "));
-
-  }*/
-
   @override
   String toString() {
     // TODO: implement toString
@@ -43,18 +35,6 @@ class LineChartPreDataWeekly extends BaseLineChartPreData {
   double getItemFlSpotXValue({required DateTime itemCreatedAt}) {
     Duration diff = now.difference(itemCreatedAt);
     double diffHours = (rangeTotalIndexValue - diff.inHours).toDouble();
-    print("WEEKLY rangeTotalIndexValue : $rangeTotalIndexValue");
-    print("WEEKLY diffHours : $diffHours");
     return diffHours;
   }
-
-/*  void test(int titleLength, int remainedTime,int bottomTotalIndexValue, int resetTime, int passedCompletedTimeCounter){
-  for (int i = 0; i < titleLength; i++) {
-  bottomTitle.add(LineChartSideTitles(
-  index: bottomTotalIndexValue - (remainedTime + ((i) * resetTime)),
-  // 6 : 60/10, 8 : reset in each 8 hours
-  text: EnumLineChartBottomSideDailyTitles.getIndexName(
-  (passedCompletedTimeCounter - i) % titleLength)));
-  }
-  }*/
 }

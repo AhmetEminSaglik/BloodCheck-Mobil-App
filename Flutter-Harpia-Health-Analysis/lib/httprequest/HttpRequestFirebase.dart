@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter_harpia_health_analysis/httprequest/BaseHttpRequest.dart';
 import 'package:flutter_harpia_health_analysis/util/HttpUtil.dart';
 import 'package:http/http.dart' as http;
-
 import '../model/firebase/FcmToken.dart';
 
 class HttpRequestFirebase {
@@ -14,7 +13,6 @@ class HttpRequestFirebase {
     print("URL : ${url}");
     print("REQUEST TOKEN :  : ${fcmToken.token}");
 
-    // var requestData = {"username": username, "password": password};
     Map<String, dynamic> requestData = {
       "patientId": fcmToken.patientId,
       "token": fcmToken.token,

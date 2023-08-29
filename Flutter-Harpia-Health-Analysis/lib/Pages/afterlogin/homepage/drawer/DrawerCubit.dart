@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/users/HomePage.dart';
-
-import '../../../../model/EnumUserProp.dart';
+import '../../../../model/enums/user/EnumUserProp.dart';
 import '../../../../model/userrole/EnumUserRole.dart';
 import '../../../../util/SharedPref.dart';
 import '../../../../util/Utils.dart';

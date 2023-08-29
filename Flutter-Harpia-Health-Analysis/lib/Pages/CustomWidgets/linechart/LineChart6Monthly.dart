@@ -1,9 +1,5 @@
 import 'package:fl_chart/fl_chart.dart';
-import 'package:fl_chart/src/chart/line_chart/line_chart_data.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/linechart/BaseLineChart.dart';
-
-import '../../../core/ResponsiveDesign.dart';
 
 class LineChart6Monthly extends BaseLineChart {
   double rangeIndex = 180;
@@ -15,7 +11,6 @@ class LineChart6Monthly extends BaseLineChart {
       : super(aspectRadio: aspectRadio) {
     extraMsg = "Not Completed Yet";
   }
-
 
   @override
   LineChartData getLineChartData() {
