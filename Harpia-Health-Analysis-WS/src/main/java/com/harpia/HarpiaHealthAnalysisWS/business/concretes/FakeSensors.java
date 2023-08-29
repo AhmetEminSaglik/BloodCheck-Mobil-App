@@ -121,7 +121,23 @@ public class FakeSensors {
                     bloodResult.setPatientId(6); // patient id
                     bloodResultService.save(bloodResult);
                     log.info("Runnabledayiz : BloodResult : " + bloodResult);
-                    sendFcmNotificationOutOfBoundsBloodResult(bloodResult);
+                    sendFcmNotificationBloodResult(bloodResult);
+                  /*  List<String> bloodResultSubItemNames = new ArrayList<>();
+                    bloodResultSubItemNames.add("BloodSugar");
+                    bloodResultSubItemNames.add("BloodPressure");
+                    bloodResultSubItemNames.add("Calcium");
+                    bloodResultSubItemNames.add("Magnesium");
+
+                    List<Integer> bloodResulListValues = new ArrayList<>();
+                    bloodResulListValues.add(bloodResult.getBloodSugar());
+                    bloodResulListValues.add(bloodResult.getBloodPressure());
+                    bloodResulListValues.add(bloodResult.getCalcium());
+                    bloodResulListValues.add(bloodResult.getMagnesium());
+                    try {
+                        sendFcmNotification(bloodResultSubItemNames, bloodResulListValues);
+                    } catch (Exception e) {
+                        log.error("EXCEPTION OCCURED : " + e.getMessage());
+                    }*/
                     counter++;
 
                 } else {
@@ -135,8 +151,67 @@ public class FakeSensors {
     FcmManager fcmService = new FcmManager();
     //    @Autowired
 
+    void sendFcmNotification(List<String> bloodResultItemNames, List<Integer> bloodResultItemValues) {
+        StringBuffer notificationBody = new StringBuffer();
+        boolean high = false;
+        boolean low = false;
+        for (int i = 0; i < bloodResultItemValues.size(); i++) {
+            if (bloodResultItemValues.get(i) > HighRangeBound) {
+                high = true;
+                log.info("sendFcmNotification  : tmp  IS  HighRangeBound ");
+                notificationBody.append(bloodResultItemNames.get(i) + " : " + bloodResultItemValues.get(i) + "; ");
+            } else if (bloodResultItemValues.get(i) < NormalRangeBound) {
+                low = true;
+                log.info("sendFcmNotification  : tmp IS  LowRangeBound ");
+                notificationBody.append(bloodResultItemNames.get(i) + " : " + bloodResultItemValues.get(i) + "; ");
+            } else {
+                log.info("sendFcmNotification  : tmp IS NormalRangeBound ");
+            }
+        }
+        StringBuffer notificationTitle = new StringBuffer("DANGEROUS");
+        if (high) {
+            notificationTitle.append(fcmNotificationService.generateTextWithHtmlColor("HIGH", Color.RED));
+        }
+        if (low) {
+            notificationTitle.append(fcmNotificationService.generateTextWithHtmlColor("LOW", Color.BLUE));
+        }
+        FcmMessage fcmMessage = createFcmMessage(notificationTitle.toString(), notificationBody.toString());
+        if (high || low) {
+            log.info("IF GIRDI :"+high+" ; LOW "+low);
+            log.info("BEFORE SHOW : "+fcmMessage.getData().isShowNotification());
+            fcmMessage.getData().setShowNotification(true);
+            log.info("AFTER  SHOW : "+fcmMessage.getData().isShowNotification());
+        }else{
+            log.info("ELSEYE GIRDI HIGH:"+high+" ; LOW "+low);
+        }
+        fcmService.sendFcmNotification(fcmMessage);
+    }
 
-    void sendFcmNotificationOutOfBoundsBloodResult(BloodResult bloodResult) {
+    FcmMessage createFcmMessage(String title, String body) {
+
+        FcmData fcmData = new FcmData();
+//        fcmData.setShowNotification(true);
+//        fcmData.setMsgTitle("DANGEROUS : Some Blood Result is too LOW");
+//        String textDangerous = "DANGEROUS";
+//        textDangerous = fcmNotificationService.generateTextWithHtmlColor(textDangerous, Color.BLUE);
+        fcmData.setMsgTitle(title);
+        fcmData.setMsg(body);
+        fcmData.setUrl("https://cdn-icons-png.flaticon.com/512/504/504276.png");
+
+        FcmNotification fcmNotification = new FcmNotification();
+        fcmNotification.setTitle(title);
+        fcmNotification.setBody(body);
+        FcmMessage fcmMessage = new FcmMessage();
+
+        fcmMessage.setNotification(fcmNotification);
+        fcmMessage.setData(fcmData);
+        fcmMessage.setTo(fcmTokenService.findByPatientId(6).getToken());
+        log.info("GONDERILECEK FCM MESSAGE : "+fcmMessage);
+        return fcmMessage;
+
+    }
+
+    void sendFcmNotificationBloodResult(BloodResult bloodResult) {
         FcmMessage fcmMessage = null;
         log.info("gelen  BloodPressure : " + bloodResult.getBloodPressure());
         try {
@@ -144,19 +219,25 @@ public class FakeSensors {
                 log.info("getBloodPressure is TOO LOW : " + bloodResult.getBloodPressure());
                 String msg = "Blood Pressure : " + bloodResult.getBloodPressure() + "\nBlood Sugar : " + bloodResult.getBloodSugar();
                 fcmMessage = getFcmMessageLowBoundRange(msg);
-            }
+                fcmMessage.getData().setShowNotification(true);
+            }else
             if (bloodResult.getBloodPressure() > HighRangeBound) {
                 log.info("getBloodPressure is TOO HIGH : " + bloodResult.getBloodPressure());
-                String msg = "Blood Pressure : " + bloodResult.getBloodPressure() + "\nBlood Sugar : " + bloodResult.getBloodSugar() +
+                String msg = "Blood Pressure : " + bloodResult.getBloodPressure() + "\nBlood Sugar : " + bloodResult.getBloodSugar();/* +
                         "\nAAAAAAAA : " + bloodResult.getBloodPressure() + "\nBlood Sugar : " + bloodResult.getBloodSugar() +
                         "\nBBBBBBB : " + bloodResult.getBloodPressure() + "\nBlood Sugar : " + bloodResult.getBloodSugar() +
                         "\nCCCCCCCCCC : " + bloodResult.getBloodPressure() + "\nBlood Sugar : " + bloodResult.getBloodSugar() +
                         "\nDDDDDDDD : " + bloodResult.getBloodPressure() + "\nBlood Sugar : " + bloodResult.getBloodSugar() +
                         "\nEEEEEEE : " + bloodResult.getBloodPressure() + "\nBlood Sugar : " + bloodResult.getBloodSugar() +
                         "\nFFFFFFFFF : " + bloodResult.getBloodPressure() + "\nBlood Sugar : " + bloodResult.getBloodSugar() +
-                        "\nGGGGGGGG : " + bloodResult.getBloodPressure() + "\nBlood Sugar : " + bloodResult.getBloodSugar();
+                        "\nGGGGGGGG : " + bloodResult.getBloodPressure() + "\nBlood Sugar : " + bloodResult.getBloodSugar();*/
                 fcmMessage = getFcmMessageHighBoundRange(msg);
+                fcmMessage.getData().setShowNotification(true);
+            } else{
+                fcmMessage=getFcmMessageNormalBoundRange();
             }
+
+                fcmMessage.getData().setShowNotification(true);
             if (fcmMessage != null) {
                 log.info("NOTIFICATION GONDERILECEK : " + bloodResult);
                 log.info("FcmMessage : " + fcmMessage);
@@ -172,9 +253,28 @@ public class FakeSensors {
     }
 
     FcmNotificationService fcmNotificationService = new FcmNotificationManager();
+    FcmMessage getFcmMessageNormalBoundRange() {
+        FcmData fcmData = new FcmData();
+        fcmData.setShowNotification(false);
+//        fcmData.setMsgTitle("DANGEROUS : Some Blood Result is too LOW");
+        fcmData.setMsgTitle("Blood Result Tested ");
+        fcmData.setMsg("Values Are Good");
+        fcmData.setUrl("https://cdn-icons-png.flaticon.com/512/504/504276.png");
+
+        FcmNotification fcmNotification = new FcmNotification();
+        fcmNotification.setTitle("Blood Result Tested");
+        fcmNotification.setBody("Values Are Good");
+        FcmMessage fcmMessage = new FcmMessage();
+
+        fcmMessage.setNotification(fcmNotification);
+        fcmMessage.setData(fcmData);
+        fcmMessage.setTo(fcmTokenService.findByPatientId(6).getToken());
+        return fcmMessage;
+    }
 
     FcmMessage getFcmMessageLowBoundRange(String text) {
         FcmData fcmData = new FcmData();
+        fcmData.setShowNotification(true);
 //        fcmData.setMsgTitle("DANGEROUS : Some Blood Result is too LOW");
         String textDangerous = "DANGEROUS";
         textDangerous = fcmNotificationService.generateTextWithHtmlColor(textDangerous, Color.BLUE);
@@ -199,6 +299,7 @@ public class FakeSensors {
         textDangerous = fcmNotificationService.generateTextWithHtmlColor(textDangerous, Color.RED);
 
         FcmData fcmData = new FcmData();
+        fcmData.setShowNotification(true);
         fcmData.setMsgTitle(textDangerous + " - HIGH");
         fcmData.setMsg(text);
         fcmData.setUrl("https://cdn-icons-png.flaticon.com/512/504/504276.png");

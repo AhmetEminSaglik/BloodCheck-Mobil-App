@@ -4,6 +4,7 @@ public class FcmData {
     String url;
     String msgTitle;
     String msg;
+    boolean showNotification = false;
 
     public String getUrl() {
         return url;
@@ -29,12 +30,21 @@ public class FcmData {
         this.msg = msg;
     }
 
+    public boolean isShowNotification() {
+        return showNotification;
+    }
+
+    public void setShowNotification(boolean showNotification) {
+        this.showNotification = showNotification;
+    }
+
     @Override
     public String toString() {
         return "FcmData{" +
                 "url='" + url + '\'' +
                 ", msgTitle='" + msgTitle + '\'' +
                 ", msg='" + msg + '\'' +
+                ", showNotification=" + showNotification +
                 '}';
     }
 }

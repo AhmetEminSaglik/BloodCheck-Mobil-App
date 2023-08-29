@@ -87,7 +87,7 @@ public class InitialDataLoader implements CommandLineRunner {
             }*/
 
         }
-//        new FakeSensors(fcmTokenService).runFakeSensors(timerController.findAllPatientTimers().getBody().getData(), bloodResultService);
+        new FakeSensors(fcmTokenService).runFakeSensors(timerController.findAllPatientTimers().getBody().getData(), bloodResultService);
     }
 
 

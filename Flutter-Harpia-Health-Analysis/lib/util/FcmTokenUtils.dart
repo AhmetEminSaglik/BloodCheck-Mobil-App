@@ -15,22 +15,24 @@ class FcmTokenUtils {
     return _token;
   }
 
-  static listenFcm() {
-    try {
-      FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-        // print('Got a message whilst in the foreground!');
-        print('--> Got a message whilst in the foreground!$message');
-        print('----> Message predata: ${message.data}');
+  static listenFcm()  {
+    try{
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      // print('Got a message whilst in the foreground!');
+      print('--> Got a message whilst in the foreground!$message');
+      print('----> Message predata: ${message.data}');
 
-        // CustomNotification.showNotification(message.predata);
-        parseMapToString(message.data);
-        if (message.notification != null) {
-          print(
-              'Message also contained a notification: ${message.notification}');
-        }
-      });
-    } catch (e) {
+
+      // CustomNotification.showNotification(message.predata);
+      parseMapToString(message.data);
+      if (message.notification != null) {
+        print('Message also contained a notification: ${message.notification}');
+      }
+    });
+    }
+    catch(e){
       print("exception : $e");
+
     }
   }
 
@@ -45,8 +47,7 @@ class FcmTokenUtils {
     print("map : $map ");
     FcmMessage message = FcmMessageFactory.createFcmMessage(map);
     print("FcmMessage : $message");
-    CustomNotificationUtil.showNotification(
-        message.fcmData.msgTitle, message.fcmData.msg);
+    CustomNotificationUtil.showNotification(message.fcmData.msgTitle,message.fcmData.msg);
     return data;
   }
 
@@ -65,7 +66,7 @@ class FcmTokenUtils {
       final title = message.notification?.title ?? "Title is Null";
       final body = message.notification?.body ?? "Body is Null";
 
-      CustomNotificationUtil.showNotification(title, body);
+      CustomNotificationUtil.showNotification(title,body);
     }
   }
 }
