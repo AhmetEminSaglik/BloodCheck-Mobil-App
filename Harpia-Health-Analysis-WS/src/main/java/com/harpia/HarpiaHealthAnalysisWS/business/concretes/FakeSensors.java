@@ -219,7 +219,7 @@ public class FakeSensors {
                 log.info("getBloodPressure is TOO LOW : " + bloodResult.getBloodPressure());
                 String msg = "Blood Pressure : " + bloodResult.getBloodPressure() + "\nBlood Sugar : " + bloodResult.getBloodSugar();
                 fcmMessage = getFcmMessageLowBoundRange(msg);
-                fcmMessage.getData().setShowNotification(true);
+//                fcmMessage.getData().setShowNotification(true);
             }else
             if (bloodResult.getBloodPressure() > HighRangeBound) {
                 log.info("getBloodPressure is TOO HIGH : " + bloodResult.getBloodPressure());
@@ -232,12 +232,11 @@ public class FakeSensors {
                         "\nFFFFFFFFF : " + bloodResult.getBloodPressure() + "\nBlood Sugar : " + bloodResult.getBloodSugar() +
                         "\nGGGGGGGG : " + bloodResult.getBloodPressure() + "\nBlood Sugar : " + bloodResult.getBloodSugar();*/
                 fcmMessage = getFcmMessageHighBoundRange(msg);
-                fcmMessage.getData().setShowNotification(true);
+//                fcmMessage.getData().setShowNotification(true);
             } else{
                 fcmMessage=getFcmMessageNormalBoundRange();
             }
 
-                fcmMessage.getData().setShowNotification(true);
             if (fcmMessage != null) {
                 log.info("NOTIFICATION GONDERILECEK : " + bloodResult);
                 log.info("FcmMessage : " + fcmMessage);
@@ -324,7 +323,7 @@ public class FakeSensors {
     }
 
     void addRunnableToExecutorServiceFor10Seconds(Runnable runnable) {
-        executorService.scheduleAtFixedRate(runnable, 0, 3, TimeUnit.SECONDS);
+        executorService.scheduleAtFixedRate(runnable, 0, 5, TimeUnit.SECONDS);
     }
 
 
