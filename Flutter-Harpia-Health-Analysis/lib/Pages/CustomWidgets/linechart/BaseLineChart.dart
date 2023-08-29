@@ -63,7 +63,6 @@ abstract class BaseLineChart extends StatelessWidget {
   }
 
   Widget showExtraMsgTopOfLineChart({String msg = "Default  Msg"}) {
-    print("showExtraMsgTopOfLineChart : GELDI MSG :$msg ");
     if (msg.isNotEmpty) {
       return Padding(
         padding: EdgeInsets.only(top: ResponsiveDesign.getScreenHeight() / 50),

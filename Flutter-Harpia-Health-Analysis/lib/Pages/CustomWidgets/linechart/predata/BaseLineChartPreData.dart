@@ -26,10 +26,7 @@ abstract class BaseLineChartPreData {
     if (_bloodResultList.isNotEmpty) {
       _bloodListSubItemsFlSpot =
           BloodListSubItemsFlSpot(bloodResultList: _bloodResultList);
-      print(" simdi bloodList sub itemler setlencek  :");
       setBloodListSubItemsFlSpotValue();
-    } else {
-      print("BloodResult list Is EMPTY,  SNACKBAR MESSAGE WILL BE SHOWN UP");
     }
 
     createLeftSideTitles();
@@ -39,7 +36,6 @@ abstract class BaseLineChartPreData {
   void setBloodListSubItemsFlSpotValue() {
     List<int> yIndexValue = [];
     bloodListSubItemsFlSpot.bloodResultList.forEach((tmp) {
-      // print("For each on item : ${tmp}");
 
       bloodListSubItemsFlSpot.bloodSugarList
           .add(getFlSpotOfItem(tmp.bloodSugar, tmp.createdAt));

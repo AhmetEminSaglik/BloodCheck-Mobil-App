@@ -15,6 +15,9 @@ import 'package:flutter_harpia_health_analysis/util/ProductColor.dart';
 import 'package:flutter_harpia_health_analysis/util/SharedPref.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../util/CustomNotification.dart';
+import '../../util/FcmTokenUtils.dart';
+
 class LoginPage extends StatefulWidget {
   final String title;
 
@@ -34,6 +37,16 @@ class _LoginPageState extends State<LoginPage> {
 
   TextEditingController tfUsername = TextEditingController();
   TextEditingController tfPassword = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print("Created TOKEN :  ${FcmTokenUtils.getToken()}");
+    FcmTokenUtils.listenFcm(context);
+    FcmTokenUtils?.listenBackground();
+    CustomNotificationUtil.initialize();
+  }
 
   @override
   Widget build(BuildContext context) {

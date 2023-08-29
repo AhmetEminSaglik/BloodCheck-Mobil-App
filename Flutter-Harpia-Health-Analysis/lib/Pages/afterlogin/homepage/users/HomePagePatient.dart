@@ -6,10 +6,10 @@ import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/linechart/Lin
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/linechart/predata/LineChartPreDataDaily.dart';
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/linechart/predata/LineChartPreDataMonthly.dart';
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/linechart/predata/LineChartPreDataWeekly.dart';
-import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/users/DetailLineChartPage.dart';
 import 'package:flutter_harpia_health_analysis/core/ResponsiveDesign.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestDoctor.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestPatient.dart';
+import 'package:flutter_harpia_health_analysis/model/firebase/FcmNotificationCubit.dart';
 import 'package:flutter_harpia_health_analysis/model/specialitem/doctor/PatientTimer.dart';
 import 'package:flutter_harpia_health_analysis/model/specialitem/doctor/PatientTimerWidget.dart';
 import 'package:flutter_harpia_health_analysis/util/PatientTimerUtils.dart';
@@ -28,6 +28,7 @@ import '../../../CustomWidgets/linechart/LineChart6Monthly.dart';
 import '../../../CustomWidgets/linechart/LineChartWeekly.dart';
 import '../../../CustomWidgets/linechart/predata/BaseLineChartPreData.dart';
 import '../appbar/AppBarCubit.dart';
+import 'DetailLineChartPage.dart';
 
 class HomePagePatient extends StatefulWidget {
   final String displayNamePatientPage;
@@ -62,6 +63,10 @@ class _HomePagePatientState extends State<HomePagePatient> {
   final double bigLineChartHeight =
       100; //ResponsiveDesign.getScreenHeight()-ResponsiveDesign.getScreenHeight()/3;
   double bigLineChartAspectRadio = 1.8;
+
+  bool showBloodSugar = true;
+  bool showBloodPressure = false;
+  int radioValue = 1;
 
   // bool listDataIsEmpty = false;4
   final CheckBoxVisibleBloodResultContent _checkBoxVisibleBloodResultContent =
@@ -131,8 +136,15 @@ class _HomePagePatientState extends State<HomePagePatient> {
     print("retrievePatientTimerData > patientTimer  : $patientTimer ");
   }
 
+  static int counter = 0;
+
   void retrieveBloodResultData() async {
-    print("DATA RETRIEVED patient Id : ${widget.patientId}");
+    // context
+    //     .read<FcmNotificationCubit>()
+    //     .deactivateUpdatePatientLineChart;
+    counter++;
+    print(
+        "counter : $counter; DATA RETRIEVED patient Id : ${widget.patientId}");
     dailyBloodResultList =
         await HttpRequestBloodResult.getDailyBloodResult(widget.patientId);
     weeklyBloodResultList =
@@ -152,18 +164,18 @@ class _HomePagePatientState extends State<HomePagePatient> {
         monthlyBloodResultList.isNotEmpty) {
       isDataFound = true;
     }
-
+/*
     print(
         "DATA RETRIEVED dailyBloodResultList size :${dailyBloodResultList.length} ");
     print(
         "DATA RETRIEVED weeklyBloodResultList size :${weeklyBloodResultList.length} ");
     print(
-        "DATA RETRIEVED monthlyBloodResultList size :${monthlyBloodResultList.length} ");
-    updateActivatedLineChart(1);
+        "DATA RETRIEVED monthlyBloodResultList size :${monthlyBloodResultList.length} ");*/
+    // setState(() {
+    isLoading = false;
+    // });
+    updateActivatedLineChart(radioValue);
 
-    setState(() {
-      isLoading = false;
-    });
     //
     // _customLineChartDataDaily =
     //     CustomLineChartDataDaily(bloodListData: dailyBloodResultList);
@@ -176,207 +188,176 @@ class _HomePagePatientState extends State<HomePagePatient> {
     //     "Data's retrieved agian : daily item ${dailyBloodResultList[0]} / ${dailyBloodResultList[dailyBloodResultList.length - 1]}");
   }
 
-  bool showBloodSugar = true;
-  bool showBloodPressure = false;
-  int radioValue = 1;
-
   @override
   Widget build(BuildContext context) {
-    // print(
-    //     "---------> tekradan calisti :  VisibleItems : $_checkBoxVisibleBloodResultContent}");
+    context.read<FcmNotificationCubit>().activateFcmNotifyPermission();
     return Scaffold(
       appBar: visibleAppBar ? getAppBar() : null,
-      // backgroundColor:ProductColor.bodyBackground,
       backgroundColor:
           isLoading ? ProductColor.bodyBackground : ProductColor.white,
-      body: RefreshIndicator(
-          onRefresh: () async {
-            retrieveBloodResultData();
-            print("RefreshIndicator CALISTI");
-          },
-          child: /* isLoading
-              ? Center(child: CircularProgressIndicator())
-              : getBodyDoctorListview(doctorList),*/
-              isLoading
-                  // ? const LoadingScreenWidget()
-                  ? const LoadingScreenWidget()
-                  : SingleChildScrollView(
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      child: Column(
-                        children: [
-                          Container(
-                            height: ResponsiveDesign.getScreenHeight() / 9,
-                            color: ProductColor.bodyBackground,
-                            child: SingleChildScrollView(
-                              child: Column(
-                                children: [
-                                  SensorTimerText(patientTimer: patientTimer),
-                                  SensorNextMeasurementText(
-                                      dailyBloodResultList:
-                                          dailyBloodResultList,
-                                      patientTimer: patientTimer),
-                                ],
-                              ),
-                            ),
-                          ),
-
-                          // SensorTimerText(patientTimer: patientTimer),
-                          Container(
-                            // color: Colors.redAccent,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
+      body: isLoading
+          ? const LoadingScreenWidget()
+          : BlocBuilder<FcmNotificationCubit, bool>(
+              builder: (builder, refreshLineChart) {
+              context
+                  .read<FcmNotificationCubit>()
+                  .deactivateUpdatePatientLineChart();
+              if (refreshLineChart) {
+                retrieveBloodResultData();
+                refreshLineChart = false;
+              }
+              return SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: Column(
+                  children: [
+                    Container(
+                      height: ResponsiveDesign.getScreenHeight() / 9,
+                      color: ProductColor.bodyBackground,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            SensorTimerText(patientTimer: patientTimer),
+                            SensorNextMeasurementText(
+                                dailyBloodResultList: dailyBloodResultList,
+                                patientTimer: patientTimer),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          // crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Column(
                               children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  // crossAxisAlignment: CrossAxisAlignment.stretch,
-                                  children: [
-                                    Column(
-                                      children: [
-                                        getBloodResultRadioButtonTime(
-                                            name: "Daily", itemValue: 1),
-                                        getBloodResultRadioButtonTime(
-                                            name: "Monthly", itemValue: 3),
-                                      ],
-                                    ),
-                                    Column(
-                                      children: [
-                                        getBloodResultRadioButtonTime(
-                                            name: "Weekly", itemValue: 2),
-                                        getBloodResultRadioButtonTime(
-                                            name: "6 Month", itemValue: 4),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                                Container(
-                                    // color: Colors.cyan,
-                                    width: ResponsiveDesign.getScreenWidth(),
-                                    child: Center(
-                                      child: Row(
-                                        children: [
-                                          Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                // Column(children: checkBoxBloodResultContents,), I dont understand why checkbox is not working in this way.
-                                                getCheckboxBloodResultItem(
-                                                  bloodResultSubItemCheckbox:
-                                                      _checkBoxVisibleBloodResultContent
-                                                              .subItemMap[
-                                                          EnumBloodResultContent
-                                                              .BLOOD_SUGAR
-                                                              .name]!,
-                                                  itemColor: ProductColor
-                                                      .fLSpotColorBloodSugar,
-                                                ),
-                                                getCheckboxBloodResultItem(
-                                                  bloodResultSubItemCheckbox:
-                                                      _checkBoxVisibleBloodResultContent
-                                                              .subItemMap[
-                                                          EnumBloodResultContent
-                                                              .CALCIUM.name]!,
-                                                  itemColor: ProductColor
-                                                      .fLSpotColorCalcium,
-                                                ),
-                                              ]),
-                                          Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                // Column(children: checkBoxBloodResultContents,), I dont understand why checkbox is not working in this way.
-                                                getCheckboxBloodResultItem(
-                                                  bloodResultSubItemCheckbox:
-                                                      _checkBoxVisibleBloodResultContent
-                                                              .subItemMap[
-                                                          EnumBloodResultContent
-                                                              .BLOOD_PRESSURE
-                                                              .name]!,
-                                                  itemColor: ProductColor
-                                                      .fLSpotColorBloodPressure,
-                                                ),
-                                                getCheckboxBloodResultItem(
-                                                  bloodResultSubItemCheckbox:
-                                                      _checkBoxVisibleBloodResultContent
-                                                              .subItemMap[
-                                                          EnumBloodResultContent
-                                                              .MAGNESIUM.name]!,
-                                                  itemColor: ProductColor
-                                                      .fLSpotColorMagnesium,
-                                                ),
-                                              ]),
-                                        ],
-                                      ),
-                                    )),
+                                getBloodResultRadioButtonTime(
+                                    name: "Daily", itemValue: 1),
+                                getBloodResultRadioButtonTime(
+                                    name: "Monthly", itemValue: 3),
                               ],
                             ),
-                          ),
-                          // SizedBox(width: 450, height: 300, child: LineChartDemo1()),
-                          // SizedBox(width: 450, height: 300, child: LineChartDemo2()),
-                          // _getPatientTimerButton(),
-                          _getPatientTimerButton(),
-                          SizedBox(
-                              child: Column(
-                            children: [
-                              isDataFound
-                                  ? Container(
-                                      width: ResponsiveDesign.getScreenWidth() -
-                                          ResponsiveDesign.getScreenWidth() / 3,
-                                      height:
-                                          ResponsiveDesign.getScreenHeight() /
-                                              20,
-                                      child: ElevatedButton(
-                                          style: ElevatedButton.styleFrom(
-                                              backgroundColor:
-                                                  ProductColor.redAccent),
-                                          onPressed: () {
-                                            activatedBaseLineChart.aspectRadio =
-                                                bigLineChartAspectRadio;
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        DetailLineChartPage(
-                                                          baseLineChart:
-                                                              activatedBaseLineChart,
-                                                        )));
-                                          },
-                                          child: Text(
-                                            "Detail LineChart",
-                                            style: TextStyle(
-                                                fontSize: ResponsiveDesign
-                                                        .getScreenHeight() /
-                                                    37,
-                                                color: ProductColor.black,
-                                            fontWeight: FontWeight.bold),
-                                          )))
-                                  : Container(),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  left: ResponsiveDesign.getScreenWidth() / 50,
-                                  right: ResponsiveDesign.getScreenWidth() / 10,
-                                ),
-                                child: SizedBox(
-                                    // width: ResponsiveDesign.getScreenWidth(),
-                                    height: ResponsiveDesign.getScreenHeight() /
-                                        2.55,
-                                    child: activatedBaseLineChart),
+                            Column(
+                              children: [
+                                getBloodResultRadioButtonTime(
+                                    name: "Weekly", itemValue: 2),
+                                getBloodResultRadioButtonTime(
+                                    name: "6 Month", itemValue: 4),
+                              ],
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                            width: ResponsiveDesign.getScreenWidth(),
+                            child: Center(
+                              child: Row(
+                                children: [
+                                  Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        getCheckboxBloodResultItem(
+                                          bloodResultSubItemCheckbox:
+                                              _checkBoxVisibleBloodResultContent
+                                                      .subItemMap[
+                                                  EnumBloodResultContent
+                                                      .BLOOD_SUGAR.name]!,
+                                          itemColor: ProductColor
+                                              .fLSpotColorBloodSugar,
+                                        ),
+                                        getCheckboxBloodResultItem(
+                                          bloodResultSubItemCheckbox:
+                                              _checkBoxVisibleBloodResultContent
+                                                      .subItemMap[
+                                                  EnumBloodResultContent
+                                                      .CALCIUM.name]!,
+                                          itemColor:
+                                              ProductColor.fLSpotColorCalcium,
+                                        ),
+                                      ]),
+                                  Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        getCheckboxBloodResultItem(
+                                          bloodResultSubItemCheckbox:
+                                              _checkBoxVisibleBloodResultContent
+                                                      .subItemMap[
+                                                  EnumBloodResultContent
+                                                      .BLOOD_PRESSURE.name]!,
+                                          itemColor: ProductColor
+                                              .fLSpotColorBloodPressure,
+                                        ),
+                                        getCheckboxBloodResultItem(
+                                          bloodResultSubItemCheckbox:
+                                              _checkBoxVisibleBloodResultContent
+                                                      .subItemMap[
+                                                  EnumBloodResultContent
+                                                      .MAGNESIUM.name]!,
+                                          itemColor:
+                                              ProductColor.fLSpotColorMagnesium,
+                                        ),
+                                      ]),
+                                ],
                               ),
-                            ],
-                          )),
-                        ],
-                      ),
+                            )),
+                      ],
+                    ),
+                    _getPatientTimerButton(),
+                    SizedBox(
+                        child: Column(
+                      children: [
+                        isDataFound
+                            ? Container(
+                                width: ResponsiveDesign.getScreenWidth() -
+                                    ResponsiveDesign.getScreenWidth() / 3,
+                                height: ResponsiveDesign.getScreenHeight() / 20,
+                                child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor:
+                                            ProductColor.redAccent),
+                                    onPressed: () {
+                                      activatedBaseLineChart.aspectRadio =
+                                          bigLineChartAspectRadio;
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  DetailLineChartPage(
+                                                    baseLineChart:
+                                                        activatedBaseLineChart,
+                                                  )));
+                                    },
+                                    child: Text(
+                                      "Detail LineChart",
+                                      style: TextStyle(
+                                          fontSize: ResponsiveDesign
+                                                  .getScreenHeight() /
+                                              37,
+                                          color: ProductColor.black,
+                                          fontWeight: FontWeight.bold),
+                                    )))
+                            : Container(),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            left: ResponsiveDesign.getScreenWidth() / 50,
+                            right: ResponsiveDesign.getScreenWidth() / 10,
+                          ),
+                          child: SizedBox(
+                              height: ResponsiveDesign.getScreenHeight() / 2.55,
+                              child: activatedBaseLineChart),
+                        ),
+                      ],
                     )),
+                  ],
+                ),
+              );
+            }),
     );
   }
 
-  /* Text getNotFoundRecordedDataText() {
-    if (listDataIsEmpty) {
-      return Text("Not Found Any Recorded Data");
-    }
-    return Text("");
-  }
-*/
   Padding getBloodResultRadioButtonTime(
       {required String name, required int itemValue}) {
     return Padding(
@@ -439,22 +420,15 @@ class _HomePagePatientState extends State<HomePagePatient> {
   }
 
   void showAlertDialogSetUpPatientTimer() async {
-    // PatientTimer timer = PatientTimer();
-    // PatientTimerAlertBoxRespond response = PatientTimerAlertBoxRespond(
-    //     result: false, patientTimer: PatientTimer());
     var resp = await showDialog(
         context: context,
         builder: (builder) => CustomAlertDialog.getAlertDialogSetUpPatientTimer(
               patientTimerWidget: PatientTimerWidget(),
               context: context,
             ));
-    // if (resp is PatientTimerAlertBoxRespond) {
-    //   print("resp.result ${resp.result}");
     if (resp != null && resp.result) {
-      // print("patientId : ${widget.patientId}");
       resp.patientTimer.patientId = widget.patientId;
       sendRequestToSavePatientTimer(resp.patientTimer);
-      // print("Savelenecek data : ${resp.patientTimer}");
       patientTimer = resp.patientTimer;
       // retrievePatientTimerData();
       setState(() {});
@@ -557,41 +531,6 @@ class SensorTimerText extends StatelessWidget {
     );
   }
 }
-
-/*class NextMeasurementTimeOfSensor extends StatelessWidget {
-  const NextMeasurementTimeOfSensor({
-    super.key,
-    required this.patientTimer,
-  });
-
-  final PatientTimer patientTimer;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-        left: ResponsiveDesign.getScreenWidth() / 10,
-        right: ResponsiveDesign.getScreenWidth() / 10,
-        top: ResponsiveDesign.getScreenHeight() / 50,
-      ),
-      child: Container(
-        width: ResponsiveDesign.getScreenWidth(),
-        height: ResponsiveDesign.getScreenHeight() / 15,
-        // color: ProductColor.white,
-        child: Center(
-          child: Text(
-              "Sensor Timer : ${PatientTimerUtils.getReadableFormat(patientTimer)}",
-              style: TextStyle(
-                  fontSize: ResponsiveDesign.getScreenWidth() / 12,
-                  color: ProductColor.bodyBackground,
-                  fontWeight: FontWeight.bold)),
-        ),
-      ),
-    );
-  }
-}*/
-
-class VisibleBloodResultSubItems {}
 
 class LoadingScreenWidget extends StatelessWidget {
   const LoadingScreenWidget({
