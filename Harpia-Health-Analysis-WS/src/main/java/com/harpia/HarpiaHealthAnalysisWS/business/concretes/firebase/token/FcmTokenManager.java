@@ -1,6 +1,6 @@
-package com.harpia.HarpiaHealthAnalysisWS.business.concretes.firebase;
+package com.harpia.HarpiaHealthAnalysisWS.business.concretes.firebase.token;
 
-import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.firebase.FcmTokenService;
+import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.firebase.token.FcmTokenService;
 import com.harpia.HarpiaHealthAnalysisWS.dataaccess.firebase.TokenRepository;
 import com.harpia.HarpiaHealthAnalysisWS.model.firebase.FcmToken;
 import org.springframework.beans.factory.annotation.Autowired;

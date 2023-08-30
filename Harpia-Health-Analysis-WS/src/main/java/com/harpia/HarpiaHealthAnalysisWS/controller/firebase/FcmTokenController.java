@@ -1,9 +1,6 @@
 package com.harpia.HarpiaHealthAnalysisWS.controller.firebase;
 
-import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.firebase.FcmTokenService;
-import com.harpia.HarpiaHealthAnalysisWS.model.firebase.FcmData;
-import com.harpia.HarpiaHealthAnalysisWS.model.firebase.FcmMessage;
-import com.harpia.HarpiaHealthAnalysisWS.model.firebase.FcmNotification;
+import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.firebase.token.FcmTokenService;
 import com.harpia.HarpiaHealthAnalysisWS.model.firebase.FcmToken;
 import com.harpia.HarpiaHealthAnalysisWS.utility.CustomLog;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.DataResult;

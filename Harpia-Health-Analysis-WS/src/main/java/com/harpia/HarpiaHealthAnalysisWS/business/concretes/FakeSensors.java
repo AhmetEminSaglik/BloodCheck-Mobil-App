@@ -1,16 +1,16 @@
 package com.harpia.HarpiaHealthAnalysisWS.business.concretes;
 
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.bloodresult.BloodResultService;
-import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.firebase.FcmNotificationService;
-import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.firebase.FcmTokenService;
-import com.harpia.HarpiaHealthAnalysisWS.business.concretes.firebase.FcmManager;
-import com.harpia.HarpiaHealthAnalysisWS.business.concretes.firebase.FcmNotificationManager;
+import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.firebase.notification.FcmService;
+import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.firebase.token.FcmTokenService;
+import com.harpia.HarpiaHealthAnalysisWS.business.concretes.firebase.notification.FcmManager;
 import com.harpia.HarpiaHealthAnalysisWS.model.bloodresult.BloodResult;
 import com.harpia.HarpiaHealthAnalysisWS.model.firebase.FcmData;
 import com.harpia.HarpiaHealthAnalysisWS.model.firebase.FcmMessage;
 import com.harpia.HarpiaHealthAnalysisWS.model.firebase.FcmNotification;
 import com.harpia.HarpiaHealthAnalysisWS.model.timer.PatientTimer;
 import com.harpia.HarpiaHealthAnalysisWS.utility.CustomLog;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.awt.*;
@@ -26,9 +26,11 @@ public class FakeSensors {
     Random random = new Random();
     private static CustomLog log = new CustomLog(FakeSensors.class);
     FcmTokenService fcmTokenService;
+    FcmService fcmService;
 
-    public FakeSensors(FcmTokenService fcmTokenService) {
+    public FakeSensors(FcmTokenService fcmTokenService, FcmService fcmService) {
         this.fcmTokenService = fcmTokenService;
+        this.fcmService = fcmService;
     }
 
     //    @Autowired
@@ -104,7 +106,7 @@ public class FakeSensors {
         return new Runnable() {
             @Override
             public void run() {
-
+                log.info("While dongusunde");
                 if (fcmTokenService.findByUserId(6) != null) {
 
                     log.info("Counter : " + counter);
@@ -148,8 +150,10 @@ public class FakeSensors {
     }
 
     //    @Autowired
-    FcmManager fcmService = new FcmManager();
-    //    @Autowired
+//    @Autowired
+//    FcmService fcmService = new FcmManager();
+//    FcmNotificationService fcmNotificationService = new FcmNotificationManager();
+//    FcmMsgService fcmMsgService = new FcmMsgManager();
 
     void sendFcmNotification(List<String> bloodResultItemNames, List<Integer> bloodResultItemValues) {
         StringBuffer notificationBody = new StringBuffer();
@@ -170,21 +174,21 @@ public class FakeSensors {
         }
         StringBuffer notificationTitle = new StringBuffer("DANGEROUS");
         if (high) {
-            notificationTitle.append(fcmNotificationService.generateTextWithHtmlColor("HIGH", Color.RED));
+            notificationTitle.append(fcmService.generateTextWithHtmlColor("HIGH", Color.RED));
         }
         if (low) {
-            notificationTitle.append(fcmNotificationService.generateTextWithHtmlColor("LOW", Color.BLUE));
+            notificationTitle.append(fcmService.generateTextWithHtmlColor("LOW", Color.BLUE));
         }
         FcmMessage fcmMessage = createFcmMessage(notificationTitle.toString(), notificationBody.toString());
         if (high || low) {
-            log.info("IF GIRDI :"+high+" ; LOW "+low);
-            log.info("BEFORE SHOW : "+fcmMessage.getData().isShowNotification());
+            log.info("IF GIRDI :" + high + " ; LOW " + low);
+            log.info("BEFORE SHOW : " + fcmMessage.getData().isShowNotification());
             fcmMessage.getData().setShowNotification(true);
-            log.info("AFTER  SHOW : "+fcmMessage.getData().isShowNotification());
-        }else{
-            log.info("ELSEYE GIRDI HIGH:"+high+" ; LOW "+low);
+            log.info("AFTER  SHOW : " + fcmMessage.getData().isShowNotification());
+        } else {
+            log.info("ELSEYE GIRDI HIGH:" + high + " ; LOW " + low);
         }
-        fcmService.sendFcmNotification(fcmMessage);
+        fcmService.sendNotification(fcmMessage);
     }
 
     FcmMessage createFcmMessage(String title, String body) {
@@ -206,7 +210,7 @@ public class FakeSensors {
         fcmMessage.setNotification(fcmNotification);
         fcmMessage.setData(fcmData);
         fcmMessage.setTo(fcmTokenService.findByUserId(6).getToken());
-        log.info("GONDERILECEK FCM MESSAGE : "+fcmMessage);
+        log.info("GONDERILECEK FCM MESSAGE : " + fcmMessage);
         return fcmMessage;
 
     }
@@ -220,8 +224,7 @@ public class FakeSensors {
                 String msg = "Blood Pressure : " + bloodResult.getBloodPressure() + "\nBlood Sugar : " + bloodResult.getBloodSugar();
                 fcmMessage = getFcmMessageLowBoundRange(msg);
 //                fcmMessage.getData().setShowNotification(true);
-            }else
-            if (bloodResult.getBloodPressure() > HighRangeBound) {
+            } else if (bloodResult.getBloodPressure() > HighRangeBound) {
                 log.info("getBloodPressure is TOO HIGH : " + bloodResult.getBloodPressure());
                 String msg = "Blood Pressure : " + bloodResult.getBloodPressure() + "\nBlood Sugar : " + bloodResult.getBloodSugar();/* +
                         "\nAAAAAAAA : " + bloodResult.getBloodPressure() + "\nBlood Sugar : " + bloodResult.getBloodSugar() +
@@ -233,14 +236,14 @@ public class FakeSensors {
                         "\nGGGGGGGG : " + bloodResult.getBloodPressure() + "\nBlood Sugar : " + bloodResult.getBloodSugar();*/
                 fcmMessage = getFcmMessageHighBoundRange(msg);
 //                fcmMessage.getData().setShowNotification(true);
-            } else{
-                fcmMessage=getFcmMessageNormalBoundRange();
+            } else {
+                fcmMessage = getFcmMessageNormalBoundRange();
             }
 
             if (fcmMessage != null) {
                 log.info("NOTIFICATION GONDERILECEK : " + bloodResult);
                 log.info("FcmMessage : " + fcmMessage);
-                fcmService.sendFcmNotification(fcmMessage);
+                fcmService.sendNotification(fcmMessage);
             } else {
                 log.info("getBloodPressure is GOOD : " + bloodResult.getBloodPressure());
                 log.info("fcmMessage IS : " + fcmMessage);
@@ -251,7 +254,8 @@ public class FakeSensors {
 
     }
 
-    FcmNotificationService fcmNotificationService = new FcmNotificationManager();
+//    FcmNotificationService fcmNotificationService = new FcmNotificationManager();
+
     FcmMessage getFcmMessageNormalBoundRange() {
         FcmData fcmData = new FcmData();
         fcmData.setShowNotification(false);
@@ -276,7 +280,7 @@ public class FakeSensors {
         fcmData.setShowNotification(true);
 //        fcmData.setMsgTitle("DANGEROUS : Some Blood Result is too LOW");
         String textDangerous = "DANGEROUS";
-        textDangerous = fcmNotificationService.generateTextWithHtmlColor(textDangerous, Color.BLUE);
+        textDangerous = fcmService.generateTextWithHtmlColor(textDangerous, Color.BLUE);
         fcmData.setMsgTitle(textDangerous + " - LOW");
         fcmData.setMsg(text);
         fcmData.setUrl("https://cdn-icons-png.flaticon.com/512/504/504276.png");
@@ -295,7 +299,7 @@ public class FakeSensors {
     FcmMessage getFcmMessageHighBoundRange(String text) {
         String textDangerous = "DANGEROUS";
 
-        textDangerous = fcmNotificationService.generateTextWithHtmlColor(textDangerous, Color.RED);
+        textDangerous = fcmService.generateTextWithHtmlColor(textDangerous, Color.RED);
 
         FcmData fcmData = new FcmData();
         fcmData.setShowNotification(true);

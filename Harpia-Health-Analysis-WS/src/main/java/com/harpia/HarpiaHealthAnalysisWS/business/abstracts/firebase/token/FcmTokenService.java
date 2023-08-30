@@ -1,4 +1,4 @@
-package com.harpia.HarpiaHealthAnalysisWS.business.abstracts.firebase;
+package com.harpia.HarpiaHealthAnalysisWS.business.abstracts.firebase.token;
 
 import com.harpia.HarpiaHealthAnalysisWS.model.firebase.FcmToken;
 

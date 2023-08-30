@@ -2,7 +2,8 @@ package com.harpia.HarpiaHealthAnalysisWS.business.concretes;
 
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.bloodresult.BloodResultService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.diabetic.DiabeticService;
-import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.firebase.FcmTokenService;
+import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.firebase.notification.FcmService;
+import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.firebase.token.FcmTokenService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.user.UserRoleService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.user.UserService;
 import com.harpia.HarpiaHealthAnalysisWS.controller.timer.PatientTimerController;
@@ -54,6 +55,8 @@ public class InitialDataLoader implements CommandLineRunner {
     private PatientTimerController timerController;
     @Autowired
     private FcmTokenService fcmTokenService;
+    @Autowired
+    private FcmService fcmService;
 
     private static CustomLog log = new CustomLog(InitialDataLoader.class);
     private static Random random = new Random();
@@ -87,7 +90,7 @@ public class InitialDataLoader implements CommandLineRunner {
             }*/
 
         }
-        new FakeSensors(fcmTokenService).runFakeSensors(timerController.findAllPatientTimers().getBody().getData(), bloodResultService);
+        new FakeSensors(fcmTokenService,fcmService).runFakeSensors(timerController.findAllPatientTimers().getBody().getData(), bloodResultService);
     }
 
 
@@ -170,6 +173,7 @@ public class InitialDataLoader implements CommandLineRunner {
         log.info("bloodResultList size: " + bloodResultList.size());
         bloodResultService.saveList(bloodResultList);
     }
+
     void saveBloodResult_per_24_hours(Patient patient) {
         log.info("24 hours bloodResult Patient id : " + patient.getId());
 
@@ -180,7 +184,7 @@ public class InitialDataLoader implements CommandLineRunner {
         log.info(patientTimer.toString());
         final int maxDays = 24;
         int minutesCounter = 0;
-        int sensorTestTime = 1 ;
+        int sensorTestTime = 1;
         int createdTime = 0;//useMinute * minutesCounter;
         List<BloodResult> bloodResultList = new ArrayList<>();
         log.info("NOW : " + LocalDateTime.now());
@@ -192,10 +196,10 @@ public class InitialDataLoader implements CommandLineRunner {
             bloodResult.setCalcium(random.nextInt(150) + 50);
             bloodResult.setPatientId(patient.getId());
             bloodResultList.add(bloodResult);
-            bloodResult.setCreatedAt(LocalDateTime.now().minusDays(sensorTestTime*minutesCounter));
+            bloodResult.setCreatedAt(LocalDateTime.now().minusDays(sensorTestTime * minutesCounter));
             minutesCounter++;
             createdTime = sensorTestTime * minutesCounter;
-            log.info("Created Blood Result : "+bloodResult);
+            log.info("Created Blood Result : " + bloodResult);
         }
 
         Collections.reverse(bloodResultList);
@@ -203,6 +207,7 @@ public class InitialDataLoader implements CommandLineRunner {
         bloodResultList.forEach(e -> log.info(e.toString()));
         bloodResultService.saveList(bloodResultList);
     }
+
     void saveBloodResult_6_Hours_Saved_5_Hours_Before(Patient patient) {
         log.info("6 hours bloodResult Patient id : " + patient.getId());
 

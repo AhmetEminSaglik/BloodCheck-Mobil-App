@@ -1,14 +1,14 @@
-package com.harpia.HarpiaHealthAnalysisWS.business.concretes.firebase;
+package com.harpia.HarpiaHealthAnalysisWS.business.concretes.firebase.notification;
 
-import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.firebase.FcmNotificationService;
-import com.harpia.HarpiaHealthAnalysisWS.utility.CustomLog;
+import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.firebase.notification.FcmMsgService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.awt.*;
 
 @Service
-public class FcmNotificationManager implements FcmNotificationService {
-//    private static CustomLog log = new CustomLog(FcmNotificationManager.class);
+@RestController
+public class FcmMsgManager implements FcmMsgService {
 
     @Override
     public String generateTextWithHtmlColor(String notificationTitle, Color color) {
