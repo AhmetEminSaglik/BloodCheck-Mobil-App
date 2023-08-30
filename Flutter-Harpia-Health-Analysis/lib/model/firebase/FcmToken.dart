@@ -1,10 +1,10 @@
 class FcmToken {
   late int _id;
-  late int _patientId;
+  late int _userId;
   late String _token;
 
-  FcmToken({required patientId, required token}) {
-    _patientId = patientId;
+  FcmToken({required userId, required token}) {
+    _userId = userId;
     _token = token;
   }
 
@@ -14,7 +14,7 @@ class FcmToken {
     _id = value;
   }
 
-  int get patientId => _patientId;
+  int get userId => _userId;
 
   String get token => _token;
 
@@ -22,12 +22,12 @@ class FcmToken {
     _token = value;
   }
 
-  set patientId(int value) {
-    _patientId = value;
+  set userId(int value) {
+    _userId = value;
   }
 
   @override
   String toString() {
-    return 'Token{_id: $_id, _patientId: $_patientId, _token: $_token}';
+    return 'FcmToken{_id: $_id, _userId: $_userId, _token: $_token}';
   }
 }

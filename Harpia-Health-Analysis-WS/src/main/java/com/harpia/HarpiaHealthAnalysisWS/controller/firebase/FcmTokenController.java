@@ -22,7 +22,7 @@ public class FcmTokenController {
 
     @PostMapping
     public ResponseEntity<DataResult<FcmToken>> save(@RequestBody FcmToken newFcmToken) {
-        FcmToken fcmToken = service.findByPatientId(newFcmToken.getPatientId());
+        FcmToken fcmToken = service.findByUserId(newFcmToken.getUserId());
         DataResult dataResult;
         if (fcmToken == null) {
             log.info("SAVE REQUEST TOKEN : " + newFcmToken);
@@ -43,7 +43,7 @@ public class FcmTokenController {
 
     @GetMapping("/patient/{id}")
     public ResponseEntity<DataResult<FcmToken>> findTokenByPatientId(@PathVariable long id) {
-        FcmToken fcmToken = service.findByPatientId(id);
+        FcmToken fcmToken = service.findByUserId(id);
         String msg = "FcmToken is retrived by patient ID=" + id;
         DataResult dataResult = new SuccessDataResult(fcmToken, msg);
         return ResponseEntity.status(HttpStatus.OK).body(dataResult);

@@ -8,5 +8,5 @@ public interface FcmTokenService {
 
     FcmToken findByToken(String token);
 
-    FcmToken findByPatientId(long patientId);
+    FcmToken findByUserId(long patientId);
 }

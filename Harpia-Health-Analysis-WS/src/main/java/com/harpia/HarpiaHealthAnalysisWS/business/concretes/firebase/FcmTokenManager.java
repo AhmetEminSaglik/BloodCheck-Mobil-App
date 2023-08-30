@@ -22,7 +22,7 @@ public class FcmTokenManager implements FcmTokenService {
     }
 
     @Override
-    public FcmToken findByPatientId(long patientId) {
-        return repository.findByPatientId(patientId);
+    public FcmToken findByUserId(long patientId) {
+        return repository.findByUserId(patientId);
     }
 }

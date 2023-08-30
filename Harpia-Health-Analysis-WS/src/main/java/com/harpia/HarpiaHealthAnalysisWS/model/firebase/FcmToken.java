@@ -9,15 +9,15 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "firebase_token", uniqueConstraints = @UniqueConstraint(columnNames = "patient_id"))
+@Table(name = "firebase_token", uniqueConstraints = @UniqueConstraint(columnNames = "user_id"))
 public class FcmToken {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private long id;
 
-    @Column(name = "patient_id")
-    private int patientId;
+    @Column(name = "user_id")
+    private int userId;
     @Column
     private String token;
 
@@ -25,7 +25,7 @@ public class FcmToken {
     public String toString() {
         return "FcmToken{" +
                 "id=" + id +
-                ", patientId=" + patientId +
+                ", userId=" + userId +
                 ", token='" + token + '\'' +
                 '}';
     }

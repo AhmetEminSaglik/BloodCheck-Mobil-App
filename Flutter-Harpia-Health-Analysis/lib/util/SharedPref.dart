@@ -32,13 +32,13 @@ class SharedPref {
     _sp.setString(EnumUserProp.PASSWORD.name, user.password);
     _sp.setString(EnumUserProp.NAME.name, user.name);
     _sp.setString(EnumUserProp.LASTNAME.name, user.lastname);
+    saveToken();
+  }
 
-    if (SharedPrefUtils.getRoleId() == EnumUserRole.PATIENT.roleId) {
-      FcmToken fcmToken = FcmToken(
-          patientId: SharedPrefUtils.getUserId(),
-          token: FcmTokenUtils.getToken());
-      HttpRequestFirebase.saveToken(fcmToken);
-    }
+  static void saveToken() {
+    FcmToken fcmToken = FcmToken(
+        userId: SharedPrefUtils.getUserId(), token: FcmTokenUtils.getToken());
+    HttpRequestFirebase.saveToken(fcmToken);
   }
 
   static void _printSP() {

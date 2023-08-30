@@ -14,7 +14,7 @@ class HttpRequestFirebase {
     print("REQUEST TOKEN :  : ${fcmToken.token}");
 
     Map<String, dynamic> requestData = {
-      "patientId": fcmToken.patientId,
+      "userId": fcmToken.userId,
       "token": fcmToken.token,
     };
     var resp = await http.post(url,
