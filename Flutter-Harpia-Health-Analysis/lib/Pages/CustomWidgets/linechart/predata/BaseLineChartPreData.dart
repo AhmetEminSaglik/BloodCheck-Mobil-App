@@ -35,10 +35,41 @@ abstract class BaseLineChartPreData {
 
   void setBloodListSubItemsFlSpotValue() {
     List<int> yIndexValue = [];
-    bloodListSubItemsFlSpot.bloodResultList.forEach((tmp) {
+    print("bloodResultList length: ${bloodListSubItemsFlSpot.bloodResultList.length} ");
+    print("rangeTotalIndexValue : $rangeTotalIndexValue ");
+    for (int i = 0; i < bloodListSubItemsFlSpot.bloodResultList.length; i++) {
+      BloodResult tmp = bloodListSubItemsFlSpot.bloodResultList[i];
 
+      bloodListSubItemsFlSpot.bloodSugarList.add(getFlSpotOfItem(
+        index: i,
+        itemValue: tmp.bloodSugar,
+      ));
+      print(
+          "------------ >  $i-) BLOOD SUGAR SPOT : ${getFlSpotOfItem(index: i, itemValue: tmp.bloodSugar)}");
+      bloodListSubItemsFlSpot.bloodPressureList.add(getFlSpotOfItem(
+        index: i,
+        itemValue: tmp.bloodPresure,
+      ));
+      bloodListSubItemsFlSpot.magnesiumList.add(getFlSpotOfItem(
+        index: i,
+        itemValue: tmp.magnesium,
+      ));
+      bloodListSubItemsFlSpot.calciumList.add(getFlSpotOfItem(
+        index: i,
+        itemValue: tmp.calcium,
+      ));
+
+      yIndexValue.add(tmp.bloodSugar);
+      yIndexValue.add(tmp.bloodPresure);
+      yIndexValue.add(tmp.calcium);
+      yIndexValue.add(tmp.magnesium);
+    }
+    /* bloodListSubItemsFlSpot.bloodResultList.forEach((tmp) {
       bloodListSubItemsFlSpot.bloodSugarList
           .add(getFlSpotOfItem(tmp.bloodSugar, tmp.createdAt));
+
+      print(
+          "------------ >  BLOOD SUGAR SPOT : ${getFlSpotOfItem(tmp.bloodSugar, tmp.createdAt)}");
       bloodListSubItemsFlSpot.bloodPressureList
           .add(getFlSpotOfItem(tmp.bloodPresure, tmp.createdAt));
       bloodListSubItemsFlSpot.magnesiumList
@@ -50,7 +81,7 @@ abstract class BaseLineChartPreData {
       yIndexValue.add(tmp.bloodPresure);
       yIndexValue.add(tmp.calcium);
       yIndexValue.add(tmp.magnesium);
-    });
+    });*/
     _minY = yIndexValue.reduce(min);
     _maxY = yIndexValue.reduce(max);
     _lineChartMaxY = _maxY + 25;
@@ -79,12 +110,14 @@ abstract class BaseLineChartPreData {
         text: _lineChartMaxY.toInt().toString()));
   }
 
-  FlSpot getFlSpotOfItem(int itemValue, DateTime createdAt) {
-    return FlSpot(
-        getItemFlSpotXValue(itemCreatedAt: createdAt), itemValue.toDouble());
+  FlSpot getFlSpotOfItem({required int index, required int itemValue}) {
+    return FlSpot(getItemFlSpotXValue(index: index), itemValue.toDouble());
   }
 
-  double getItemFlSpotXValue({required DateTime itemCreatedAt});
+  // double getItemFlSpotXValue({required DateTime itemCreatedAt});
+  double getItemFlSpotXValue({required int index}) {
+    return (rangeTotalIndexValue - index).toDouble();
+  }
 
   BloodListSubItemsFlSpot get bloodListSubItemsFlSpot =>
       _bloodListSubItemsFlSpot;

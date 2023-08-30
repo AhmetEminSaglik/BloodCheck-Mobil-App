@@ -29,11 +29,18 @@ class LineChartPreDataDaily extends BaseLineChartPreData {
   String toString() {
     return "LineChartPreDataDaily";
   }
-
+/*
   @override
+  double getItemFlSpotXValue({required int index}) {
+    return (rangeTotalIndexValue - index).toDouble();
+
+    // throw UnimplementedError();
+  }*/
+
+/*@override
   double getItemFlSpotXValue({required DateTime itemCreatedAt}) {
     Duration diff = now.difference(itemCreatedAt);
     double diffMinutes = rangeTotalIndexValue - diff.inMinutes / 10;
     return diffMinutes;
-  }
+  }*/
 }

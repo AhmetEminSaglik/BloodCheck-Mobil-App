@@ -142,49 +142,47 @@ abstract class BaseLineChart extends StatelessWidget {
   }
 
   LineChartBarData getBloodSugarLineChartBarData() {
-    List<FlSpot> spotsBloodSugar = [];
+    List<FlSpot> spots = [];
     for (FlSpot tmp
         in _baseLineChartPreData.bloodListSubItemsFlSpot.bloodSugarList) {
-      spotsBloodSugar.add(tmp);
+      spots.add(tmp);
     }
 
     return _getLineChartBarDataForSubBloodResultItem(
-        spotValues: spotsBloodSugar, color: ProductColor.fLSpotColorBloodSugar);
+        spotValues: spots, color: ProductColor.fLSpotColorBloodSugar);
   }
 
   LineChartBarData getBloodPressureLineChartBarData() {
-    List<FlSpot> spotsBloodPressure = [];
+    List<FlSpot> spots = [];
     for (FlSpot tmp
         in _baseLineChartPreData.bloodListSubItemsFlSpot.bloodPressureList) {
-      spotsBloodPressure.add(tmp);
+      spots.add(tmp);
     }
 
     return _getLineChartBarDataForSubBloodResultItem(
-        spotValues: spotsBloodPressure,
-        color: ProductColor.fLSpotColorBloodPressure);
+        spotValues: spots, color: ProductColor.fLSpotColorBloodPressure);
   }
 
   LineChartBarData getMagnesiumLineChartBarData() {
-    List<FlSpot> spotsBloodPressure = [];
+    List<FlSpot> spots = [];
     for (FlSpot tmp
         in _baseLineChartPreData.bloodListSubItemsFlSpot.magnesiumList) {
-      spotsBloodPressure.add(tmp);
+      spots.add(tmp);
     }
 
     return _getLineChartBarDataForSubBloodResultItem(
-        spotValues: spotsBloodPressure,
-        color: ProductColor.fLSpotColorMagnesium);
+        spotValues: spots, color: ProductColor.fLSpotColorMagnesium);
   }
 
   LineChartBarData getCalciumLineChartBarData() {
-    List<FlSpot> spotsBloodPressure = [];
+    List<FlSpot> spots = [];
     for (FlSpot tmp
         in _baseLineChartPreData.bloodListSubItemsFlSpot.calciumList) {
-      spotsBloodPressure.add(tmp);
+      spots.add(tmp);
     }
 
     return _getLineChartBarDataForSubBloodResultItem(
-        spotValues: spotsBloodPressure, color: ProductColor.fLSpotColorCalcium);
+        spotValues: spots, color: ProductColor.fLSpotColorCalcium);
   }
 
   LineChartBarData _getLineChartBarDataForSubBloodResultItem(
@@ -231,5 +229,14 @@ abstract class BaseLineChart extends StatelessWidget {
   TextStyle axisTextStyle() {
     return const TextStyle(
         fontSize: 16, fontWeight: FontWeight.bold, color: Colors.red);
+  }
+
+  LineChartBarData getLineChartBarData(
+      bool visible, LineChartBarData lineChartBarData) {
+    if (visible) {
+      return lineChartBarData;
+    } else {
+      return LineChartBarData();
+    }
   }
 }

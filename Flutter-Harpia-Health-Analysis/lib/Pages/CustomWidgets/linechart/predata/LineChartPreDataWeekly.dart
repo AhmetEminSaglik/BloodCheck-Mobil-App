@@ -31,10 +31,10 @@ class LineChartPreDataWeekly extends BaseLineChartPreData {
     return "LineChartPreDataWeekly";
   }
 
-  @override
+/*  @override
   double getItemFlSpotXValue({required DateTime itemCreatedAt}) {
     Duration diff = now.difference(itemCreatedAt);
     double diffHours = (rangeTotalIndexValue - diff.inHours).toDouble();
     return diffHours;
-  }
+  }*/
 }
