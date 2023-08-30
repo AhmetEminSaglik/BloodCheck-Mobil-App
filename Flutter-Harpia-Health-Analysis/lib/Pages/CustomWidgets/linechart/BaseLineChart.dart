@@ -232,4 +232,13 @@ abstract class BaseLineChart extends StatelessWidget {
     return const TextStyle(
         fontSize: 16, fontWeight: FontWeight.bold, color: Colors.red);
   }
+
+  LineChartBarData getLineChartBarData(
+      {required bool visible, required LineChartBarData lineChartBarData}) {
+    if (visible) {
+      return lineChartBarData;
+    } else {
+      return LineChartBarData();
+    }
+  }
 }

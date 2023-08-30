@@ -15,7 +15,6 @@ class LineChartPreDataDaily extends BaseLineChartPreData {
     hour %= 8;
     int remainedTime = ((hour * 60 + minute) / 10).toInt();
     int dailyTitleLength = EnumLineChartBottomSideDailyTitles.values.length;
-
     for (int i = 0; i < dailyTitleLength; i++) {
       bottomTitle.add(LineChartSideTitle(
           index: dailyTotalIndexValue - (remainedTime + ((i) * 6 * 8)),

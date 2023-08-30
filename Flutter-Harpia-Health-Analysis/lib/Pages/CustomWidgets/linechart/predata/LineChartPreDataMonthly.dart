@@ -16,7 +16,7 @@ class LineChartPreDataMonthly extends BaseLineChartPreData {
     day %= weekValue;
     double remainedTime = ((day * 24 + hour) / 24);
     int monthlyTitleLength = EnumLineChartBottomSideMonthlyTitles.values.length;
-    for (int i = 0; i <= monthlyTitleLength; i++) {
+    for (int i = 0; i < monthlyTitleLength; i++) {
       bottomTitle.add(LineChartSideTitle(
           index:
               (monthlyTotalIndexValue - (remainedTime + ((i) * 6 * weekValue)))
