@@ -105,7 +105,7 @@ public class FakeSensors {
             @Override
             public void run() {
 
-                if (fcmTokenService.findByPatientId(6) != null) {
+                if (fcmTokenService.findByUserId(6) != null) {
 
                     log.info("Counter : " + counter);
                     if (counter % 3 == 0) {
@@ -205,7 +205,7 @@ public class FakeSensors {
 
         fcmMessage.setNotification(fcmNotification);
         fcmMessage.setData(fcmData);
-        fcmMessage.setTo(fcmTokenService.findByPatientId(6).getToken());
+        fcmMessage.setTo(fcmTokenService.findByUserId(6).getToken());
         log.info("GONDERILECEK FCM MESSAGE : "+fcmMessage);
         return fcmMessage;
 
@@ -267,7 +267,7 @@ public class FakeSensors {
 
         fcmMessage.setNotification(fcmNotification);
         fcmMessage.setData(fcmData);
-        fcmMessage.setTo(fcmTokenService.findByPatientId(6).getToken());
+        fcmMessage.setTo(fcmTokenService.findByUserId(6).getToken());
         return fcmMessage;
     }
 
@@ -288,7 +288,7 @@ public class FakeSensors {
 
         fcmMessage.setNotification(fcmNotification);
         fcmMessage.setData(fcmData);
-        fcmMessage.setTo(fcmTokenService.findByPatientId(6).getToken());
+        fcmMessage.setTo(fcmTokenService.findByUserId(6).getToken());
         return fcmMessage;
     }
 
@@ -310,7 +310,7 @@ public class FakeSensors {
 
         fcmMessage.setNotification(fcmNotification);
         fcmMessage.setData(fcmData);
-        fcmMessage.setTo(fcmTokenService.findByPatientId(6).getToken());
+        fcmMessage.setTo(fcmTokenService.findByUserId(6).getToken());
 
 
 //        fcmMessage.getData().setMsgTitle(fcmNotificationService.generateTextWithHtmlColor(fcmMessage.getData().getMsgTitle(), Color.RED));
