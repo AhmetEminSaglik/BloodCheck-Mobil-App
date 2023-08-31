@@ -3,7 +3,9 @@ package com.harpia.HarpiaHealthAnalysisWS.business.concretes.firebase.notificati
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.firebase.notification.FcmMsgService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.firebase.notification.FcmNotificationService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.firebase.notification.FcmService;
+import com.harpia.HarpiaHealthAnalysisWS.model.firebase.FcmData;
 import com.harpia.HarpiaHealthAnalysisWS.model.firebase.FcmMessage;
+import com.harpia.HarpiaHealthAnalysisWS.model.firebase.FcmNotification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,11 @@ public class FcmManager implements FcmService {
     @Override
     public String generateTextWithHtmlColor(String notificationTitle, Color color) {
         return msgService.generateTextWithHtmlColor(notificationTitle, color);
+    }
+
+    @Override
+    public FcmMessage generateFcmMsg(String token, FcmNotification notification, FcmData data) {
+        return msgService.generateFcmMsg(token,notification,data);
     }
 
     @Override

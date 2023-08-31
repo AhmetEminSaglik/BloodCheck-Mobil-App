@@ -1,9 +1,9 @@
 package com.harpia.HarpiaHealthAnalysisWS.model.firebase;
 
 public class FcmData {
-    String url;
-    String msgTitle;
-    String msg;
+    String url="";
+    String msgTitle="";
+    String msg="";
     boolean showNotification = false;
 
     public String getUrl() {

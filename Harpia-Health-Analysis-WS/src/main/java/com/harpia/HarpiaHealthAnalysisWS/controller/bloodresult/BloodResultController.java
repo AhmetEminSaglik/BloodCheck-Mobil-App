@@ -1,7 +1,9 @@
 package com.harpia.HarpiaHealthAnalysisWS.controller.bloodresult;
 
+import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.bloodresult.BloodResultAssessmentService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.bloodresult.BloodResultParseService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.bloodresult.BloodResultService;
+import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.firebase.notification.FcmService;
 import com.harpia.HarpiaHealthAnalysisWS.model.bloodresult.BloodResult;
 import com.harpia.HarpiaHealthAnalysisWS.utility.CustomLog;
 import com.harpia.HarpiaHealthAnalysisWS.utility.exception.response.InvalidRequestedBloodResultDateException;
@@ -22,7 +24,11 @@ public class BloodResultController {
     BloodResultService service;
     @Autowired
     BloodResultParseService parseService;
+    @Autowired
+    BloodResultAssessmentService assessmentService;
     private static CustomLog log = new CustomLog(BloodResultController.class);
+    @Autowired
+    FcmService fcmService;
 
     @GetMapping
     public ResponseEntity<DataResult<BloodResult>> findAllBloodResult() {
@@ -35,7 +41,8 @@ public class BloodResultController {
     @PostMapping
     public ResponseEntity<DataResult<BloodResult>> saveBloodResult(@RequestBody BloodResult bloodResult) {
         bloodResult = service.save(bloodResult);
-        String msg = "Blood Results is saved";
+        String msg = "Blood Results is saved, Notification is send";
+        assessmentService.assessToSendFcmMsg(bloodResult);
         DataResult dataResult = new SuccessDataResult(bloodResult, msg);
         return ResponseEntity.status(HttpStatus.OK).body(dataResult);
     }
