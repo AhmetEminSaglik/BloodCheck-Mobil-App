@@ -63,14 +63,16 @@ public class BloodResultAssessmentManager implements BloodResultAssessmentServic
         String token = fcmTokenService.findByUserId(doctorId).getToken();
         fcmMessage.setTo(token);
 
-        String msgTitle = fcmMessage.getData().getMsgTitle();
-        StringBuffer sbTitle = new StringBuffer(msgTitle);
-        sbTitle.insert(dangerous.length(), patientFullName.toUpperCase());
-        fcmMessage.getData().setMsgTitle(sbTitle.toString());
+        if (fcmMessage.getData().isShowNotification()) {
+            String msgTitle = fcmMessage.getData().getMsgTitle();
+            StringBuffer sbTitle = new StringBuffer(msgTitle);
+            sbTitle.insert(dangerous.length(), patientFullName.toUpperCase());
+            fcmMessage.getData().setMsgTitle(sbTitle.toString());
 
-        FcmNotification notification = fcmMessage.getNotification();
-        notification.setTitle(notification.getTitle()+": "+patientFullName);
-        notification.setBody("Patient's blood result values are out of normal bounds.");
+            FcmNotification notification = fcmMessage.getNotification();
+            notification.setTitle(notification.getTitle() + ": " + patientFullName);
+            notification.setBody("Patient's blood result values are out of normal bounds.");
+        }
         fcmService.sendNotification(fcmMessage);
     }
 
@@ -117,7 +119,6 @@ public class BloodResultAssessmentManager implements BloodResultAssessmentServic
         FcmNotification notification = new FcmNotification();
 
         FcmData data = new FcmData();
-
         if (msgTitle.toString().contains(dangerous)) {
             data.setShowNotification(true);
             notification.setTitle("DANGEROUS");
