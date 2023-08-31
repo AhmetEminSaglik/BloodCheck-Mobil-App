@@ -1,13 +1,20 @@
 package com.harpia.HarpiaHealthAnalysisWS.controller.user;
 
+import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.firebase.notification.FcmMsgService;
+import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.firebase.notification.FcmService;
+import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.firebase.token.FcmTokenService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.user.PatientService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.user.UserService;
 import com.harpia.HarpiaHealthAnalysisWS.business.concretes.signup.SignupUser;
 import com.harpia.HarpiaHealthAnalysisWS.model.enums.EnumUserRole;
+import com.harpia.HarpiaHealthAnalysisWS.model.firebase.FcmData;
+import com.harpia.HarpiaHealthAnalysisWS.model.firebase.FcmMessage;
+import com.harpia.HarpiaHealthAnalysisWS.model.firebase.FcmNotification;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.Doctor;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.Patient;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.User;
 import com.harpia.HarpiaHealthAnalysisWS.utility.CustomLog;
+import com.harpia.HarpiaHealthAnalysisWS.utility.exception.response.FailedSendNotificationToDoctorException;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.DataResult;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.SuccessDataResult;
 import org.slf4j.Logger;
@@ -28,12 +35,47 @@ public class PatientController {
     private UserService userService;
     @Autowired
     private PatientService patientService;
+    @Autowired
+    FcmService fcmService;
+    @Autowired
+    FcmTokenService tokenService;
 
     @PostMapping()
     public ResponseEntity<DataResult<User>> savePatient(@RequestBody Patient inputPatient) {
         inputPatient.setRoleId(EnumUserRole.PATIENT.getId());
         SignupUser signupUser = new SignupUser(userService);
         DataResult<User> dataResult = signupUser.signup(inputPatient);
+
+
+        String token = "";
+        try {
+            token = tokenService.findByUserId(inputPatient.getDoctorId()).getToken();
+            log.info("Token : " + token);
+            if (token != null) {
+                FcmNotification fcmNotification = new FcmNotification();
+                String msgTitle = "New Patient Is Assigned";
+                String msgBody = inputPatient.getName() + " " + inputPatient.getLastname() + " is assigned to you";
+                fcmNotification.setBody(msgBody);
+                fcmNotification.setTitle(msgTitle);
+
+                FcmData data = new FcmData();
+                data.setMsgTitle(msgTitle);
+                data.setMsg(msgBody);
+
+                FcmMessage fcmMessage = fcmService.generateFcmMsg(token, fcmNotification, data);
+                fcmMessage.getData().setShowNotification(true);
+                fcmService.sendNotification(fcmMessage);
+                log.info(" FCM MESSAGE IS SEND : "+fcmMessage);
+            }
+        } catch (Exception e) {
+            log.error("Exception Occured : " + e.getMessage());
+
+            if (dataResult.isSuccess() && token.isEmpty()) {
+                String msg = FailedSendNotificationToDoctorException.customErrorMsg + " " + dataResult.getMessage();
+                dataResult = new SuccessDataResult<>(dataResult.getData(), msg);
+            }
+                log.info(" FCM GONDERILEMEDI ERROR OCCURED "+e.getMessage());
+        }
         return ResponseEntity.status(HttpStatus.CREATED).body(dataResult);
     }
 

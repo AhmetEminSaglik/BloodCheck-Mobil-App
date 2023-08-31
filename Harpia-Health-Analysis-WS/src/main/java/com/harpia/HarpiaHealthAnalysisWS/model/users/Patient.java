@@ -16,7 +16,9 @@ public class Patient extends User {
 
     @Override
     public String toString() {
-        return "Patient{" + super.toString() + ", " +
+        return "Patient{" +
+                "doctorId=" + doctorId +
+                ", diabeticTypeId=" + diabeticTypeId +
                 '}';
     }
 

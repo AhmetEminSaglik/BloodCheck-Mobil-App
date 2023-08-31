@@ -384,8 +384,8 @@ class _SignUpButton extends StatelessWidget {
       _DoctorDropdownMenuButton doctorDropDown,
       _DiabeticTypeDropdownMenuButton diabeticDropDown) {
     list.forEach((e) => e.text = "");
-    doctorDropDown.selectedDoctorId = 0;
-    diabeticDropDown.selectedDiabeticTypeValue = 0;
+    // doctorDropDown.selectedDoctorId = 0;
+    // diabeticDropDown.selectedDiabeticTypeValue = 0;
   }
 
   void _signUpProcess(
