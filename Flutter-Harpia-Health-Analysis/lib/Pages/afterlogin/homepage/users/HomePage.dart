@@ -6,6 +6,8 @@ import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/drawer/
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/drawer/MainDrawer.dart';
 import 'package:flutter_harpia_health_analysis/util/ProductColor.dart';
 
+import '../../../../util/FcmTokenUtils.dart';
+
 class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
@@ -59,7 +61,9 @@ void test() async {
   );
   bool success =
       await FlutterBackground.initialize(androidConfig: androidConfig);
-  print("-------------->RESULT : $success");
+  if(FlutterBackground.isBackgroundExecutionEnabled){
+    FcmTokenUtils.listenBackground();
+  }
 
 }
 

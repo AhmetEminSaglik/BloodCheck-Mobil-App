@@ -5,10 +5,7 @@ class FcmData {
   late bool _showNotification;
 
   FcmData(
-      {required url,
-      required msgTitle,
-      required msg,
-      required showNotification}) {
+      {url = "", required msgTitle, required msg, required showNotification}) {
     _url = url;
     _msg = msg;
     _msgTitle = msgTitle;
@@ -21,7 +18,7 @@ class FcmData {
       msgTitle: json["msgTitle"] as String,
       msg: json["msg"] as String,
       url: json["url"] as String,
-      showNotification:showNotification,
+      showNotification: showNotification,
     );
   }
 

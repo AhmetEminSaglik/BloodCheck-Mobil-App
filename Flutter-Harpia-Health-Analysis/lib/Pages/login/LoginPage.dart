@@ -44,7 +44,6 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
     print("Created TOKEN :  ${FcmTokenUtils.getToken()}");
     FcmTokenUtils.listenFcm(context);
-    FcmTokenUtils?.listenBackground();
     CustomNotificationUtil.initialize();
   }
 
