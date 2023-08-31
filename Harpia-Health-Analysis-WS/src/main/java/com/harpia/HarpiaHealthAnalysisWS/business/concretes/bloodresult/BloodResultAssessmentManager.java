@@ -3,6 +3,7 @@ package com.harpia.HarpiaHealthAnalysisWS.business.concretes.bloodresult;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.bloodresult.BloodResultAssessmentService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.firebase.notification.FcmService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.firebase.token.FcmTokenService;
+import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.user.PatientService;
 import com.harpia.HarpiaHealthAnalysisWS.model.bloodresult.BloodResult;
 import com.harpia.HarpiaHealthAnalysisWS.model.bloodresult.BloodResultAssessmentValue;
 import com.harpia.HarpiaHealthAnalysisWS.model.bloodresult.ItemRangeValue;
@@ -10,6 +11,7 @@ import com.harpia.HarpiaHealthAnalysisWS.model.enums.EnumBloodResultContent;
 import com.harpia.HarpiaHealthAnalysisWS.model.firebase.FcmData;
 import com.harpia.HarpiaHealthAnalysisWS.model.firebase.FcmMessage;
 import com.harpia.HarpiaHealthAnalysisWS.model.firebase.FcmNotification;
+import com.harpia.HarpiaHealthAnalysisWS.model.users.Patient;
 import com.harpia.HarpiaHealthAnalysisWS.utility.CustomLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,8 @@ import java.util.Map;
 
 @Service
 public class BloodResultAssessmentManager implements BloodResultAssessmentService {
+    private final String dangerous = "DANGEROUS:";
+    private String patientFullName = "";
     private static CustomLog log = new CustomLog(BloodResultAssessmentManager.class);
 
     private BloodResultAssessmentValue bloodResultAssessmentValue = new BloodResultAssessmentValue();
@@ -27,22 +31,51 @@ public class BloodResultAssessmentManager implements BloodResultAssessmentServic
     FcmService fcmService;
     @Autowired
     FcmTokenService fcmTokenService;
+    @Autowired
+    PatientService patientService;
 
     @Override
     public void assessToSendFcmMsg(BloodResult bloodResult) {
         log.info("assess blood result : " + bloodResult);
         HashMap<String, Integer> subItemMap = new HashMap<>();
 
-        subItemMap.put(EnumBloodResultContent.BLOOD_SUGAR.name(), bloodResult.getBloodSugar());
-        subItemMap.put(EnumBloodResultContent.BLOOD_PRESSURE.name(), bloodResult.getBloodPressure());
-        subItemMap.put(EnumBloodResultContent.CALCIUM.name(), bloodResult.getCalcium());
-        subItemMap.put(EnumBloodResultContent.MAGNESIUM.name(), bloodResult.getMagnesium());
+        subItemMap.put(EnumBloodResultContent.BLOOD_SUGAR.getName(), bloodResult.getBloodSugar());
+        subItemMap.put(EnumBloodResultContent.BLOOD_PRESSURE.getName(), bloodResult.getBloodPressure());
+        subItemMap.put(EnumBloodResultContent.CALCIUM.getName(), bloodResult.getCalcium());
+        subItemMap.put(EnumBloodResultContent.MAGNESIUM.getName(), bloodResult.getMagnesium());
 
-        sendFcmMessage(bloodResult.getPatientId(), subItemMap);
+//        sendFcmMessage(bloodResult.getPatientId(), subItemMap);
+        FcmMessage fcmMessage = createFcmMessage(bloodResult.getPatientId(), subItemMap);
+        Patient patient = patientService.findById(bloodResult.getPatientId());
+        sendMsgToPatient(fcmMessage);
+
+        patientFullName = " " + patient.getName() + " " + patient.getLastname();
+        sendMsgToDoctorOfPatient(bloodResult.getPatientId(), fcmMessage);
     }
 
-    void sendFcmMessage(long patientId, Map<String, Integer> itemMap) {
-        final String dangerous = "DANGEROUS";
+    private void sendMsgToPatient(FcmMessage fcmMessage) {
+        fcmService.sendNotification(fcmMessage);
+        log.info("send to Patient : TOKEN : " + fcmMessage.getTo());
+    }
+
+    private void sendMsgToDoctorOfPatient(long patientId, FcmMessage fcmMessage) {
+        long doctorId = patientService.findById(patientId).getDoctorId();
+        String token = fcmTokenService.findByUserId(doctorId).getToken();
+        fcmMessage.setTo(token);
+
+        String msgTitle = fcmMessage.getData().getMsgTitle();
+        StringBuffer sbTitle = new StringBuffer(msgTitle);
+        sbTitle.insert(dangerous.length(), patientFullName.toUpperCase());
+        fcmMessage.getData().setMsgTitle(sbTitle.toString());
+
+        FcmNotification notification = fcmMessage.getNotification();
+        notification.setTitle(notification.getTitle()+": "+patientFullName);
+        notification.setBody("Patient's blood result values are out of normal bounds.");
+        fcmService.sendNotification(fcmMessage);
+    }
+
+    FcmMessage createFcmMessage(long patientId, Map<String, Integer> itemMap) {
+
         boolean tooHigh = false;
         boolean tooLow = false;
 
@@ -51,21 +84,15 @@ public class BloodResultAssessmentManager implements BloodResultAssessmentServic
         Map<String, ItemRangeValue> boundMap = bloodResultAssessmentValue.getMap();
 
         for (String subItem : itemMap.keySet()) {
-            log.info("item : " + subItem);
-//            String item=itemMap.get(tmp);
-//log.info("Demo :"+boundMap.get(subItem));
-//            for (String boundTmp : boundMap.keySet()) {
-//                log.info("Bound Map item : "+boundTmp);
             int lowBound = boundMap.get(subItem).getLowBound();
             int highBound = boundMap.get(subItem).getHighBound();
-
             int subItemValue = itemMap.get(subItem);
             if (subItemValue > highBound) {
-                msgBody.append(createFcmMsgBody(subItem.toUpperCase(), Color.RED));
+                msgBody.append(createFcmMsgBody(subItem, Color.RED));
                 msgBody.append("-");
                 tooHigh = true;
             } else if (subItemValue < lowBound) {
-                msgBody.append(createFcmMsgBody(subItem.toUpperCase(), Color.BLUE));
+                msgBody.append(createFcmMsgBody(subItem, Color.BLUE));
                 msgBody.append("-");
                 tooLow = true;
             }
@@ -105,8 +132,8 @@ public class BloodResultAssessmentManager implements BloodResultAssessmentServic
 
         FcmMessage fcmMessage = fcmService.generateFcmMsg(token, notification, data);
         log.info("sending fcm msg : " + fcmMessage);
-
-        fcmService.sendNotification(fcmMessage);
+        return fcmMessage;
+//        fcmService.sendNotification(fcmMessage);
     }
 
 
@@ -115,7 +142,6 @@ public class BloodResultAssessmentManager implements BloodResultAssessmentServic
     }
 
     String createFcmMsgBody(String text, Color color) {
-        log.info("GELEN TEXT : " + text);
         return fcmService.generateTextWithHtmlColor(text, color);
     }
 

@@ -12,6 +12,7 @@ import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestPatient.da
 import 'package:flutter_harpia_health_analysis/model/firebase/FcmNotificationCubit.dart';
 import 'package:flutter_harpia_health_analysis/model/specialitem/doctor/PatientTimer.dart';
 import 'package:flutter_harpia_health_analysis/model/specialitem/doctor/PatientTimerWidget.dart';
+import 'package:flutter_harpia_health_analysis/util/FcmTokenUtils.dart';
 import 'package:flutter_harpia_health_analysis/util/PatientTimerUtils.dart';
 import '../../../../httprequest/HttpRequestBloodResult.dart';
 import '../../../../httprequest/ResponseEntity.dart';
@@ -127,6 +128,7 @@ class _HomePagePatientState extends State<HomePagePatient> {
     super.initState();
     retrieveBloodResultData();
     retrievePatientTimerData();
+    FcmTokenUtils.updatePatientId(widget.patientId);
     //  activatedLineChartWidget = lineChartEmpty;
   }
 
@@ -187,12 +189,14 @@ class _HomePagePatientState extends State<HomePagePatient> {
     // print(
     //     "Data's retrieved agian : daily item ${dailyBloodResultList[0]} / ${dailyBloodResultList[dailyBloodResultList.length - 1]}");
   }
+
   @override
   void deactivate() {
     // TODO: implement deactivate
     super.deactivate();
     context.read<FcmNotificationCubit>().deactivateFcmNotifyPermission();
   }
+
   /*@override
   void dispose() {
     // TODO: implement dispose

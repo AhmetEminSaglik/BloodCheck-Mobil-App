@@ -1,10 +1,11 @@
 package com.harpia.HarpiaHealthAnalysisWS.model.firebase;
 
 public class FcmData {
-    String url="";
-    String msgTitle="";
-    String msg="";
+    String url = "";
+    String msgTitle = "";
+    String msg = "";
     boolean showNotification = false;
+    long patientId;
 
     public String getUrl() {
         return url;
@@ -38,6 +39,14 @@ public class FcmData {
         this.showNotification = showNotification;
     }
 
+    public long getPatientId() {
+        return patientId;
+    }
+
+    public void setPatientId(long patientId) {
+        this.patientId = patientId;
+    }
+
     @Override
     public String toString() {
         return "FcmData{" +
@@ -45,6 +54,7 @@ public class FcmData {
                 ", msgTitle='" + msgTitle + '\'' +
                 ", msg='" + msg + '\'' +
                 ", showNotification=" + showNotification +
+                ", patientId=" + patientId +
                 '}';
     }
 }

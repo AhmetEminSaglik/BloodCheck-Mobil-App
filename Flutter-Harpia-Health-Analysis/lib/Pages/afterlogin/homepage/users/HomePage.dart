@@ -20,8 +20,9 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    test();
+    enableBackgroudnExecution();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +50,7 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-void test() async {
+void enableBackgroudnExecution() async {
   const androidConfig = FlutterBackgroundAndroidConfig(
     notificationTitle: "flutter_background example app",
     notificationText:
@@ -61,10 +62,9 @@ void test() async {
   );
   bool success =
       await FlutterBackground.initialize(androidConfig: androidConfig);
-  if(FlutterBackground.isBackgroundExecutionEnabled){
+  if (FlutterBackground.isBackgroundExecutionEnabled) {
     FcmTokenUtils.listenBackground();
   }
-
 }
 
 /*Future<void> requestPermission() async {

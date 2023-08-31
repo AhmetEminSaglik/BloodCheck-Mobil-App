@@ -9,10 +9,10 @@ public class BloodResultAssessmentValue {
     private final HashMap<String, ItemRangeValue> map = new HashMap();
 
     public BloodResultAssessmentValue() {
-        map.putIfAbsent(EnumBloodResultContent.BLOOD_SUGAR.name(), bloodSugarRange);
-        map.putIfAbsent(EnumBloodResultContent.BLOOD_PRESSURE.name(), bloodPressureRange);
-        map.putIfAbsent(EnumBloodResultContent.CALCIUM.name(), calciumRange);
-        map.putIfAbsent(EnumBloodResultContent.MAGNESIUM.name(), magnesiumRange);
+        map.putIfAbsent(EnumBloodResultContent.BLOOD_SUGAR.getName(), bloodSugarRange);
+        map.putIfAbsent(EnumBloodResultContent.BLOOD_PRESSURE.getName(), bloodPressureRange);
+        map.putIfAbsent(EnumBloodResultContent.CALCIUM.getName(), calciumRange);
+        map.putIfAbsent(EnumBloodResultContent.MAGNESIUM.getName(), magnesiumRange);
 //        list.add(bloodSugar);
 //        list.add(bloodPressure);
 //        list.add(magnesium);

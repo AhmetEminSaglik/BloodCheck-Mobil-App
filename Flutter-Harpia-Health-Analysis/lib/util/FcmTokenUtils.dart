@@ -19,19 +19,28 @@ class FcmTokenUtils {
     return _token;
   }
 
+  static int? _viewPatientIdPage;
+
+  static updatePatientId(int patientId) {
+    _viewPatientIdPage = patientId;
+  }
+
   static listenFcm(BuildContext context) {
     try {
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
         // print('Got a message whilst in the foreground!');
         print('--> LISTEN GELDI data ! ${message.data}');
 
-        context.read<FcmNotificationCubit>().activateUpdatePatientLineChart();
-
         // print('--> Got a message whilst in the foreground!$message');
         print('----> Message predata: ${message.data}');
 
         // CustomNotification.showNotification(message.predata);
         FcmData fcmData = parseMapToFcmData(message.data);
+
+        if (_viewPatientIdPage != fcmData.patientId) {
+          context.read<FcmNotificationCubit>().activateUpdatePatientLineChart();
+        }
+
         if (fcmData.showNotification) {
           print("---> fcmdata.showNotification : ${fcmData.showNotification}");
           CustomNotificationUtil.showNotification(
