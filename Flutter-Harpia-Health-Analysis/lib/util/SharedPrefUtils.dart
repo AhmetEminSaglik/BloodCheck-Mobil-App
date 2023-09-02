@@ -36,13 +36,13 @@ class SharedPrefUtils {
 
   static int getRoleId() {
     var value = _sp.getInt(EnumUserProp.ROLE_ID.name);
-    return value ?? "";
+    return value ?? -1;
     return _sp.getInt(EnumUserProp.ROLE_ID.name);
   }
 
   static int getUserId() {
     var value = _sp.getInt(EnumUserProp.ID.name);
-    return value ?? "";
+    return value ?? -1;
     // return _sp.getInt(EnumUserProp.ID.name);
   }
 

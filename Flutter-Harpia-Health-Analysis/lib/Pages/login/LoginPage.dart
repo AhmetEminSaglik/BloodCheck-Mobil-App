@@ -267,7 +267,7 @@ class _LoginButton extends StatelessWidget {
         print("ELSE DE  User will be created");
         User user = UserFactory.createUser(respEntity!.data);
         saveUserData(context, user);
-        updateCubits(context);
+        //updateCubits(context);
         navigateToHomePage(context: context, roleId: user.roleId);
       }
     }
@@ -294,8 +294,9 @@ void showInvalidUsernameOrPassword(
   ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar.getSnackBar(msg));
 }
 
-void saveUserData(BuildContext context, User user) {
-  SharedPrefUtils.setLoginDataUser(user).then((value) {});
+void saveUserData(BuildContext context, User user) async {
+  await SharedPrefUtils.setLoginDataUser(user).then((value) {});
+  updateCubits(context);
 }
 
 void updateCubits(BuildContext context) {
