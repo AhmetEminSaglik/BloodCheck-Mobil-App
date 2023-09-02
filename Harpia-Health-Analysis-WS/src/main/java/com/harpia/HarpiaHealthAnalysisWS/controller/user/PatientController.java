@@ -65,7 +65,7 @@ public class PatientController {
                 FcmMessage fcmMessage = fcmService.generateFcmMsg(token, fcmNotification, data);
                 fcmMessage.getData().setShowNotification(true);
                 fcmService.sendNotification(fcmMessage);
-                log.info(" FCM MESSAGE IS SEND : "+fcmMessage);
+                log.info(" FCM MESSAGE IS SEND : " + fcmMessage);
             }
         } catch (Exception e) {
             log.error("Exception Occured : " + e.getMessage());
@@ -74,7 +74,7 @@ public class PatientController {
                 String msg = FailedSendNotificationToDoctorException.customErrorMsg + " " + dataResult.getMessage();
                 dataResult = new SuccessDataResult<>(dataResult.getData(), msg);
             }
-                log.info(" FCM GONDERILEMEDI ERROR OCCURED "+e.getMessage());
+            log.info(" FCM GONDERILEMEDI ERROR OCCURED " + e.getMessage());
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(dataResult);
     }
@@ -103,6 +103,15 @@ public class PatientController {
         log.info("Found Doctor Id : " + doctorId);
         String msg = "Doctor (" + doctorId + ") who is responsible with patient ID(" + id + ") is retrieved";
         DataResult<List<Patient>> result = new SuccessDataResult(doctorId, msg);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
+
+    @PutMapping()
+    public ResponseEntity<DataResult<Patient>> updateDoctor(@RequestBody Patient patient) {
+        log.info("Update Patient");
+        patient = (Patient) savePatient(patient).getBody().getData();
+        String msg = "Patient is updated";
+        DataResult<Patient> result = new SuccessDataResult(patient, msg);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 }

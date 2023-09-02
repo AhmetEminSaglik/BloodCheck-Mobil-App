@@ -22,4 +22,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findAllByCreatedAtAfter(LocalDateTime time);
 
     List<User> findAllByRoleIdOrderByIdDesc(int roleId);
+
 }

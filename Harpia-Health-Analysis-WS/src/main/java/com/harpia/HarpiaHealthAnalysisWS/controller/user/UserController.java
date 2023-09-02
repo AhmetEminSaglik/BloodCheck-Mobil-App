@@ -4,6 +4,7 @@ import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.login.LoginValidatio
 import com.harpia.HarpiaHealthAnalysisWS.business.concretes.login.LoginCredentialsValidation;
 import com.harpia.HarpiaHealthAnalysisWS.dataaccess.user.UserRepository;
 import com.harpia.HarpiaHealthAnalysisWS.model.LoginCredentials;
+import com.harpia.HarpiaHealthAnalysisWS.model.users.Doctor;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.User;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.user.UserService;
 import com.harpia.HarpiaHealthAnalysisWS.utility.CustomLog;
@@ -12,6 +13,8 @@ import com.harpia.HarpiaHealthAnalysisWS.utility.result.SuccessDataResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -19,7 +22,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
-@CrossOrigin(origins = "http://localhost:8080")
+//@CrossOrigin(origins = "http://localhost:8080")
 public class UserController {
     private static CustomLog log = new CustomLog(UserController.class);
     @Autowired
@@ -45,10 +48,10 @@ public class UserController {
         return new SuccessDataResult<>(user, "User retrived Succesfully");
     }
 
-    public User saveUser(User user) {
+    /*public User saveUser(User user) {
         user = service.save(user);
         return user;
-    }
+    }*/
 
     @PostMapping("/login")
     public DataResult<User> login(@RequestBody LoginCredentials loginCreds) {

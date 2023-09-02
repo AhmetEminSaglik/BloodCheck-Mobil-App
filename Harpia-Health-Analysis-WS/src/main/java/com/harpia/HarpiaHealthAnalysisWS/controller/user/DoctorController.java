@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.print.Doc;
 import java.util.List;
 
 @RestController
@@ -58,5 +59,14 @@ public class DoctorController {
         DataResult<List<Patient>> result = new SuccessDataResult(patientList, msg);
         return ResponseEntity.status(HttpStatus.OK).body(result);
 
+    }
+
+    @PutMapping()
+    public ResponseEntity<DataResult<Doctor>> updateDoctor(@RequestBody Doctor doctor) {
+        log.info("Update Doctor");
+        doctor = (Doctor) saveDoctor(doctor).getBody().getData();
+        String msg = "Doctor is updated";
+        DataResult<Doctor> result = new SuccessDataResult(doctor, msg);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 }
