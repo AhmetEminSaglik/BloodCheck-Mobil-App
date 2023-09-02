@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_harpia_health_analysis/util/SharedPrefUtils.dart';
 
 class SafeLogoutDrawerItem extends StatefulWidget {
   @override
@@ -26,6 +27,6 @@ class _SafeLogoutDrawerItemState extends State<SafeLogoutDrawerItem> {
 
 class SafeLogOut {
   static void clearSharedPref() {
-    // SharedPref.sp.clear();
+    SharedPrefUtils.sp.clear();
   }
 }

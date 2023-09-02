@@ -3,7 +3,7 @@ import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/drawer/
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/drawer/DoctorDrawer.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/drawer/PatientDrawer.dart';
 import 'package:flutter_harpia_health_analysis/model/userrole/EnumUserRole.dart';
-import 'package:flutter_harpia_health_analysis/util/Utils.dart';
+import 'package:flutter_harpia_health_analysis/util/SharedPrefUtils.dart';
 
 class MainDrawer extends StatefulWidget {
   const MainDrawer({Key? key}) : super(key: key);

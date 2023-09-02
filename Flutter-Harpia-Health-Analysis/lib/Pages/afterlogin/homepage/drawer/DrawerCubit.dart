@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../model/enums/user/EnumUserProp.dart';
 import '../../../../model/userrole/EnumUserRole.dart';
-import '../../../../util/SharedPref.dart';
-import '../../../../util/Utils.dart';
+import '../../../../util/SharedPrefUtils.dart';
 import '../users/HomePageDoctor.dart';
 import '../users/HomePagePatient.dart';
 import '../users/admin/HomePageAdmin.dart';
@@ -28,7 +26,7 @@ class DrawerCubit extends Cubit<Widget> {
     if (userRoleId == EnumUserRole.ADMIN.roleId) {
       return const HomePageAdmin();
     } else if (userRoleId == EnumUserRole.DOCTOR.roleId) {
-      int doctorId = SharedPref.sp.getInt(EnumUserProp.ID.name) ?? -1;
+      int doctorId = SharedPrefUtils.getUserId() ?? -1;
       return HomePageDoctor(doctorId: doctorId);
     } else if (userRoleId == EnumUserRole.PATIENT.roleId) {
       return HomePagePatient(

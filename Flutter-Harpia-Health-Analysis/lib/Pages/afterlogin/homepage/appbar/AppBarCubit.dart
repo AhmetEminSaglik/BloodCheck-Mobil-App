@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../model/userrole/EnumUserRole.dart';
-import '../../../../util/Utils.dart';
+import '../../../../util/SharedPrefUtils.dart';
 
 class AppBarCubit extends Cubit<Widget> {
   Widget appBarTitleWidget = const Text("Empty Text");

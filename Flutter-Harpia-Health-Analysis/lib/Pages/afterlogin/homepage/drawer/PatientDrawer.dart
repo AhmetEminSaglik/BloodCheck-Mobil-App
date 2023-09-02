@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/drawer/DrawerCubit.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/users/HomePagePatient.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/profile/PatientProfile.dart';
-import 'package:flutter_harpia_health_analysis/model/enums/user/EnumUserProp.dart';
-import 'package:flutter_harpia_health_analysis/util/SharedPref.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../util/SafeLogoutDrawerItem.dart';
-import '../../../../util/Utils.dart';
+import '../../../../util/SharedPrefUtils.dart';
 
 class PatientDrawer extends StatefulWidget {
   @override
@@ -18,8 +16,8 @@ class PatientDrawer extends StatefulWidget {
 }
 
 class _PatientDrawerState extends State<PatientDrawer> {
-  static String name = SharedPref.sp.getString(EnumUserProp.NAME.name);
-  static String lastname = SharedPref.sp.getString(EnumUserProp.LASTNAME.name);
+  static String name = SharedPrefUtils.getName();
+  static String lastname = SharedPrefUtils.getLastname();
   var pageList = [
     HomePagePatient(
         patientId: SharedPrefUtils.getUserId(),

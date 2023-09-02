@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/appbar/AppBarCubit.dart';
@@ -12,9 +11,10 @@ import 'package:flutter_harpia_health_analysis/httprequest/ResponseEntity.dart';
 import 'package:flutter_harpia_health_analysis/model/user/User.dart';
 import 'package:flutter_harpia_health_analysis/util/CustomSnackBar.dart';
 import 'package:flutter_harpia_health_analysis/util/ProductColor.dart';
-import 'package:flutter_harpia_health_analysis/util/SharedPref.dart';
+import 'package:flutter_harpia_health_analysis/util/SharedPrefUtils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../model/enums/user/EnumUserProp.dart';
 import '../../util/CustomNotification.dart';
 import '../../util/FcmTokenUtils.dart';
 
@@ -43,8 +43,27 @@ class _LoginPageState extends State<LoginPage> {
     // TODO: implement initState
     super.initState();
     print("Created TOKEN :  ${FcmTokenUtils.getToken()}");
+    autoLogin();
     FcmTokenUtils.listenFcm(context);
     CustomNotificationUtil.initialize();
+  }
+
+  void autoLogin() async {
+    // SharedPref.initiliazeSharedPref();
+    await SharedPrefUtils.initiliazeSharedPref();
+    String username = SharedPrefUtils.getUsername();
+    String password = SharedPrefUtils.getPassword();
+    if (username.isNotEmpty && password.isNotEmpty) {
+      login(username: username, password: password);
+      ResponseEntity? respEntity;
+      await login(username: username, password: password)
+          .then((value) => respEntity = value);
+      if (respEntity != null && respEntity!.success) {
+        User user = UserFactory.createUser(respEntity!.data);
+        // saveUserData(context, user);
+        navigateToHomePage(context: context, roleId: user.roleId);
+      }
+    }
   }
 
   @override
@@ -211,7 +230,7 @@ class _LoginButton extends StatelessWidget {
         height: ResponsiveDesign.getScreenHeight() / 15,
         child: ElevatedButton(
             onPressed: () {
-              loginProcess(context);
+              loginManuelProcess(context);
             },
             style: ButtonStyle(
                 backgroundColor:
@@ -223,46 +242,67 @@ class _LoginButton extends StatelessWidget {
                     fontSize: ResponsiveDesign.getScreenWidth() / 20))));
   }
 
-  void loginProcess(BuildContext context) async {
+  void loginManuelProcess(BuildContext context) async {
     bool controlResult = formKey.currentState!.validate();
     if (controlResult) {
       String username = tfUsername.text;
       String pass = tfPassword.text;
-      var request = HttpRequestUser();
+      /* var request = HttpRequestUser();
       request.login(username, pass).then((resp) async {
         Map<String, dynamic> jsonData = json.decode(resp.body);
 
         var respEntity = ResponseEntity.fromJson(jsonData);
+*/
+      print("loginManuelProecess come");
+      ResponseEntity? respEntity;
+      await login(username: username, password: pass)
+          .then((value) => respEntity = value);
+      print("loginManuelProecess after login() -> respoEntity : ${respEntity}");
 
-        if (!respEntity.success) {
-          showInvalidUsernameOrPassword(
-              context: context, msg: respEntity.message);
-        } else {
-          User user = UserFactory.createUser(respEntity.data);
-          saveUserData(context, user);
-          navigateToHomePage(context: context, roleId: user.roleId);
-        }
-      });
+      if (respEntity != null && !respEntity!.success) {
+        print(
+            "loginManuelProecess after login() -> respoEntity  !null : ${respEntity} and !responseEntity.success = ${!respEntity!.success}");
+        showInvalidUsernameOrPassword(
+            context: context, msg: respEntity!.message);
+      } else {
+        print("ELSE DE  User will be created");
+        User user = UserFactory.createUser(respEntity!.data);
+        saveUserData(context, user);
+        navigateToHomePage(context: context, roleId: user.roleId);
+      }
     }
   }
+}
 
-  void showInvalidUsernameOrPassword(
-      {required BuildContext context, required String msg}) {
-    ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar.getSnackBar(msg));
-  }
+Future<ResponseEntity?> login(
+    {required String username, required String password}) async {
+  print("Come to login()");
+  var request = HttpRequestUser();
+  ResponseEntity? respEntity;
+  await request.login(username, password).then((resp) async {
+    Map<String, dynamic> jsonData = json.decode(resp.body);
+    print("respEntity : ${respEntity}");
 
-  void saveUserData(BuildContext context, User user) {
-    SharedPref.setLoginDataUser(user).then((value) {
-      context.read<DrawerCubit>().resetBody();
-      context.read<AppBarCubit>().setTitleRoleName();
-    });
-  }
+    respEntity = ResponseEntity.fromJson(jsonData);
+    return respEntity;
+  });
+  return respEntity;
+}
 
-  void navigateToHomePage(
-      {required BuildContext context, required int roleId}) {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => HomePage()));
-  }
+void showInvalidUsernameOrPassword(
+    {required BuildContext context, required String msg}) {
+  ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar.getSnackBar(msg));
+}
+
+void saveUserData(BuildContext context, User user) {
+  SharedPrefUtils.setLoginDataUser(user).then((value) {
+    context.read<DrawerCubit>().resetBody();
+    context.read<AppBarCubit>().setTitleRoleName();
+  });
+}
+
+void navigateToHomePage({required BuildContext context, required int roleId}) {
+  Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
 }
 
 class _TextFieldInputLength {

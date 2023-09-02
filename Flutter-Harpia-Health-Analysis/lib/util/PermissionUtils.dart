@@ -1,5 +1,5 @@
 import 'package:flutter_harpia_health_analysis/model/userrole/EnumUserRole.dart';
-import 'package:flutter_harpia_health_analysis/util/Utils.dart';
+import 'package:flutter_harpia_health_analysis/util/SharedPrefUtils.dart';
 
 class PermissionUtils {
   static bool letRunForAdmin() {
