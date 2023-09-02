@@ -40,10 +40,9 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    print("Created TOKEN :  ${FcmTokenUtils.getToken()}");
     autoLogin();
+    print("Created TOKEN :  ${FcmTokenUtils.getToken()}");
     FcmTokenUtils.listenFcm(context);
     CustomNotificationUtil.initialize();
   }
@@ -54,13 +53,13 @@ class _LoginPageState extends State<LoginPage> {
     String username = SharedPrefUtils.getUsername();
     String password = SharedPrefUtils.getPassword();
     if (username.isNotEmpty && password.isNotEmpty) {
-      login(username: username, password: password);
       ResponseEntity? respEntity;
       await login(username: username, password: password)
           .then((value) => respEntity = value);
       if (respEntity != null && respEntity!.success) {
         User user = UserFactory.createUser(respEntity!.data);
         // saveUserData(context, user);
+        updateCubits(context);
         navigateToHomePage(context: context, roleId: user.roleId);
       }
     }
@@ -268,6 +267,7 @@ class _LoginButton extends StatelessWidget {
         print("ELSE DE  User will be created");
         User user = UserFactory.createUser(respEntity!.data);
         saveUserData(context, user);
+        updateCubits(context);
         navigateToHomePage(context: context, roleId: user.roleId);
       }
     }
@@ -295,10 +295,12 @@ void showInvalidUsernameOrPassword(
 }
 
 void saveUserData(BuildContext context, User user) {
-  SharedPrefUtils.setLoginDataUser(user).then((value) {
-    context.read<DrawerCubit>().resetBody();
-    context.read<AppBarCubit>().setTitleRoleName();
-  });
+  SharedPrefUtils.setLoginDataUser(user).then((value) {});
+}
+
+void updateCubits(BuildContext context) {
+  context.read<DrawerCubit>().resetBody();
+  context.read<AppBarCubit>().setTitleRoleName();
 }
 
 void navigateToHomePage({required BuildContext context, required int roleId}) {

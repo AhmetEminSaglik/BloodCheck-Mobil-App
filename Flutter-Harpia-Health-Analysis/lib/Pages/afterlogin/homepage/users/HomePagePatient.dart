@@ -12,6 +12,7 @@ import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestPatient.da
 import 'package:flutter_harpia_health_analysis/model/firebase/FcmNotificationCubit.dart';
 import 'package:flutter_harpia_health_analysis/model/specialitem/doctor/PatientTimer.dart';
 import 'package:flutter_harpia_health_analysis/model/specialitem/doctor/PatientTimerWidget.dart';
+import 'package:flutter_harpia_health_analysis/util/AppBarUtil.dart';
 import 'package:flutter_harpia_health_analysis/util/FcmTokenUtils.dart';
 import 'package:flutter_harpia_health_analysis/util/PatientTimerUtils.dart';
 import '../../../../httprequest/HttpRequestBloodResult.dart';
@@ -208,7 +209,7 @@ class _HomePagePatientState extends State<HomePagePatient> {
   Widget build(BuildContext context) {
     context.read<FcmNotificationCubit>().activateFcmNotifyPermission();
     return Scaffold(
-      appBar: visibleAppBar ? getAppBar() : null,
+      appBar: visibleAppBar ? AppBarUtil.getAppBar() : null,
       backgroundColor:
           isLoading ? ProductColor.bodyBackground : ProductColor.white,
       body: isLoading
@@ -573,11 +574,11 @@ class LoadingScreenWidget extends StatelessWidget {
   }
 }
 
-AppBar getAppBar() {
+/*AppBar getAppBar() {
   return AppBar(
     backgroundColor: ProductColor.appBarBackgroundColor,
     title: BlocBuilder<AppBarCubit, Widget>(builder: (builder, titleWidget) {
       return titleWidget;
     }),
   );
-}
+}*/

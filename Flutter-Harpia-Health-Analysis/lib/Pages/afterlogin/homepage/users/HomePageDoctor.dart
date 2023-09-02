@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/listview/patient/ListviewBuilderPatient.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestDoctor.dart';
+import 'package:flutter_harpia_health_analysis/util/AppBarUtil.dart';
 import 'package:flutter_harpia_health_analysis/util/PermissionUtils.dart';
 import '../../../../model/user/Patient.dart';
 import '../../../../util/ProductColor.dart';
@@ -19,7 +20,7 @@ class HomePageDoctor extends StatefulWidget {
 class _HomePageDoctorState extends State<HomePageDoctor> {
   bool visibleAppBar = false;
   List<Patient> patientList = [];
-
+/*
   AppBar getAppBar() {
     return AppBar(
       backgroundColor: ProductColor.appBarBackgroundColor,
@@ -27,7 +28,7 @@ class _HomePageDoctorState extends State<HomePageDoctor> {
         return titleWidget;
       }),
     );
-  }
+  }*/
 
   @override
   void initState() {
@@ -39,7 +40,7 @@ class _HomePageDoctorState extends State<HomePageDoctor> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: visibleAppBar ? getAppBar() : null,
+      appBar: visibleAppBar ? AppBarUtil.getAppBar() : null,
       body: ListviewBuilderPatient(widget.doctorId),
     );
   }

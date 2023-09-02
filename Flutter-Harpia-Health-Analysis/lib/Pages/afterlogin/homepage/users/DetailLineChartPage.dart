@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/linechart/BaseLineChart.dart';
 import 'package:flutter_harpia_health_analysis/core/ResponsiveDesign.dart';
+import 'package:flutter_harpia_health_analysis/util/AppBarUtil.dart';
 import '../../../../util/ProductColor.dart';
 import '../appbar/AppBarCubit.dart';
 
@@ -13,7 +14,7 @@ class DetailLineChartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getAppBar(),
+      appBar: AppBarUtil.getAppBar(),
       body: Padding(
         padding:
             EdgeInsets.only(left: ResponsiveDesign.getScreenHeight() / 1000),
@@ -32,12 +33,12 @@ class DetailLineChartPage extends StatelessWidget {
     );
   }
 
-  AppBar getAppBar() {
+/*  AppBar getAppBar() {
     return AppBar(
       backgroundColor: ProductColor.appBarBackgroundColor,
       title: BlocBuilder<AppBarCubit, Widget>(builder: (builder, titleWidget) {
         return titleWidget;
       }),
     );
-  }
+  }*/
 }
