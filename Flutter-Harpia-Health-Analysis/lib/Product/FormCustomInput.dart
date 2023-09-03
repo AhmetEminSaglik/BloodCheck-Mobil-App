@@ -19,7 +19,6 @@ class FormInputTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("hintText : $hintText    \\ Gelen compulsdoryArea : $compulsoryArea");
     return _InputTextFieldPadding(
       widget: _InputTextFormField(
         hint: hintText,
