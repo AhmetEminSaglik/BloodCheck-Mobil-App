@@ -253,6 +253,7 @@ class _LoginButton extends StatelessWidget {
         showInvalidUsernameOrPassword(
             context: context, msg: respEntity!.message);
       } else {
+        print("Gelen Data ${respEntity!.data}");
         User user = UserFactory.createUser(respEntity!.data);
         saveUserData(context, user);
         navigateToHomePage(context: context, roleId: user.roleId);

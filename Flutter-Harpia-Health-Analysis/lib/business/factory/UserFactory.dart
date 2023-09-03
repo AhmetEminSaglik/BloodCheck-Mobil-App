@@ -12,6 +12,10 @@ class UserFactory {
     return Doctor.fromJson(json);
   }
 
+  static Patient createPatient(Map<String, dynamic> json) {
+    return Patient.fromJson(json);
+  }
+
   static List<User> createUserList(List<dynamic> json) {
     List<User> userList = json.map((data) => User.fromJson(data)).toList();
     return userList;

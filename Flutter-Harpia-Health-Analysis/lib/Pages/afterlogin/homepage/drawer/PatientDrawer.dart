@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/drawer/DrawerCubit.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/users/HomePagePatient.dart';
-import 'package:flutter_harpia_health_analysis/Pages/afterlogin/profile/PatientProfile.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../util/SafeLogoutDrawerItem.dart';
 import '../../../../util/SharedPrefUtils.dart';
+import '../../profile/patient/PatientProfile.dart';
 
 class PatientDrawer extends StatefulWidget {
   @override
@@ -22,7 +22,7 @@ class _PatientDrawerState extends State<PatientDrawer> {
     HomePagePatient(
         patientId: SharedPrefUtils.getUserId(),
         displayNamePatientPage: "$name $lastname"),
-    const PatientProfile()
+    PatientProfile(patientId: SharedPrefUtils.getUserId())
   ];
   int selectedIndex = 0;
 

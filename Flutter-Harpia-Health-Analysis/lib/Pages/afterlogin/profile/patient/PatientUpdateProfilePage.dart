@@ -1,37 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_harpia_health_analysis/Pages/afterlogin/profile/doctor/DoctorProfile.dart';
+import 'package:flutter_harpia_health_analysis/Pages/afterlogin/profile/patient/PatientProfile.dart';
+import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestPatient.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/ResponseEntity.dart';
 import 'package:flutter_harpia_health_analysis/util/AppBarUtil.dart';
 import '../../../../Product/FormCustomInput.dart';
 import '../../../../core/ResponsiveDesign.dart';
-import '../../../../httprequest/HttpRequestDoctor.dart';
-import '../../../../model/user/Doctor.dart';
-import '../../../../model/userrole/EnumUserRole.dart';
-import '../../../../util/CustomAlertDialog.dart';
+import '../../../../model/user/Patient.dart';
 import '../../../../util/CustomSnackBar.dart';
 import '../../../../util/ProductColor.dart';
 import '../../../../util/SharedPrefUtils.dart';
 import '../ProfilUpdatedCubit.dart';
 
-class DoctorUpdateProfilePage extends StatefulWidget {
-  late Doctor doctor;
+class PatientUpdateProfilePage extends StatefulWidget {
+  late Patient patient;
 
-  DoctorUpdateProfilePage({required this.doctor});
+  PatientUpdateProfilePage({required this.patient});
 
   @override
-  State<DoctorUpdateProfilePage> createState() =>
-      _DoctorUpdateProfilePageState();
+  State<PatientUpdateProfilePage> createState() =>
+      _PatientUpdateProfilePageState();
 }
 
-class _DoctorUpdateProfilePageState extends State<DoctorUpdateProfilePage> {
+class _PatientUpdateProfilePageState extends State<PatientUpdateProfilePage> {
   var formKey = GlobalKey<FormState>();
   TextEditingController tfUsername = TextEditingController();
   TextEditingController tfPassword = TextEditingController();
   TextEditingController tfName = TextEditingController();
   TextEditingController tfLastname = TextEditingController();
-  TextEditingController tfSpecialization = TextEditingController();
-  TextEditingController tfGraduate = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -75,27 +71,13 @@ class _DoctorUpdateProfilePageState extends State<DoctorUpdateProfilePage> {
                       obscure: false,
                       compulsoryArea: false,
                     ),
-                    FormInputTextField(
-                      hintText: "Spelization",
-                      controller: tfSpecialization,
-                      obscure: false,
-                      compulsoryArea: false,
-                    ),
-                    FormInputTextField(
-                      hintText: "Graduate",
-                      controller: tfGraduate,
-                      obscure: false,
-                      compulsoryArea: false,
-                    ),
                     _UpdateProfileButton(
                       formKey: formKey,
-                      defaultDoctor: widget.doctor,
+                      defaultPatient: widget.patient,
                       tfUsername: tfUsername,
                       tfPassword: tfPassword,
                       tfName: tfName,
                       tfLastname: tfLastname,
-                      tfGraduate: tfGraduate,
-                      tfSpecialization: tfSpecialization,
                     )
                   ],
                 ),
@@ -109,31 +91,23 @@ class _DoctorUpdateProfilePageState extends State<DoctorUpdateProfilePage> {
 }
 
 class _UpdateProfileButton extends StatelessWidget {
-  late Doctor defaultDoctor;
+  late Patient defaultPatient;
   List<TextEditingController> list = [];
-  final TextEditingController tfUsername,
-      tfPassword,
-      tfName,
-      tfLastname,
-      tfSpecialization,
-      tfGraduate;
+  final TextEditingController tfUsername, tfPassword, tfName, tfLastname;
   GlobalKey<FormState> formKey;
 
-  _UpdateProfileButton(
-      {required this.formKey,
-      required this.defaultDoctor,
-      required this.tfUsername,
-      required this.tfPassword,
-      required this.tfName,
-      required this.tfLastname,
-      required this.tfGraduate,
-      required this.tfSpecialization}) {
+  _UpdateProfileButton({
+    required this.formKey,
+    required this.defaultPatient,
+    required this.tfUsername,
+    required this.tfPassword,
+    required this.tfName,
+    required this.tfLastname,
+  }) {
     list.add(tfUsername);
     list.add(tfPassword);
     list.add(tfName);
     list.add(tfLastname);
-    list.add(tfGraduate);
-    list.add(tfSpecialization);
   }
 
   @override
@@ -163,9 +137,7 @@ class _UpdateProfileButton extends StatelessWidget {
     if (tfUsername.text.isNotEmpty ||
         tfPassword.text.isNotEmpty ||
         tfName.text.isNotEmpty ||
-        tfLastname.text.isNotEmpty ||
-        tfSpecialization.text.isNotEmpty ||
-        tfGraduate.text.isNotEmpty) {
+        tfLastname.text.isNotEmpty) {
       return true;
     }
     return false;
@@ -179,22 +151,18 @@ class _UpdateProfileButton extends StatelessWidget {
         String password = tfPassword.text;
         String name = tfName.text;
         String lastname = tfLastname.text;
-        String specialization = tfSpecialization.text;
-        String graduate = tfGraduate.text;
 
-        Doctor doctor = Doctor(
-          id: defaultDoctor.id,
-          roleId: defaultDoctor.roleId,
-          name: name.isNotEmpty ? name : defaultDoctor.name,
-          lastname: lastname.isNotEmpty ? lastname : defaultDoctor.lastname,
-          username: username.isNotEmpty ? username : defaultDoctor.username,
-          password: password.isNotEmpty ? password : defaultDoctor.password,
-          specialization: specialization.isNotEmpty
-              ? specialization
-              : defaultDoctor.specialization,
-          graduate: graduate.isNotEmpty ? graduate : defaultDoctor.graduate,
+        Patient doctor = Patient(
+          id: defaultPatient.id,
+          roleId: defaultPatient.roleId,
+          name: name.isNotEmpty ? name : defaultPatient.name,
+          lastname: lastname.isNotEmpty ? lastname : defaultPatient.lastname,
+          username: username.isNotEmpty ? username : defaultPatient.username,
+          password: password.isNotEmpty ? password : defaultPatient.password,
+          diabeticTypeId: defaultPatient.diabeticTypeId,
+          doctorId: defaultPatient.doctorId,
         );
-        var request = HttpRequestDoctor();
+        var request = HttpRequestPatient();
 
         ResponseEntity? respEntity;
 
@@ -208,10 +176,11 @@ class _UpdateProfileButton extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        DoctorProfile(doctorId: (defaultDoctor.id))));
+                        PatientProfile(patientId: defaultPatient.id)));
             String msg = "Updated Successfuly";
             ScaffoldMessenger.of(context)
                 .showSnackBar(CustomSnackBar.getSnackBar(msg));
+
           } else {
             ScaffoldMessenger.of(context)
                 .showSnackBar(CustomSnackBar.getSnackBar(respEntity!.message));

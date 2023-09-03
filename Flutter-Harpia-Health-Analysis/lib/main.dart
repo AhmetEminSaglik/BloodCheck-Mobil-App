@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/appbar/AppBarCubit.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/drawer/DrawerCubit.dart';
+import 'package:flutter_harpia_health_analysis/Pages/afterlogin/profile/ProfilUpdatedCubit.dart';
 import 'package:flutter_harpia_health_analysis/firebase_options.dart';
 import 'package:flutter_harpia_health_analysis/model/firebase/FcmNotificationCubit.dart';
 import 'package:flutter_harpia_health_analysis/util/FcmTokenUtils.dart';
@@ -40,7 +41,8 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => DrawerCubit()),
         BlocProvider(create: (context) => AppBarCubit()),
-        BlocProvider(create: (context) => FcmNotificationCubit())
+        BlocProvider(create: (context) => FcmNotificationCubit()),
+        BlocProvider(create: (context) => ProfilUpdatedCubit()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

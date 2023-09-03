@@ -69,7 +69,6 @@ class HttpRequestDoctor {
   Future<ResponseEntity> update(Doctor doctor) async {
     Uri url = Uri.parse("$_baseUrl");
     print("URL : $url");
-    print("DOCTOR  : $doctor");
     Map<String, dynamic> requestData = doctor.toJson();
     var resp = await http.put(url,
         headers: HttpUtil.header, body: jsonEncode(requestData));

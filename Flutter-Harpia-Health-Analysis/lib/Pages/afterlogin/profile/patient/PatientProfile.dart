@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_harpia_health_analysis/Pages/afterlogin/profile/ProfilUpdatedCubit.dart';
 import 'package:flutter_harpia_health_analysis/core/ResponsiveDesign.dart';
-import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestDoctor.dart';
-import 'package:flutter_harpia_health_analysis/util/PermissionUtils.dart';
+import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestPatient.dart';
+import 'package:flutter_harpia_health_analysis/model/enums/diabetic/EnumDiabeticType.dart';
 import '../../../../model/user/Doctor.dart';
+import '../../../../model/user/Patient.dart';
 import '../../../../util/ProductColor.dart';
-import '../ProfilUpdatedCubit.dart';
-import 'DoctorUpdateProfilePage.dart';
+import 'PatientUpdateProfilePage.dart';
 
-class DoctorProfile extends StatefulWidget {
-  int doctorId;
+class PatientProfile extends StatefulWidget {
+  int patientId;
 
-  DoctorProfile({required this.doctorId});
+  PatientProfile({required this.patientId});
 
   @override
-  State<DoctorProfile> createState() => _DoctorProfileState();
+  State<PatientProfile> createState() => _PatientProfileState();
 }
 
-class _DoctorProfileState extends State<DoctorProfile> {
+class _PatientProfileState extends State<PatientProfile> {
+  late Patient patient;
   late Doctor doctor;
   bool isLoading = true;
   final String unknowData = "Unknown Data";
@@ -54,37 +56,40 @@ class _DoctorProfileState extends State<DoctorProfile> {
                   _ProfileItem(
                     labelName: "Name",
                     labelValue:
-                        doctor.name.isNotEmpty ? doctor.name : unknowData,
+                        patient.name.isNotEmpty ? patient.name : unknowData,
                   ),
+                  /*   BlocBuilder<ProfilUpdatedCubit, bool>(
+                    builder: (builder, isUpdated) {
+                      if (isUpdated) {
+                        isLoading = isUpdated;
+                        retrieveData();
+                        context.read<ProfilUpdatedCubit>().setFalse();
+                      }
+                      return Container();
+                    },
+                  ),*/
                   _ProfileItem(
                     labelName: "Lastname",
-                    labelValue: doctor.lastname.isNotEmpty
-                        ? doctor.lastname
-                        : unknowData,
-                  ),
-                  PermissionUtils.letRunForDoctor()
-                      ? _ProfileItem(
-                          labelName: "Username",
-                          labelValue: doctor.username.isNotEmpty
-                              ? doctor.username
-                              : unknowData,
-                        )
-                      : Container(),
-                  _ProfileItem(
-                    labelName: "Specialization",
-                    labelValue: doctor.specialization.isNotEmpty
-                        ? doctor.specialization
+                    labelValue: patient.lastname.isNotEmpty
+                        ? patient.lastname
                         : unknowData,
                   ),
                   _ProfileItem(
-                    labelName: "Graduate",
-                    labelValue: doctor.graduate.isNotEmpty
-                        ? doctor.graduate
+                    labelName: "Username",
+                    labelValue: patient.username.isNotEmpty
+                        ? patient.username
                         : unknowData,
                   ),
-                  PermissionUtils.letRunForDoctor()
-                      ? _UpdateProfileButton(doctor: doctor)
-                      : Container(),
+                  _ProfileItem(
+                      labelName: "Diabetic Type",
+                      labelValue:
+                          EnumDiabeticType.getTypeName(patient.diabeticTypeId)),
+                  _ProfileItem(
+                      labelName: "Doctor",
+                      labelValue: "${doctor.name} ${doctor.lastname}"),
+                  _UpdateProfileButton(
+                    patient: patient,
+                  )
                 ],
               ),
             ),
@@ -93,7 +98,9 @@ class _DoctorProfileState extends State<DoctorProfile> {
 
   retrieveData() async {
     if (isLoading) {
-      doctor = await HttpRequestDoctor.findById(widget.doctorId);
+      patient = await HttpRequestPatient.findPatientById(widget.patientId);
+      doctor =
+          await HttpRequestPatient.findResponsibleDoctorByPatientId(patient.id);
       setState(() {
         isLoading = false;
       });
@@ -144,9 +151,9 @@ class _ProfileItemDesignedText extends StatelessWidget {
 }
 
 class _UpdateProfileButton extends StatelessWidget {
-  late final Doctor doctor;
+  late final Patient patient;
 
-  _UpdateProfileButton({required this.doctor});
+  _UpdateProfileButton({required this.patient});
 
   @override
   Widget build(BuildContext context) {
@@ -155,8 +162,9 @@ class _UpdateProfileButton extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) =>
-                      DoctorUpdateProfilePage(doctor: doctor)));
+                  builder: (context) => PatientUpdateProfilePage(
+                        patient: patient,
+                      )));
         },
         child: const Text("Update Profile"));
   }
