@@ -62,11 +62,17 @@ public class DoctorController {
     }
 
     @PutMapping()
-    public ResponseEntity<DataResult<Doctor>> updateDoctor(@RequestBody Doctor doctor) {
-        log.info("Update Doctor");
-        doctor = (Doctor) saveDoctor(doctor).getBody().getData();
+    public ResponseEntity<DataResult<Doctor>> updateDoctor(@RequestBody Doctor newDoctor) {
+        userService.save(newDoctor);
         String msg = "Doctor is updated";
-        DataResult<Doctor> result = new SuccessDataResult(doctor, msg);
+        DataResult<Doctor> result = new SuccessDataResult(newDoctor, msg);
         return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
+
+    boolean isUpdateable(String oldVar, String newVar) {
+        if (newVar != null && !oldVar.equals(newVar) && newVar.length() > 0) {
+            return true;
+        }
+        return false;
     }
 }

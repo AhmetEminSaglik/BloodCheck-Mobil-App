@@ -21,5 +21,4 @@ public interface UserService {
     List<User> findAll();
 
     List<User> findAllByRoleId(int roleId);
-
 }

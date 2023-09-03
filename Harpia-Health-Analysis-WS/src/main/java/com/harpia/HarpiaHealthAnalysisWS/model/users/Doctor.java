@@ -35,6 +35,7 @@ public class Doctor extends User {
     @Override
     public String toString() {
         return "Doctor{" +
+                super.toString() + "," +
                 "graduate='" + graduate + '\'' +
                 ", specialization='" + specialization + '\'' +
                 '}';
