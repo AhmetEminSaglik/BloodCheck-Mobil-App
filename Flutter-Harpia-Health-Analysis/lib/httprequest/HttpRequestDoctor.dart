@@ -44,8 +44,7 @@ class HttpRequestDoctor {
 
   static Future<http.Response> savePatientTimer(
       PatientTimer patientTimer) async {
-    Uri url =
-        Uri.parse("${BaseHttpRequestConfig.baseUrl}/timers");
+    Uri url = Uri.parse("${BaseHttpRequestConfig.baseUrl}/timers");
     print("URL : ${url}");
     Map<String, dynamic> requestData = {
       "hours": patientTimer.hours,
@@ -55,5 +54,15 @@ class HttpRequestDoctor {
     var resp = await http.post(url,
         headers: HttpUtil.header, body: jsonEncode(requestData));
     return resp;
+  }
+
+  static Future<Doctor> findById(int id) async {
+    Uri url = Uri.parse("$_baseUrl/$id");
+    print("URL : $url");
+
+    var resp = await http.get(url);
+    Map<String, dynamic> jsonData = json.decode(resp.body);
+    var respEntity = ResponseEntity.fromJson(jsonData);
+    return UserFactory.createDoctor(respEntity.data);
   }
 }

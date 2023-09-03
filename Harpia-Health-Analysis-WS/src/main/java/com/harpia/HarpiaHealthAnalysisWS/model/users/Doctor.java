@@ -3,7 +3,6 @@ package com.harpia.HarpiaHealthAnalysisWS.model.users;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,12 +11,32 @@ import lombok.*;
 @Setter
 public class Doctor extends User {
     @Column
-    int totalPatientNumber;
+    String graduate = "";
+
+    @Column
+    String specialization = "";
+
+    public String getGraduate() {
+        return graduate;
+    }
+
+    public void setGraduate(String graduate) {
+        this.graduate = graduate;
+    }
+
+    public String getSpecialization() {
+        return specialization;
+    }
+
+    public void setSpecialization(String specialization) {
+        this.specialization = specialization;
+    }
 
     @Override
     public String toString() {
-        return "Doctor{" + super.toString() +
-                "totalPatientNumber=" + totalPatientNumber +
+        return "Doctor{" +
+                "graduate='" + graduate + '\'' +
+                ", specialization='" + specialization + '\'' +
                 '}';
     }
 }

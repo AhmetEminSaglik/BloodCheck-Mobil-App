@@ -246,28 +246,16 @@ class _LoginButton extends StatelessWidget {
     if (controlResult) {
       String username = tfUsername.text;
       String pass = tfPassword.text;
-      /* var request = HttpRequestUser();
-      request.login(username, pass).then((resp) async {
-        Map<String, dynamic> jsonData = json.decode(resp.body);
-
-        var respEntity = ResponseEntity.fromJson(jsonData);
-*/
-      print("loginManuelProecess come");
       ResponseEntity? respEntity;
       await login(username: username, password: pass)
           .then((value) => respEntity = value);
-      print("loginManuelProecess after login() -> respoEntity : ${respEntity}");
 
       if (respEntity != null && !respEntity!.success) {
-        print(
-            "loginManuelProecess after login() -> respoEntity  !null : ${respEntity} and !responseEntity.success = ${!respEntity!.success}");
         showInvalidUsernameOrPassword(
             context: context, msg: respEntity!.message);
       } else {
-        print("ELSE DE  User will be created");
         User user = UserFactory.createUser(respEntity!.data);
         saveUserData(context, user);
-        //updateCubits(context);
         navigateToHomePage(context: context, roleId: user.roleId);
       }
     }
@@ -295,6 +283,7 @@ void showInvalidUsernameOrPassword(
 }
 
 void saveUserData(BuildContext context, User user) async {
+  print("Login page -> saveUserData -> User : $user");
   await SharedPrefUtils.setLoginDataUser(user).then((value) {});
   updateCubits(context);
 }

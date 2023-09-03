@@ -78,16 +78,17 @@ public class InitialDataLoader implements CommandLineRunner {
             Patient patient_6_Month = patientList.get(patientList.size() - 4);
             Patient patient_24_hours = patientList.get(patientList.size() - 5);
 
-            saveBloodResult_2_Data(patient_2_Data);
+//            saveBloodResult_2_Data(patient_2_Data);
             saveBloodResult_6_Hours_Saved_5_Hours_Before(patient_6_Hours);
             saveBloodResult_17_Days_16_Hours(patient_17_Days);
             saveBloodResult_per_24_hours(patient_24_hours);
 
 
+
 //            saveBloodResultPerMinuteForSixMonth(patient_6_Month);
-            /*for (int i = 0; i < patientList.size() - 2; i++) {
-                saveBloodResultPerMinuteForSixMonth(patientList.get(3));
-            }*/
+//            for (int i = 0; i < patientList.size() - 2; i++) {
+                saveBloodResultPerMinuteForSixMonth(patient_2_Data);
+//            }
 
         }
 //        new FakeSensors(fcmTokenService,fcmService).runFakeSensors(timerController.findAllPatientTimers().getBody().getData(), bloodResultService);
@@ -380,6 +381,8 @@ public class InitialDataLoader implements CommandLineRunner {
             user.setLastname(getName(i));
             user.setUsername("doc" + i);
             user.setPassword("pass");
+            user.setGraduate("Graduate "+i);
+            user.setSpecialization("Spelization "+i);
             user.setRoleId(EnumUserRole.DOCTOR.getId());
             list.add(user);
         }

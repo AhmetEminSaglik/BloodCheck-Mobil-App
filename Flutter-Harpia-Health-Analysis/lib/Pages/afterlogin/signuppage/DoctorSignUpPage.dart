@@ -145,7 +145,7 @@ class _SignUpButton extends StatelessWidget {
           lastname: lastname,
           username: username,
           password: pass,
-          totalPatientNumber: -11);
+      );
       request.signUp(doctor).then((resp) async {
         Map<String, dynamic> jsonData = json.decode(resp.body);
 

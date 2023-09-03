@@ -10,20 +10,25 @@ import '../users/HomePageDoctor.dart';
 class DoctorDrawer extends StatefulWidget {
   @override
   State<DoctorDrawer> createState() => _DoctorDrawerState();
-
-  DoctorDrawer() {
-    print("DOCTOR drawer'e geldi");
-  }
 }
 
 class _DoctorDrawerState extends State<DoctorDrawer> {
-  static int doctorId = SharedPrefUtils.getUserId() ?? -1;
+  late int doctorId = SharedPrefUtils.getUserId();
 
-  var pageList = [HomePageDoctor(doctorId: doctorId), const DoctorProfile()];
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  late var pageList = [
+    HomePageDoctor(doctorId: doctorId),
+    DoctorProfile(doctorId: doctorId)
+  ];
   int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
+    print("DOCTOR ID : $doctorId");
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,

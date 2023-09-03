@@ -1,107 +1,22 @@
-import 'package:flutter/material.dart';
+/* import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_harpia_health_analysis/util/AppBarUtil.dart';
-import '../../../../business/factory/UserFactory.dart';
-import '../../../../core/ResponsiveDesign.dart';
-import '../../../../httprequest/HttpRequestDoctor.dart';
-import '../../../../httprequest/ResponseEntity.dart';
-import '../../../../model/user/Doctor.dart';
-import '../../../../model/user/User.dart';
-import '../../../../model/userrole/EnumUserRole.dart';
-import '../../../../util/CustomAlertDialog.dart';
-import '../../../../util/ProductColor.dart';
-import 'dart:convert';
 
-class DoctorUpdateProfilePage extends StatefulWidget {
-  const DoctorUpdateProfilePage({Key? key}) : super(key: key);
+import '../core/ResponsiveDesign.dart';
+import '../util/ProductColor.dart';
 
-  @override
-  State<DoctorUpdateProfilePage> createState() =>
-      _DoctorUpdateProfilePageState();
-}
-
-class _DoctorUpdateProfilePageState extends State<DoctorUpdateProfilePage> {
-  var formKey = GlobalKey<FormState>();
-  TextEditingController tfUsername = TextEditingController();
-  TextEditingController tfPassword = TextEditingController();
-  TextEditingController tfName = TextEditingController();
-  TextEditingController tfLastname = TextEditingController();
-  TextEditingController tfSpecialization = TextEditingController();
-  TextEditingController tfGraduate = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBarUtil.getAppBar(),
-      backgroundColor: ProductColor.bodyBackground,
-      body: Padding(
-        padding: EdgeInsets.only(
-            left: ResponsiveDesign.getScreenWidth() / 25,
-            right: ResponsiveDesign.getScreenWidth() / 25,
-            top: ResponsiveDesign.getScreenWidth() / 10,
-            bottom: ResponsiveDesign.getScreenWidth() / 20),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Form(
-                key: formKey,
-                child: Column(
-                  children: [
-                    _FormInputTextField(
-                        hintText: "Username",
-                        controller: tfUsername,
-                        obscure: false),
-                    _FormInputTextField(
-                        hintText: "Password",
-                        controller: tfPassword,
-                        obscure: true),
-                    _FormInputTextField(
-                        hintText: "Name", controller: tfName, obscure: false),
-                    _FormInputTextField(
-                        hintText: "Lastname",
-                        controller: tfLastname,
-                        obscure: false),
-                    _FormInputTextField(
-                        hintText: "Spelization",
-                        controller: tfSpecialization,
-                        obscure: false),
-                    _FormInputTextField(
-                        hintText: "Graduate",
-                        controller: tfGraduate,
-                        obscure: false),
-                    _UpdateProfileButton(
-                      formKey: formKey,
-                      tfUsername: tfUsername,
-                      tfPassword: tfPassword,
-                      tfName: tfName,
-                      tfLastname: tfLastname,
-                      tfGraduate: tfGraduate,
-                      tfSpecialization: tfSpecialization,
-                    )
-                  ],
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _FormInputTextField extends StatelessWidget {
+class FormInputTextField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
   final bool obscure;
 
-  const _FormInputTextField(
+  const FormInputTextField(
       {required this.controller,
       required this.hintText,
       required this.obscure});
 
   @override
   Widget build(BuildContext context) {
-    return _InputTextFieldPadding(
+    return InputTextFieldPadding(
       widget: _InputTextFormField(
         hint: hintText,
         textEditController: controller,
@@ -111,10 +26,10 @@ class _FormInputTextField extends StatelessWidget {
   }
 }
 
-class _InputTextFieldPadding extends StatelessWidget {
+class InputTextFieldPadding extends StatelessWidget {
   final StatelessWidget widget;
 
-  const _InputTextFieldPadding({super.key, required this.widget});
+  const InputTextFieldPadding({super.key, required this.widget});
 
   @override
   Widget build(BuildContext context) {
@@ -183,24 +98,16 @@ class _InputTextFormField extends StatelessWidget {
     );
   }
 }
-
-class _UpdateProfileButton extends StatelessWidget {
-  final TextEditingController tfUsername,
-      tfPassword,
-      tfName,
-      tfLastname,
-      tfSpecialization,
-      tfGraduate;
+class _SignUpButton extends StatelessWidget {
+  final TextEditingController tfUsername, tfPassword, tfName, tfLastname;
   GlobalKey<FormState> formKey;
 
-  _UpdateProfileButton(
+  _SignUpButton(
       {required this.formKey,
-      required this.tfUsername,
-      required this.tfPassword,
-      required this.tfName,
-      required this.tfLastname,
-      required this.tfGraduate,
-      required this.tfSpecialization}); //({super.key /*,required this.screenInfo*/});
+        required this.tfUsername,
+        required this.tfPassword,
+        required this.tfName,
+        required this.tfLastname}); //({super.key /*,required this.screenInfo*/});
 
   @override
   Widget build(BuildContext context) {
@@ -209,14 +116,14 @@ class _UpdateProfileButton extends StatelessWidget {
         height: ResponsiveDesign.getScreenHeight() / 15,
         child: ElevatedButton(
             onPressed: () {
-              _updateProfileProcess(context);
+              _signUpProcess(context);
             },
             style: ButtonStyle(
                 backgroundColor:
-                    MaterialStateColor.resolveWith((states) => Colors.pink),
+                MaterialStateColor.resolveWith((states) => Colors.pink),
                 foregroundColor:
-                    MaterialStateColor.resolveWith((states) => Colors.white)),
-            child: Text("Update Profile",
+                MaterialStateColor.resolveWith((states) => Colors.white)),
+            child: Text("Sign in",
                 style: TextStyle(
                     fontSize: ResponsiveDesign.getScreenWidth() / 20))));
   }
@@ -225,26 +132,22 @@ class _UpdateProfileButton extends StatelessWidget {
     list.forEach((e) => e.text = "");
   }
 
-  void _updateProfileProcess(BuildContext context) async {
+  void _buttonProcess(BuildContext context) async {
     bool controlResult = formKey.currentState!.validate();
     if (controlResult) {
       String username = tfUsername.text;
       String pass = tfPassword.text;
       String name = tfName.text;
       String lastname = tfLastname.text;
-      String specialization = tfSpecialization.text;
-      String graduate = tfGraduate.text;
       var request = HttpRequestDoctor();
       Doctor doctor = Doctor(
-        id: 0,
-        roleId: EnumUserRole.DOCTOR.roleId,
-        name: name,
-        lastname: lastname,
-        username: username,
-        password: pass,
-        specialization: specialization,
-        graduate: graduate,
-      );
+          id: 0,
+          roleId: EnumUserRole.DOCTOR.roleId,
+          name: name,
+          lastname: lastname,
+          username: username,
+          password: pass,
+          totalPatientNumber: -11);
       request.signUp(doctor).then((resp) async {
         Map<String, dynamic> jsonData = json.decode(resp.body);
 
@@ -294,8 +197,8 @@ class _UpdateProfileButton extends StatelessWidget {
             roleId: EnumUserRole.DOCTOR.roleId));
   }
 }
-
 class _TextFieldInputLength {
   static int min = 3;
   static int max = 10;
 }
+*/

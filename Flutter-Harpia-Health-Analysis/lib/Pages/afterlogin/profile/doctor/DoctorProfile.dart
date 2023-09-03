@@ -1,54 +1,78 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/profile/doctor/DoctorUpdateProfilePage.dart';
 import 'package:flutter_harpia_health_analysis/core/ResponsiveDesign.dart';
+import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestDoctor.dart';
 
+import '../../../../model/user/Doctor.dart';
 import '../../../../util/ProductColor.dart';
+import 'DoctorUpdateProfilePage2.dart';
 
 class DoctorProfile extends StatefulWidget {
-  const DoctorProfile({Key? key}) : super(key: key);
+  int doctorId;
+
+  DoctorProfile({required this.doctorId});
 
   @override
   State<DoctorProfile> createState() => _DoctorProfileState();
 }
 
 class _DoctorProfileState extends State<DoctorProfile> {
+  late Doctor doctor;
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    retrieveDoctorData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ProductColor.bodyBackground,
-      body: Padding(
-        padding: EdgeInsets.only(
-          left: ResponsiveDesign.getScreenWidth() / 20,
-          right: ResponsiveDesign.getCertainWidth() / 20,
-          top: ResponsiveDesign.getScreenHeight() / 40,
-        ),
-        child: Column(
-          children: [
-            _ProfileItem(
-              labelName: "Name",
-              labelValue: "Ahmet Emin",
+      body: isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : Padding(
+              padding: EdgeInsets.only(
+                left: ResponsiveDesign.getScreenWidth() / 20,
+                right: ResponsiveDesign.getCertainWidth() / 20,
+                top: ResponsiveDesign.getScreenHeight() / 40,
+              ),
+              child: Column(
+                children: [
+                  _ProfileItem(
+                    labelName: "Name",
+                    labelValue: doctor.name,
+                  ),
+                  _ProfileItem(
+                    labelName: "LastName",
+                    labelValue: doctor.lastname,
+                  ),
+                  _ProfileItem(
+                    labelName: "Username",
+                    labelValue: doctor.username,
+                  ),
+                  _ProfileItem(
+                    labelName: "Specialization",
+                    labelValue: doctor.specialization,
+                  ),
+                  _ProfileItem(
+                    labelName: "Graduate",
+                    labelValue: doctor.graduate,
+                  ),
+                  const _UpdateProfileButton(),
+                ],
+              ),
             ),
-            _ProfileItem(
-              labelName: "LastName",
-              labelValue: "Saglik",
-            ),
-            _ProfileItem(
-              labelName: "Username",
-              labelValue: "doc1",
-            ),
-            _ProfileItem(
-              labelName: "Specialization",
-              labelValue: "Endocrinologists ",
-            ),
-            _ProfileItem(
-              labelName: "Graduate",
-              labelValue: "KTU ",
-            ),
-            const _UpdateProfileButton(),
-          ],
-        ),
-      ),
     );
+  }
+
+  retrieveDoctorData() async {
+    doctor = await HttpRequestDoctor.findById(widget.doctorId);
+    setState(() {
+      isLoading = false;
+    });
   }
 }
 
@@ -104,7 +128,7 @@ class _UpdateProfileButton extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => const DoctorUpdateProfilePage()));
+                  builder: (context) => const DoctorUpdateProfilePage2()));
         },
         child: Text("Update Profile"));
   }

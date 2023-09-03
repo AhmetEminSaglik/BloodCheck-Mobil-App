@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_harpia_health_analysis/util/AppBarUtil.dart';
+import '../../../../Product/FormCustomInput.dart';
 import '../../../../business/factory/UserFactory.dart';
 import '../../../../core/ResponsiveDesign.dart';
 import '../../../../httprequest/HttpRequestDoctor.dart';
@@ -12,15 +13,15 @@ import '../../../../util/CustomAlertDialog.dart';
 import '../../../../util/ProductColor.dart';
 import 'dart:convert';
 
-class DoctorUpdateProfilePage extends StatefulWidget {
-  const DoctorUpdateProfilePage({Key? key}) : super(key: key);
+class DoctorUpdateProfilePage2 extends StatefulWidget {
+  const DoctorUpdateProfilePage2({Key? key}) : super(key: key);
 
   @override
-  State<DoctorUpdateProfilePage> createState() =>
-      _DoctorUpdateProfilePageState();
+  State<DoctorUpdateProfilePage2> createState() =>
+      _DoctorUpdateProfilePage2State();
 }
 
-class _DoctorUpdateProfilePageState extends State<DoctorUpdateProfilePage> {
+class _DoctorUpdateProfilePage2State extends State<DoctorUpdateProfilePage2> {
   var formKey = GlobalKey<FormState>();
   TextEditingController tfUsername = TextEditingController();
   TextEditingController tfPassword = TextEditingController();
@@ -43,29 +44,30 @@ class _DoctorUpdateProfilePageState extends State<DoctorUpdateProfilePage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
+              Text("update profil Page 2 "),
               Form(
                 key: formKey,
                 child: Column(
                   children: [
-                    _FormInputTextField(
+                    FormInputTextField(
                         hintText: "Username",
                         controller: tfUsername,
                         obscure: false),
-                    _FormInputTextField(
+                    FormInputTextField(
                         hintText: "Password",
                         controller: tfPassword,
                         obscure: true),
-                    _FormInputTextField(
+                    FormInputTextField(
                         hintText: "Name", controller: tfName, obscure: false),
-                    _FormInputTextField(
+                    FormInputTextField(
                         hintText: "Lastname",
                         controller: tfLastname,
                         obscure: false),
-                    _FormInputTextField(
+                    FormInputTextField(
                         hintText: "Spelization",
                         controller: tfSpecialization,
                         obscure: false),
-                    _FormInputTextField(
+                    FormInputTextField(
                         hintText: "Graduate",
                         controller: tfGraduate,
                         obscure: false),
@@ -89,102 +91,9 @@ class _DoctorUpdateProfilePageState extends State<DoctorUpdateProfilePage> {
   }
 }
 
-class _FormInputTextField extends StatelessWidget {
-  final TextEditingController controller;
-  final String hintText;
-  final bool obscure;
-
-  const _FormInputTextField(
-      {required this.controller,
-      required this.hintText,
-      required this.obscure});
-
-  @override
-  Widget build(BuildContext context) {
-    return _InputTextFieldPadding(
-      widget: _InputTextFormField(
-        hint: hintText,
-        textEditController: controller,
-        obscureText: obscure,
-      ),
-    );
-  }
-}
-
-class _InputTextFieldPadding extends StatelessWidget {
-  final StatelessWidget widget;
-
-  const _InputTextFieldPadding({super.key, required this.widget});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-          left: ResponsiveDesign.getScreenWidth() / 30,
-          right: ResponsiveDesign.getScreenWidth() / 30,
-          top: ResponsiveDesign.getScreenWidth() / 30,
-          bottom: ResponsiveDesign.getScreenWidth() / 25),
-      child: widget,
-    );
-  }
-}
-
-class _InputTextFormField extends StatelessWidget {
-  final String hint;
-  final TextEditingController textEditController;
-  final bool obscureText;
-
-  const _InputTextFormField(
-      {required this.hint,
-      required this.textEditController,
-      required this.obscureText});
-
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      // inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]"))],
-      inputFormatters: <TextInputFormatter>[
-        FilteringTextInputFormatter.allow(RegExp('[a-z A-Z 0-9]'))
-      ],
-      maxLength: _TextFieldInputLength.max,
-      controller: textEditController,
-      obscureText: obscureText,
-      validator: (data) {
-        if (data!.isEmpty) {
-          return "Please enter $hint";
-        }
-        if (data.length < _TextFieldInputLength.min) {
-          return "Please enter ${_TextFieldInputLength.min} or more  character";
-        }
-        if (data.length > _TextFieldInputLength.max) {
-          return "Please enter ${_TextFieldInputLength.max} or less  character";
-        }
-        // return null;
-      },
-      decoration: InputDecoration(
-          labelText: hint,
-          labelStyle: TextStyle(
-              fontSize: ResponsiveDesign.getScreenWidth() / 23,
-              color: ProductColor.black,
-              fontWeight: FontWeight.bold),
-          hintText: hint,
-          hintStyle:
-              TextStyle(fontSize: ResponsiveDesign.getScreenWidth() / 20),
-          focusedBorder: OutlineInputBorder(
-              borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-              borderSide: BorderSide(color: ProductColor.darkBlue)),
-          filled: true,
-          fillColor: ProductColor.white,
-          border: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(10.0)))),
-      style: TextStyle(
-          fontSize: ResponsiveDesign.getScreenWidth() / 22,
-          color: ProductColor.darkBlue),
-    );
-  }
-}
-
 class _UpdateProfileButton extends StatelessWidget {
+  List<TextEditingController> list = [];
+
   final TextEditingController tfUsername,
       tfPassword,
       tfName,
@@ -200,7 +109,14 @@ class _UpdateProfileButton extends StatelessWidget {
       required this.tfName,
       required this.tfLastname,
       required this.tfGraduate,
-      required this.tfSpecialization}); //({super.key /*,required this.screenInfo*/});
+      required this.tfSpecialization}) {
+    list.add(tfUsername);
+    list.add(tfPassword);
+    list.add(tfName);
+    list.add(tfLastname);
+    list.add(tfGraduate);
+    list.add(tfSpecialization);
+  } //({super.key /*,required this.screenInfo*/});
 
   @override
   Widget build(BuildContext context) {
@@ -293,9 +209,4 @@ class _UpdateProfileButton extends StatelessWidget {
             msg: msg,
             roleId: EnumUserRole.DOCTOR.roleId));
   }
-}
-
-class _TextFieldInputLength {
-  static int min = 3;
-  static int max = 10;
 }
