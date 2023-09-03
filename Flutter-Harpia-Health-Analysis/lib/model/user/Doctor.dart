@@ -7,12 +7,12 @@ class Doctor extends User {
   Doctor(
       {required int id,
       required int roleId,
-      required String name,
-      required String lastname,
       required String username,
       required String password,
-      String specialization = "Unknow Data",
-      String graduate = "Unknow Data"})
+      String name = "",
+      String lastname = "",
+      String specialization = "",
+      String graduate = ""})
       : super(
             id: id,
             roleId: roleId,

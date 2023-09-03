@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestDoctor.dart';
 import 'package:flutter_harpia_health_analysis/model/user/Doctor.dart';
 import 'package:flutter_harpia_health_analysis/model/userrole/EnumUserRole.dart';
@@ -25,6 +24,8 @@ class _DoctorSignUpPageState extends State<DoctorSignUpPage> {
   TextEditingController tfPassword = TextEditingController();
   TextEditingController tfName = TextEditingController();
   TextEditingController tfLastname = TextEditingController();
+  TextEditingController tfSpecialization = TextEditingController();
+  TextEditingController tfGraduate = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -44,31 +45,42 @@ class _DoctorSignUpPageState extends State<DoctorSignUpPage> {
                 child: Column(
                   children: [
                     FormInputTextField(
-                      hintText: "Username",
-                      controller: tfUsername,
-                      obscure: false,
-                    ),
+                        hintText: "Username",
+                        controller: tfUsername,
+                        obscure: false,
+                        compulsoryArea: true),
                     FormInputTextField(
-                      hintText: "Password",
-                      controller: tfPassword,
-                      obscure: true,
-                    ),
+                        hintText: "Password",
+                        controller: tfPassword,
+                        obscure: true,
+                        compulsoryArea: true),
                     FormInputTextField(
                       hintText: "Name",
                       controller: tfName,
                       obscure: false,
                     ),
                     FormInputTextField(
-                      hintText: "Lastname",
-                      controller: tfLastname,
-                      obscure: false,
-                    ),
+                        hintText: "Lastname",
+                        controller: tfLastname,
+                        obscure: false),
+                    FormInputTextField(
+                        hintText: "Specialization",
+                        controller: tfSpecialization,
+                        obscure: false,
+                        compulsoryArea: false),
+                    FormInputTextField(
+                        hintText: "Graduate",
+                        controller: tfGraduate,
+                        obscure: false,
+                        compulsoryArea: false),
                     _SignUpButton(
                       formKey: formKey,
                       tfUsername: tfUsername,
                       tfPassword: tfPassword,
                       tfName: tfName,
                       tfLastname: tfLastname,
+                      tfSpecialization: tfSpecialization,
+                      tfGraduate: tfGraduate,
                     )
                   ],
                 ),
@@ -82,7 +94,12 @@ class _DoctorSignUpPageState extends State<DoctorSignUpPage> {
 }
 
 class _SignUpButton extends StatelessWidget {
-  final TextEditingController tfUsername, tfPassword, tfName, tfLastname;
+  final TextEditingController tfUsername,
+      tfPassword,
+      tfName,
+      tfLastname,
+      tfSpecialization,
+      tfGraduate;
   GlobalKey<FormState> formKey;
 
   _SignUpButton(
@@ -90,7 +107,9 @@ class _SignUpButton extends StatelessWidget {
       required this.tfUsername,
       required this.tfPassword,
       required this.tfName,
-      required this.tfLastname}); //({super.key /*,required this.screenInfo*/});
+      required this.tfLastname,
+      required this.tfSpecialization,
+      required this.tfGraduate}); //({super.key /*,required this.screenInfo*/});
 
   @override
   Widget build(BuildContext context) {
@@ -122,15 +141,18 @@ class _SignUpButton extends StatelessWidget {
       String pass = tfPassword.text;
       String name = tfName.text;
       String lastname = tfLastname.text;
+      String specialization = tfSpecialization.text;
+      String graduate = tfGraduate.text;
       var request = HttpRequestDoctor();
       Doctor doctor = Doctor(
-        id: 0,
-        roleId: EnumUserRole.DOCTOR.roleId,
-        name: name,
-        lastname: lastname,
-        username: username,
-        password: pass,
-      );
+          id: 0,
+          roleId: EnumUserRole.DOCTOR.roleId,
+          name: name,
+          lastname: lastname,
+          username: username,
+          password: pass,
+          specialization: specialization,
+          graduate: graduate);
       request.signUp(doctor).then((resp) async {
         Map<String, dynamic> jsonData = json.decode(resp.body);
 

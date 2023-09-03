@@ -18,6 +18,7 @@ class DoctorProfile extends StatefulWidget {
 class _DoctorProfileState extends State<DoctorProfile> {
   late Doctor doctor;
   bool isLoading = true;
+  final String unknowData = "Unknow Data";
 
   @override
   Widget build(BuildContext context) {
@@ -36,25 +37,34 @@ class _DoctorProfileState extends State<DoctorProfile> {
                 children: [
                   _ProfileItem(
                     labelName: "Name",
-                    labelValue: doctor.name,
+                    labelValue:
+                        doctor.name.isNotEmpty ? doctor.name : unknowData,
                   ),
                   _ProfileItem(
-                    labelName: "LastName",
-                    labelValue: doctor.lastname,
+                    labelName: "Lastname",
+                    labelValue: doctor.lastname.isNotEmpty
+                        ? doctor.lastname
+                        : unknowData,
                   ),
                   PermissionUtils.letRunForDoctor()
                       ? _ProfileItem(
                           labelName: "Username",
-                          labelValue: doctor.username,
+                          labelValue: doctor.username.isNotEmpty
+                              ? doctor.username
+                              : unknowData,
                         )
                       : Container(),
                   _ProfileItem(
                     labelName: "Specialization",
-                    labelValue: doctor.specialization,
+                    labelValue: doctor.specialization.isNotEmpty
+                        ? doctor.specialization
+                        : unknowData,
                   ),
                   _ProfileItem(
                     labelName: "Graduate",
-                    labelValue: doctor.graduate,
+                    labelValue: doctor.graduate.isNotEmpty
+                        ? doctor.graduate
+                        : unknowData,
                   ),
                   PermissionUtils.letRunForDoctor()
                       ? _UpdateProfileButton(doctor: doctor)
