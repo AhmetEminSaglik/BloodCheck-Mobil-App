@@ -94,22 +94,28 @@ public class PatientController {
     }
 
     @GetMapping("/{id}/doctors")
-    public ResponseEntity<DataResult<List<Patient>>> findDoctorByPatientId(@PathVariable long id) {
+    public ResponseEntity<DataResult<Doctor>> findResponsibleDoctorByPatientId(@PathVariable long id) {
 //        List<Patient> patientList = patientService.findAllPatientByDoctorId(id);
-
-        log.info("Given Patient Id : " + id);
-        Patient patient = patientService.findById(id);
-        long doctorId = patient.getDoctorId();
-        log.info("Found Doctor Id : " + doctorId);
-        String msg = "Doctor (" + doctorId + ") who is responsible with patient ID(" + id + ") is retrieved";
-        DataResult<List<Patient>> result = new SuccessDataResult(doctorId, msg);
+        DataResult<Doctor> result = null;
+        try {
+            log.info("Given Patient Id : " + id);
+            Patient patient = patientService.findById(id);
+            long doctorId = patient.getDoctorId();
+            log.info("Found Doctor Id : " + doctorId);
+            Doctor doctor = (Doctor) userService.findById(doctorId);
+            log.info("Found Doctor Data : " + doctor);
+            String msg = "Doctor (" + doctor.getId() + ") who is responsible with patient ID(" + id + ") is retrieved";
+            result = new SuccessDataResult(doctor, msg);
+        } catch (Exception e) {
+            log.error("EXCEPTION OCCURED : " + e.getMessage());
+        }
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
     @PutMapping()
-    public ResponseEntity<DataResult<Patient>> updateDoctor(@RequestBody Patient patient) {
+    public ResponseEntity<DataResult<Patient>> updatePatient(@RequestBody Patient patient) {
         log.info("Update Patient");
-        patient = (Patient) savePatient(patient).getBody().getData();
+        patient = (Patient) userService.save(patient);
         String msg = "Patient is updated";
         DataResult<Patient> result = new SuccessDataResult(patient, msg);
         return ResponseEntity.status(HttpStatus.OK).body(result);
