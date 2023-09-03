@@ -97,36 +97,6 @@ class _DoctorProfileState extends State<DoctorProfile> {
                           text: "Update Profile",
                         )
                       : Container(),
-                  /* ? _ProfileItem(
-                          labelName: "Username",
-                          labelValue: doctor.username.isNotEmpty
-                              ? doctor.username
-                              : unknowData,
-                        )
-                      : Container(),
-                  _ProfileItem(
-                    labelName: "Name",
-                    labelValue:
-                        doctor.name.isNotEmpty ? doctor.name : unknowData,
-                  ),
-                  _ProfileItem(
-                    labelName: "Lastname",
-                    labelValue: doctor.lastname.isNotEmpty
-                        ? doctor.lastname
-                        : unknowData,
-                  ),
-                  _ProfileItem(
-                    labelName: "Specialization",
-                    labelValue: doctor.specialization.isNotEmpty
-                        ? doctor.specialization
-                        : unknowData,
-                  ),
-                  _ProfileItem(
-                    labelName: "Graduate",
-                    labelValue: doctor.graduate.isNotEmpty
-                        ? doctor.graduate
-                        : unknowData,
-                  ),*/
                 ],
               ),
             ),
@@ -163,22 +133,3 @@ class CustomTextWithSizeBox extends StatelessWidget {
     );
   }
 }
-/*
-class _UpdateProfileButton extends StatelessWidget {
-  late final Doctor doctor;
-
-  _UpdateProfileButton({required this.doctor});
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-        onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      DoctorUpdateProfilePage(doctor: doctor)));
-        },
-        child: const Text("Update Profile"));
-  }
-}*/

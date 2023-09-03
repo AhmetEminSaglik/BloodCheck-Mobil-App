@@ -68,29 +68,14 @@ class _AdminProfileState extends State<AdminProfile> {
                           : unknowData),
                   CustomTextWithSizeBox(
                       space: spaceHeight,
-                      text1: "Username",
+                      text1: "Name",
                       text2: admin.name.isNotEmpty ? admin.name : unknowData),
                   CustomTextWithSizeBox(
                       space: spaceHeight,
-                      text1: "Username",
+                      text1: "Lastname",
                       text2: admin.lastname.isNotEmpty
                           ? admin.lastname
                           : unknowData),
-                  /*  _ProfileItem(
-                    labelName: "Username",
-                    labelValue:
-                        admin.username.isNotEmpty ? admin.username : unknowData,
-                  ),
-                  _ProfileItem(
-                    labelName: "Name",
-                    labelValue: admin.name.isNotEmpty ? admin.name : unknowData,
-                  ),
-                  _ProfileItem(
-                    labelName: "Lastname",
-                    labelValue:
-                        admin.lastname.isNotEmpty ? admin.lastname : unknowData,
-                  ),*/
-                  // _UpdateProfileButton(admin: admin),
                   CustomButton(text: "Update Profile", action: updateProfile),
                 ],
               ),

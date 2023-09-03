@@ -8,6 +8,7 @@ class AppBarUtil {
   static AppBar getAppBar() {
     return AppBar(
       backgroundColor: ProductColor.appBarBackgroundColor,
+      foregroundColor: ProductColor.appBarForegroundColor,
       title: BlocBuilder<AppBarCubit, Widget>(builder: (builder, titleWidget) {
         return titleWidget;
       }),
