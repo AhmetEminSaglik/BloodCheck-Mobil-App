@@ -15,4 +15,11 @@ class PermissionUtils {
     }
     return false;
   }
+
+  static bool letRunForPatient() {
+    if (EnumUserRole.PATIENT.roleId == SharedPrefUtils.getRoleId()) {
+      return true;
+    }
+    return false;
+  }
 }

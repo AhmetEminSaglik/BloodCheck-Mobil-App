@@ -65,4 +65,17 @@ class HttpRequestDoctor {
     var respEntity = ResponseEntity.fromJson(jsonData);
     return UserFactory.createDoctor(respEntity.data);
   }
+
+  Future<ResponseEntity> update(Doctor doctor) async {
+    Uri url = Uri.parse("$_baseUrl");
+    print("URL : $url");
+    print("DOCTOR  : $doctor");
+    Map<String, dynamic> requestData = doctor.toJson();
+    var resp = await http.put(url,
+        headers: HttpUtil.header, body: jsonEncode(requestData));
+
+    Map<String, dynamic> jsonData = json.decode(resp.body);
+    ResponseEntity respEntity = ResponseEntity.fromJson(jsonData);
+    return respEntity;
+  }
 }

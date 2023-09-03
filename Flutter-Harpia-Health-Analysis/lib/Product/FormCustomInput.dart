@@ -8,19 +8,24 @@ class FormInputTextField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
   final bool obscure;
+  bool compulsoryArea;
 
-  const FormInputTextField(
-      {required this.controller,
+  FormInputTextField(
+      {super.key,
+      required this.controller,
       required this.hintText,
-      required this.obscure});
+      required this.obscure,
+      this.compulsoryArea = true});
 
   @override
   Widget build(BuildContext context) {
+    print("hintText : $hintText    \\ Gelen compulsdoryArea : $compulsoryArea");
     return _InputTextFieldPadding(
       widget: _InputTextFormField(
         hint: hintText,
         textEditController: controller,
         obscureText: obscure,
+        compulsoryArea: compulsoryArea,
       ),
     );
   }
@@ -30,11 +35,13 @@ class _InputTextFormField extends StatelessWidget {
   final String hint;
   final TextEditingController textEditController;
   final bool obscureText;
+  bool compulsoryArea;
 
-  const _InputTextFormField(
+  _InputTextFormField(
       {required this.hint,
       required this.textEditController,
-      required this.obscureText});
+      required this.obscureText,
+      required this.compulsoryArea});
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +54,15 @@ class _InputTextFormField extends StatelessWidget {
       controller: textEditController,
       obscureText: obscureText,
       validator: (data) {
-        if (data!.isEmpty) {
+        if (data!.isEmpty && compulsoryArea) {
+          print("data!.isEmpty : ${data!.isEmpty}");
+          print("compulsoryArea : $compulsoryArea");
           return "Please enter $hint";
         }
-        if (data.length < _TextFieldInputLength.min) {
+        if (data.length > 0) {
+          compulsoryArea = true;
+        }
+        if (data.length < _TextFieldInputLength.min && compulsoryArea) {
           return "Please enter ${_TextFieldInputLength.min} or more  character";
         }
         if (data.length > _TextFieldInputLength.max) {

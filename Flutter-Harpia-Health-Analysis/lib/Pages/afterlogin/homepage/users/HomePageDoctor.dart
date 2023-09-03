@@ -19,7 +19,7 @@ class HomePageDoctor extends StatefulWidget {
 
 class _HomePageDoctorState extends State<HomePageDoctor> {
   bool visibleAppBar = false;
-  List<Patient> patientList = [];
+  // List<Patient> patientList = [];
 /*
   AppBar getAppBar() {
     return AppBar(
@@ -34,7 +34,7 @@ class _HomePageDoctorState extends State<HomePageDoctor> {
   void initState() {
     super.initState();
     visibleAppBar = PermissionUtils.letRunForAdmin();
-    setPatientList(widget.doctorId);
+    // setPatientList(widget.doctorId);
   }
 
   @override
@@ -45,7 +45,7 @@ class _HomePageDoctorState extends State<HomePageDoctor> {
     );
   }
 
-  void setPatientList(int doctorId) async {
+/*void setPatientList(int doctorId) async {
     patientList = await HttpRequestDoctor.getPatientListOfDoctorId(doctorId);
-  }
+  }*/
 }

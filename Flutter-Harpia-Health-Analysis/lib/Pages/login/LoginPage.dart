@@ -48,7 +48,6 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void autoLogin() async {
-    // SharedPref.initiliazeSharedPref();
     await SharedPrefUtils.initiliazeSharedPref();
     String username = SharedPrefUtils.getUsername();
     String password = SharedPrefUtils.getPassword();
