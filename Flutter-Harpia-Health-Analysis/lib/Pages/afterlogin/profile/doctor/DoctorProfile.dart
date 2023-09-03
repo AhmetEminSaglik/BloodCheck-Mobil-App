@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_harpia_health_analysis/Pages/afterlogin/profile/doctor/DoctorUpdateProfilePage.dart';
 import 'package:flutter_harpia_health_analysis/core/ResponsiveDesign.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestDoctor.dart';
-
+import 'package:flutter_harpia_health_analysis/util/PermissionUtils.dart';
 import '../../../../model/user/Doctor.dart';
 import '../../../../util/ProductColor.dart';
-import 'DoctorUpdateProfilePage2.dart';
+import 'DoctorUpdateProfilePage.dart';
 
 class DoctorProfile extends StatefulWidget {
   int doctorId;
@@ -21,14 +20,8 @@ class _DoctorProfileState extends State<DoctorProfile> {
   bool isLoading = true;
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    retrieveDoctorData();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    retrieveDoctorData();
     return Scaffold(
       backgroundColor: ProductColor.bodyBackground,
       body: isLoading
@@ -49,10 +42,12 @@ class _DoctorProfileState extends State<DoctorProfile> {
                     labelName: "LastName",
                     labelValue: doctor.lastname,
                   ),
-                  _ProfileItem(
-                    labelName: "Username",
-                    labelValue: doctor.username,
-                  ),
+                  PermissionUtils.letRunForDoctor()
+                      ? _ProfileItem(
+                          labelName: "Username",
+                          labelValue: doctor.username,
+                        )
+                      : Container(),
                   _ProfileItem(
                     labelName: "Specialization",
                     labelValue: doctor.specialization,
@@ -61,7 +56,9 @@ class _DoctorProfileState extends State<DoctorProfile> {
                     labelName: "Graduate",
                     labelValue: doctor.graduate,
                   ),
-                  const _UpdateProfileButton(),
+                  PermissionUtils.letRunForDoctor()
+                      ? _UpdateProfileButton(doctor: doctor)
+                      : Container(),
                 ],
               ),
             ),
@@ -106,7 +103,7 @@ class _ProfileItemDesignedText extends StatelessWidget {
   final String text;
   final double fontSize;
 
-  _ProfileItemDesignedText(
+  const _ProfileItemDesignedText(
       {required this.color, required this.text, required this.fontSize});
 
   @override
@@ -119,7 +116,9 @@ class _ProfileItemDesignedText extends StatelessWidget {
 }
 
 class _UpdateProfileButton extends StatelessWidget {
-  const _UpdateProfileButton({Key? key}) : super(key: key);
+  late final Doctor doctor;
+
+  _UpdateProfileButton({required this.doctor});
 
   @override
   Widget build(BuildContext context) {
@@ -128,8 +127,9 @@ class _UpdateProfileButton extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => const DoctorUpdateProfilePage2()));
+                  builder: (context) =>
+                      DoctorUpdateProfilePage(doctor: doctor)));
         },
-        child: Text("Update Profile"));
+        child: const Text("Update Profile"));
   }
 }

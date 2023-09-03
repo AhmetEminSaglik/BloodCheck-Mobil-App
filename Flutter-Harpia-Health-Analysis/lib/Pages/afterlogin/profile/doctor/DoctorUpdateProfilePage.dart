@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_harpia_health_analysis/Pages/afterlogin/profile/doctor/DoctorProfile.dart';
+import 'package:flutter_harpia_health_analysis/httprequest/ResponseEntity.dart';
 import 'package:flutter_harpia_health_analysis/util/AppBarUtil.dart';
-import '../../../../business/factory/UserFactory.dart';
+import '../../../../Product/FormCustomInput.dart';
 import '../../../../core/ResponsiveDesign.dart';
 import '../../../../httprequest/HttpRequestDoctor.dart';
-import '../../../../httprequest/ResponseEntity.dart';
 import '../../../../model/user/Doctor.dart';
-import '../../../../model/user/User.dart';
 import '../../../../model/userrole/EnumUserRole.dart';
 import '../../../../util/CustomAlertDialog.dart';
+import '../../../../util/CustomSnackBar.dart';
 import '../../../../util/ProductColor.dart';
-import 'dart:convert';
+import '../../../../util/SharedPrefUtils.dart';
 
 class DoctorUpdateProfilePage extends StatefulWidget {
-  const DoctorUpdateProfilePage({Key? key}) : super(key: key);
+  late Doctor doctor;
+
+  DoctorUpdateProfilePage({required this.doctor});
 
   @override
   State<DoctorUpdateProfilePage> createState() =>
@@ -47,30 +49,45 @@ class _DoctorUpdateProfilePageState extends State<DoctorUpdateProfilePage> {
                 key: formKey,
                 child: Column(
                   children: [
-                    _FormInputTextField(
-                        hintText: "Username",
-                        controller: tfUsername,
-                        obscure: false),
-                    _FormInputTextField(
-                        hintText: "Password",
-                        controller: tfPassword,
-                        obscure: true),
-                    _FormInputTextField(
-                        hintText: "Name", controller: tfName, obscure: false),
-                    _FormInputTextField(
-                        hintText: "Lastname",
-                        controller: tfLastname,
-                        obscure: false),
-                    _FormInputTextField(
-                        hintText: "Spelization",
-                        controller: tfSpecialization,
-                        obscure: false),
-                    _FormInputTextField(
-                        hintText: "Graduate",
-                        controller: tfGraduate,
-                        obscure: false),
+                    FormInputTextField(
+                      hintText: "Username",
+                      controller: tfUsername,
+                      obscure: false,
+                      compulsoryArea: false,
+                    ),
+                    FormInputTextField(
+                      hintText: "Password",
+                      controller: tfPassword,
+                      obscure: true,
+                      compulsoryArea: false,
+                    ),
+                    FormInputTextField(
+                      hintText: "Name",
+                      controller: tfName,
+                      obscure: false,
+                      compulsoryArea: false,
+                    ),
+                    FormInputTextField(
+                      hintText: "Lastname",
+                      controller: tfLastname,
+                      obscure: false,
+                      compulsoryArea: false,
+                    ),
+                    FormInputTextField(
+                      hintText: "Spelization",
+                      controller: tfSpecialization,
+                      obscure: false,
+                      compulsoryArea: false,
+                    ),
+                    FormInputTextField(
+                      hintText: "Graduate",
+                      controller: tfGraduate,
+                      obscure: false,
+                      compulsoryArea: false,
+                    ),
                     _UpdateProfileButton(
                       formKey: formKey,
+                      defaultDoctor: widget.doctor,
                       tfUsername: tfUsername,
                       tfPassword: tfPassword,
                       tfName: tfName,
@@ -89,102 +106,9 @@ class _DoctorUpdateProfilePageState extends State<DoctorUpdateProfilePage> {
   }
 }
 
-class _FormInputTextField extends StatelessWidget {
-  final TextEditingController controller;
-  final String hintText;
-  final bool obscure;
-
-  const _FormInputTextField(
-      {required this.controller,
-      required this.hintText,
-      required this.obscure});
-
-  @override
-  Widget build(BuildContext context) {
-    return _InputTextFieldPadding(
-      widget: _InputTextFormField(
-        hint: hintText,
-        textEditController: controller,
-        obscureText: obscure,
-      ),
-    );
-  }
-}
-
-class _InputTextFieldPadding extends StatelessWidget {
-  final StatelessWidget widget;
-
-  const _InputTextFieldPadding({super.key, required this.widget});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-          left: ResponsiveDesign.getScreenWidth() / 30,
-          right: ResponsiveDesign.getScreenWidth() / 30,
-          top: ResponsiveDesign.getScreenWidth() / 30,
-          bottom: ResponsiveDesign.getScreenWidth() / 25),
-      child: widget,
-    );
-  }
-}
-
-class _InputTextFormField extends StatelessWidget {
-  final String hint;
-  final TextEditingController textEditController;
-  final bool obscureText;
-
-  const _InputTextFormField(
-      {required this.hint,
-      required this.textEditController,
-      required this.obscureText});
-
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      // inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]"))],
-      inputFormatters: <TextInputFormatter>[
-        FilteringTextInputFormatter.allow(RegExp('[a-z A-Z 0-9]'))
-      ],
-      maxLength: _TextFieldInputLength.max,
-      controller: textEditController,
-      obscureText: obscureText,
-      validator: (data) {
-        if (data!.isEmpty) {
-          return "Please enter $hint";
-        }
-        if (data.length < _TextFieldInputLength.min) {
-          return "Please enter ${_TextFieldInputLength.min} or more  character";
-        }
-        if (data.length > _TextFieldInputLength.max) {
-          return "Please enter ${_TextFieldInputLength.max} or less  character";
-        }
-        // return null;
-      },
-      decoration: InputDecoration(
-          labelText: hint,
-          labelStyle: TextStyle(
-              fontSize: ResponsiveDesign.getScreenWidth() / 23,
-              color: ProductColor.black,
-              fontWeight: FontWeight.bold),
-          hintText: hint,
-          hintStyle:
-              TextStyle(fontSize: ResponsiveDesign.getScreenWidth() / 20),
-          focusedBorder: OutlineInputBorder(
-              borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-              borderSide: BorderSide(color: ProductColor.darkBlue)),
-          filled: true,
-          fillColor: ProductColor.white,
-          border: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(10.0)))),
-      style: TextStyle(
-          fontSize: ResponsiveDesign.getScreenWidth() / 22,
-          color: ProductColor.darkBlue),
-    );
-  }
-}
-
 class _UpdateProfileButton extends StatelessWidget {
+  late Doctor defaultDoctor;
+  List<TextEditingController> list = [];
   final TextEditingController tfUsername,
       tfPassword,
       tfName,
@@ -195,12 +119,20 @@ class _UpdateProfileButton extends StatelessWidget {
 
   _UpdateProfileButton(
       {required this.formKey,
+      required this.defaultDoctor,
       required this.tfUsername,
       required this.tfPassword,
       required this.tfName,
       required this.tfLastname,
       required this.tfGraduate,
-      required this.tfSpecialization}); //({super.key /*,required this.screenInfo*/});
+      required this.tfSpecialization}) {
+    list.add(tfUsername);
+    list.add(tfPassword);
+    list.add(tfName);
+    list.add(tfLastname);
+    list.add(tfGraduate);
+    list.add(tfSpecialization);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -225,46 +157,68 @@ class _UpdateProfileButton extends StatelessWidget {
     list.forEach((e) => e.text = "");
   }
 
+  bool isAnyAreaFilled() {
+    if (tfUsername.text.isNotEmpty ||
+        tfPassword.text.isNotEmpty ||
+        tfName.text.isNotEmpty ||
+        tfLastname.text.isNotEmpty ||
+        tfSpecialization.text.isNotEmpty ||
+        tfGraduate.text.isNotEmpty) {
+      return true;
+    }
+    return false;
+  }
+
   void _updateProfileProcess(BuildContext context) async {
     bool controlResult = formKey.currentState!.validate();
     if (controlResult) {
-      String username = tfUsername.text;
-      String pass = tfPassword.text;
-      String name = tfName.text;
-      String lastname = tfLastname.text;
-      String specialization = tfSpecialization.text;
-      String graduate = tfGraduate.text;
-      var request = HttpRequestDoctor();
-      Doctor doctor = Doctor(
-        id: 0,
-        roleId: EnumUserRole.DOCTOR.roleId,
-        name: name,
-        lastname: lastname,
-        username: username,
-        password: pass,
-        specialization: specialization,
-        graduate: graduate,
-      );
-      request.signUp(doctor).then((resp) async {
-        Map<String, dynamic> jsonData = json.decode(resp.body);
+      if (isAnyAreaFilled()) {
+        String username = tfUsername.text;
+        String password = tfPassword.text;
+        String name = tfName.text;
+        String lastname = tfLastname.text;
+        String specialization = tfSpecialization.text;
+        String graduate = tfGraduate.text;
 
-        var respEntity = ResponseEntity.fromJson(jsonData);
-        if (!respEntity.success) {
-          showAlertDialogInvalidUsername(
-              context: context, msg: respEntity.message);
-        } else {
-          User user = UserFactory.createUser(respEntity.data);
-          showAlertDialogDoctorSignUpSuccessfully(
-              context: context, msg: respEntity.message);
-          List<TextEditingController> list = [
-            tfUsername,
-            tfPassword,
-            tfName,
-            tfLastname
-          ];
-          resetTextFields(list);
+        Doctor doctor = Doctor(
+          id: defaultDoctor.id,
+          roleId: EnumUserRole.DOCTOR.roleId,
+          name: name.isNotEmpty ? name : defaultDoctor.name,
+          lastname: lastname.isNotEmpty ? lastname : defaultDoctor.lastname,
+          username: username.isNotEmpty ? username : defaultDoctor.username,
+          password: password.isNotEmpty ? password : defaultDoctor.password,
+          specialization: specialization.isNotEmpty
+              ? specialization
+              : defaultDoctor.specialization,
+          graduate: graduate.isNotEmpty ? graduate : defaultDoctor.graduate,
+        );
+        var request = HttpRequestDoctor();
+
+        ResponseEntity? respEntity;
+
+        await request.update(doctor).then((value) => respEntity = value);
+
+        if (respEntity != null) {
+          if (respEntity!.success) {
+            await SharedPrefUtils.setLoginDataUser(doctor).then((value) {});
+            Navigator.pop(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        DoctorProfile(doctorId: (defaultDoctor.id))));
+            String msg = "Profile is updated";
+            ScaffoldMessenger.of(context)
+                .showSnackBar(CustomSnackBar.getSnackBar(msg));
+          } else {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(CustomSnackBar.getSnackBar(respEntity!.message));
+          }
         }
-      });
+      } else {
+        String msg = "Must be filled at least one area to update profile";
+        ScaffoldMessenger.of(context)
+            .showSnackBar(CustomSnackBar.getSnackBar(msg));
+      }
     }
   }
 
@@ -293,9 +247,4 @@ class _UpdateProfileButton extends StatelessWidget {
             msg: msg,
             roleId: EnumUserRole.DOCTOR.roleId));
   }
-}
-
-class _TextFieldInputLength {
-  static int min = 3;
-  static int max = 10;
 }
