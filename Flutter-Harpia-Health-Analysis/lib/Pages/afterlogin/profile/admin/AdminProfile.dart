@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_harpia_health_analysis/core/ResponsiveDesign.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestAdmin.dart';
-import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestAdmin.dart';
-import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestUser.dart';
-import 'package:flutter_harpia_health_analysis/util/PermissionUtils.dart';
-import '../../../../model/user/Admin.dart';
+import '../../../../Product/CustomButton.dart';
+import '../../../../Product/CustomText.dart';
 import '../../../../model/user/Admin.dart';
 import '../../../../util/ProductColor.dart';
 import '../ProfilUpdatedCubit.dart';
@@ -24,6 +22,7 @@ class _AdminProfileState extends State<AdminProfile> {
   late Admin admin;
   bool isLoading = true;
   final String unknowData = "Unknown Data";
+  final double spaceHeight = ResponsiveDesign.getScreenHeight() / 40;
 
   renderPage() {
     return BlocBuilder<ProfilUpdatedCubit, bool>(
@@ -36,6 +35,13 @@ class _AdminProfileState extends State<AdminProfile> {
         return Container();
       },
     );
+  }
+
+  void updateProfile() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => AdminUpdateProfilePage(admin: admin)));
   }
 
   @override
@@ -54,6 +60,27 @@ class _AdminProfileState extends State<AdminProfile> {
               child: Column(
                 children: [
                   renderPage(),
+                  CustomTextWithSizeBox(
+                      space: spaceHeight,
+                      text1: "Username",
+                      text2: admin.username.isNotEmpty
+                          ? admin.username
+                          : unknowData),
+                  CustomTextWithSizeBox(
+                      space: spaceHeight,
+                      text1: "Username",
+                      text2: admin.name.isNotEmpty ? admin.name : unknowData),
+                  CustomTextWithSizeBox(
+                      space: spaceHeight,
+                      text1: "Username",
+                      text2: admin.lastname.isNotEmpty
+                          ? admin.lastname
+                          : unknowData),
+                  /*  _ProfileItem(
+                    labelName: "Username",
+                    labelValue:
+                        admin.username.isNotEmpty ? admin.username : unknowData,
+                  ),
                   _ProfileItem(
                     labelName: "Name",
                     labelValue: admin.name.isNotEmpty ? admin.name : unknowData,
@@ -62,16 +89,9 @@ class _AdminProfileState extends State<AdminProfile> {
                     labelName: "Lastname",
                     labelValue:
                         admin.lastname.isNotEmpty ? admin.lastname : unknowData,
-                  ),
-                  PermissionUtils.letRunForAdmin()
-                      ? _ProfileItem(
-                          labelName: "Username",
-                          labelValue: admin.username.isNotEmpty
-                              ? admin.username
-                              : unknowData,
-                        )
-                      : Container(),
-                  _UpdateProfileButton(admin: admin),
+                  ),*/
+                  // _UpdateProfileButton(admin: admin),
+                  CustomButton(text: "Update Profile", action: updateProfile),
                 ],
               ),
             ),
@@ -88,62 +108,23 @@ class _AdminProfileState extends State<AdminProfile> {
   }
 }
 
-class _ProfileItem extends StatelessWidget {
-  final String labelName;
-  final String labelValue;
-  final Color labelNameColor = ProductColor.black;
-  final Color labelValueColor = ProductColor.black;
-  final double fontSize = ResponsiveDesign.getCertainHeight() / 40;
+class CustomTextWithSizeBox extends StatelessWidget {
+  final String text1;
+  final String text2;
+  final double space;
 
-  _ProfileItem({required this.labelName, required this.labelValue});
+  CustomTextWithSizeBox(
+      {required this.text1, required this.text2, required this.space});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(top: ResponsiveDesign.getScreenHeight() / 100),
-      child: Row(
-        children: [
-          _ProfileItemDesignedText(
-              color: labelNameColor, text: "$labelName : ", fontSize: fontSize),
-          _ProfileItemDesignedText(
-              color: labelValueColor, text: labelValue, fontSize: fontSize),
-        ],
-      ),
+    return Column(
+      children: [
+        CustomText(text1: text1, text2: text2),
+        SizedBox(
+          height: space,
+        )
+      ],
     );
-  }
-}
-
-class _ProfileItemDesignedText extends StatelessWidget {
-  final Color color;
-  final String text;
-  final double fontSize;
-
-  const _ProfileItemDesignedText(
-      {required this.color, required this.text, required this.fontSize});
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      text,
-      style: TextStyle(fontSize: fontSize, color: color),
-    );
-  }
-}
-
-class _UpdateProfileButton extends StatelessWidget {
-  late final Admin admin;
-
-  _UpdateProfileButton({required this.admin});
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-        onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => AdminUpdateProfilePage(admin: admin)));
-        },
-        child: const Text("Update Profile"));
   }
 }

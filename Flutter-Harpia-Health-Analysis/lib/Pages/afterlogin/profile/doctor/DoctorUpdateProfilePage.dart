@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/profile/doctor/DoctorProfile.dart';
+import 'package:flutter_harpia_health_analysis/Product/CustomButton.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/ResponseEntity.dart';
 import 'package:flutter_harpia_health_analysis/util/AppBarUtil.dart';
 import '../../../../Product/FormCustomInput.dart';
 import '../../../../core/ResponsiveDesign.dart';
 import '../../../../httprequest/HttpRequestDoctor.dart';
 import '../../../../model/user/Doctor.dart';
-import '../../../../model/userrole/EnumUserRole.dart';
-import '../../../../util/CustomAlertDialog.dart';
 import '../../../../util/CustomSnackBar.dart';
 import '../../../../util/ProductColor.dart';
 import '../../../../util/SharedPrefUtils.dart';
@@ -139,20 +138,14 @@ class _UpdateProfileButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        width: ResponsiveDesign.getScreenWidth() / 1.5,
-        height: ResponsiveDesign.getScreenHeight() / 15,
-        child: ElevatedButton(
-            onPressed: () {
-              _updateProfileProcess(context);
-            },
-            style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateColor.resolveWith((states) => Colors.pink),
-                foregroundColor:
-                    MaterialStateColor.resolveWith((states) => Colors.white)),
-            child: Text("Update Profile",
-                style: TextStyle(
-                    fontSize: ResponsiveDesign.getScreenWidth() / 20))));
+        child: CustomButton(
+      action: () {
+        _updateProfileProcess(context);
+      },
+      text: "Update",
+      textColor: ProductColor.white,
+      backgroundColor: ProductColor.pink,
+    ));
   }
 
   void resetTextFields(List<TextEditingController> list) {

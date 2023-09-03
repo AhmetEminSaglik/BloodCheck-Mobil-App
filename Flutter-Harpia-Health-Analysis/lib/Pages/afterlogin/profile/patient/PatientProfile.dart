@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/profile/ProfilUpdatedCubit.dart';
+import 'package:flutter_harpia_health_analysis/Product/CustomButton.dart';
+import 'package:flutter_harpia_health_analysis/Product/CustomText.dart';
 import 'package:flutter_harpia_health_analysis/core/ResponsiveDesign.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestPatient.dart';
 import 'package:flutter_harpia_health_analysis/model/enums/diabetic/EnumDiabeticType.dart';
@@ -23,6 +25,7 @@ class _PatientProfileState extends State<PatientProfile> {
   late Doctor doctor;
   bool isLoading = true;
   final String unknowData = "Unknown Data";
+  final double spaceHeight = ResponsiveDesign.getScreenHeight() / 40;
 
   renderPage() {
     return BlocBuilder<ProfilUpdatedCubit, bool>(
@@ -37,62 +40,99 @@ class _PatientProfileState extends State<PatientProfile> {
     );
   }
 
+  void updateProfile() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => PatientUpdateProfilePage(
+                  patient: patient,
+                )));
+  }
+
   @override
   Widget build(BuildContext context) {
     retrieveData();
     return Scaffold(
       backgroundColor: ProductColor.bodyBackground,
-      body: isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : Padding(
-              padding: EdgeInsets.only(
-                left: ResponsiveDesign.getScreenWidth() / 20,
-                right: ResponsiveDesign.getCertainWidth() / 20,
-                top: ResponsiveDesign.getScreenHeight() / 40,
-              ),
-              child: Column(
-                children: [
-                  renderPage(),
-                  _ProfileItem(
-                    labelName: "Name",
-                    labelValue:
-                        patient.name.isNotEmpty ? patient.name : unknowData,
-                  ),
-                  /*   BlocBuilder<ProfilUpdatedCubit, bool>(
-                    builder: (builder, isUpdated) {
-                      if (isUpdated) {
-                        isLoading = isUpdated;
-                        retrieveData();
-                        context.read<ProfilUpdatedCubit>().setFalse();
-                      }
-                      return Container();
-                    },
-                  ),*/
-                  _ProfileItem(
-                    labelName: "Lastname",
-                    labelValue: patient.lastname.isNotEmpty
-                        ? patient.lastname
-                        : unknowData,
-                  ),
-                  _ProfileItem(
-                    labelName: "Username",
-                    labelValue: patient.username.isNotEmpty
-                        ? patient.username
-                        : unknowData,
-                  ),
-                  _ProfileItem(
-                      labelName: "Diabetic Type",
+      body: SingleChildScrollView(
+        child: isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : Padding(
+                padding: EdgeInsets.only(
+                  left: ResponsiveDesign.getScreenWidth() / 20,
+                  right: ResponsiveDesign.getCertainWidth() / 20,
+                  top: ResponsiveDesign.getScreenHeight() / 20,
+                ),
+                child: Column(
+                  children: [
+                    renderPage(),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          bottom: ResponsiveDesign.getScreenHeight() / 25),
+                      child: Column(children: [
+                        CustomTextWithSizeBox(
+                            space: spaceHeight,
+                            text1: "Username",
+                            text2: patient.username.isNotEmpty
+                                ? patient.username
+                                : unknowData),
+                        CustomTextWithSizeBox(
+                            space: spaceHeight,
+                            text1: "Name",
+                            text2: patient.name.isNotEmpty
+                                ? patient.name
+                                : unknowData),
+                        CustomTextWithSizeBox(
+                          space: spaceHeight,
+                          text1: "Lastname",
+                          text2: patient.lastname.isNotEmpty
+                              ? patient.lastname
+                              : unknowData,
+                        ),
+                        CustomTextWithSizeBox(
+                            space: spaceHeight,
+                            text1: "Doctor",
+                            text2: doctor.lastname),
+                        CustomTextWithSizeBox(
+                            space: spaceHeight,
+                            text1: "Diabetic Type",
+                            text2: EnumDiabeticType.getTypeName(
+                                patient.diabeticTypeId)),
+                      ]),
+                    ),
+                    CustomButton(text: "Update Profile", action: updateProfile),
+                    /*            _ProfileItem(
+                      labelName: "Username",
+                      labelValue: patient.username.isNotEmpty
+                          ? patient.username
+                          : unknowData,
+                    ),
+                    _ProfileItem(
+                      labelName: "Name",
                       labelValue:
-                          EnumDiabeticType.getTypeName(patient.diabeticTypeId)),
-                  _ProfileItem(
-                      labelName: "Doctor",
-                      labelValue: "${doctor.name} ${doctor.lastname}"),
-                  _UpdateProfileButton(
-                    patient: patient,
-                  )
-                ],
+                          patient.name.isNotEmpty ? patient.name : unknowData,
+                    ),
+                    _ProfileItem(
+                      labelName: "Lastname",
+                      labelValue: patient.lastname.isNotEmpty
+                          ? patient.lastname
+                          : unknowData,
+                    ),
+                    _ProfileItem(
+                        labelName: "Diabetic Type",
+                        labelValue:
+                            EnumDiabeticType.getTypeName(patient.diabeticTypeId)),
+                    _ProfileItem(
+                        labelName: "Doctor",
+                        labelValue: "${doctor.name} ${doctor.lastname}"),*/
+
+                    /*_UpdateProfileButton(
+                      patient: patient,
+                    )*/
+                  ],
+                ),
               ),
-            ),
+      ),
     );
   }
 
@@ -133,6 +173,27 @@ class _ProfileItem extends StatelessWidget {
   }
 }
 
+class CustomTextWithSizeBox extends StatelessWidget {
+  final String text1;
+  final String text2;
+  final double space;
+
+  CustomTextWithSizeBox(
+      {required this.text1, required this.text2, required this.space});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        CustomText(text1: text1, text2: text2),
+        SizedBox(
+          height: space,
+        )
+      ],
+    );
+  }
+}
+
 class _ProfileItemDesignedText extends StatelessWidget {
   final Color color;
   final String text;
@@ -147,25 +208,5 @@ class _ProfileItemDesignedText extends StatelessWidget {
       text,
       style: TextStyle(fontSize: fontSize, color: color),
     );
-  }
-}
-
-class _UpdateProfileButton extends StatelessWidget {
-  late final Patient patient;
-
-  _UpdateProfileButton({required this.patient});
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-        onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => PatientUpdateProfilePage(
-                        patient: patient,
-                      )));
-        },
-        child: const Text("Update Profile"));
   }
 }

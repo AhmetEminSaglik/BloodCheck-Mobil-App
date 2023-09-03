@@ -7,7 +7,9 @@ class ProductColor {
   static const _green = Colors.green;
   static const _darkWhite = Colors.white70;
   static const _redAccent = Colors.redAccent;
+  static const _pink = Colors.pink;
   static const _bodyBackground = Colors.cyan;
+  static const _bodyBackgroundDark = Color(0xff086c78);
   static const _bodyBackgroundLight = Color(0xffb4ead8);
   static const _alertBoxBackgroundColor = _bodyBackground;
   static const _appBarBackgroundColor = _redAccent;
@@ -22,25 +24,29 @@ class ProductColor {
 
   static get white => _white;
 
-  static get darkWhite => _darkWhite;
-
   static get green => _green;
+
+  static get darkWhite => _darkWhite;
 
   static get redAccent => _redAccent;
 
-  static get appBarBackgroundColor => _appBarBackgroundColor;
+  static get pink => _pink;
 
   static get bodyBackground => _bodyBackground;
 
-  static get bodyBackgroundLight => _bodyBackgroundLight;
-
-  static get alertBoxBackgroundColor => _alertBoxBackgroundColor;
-
-  static get fLSpotColorBloodSugar => _fLSpotColorBloodSugar;
-
-  static get fLSpotColorBloodPressure => _fLSpotColorBloodPressure;
+  static get bodyBackgroundDark => _bodyBackgroundDark;
 
   static get fLSpotColorCalcium => _fLSpotColorCalcium;
 
   static get fLSpotColorMagnesium => _fLSpotColorMagnesium;
+
+  static get fLSpotColorBloodPressure => _fLSpotColorBloodPressure;
+
+  static get fLSpotColorBloodSugar => _fLSpotColorBloodSugar;
+
+  static get appBarBackgroundColor => _appBarBackgroundColor;
+
+  static get alertBoxBackgroundColor => _alertBoxBackgroundColor;
+
+  static get bodyBackgroundLight => _bodyBackgroundLight;
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/profile/patient/PatientProfile.dart';
+import 'package:flutter_harpia_health_analysis/Product/CustomButton.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestPatient.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/ResponseEntity.dart';
 import 'package:flutter_harpia_health_analysis/util/AppBarUtil.dart';
@@ -113,9 +114,18 @@ class _UpdateProfileButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        width: ResponsiveDesign.getScreenWidth() / 1.5,
-        height: ResponsiveDesign.getScreenHeight() / 15,
-        child: ElevatedButton(
+      // width: ResponsiveDesign.getScreenWidth() / 1.5,
+      // height: ResponsiveDesign.getScreenHeight() / 15,
+      child: CustomButton(
+        action: () {
+          _updateProfileProcess(context);
+        },
+        textColor: ProductColor.white,
+        text: "Update",
+        backgroundColor: ProductColor.pink,
+        fontSize: ResponsiveDesign.getScreenHeight() /40,
+      ),
+      /*ElevatedButton(
             onPressed: () {
               _updateProfileProcess(context);
             },
@@ -126,7 +136,8 @@ class _UpdateProfileButton extends StatelessWidget {
                     MaterialStateColor.resolveWith((states) => Colors.white)),
             child: Text("Update Profile",
                 style: TextStyle(
-                    fontSize: ResponsiveDesign.getScreenWidth() / 20))));
+                    fontSize: ResponsiveDesign.getScreenWidth() / 20)))*/
+    );
   }
 
   void resetTextFields(List<TextEditingController> list) {
@@ -180,7 +191,6 @@ class _UpdateProfileButton extends StatelessWidget {
             String msg = "Updated Successfuly";
             ScaffoldMessenger.of(context)
                 .showSnackBar(CustomSnackBar.getSnackBar(msg));
-
           } else {
             ScaffoldMessenger.of(context)
                 .showSnackBar(CustomSnackBar.getSnackBar(respEntity!.message));
