@@ -18,4 +18,5 @@ class HttpRequestUser {
         headers: HttpUtil.header, body: jsonEncode(requestData));
     return resp;
   }
+
 }

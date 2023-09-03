@@ -1,11 +1,16 @@
 import 'package:flutter_harpia_health_analysis/model/user/Doctor.dart';
 
+import '../../model/user/Admin.dart';
 import '../../model/user/Patient.dart';
 import '../../model/user/User.dart';
 
 class UserFactory {
   static User createUser(Map<String, dynamic> json) {
     return User.fromJson(json);
+  }
+
+  static Admin createAdmin(Map<String, dynamic> json) {
+    return Admin.fromJson(json);
   }
 
   static Doctor createDoctor(Map<String, dynamic> json) {
