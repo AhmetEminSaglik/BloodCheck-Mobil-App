@@ -6,7 +6,9 @@ import 'package:flutter_harpia_health_analysis/model/userrole/EnumUserRole.dart'
 import 'package:flutter_harpia_health_analysis/util/SharedPrefUtils.dart';
 
 class MainDrawer extends StatefulWidget {
-  const MainDrawer({Key? key}) : super(key: key);
+  List<StatefulWidget> drawerList = [];
+
+  MainDrawer({super.key, required this.drawerList});
 
   @override
   State<MainDrawer> createState() => _MainDrawerState();
@@ -17,11 +19,11 @@ class _MainDrawerState extends State<MainDrawer> {
 
   Widget getUserDrawer() {
     if (userRoleId == EnumUserRole.ADMIN.roleId) {
-      return AdminDrawer();
+      return widget.drawerList[0];
     } else if (userRoleId == EnumUserRole.DOCTOR.roleId) {
-      return DoctorDrawer();
+      return widget.drawerList[1];
     } else if (userRoleId == EnumUserRole.PATIENT.roleId) {
-      return PatientDrawer();
+      return widget.drawerList[2];
     }
     return const Text("Unknow UserRoleType");
   }

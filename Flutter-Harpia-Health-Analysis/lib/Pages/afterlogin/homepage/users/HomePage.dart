@@ -1,40 +1,61 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_background/flutter_background.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/appbar/AppBarCubit.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/drawer/DrawerCubit.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/drawer/MainDrawer.dart';
+import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/drawer/PatientDrawer.dart';
 import 'package:flutter_harpia_health_analysis/util/AppBarUtil.dart';
 import 'package:flutter_harpia_health_analysis/util/ProductColor.dart';
 
 import '../../../../util/FcmTokenUtils.dart';
+import '../../../../util/SharedPrefUtils.dart';
+import '../drawer/AdminDrawer.dart';
+import '../drawer/DoctorDrawer.dart';
 
 class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
 
-  HomePage({super.key});
+  const HomePage({super.key});
 }
 
 class _HomePageState extends State<HomePage> {
+  int userId = SharedPrefUtils.getUserId();
+  late final MainDrawer mainDrawer;
+  late final AdminDrawer _adminDrawer;
+  late final DoctorDrawer _doctorDrawer;
+  late final PatientDrawer _patientDrawer;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     enableBackgroudnExecution();
+    prepareDrawer();
+  }
+
+  void prepareDrawer() {
+    _adminDrawer = AdminDrawer();
+    _doctorDrawer = DoctorDrawer();
+    _patientDrawer = PatientDrawer(patientId: userId);
+    mainDrawer =
+        MainDrawer(drawerList: [_adminDrawer, _doctorDrawer, _patientDrawer]);
+    print("Drawer's are prepared");
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarUtil.getAppBar()/*AppBar(
+      appBar: AppBarUtil
+          .getAppBar() /*AppBar(
         // backgroundColor: ProductColor.appBarBackgroundColor,
         title:
             BlocBuilder<AppBarCubit, Widget>(builder: (builder, titleWidget) {
           return titleWidget;
         }),
-      )*/,
-      drawer: const MainDrawer(),
+      )*/
+      ,
+      drawer: mainDrawer,
       backgroundColor: ProductColor.bodyBackground,
       body: CustomScrollView(
         slivers: [

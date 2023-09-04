@@ -61,7 +61,7 @@ class _PatientProfileState extends State<PatientProfile> {
                 padding: EdgeInsets.only(
                   left: ResponsiveDesign.getScreenWidth() / 20,
                   right: ResponsiveDesign.getCertainWidth() / 20,
-                  top: ResponsiveDesign.getScreenHeight() / 20,
+                  top: ResponsiveDesign.getScreenHeight() / 40,
                 ),
                 child: Column(
                   children: [
@@ -70,6 +70,14 @@ class _PatientProfileState extends State<PatientProfile> {
                       padding: EdgeInsets.only(
                           bottom: ResponsiveDesign.getScreenHeight() / 25),
                       child: Column(children: [
+                        Text(
+                          "My Profile",
+                          style: TextStyle(
+                            fontSize: ResponsiveDesign.getScreenHeight() / 30,
+                            color: ProductColor.black,
+                          ),
+                        ),
+                        SizedBox(height: spaceHeight),
                         CustomTextWithSizeBox(
                             space: spaceHeight,
                             text1: "Username",

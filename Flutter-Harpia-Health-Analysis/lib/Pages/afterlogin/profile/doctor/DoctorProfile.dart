@@ -62,6 +62,25 @@ class _DoctorProfileState extends State<DoctorProfile> {
                 children: [
                   renderPage(),
                   PermissionUtils.letRunForDoctor()
+                      ? Text(
+                    "My Profile",
+                    style: TextStyle(
+                      fontSize: ResponsiveDesign.getScreenHeight() / 30,
+                      color: ProductColor.black,
+                    ),
+                  )
+                      : Container(),
+                  PermissionUtils.letRunForPatient()
+                      ? Text(
+                    "My Doctor Profile",
+                    style: TextStyle(
+                      fontSize: ResponsiveDesign.getScreenHeight() / 30,
+                      color: ProductColor.black,
+                    ),
+                  )
+                      : Container(),
+                  SizedBox(height: spaceHeight),
+                  PermissionUtils.letRunForDoctor()
                       ? CustomTextWithSizeBox(
                           space: spaceHeight,
                           text1: "Username",
@@ -114,12 +133,14 @@ class _DoctorProfileState extends State<DoctorProfile> {
 }
 
 class CustomTextWithSizeBox extends StatelessWidget {
-  final String text1;
-  final String text2;
+  String text1 = "";
+  String text2 = "";
   final double space;
 
-  CustomTextWithSizeBox(
-      {required this.text1, required this.text2, required this.space});
+  CustomTextWithSizeBox({text1, text2, required this.space}) {
+    text1 != null ? this.text1 = text1 : null;
+    text2 != null ? this.text2 = text2 : null;
+  }
 
   @override
   Widget build(BuildContext context) {

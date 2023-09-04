@@ -60,6 +60,14 @@ class _AdminProfileState extends State<AdminProfile> {
               child: Column(
                 children: [
                   renderPage(),
+                  Text(
+                    "My Profile",
+                    style: TextStyle(
+                      fontSize: ResponsiveDesign.getScreenHeight() / 30,
+                      color: ProductColor.black,
+                    ),
+                  ),
+                  SizedBox(height: spaceHeight),
                   CustomTextWithSizeBox(
                       space: spaceHeight,
                       text1: "Username",
