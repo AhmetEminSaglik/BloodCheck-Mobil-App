@@ -6,6 +6,7 @@ import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/linechart/Lin
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/linechart/predata/LineChartPreDataDaily.dart';
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/linechart/predata/LineChartPreDataMonthly.dart';
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/linechart/predata/LineChartPreDataWeekly.dart';
+import 'package:flutter_harpia_health_analysis/Product/CustomText.dart';
 import 'package:flutter_harpia_health_analysis/core/ResponsiveDesign.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestDoctor.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestPatient.dart';
@@ -15,6 +16,7 @@ import 'package:flutter_harpia_health_analysis/model/specialitem/doctor/PatientT
 import 'package:flutter_harpia_health_analysis/util/AppBarUtil.dart';
 import 'package:flutter_harpia_health_analysis/util/FcmTokenUtils.dart';
 import 'package:flutter_harpia_health_analysis/util/PatientTimerUtils.dart';
+import '../../../../business/QRCodeScanner.dart';
 import '../../../../httprequest/HttpRequestBloodResult.dart';
 import '../../../../httprequest/ResponseEntity.dart';
 import '../../../../model/bloodresult/BloodResult.dart';
@@ -45,6 +47,7 @@ class HomePagePatient extends StatefulWidget {
 }
 
 class _HomePagePatientState extends State<HomePagePatient> {
+  String QRCodeData = "";
   late BaseLineChart activatedBaseLineChart;
 
   bool visibleAppBar =
@@ -127,12 +130,12 @@ class _HomePagePatientState extends State<HomePagePatient> {
     print("retrievePatientTimerData > patientTimer  : $patientTimer ");
   }
 
-  static int counter = 0;
+  // static int counter = 0;
 
   void retrieveBloodResultData() async {
-    counter++;
-    print(
-        "counter : $counter; DATA RETRIEVED patient Id : ${widget.patientId}");
+    // counter++;
+    // print(
+    //     "counter : $counter; DATA RETRIEVED patient Id : ${widget.patientId}");
     dailyBloodResultList =
         await HttpRequestBloodResult.getDailyBloodResult(widget.patientId);
     weeklyBloodResultList =
@@ -185,18 +188,36 @@ class _HomePagePatientState extends State<HomePagePatient> {
                 physics: const AlwaysScrollableScrollPhysics(),
                 child: Column(
                   children: [
-                    Text("counter $counter"),
+                    QRCodeData.isNotEmpty ?
+                    Padding(
+                      padding: EdgeInsets.only(
+                          top: ResponsiveDesign.getScreenHeight() / 50,
+                          bottom: ResponsiveDesign.getScreenHeight() / 50,
+                          left: ResponsiveDesign.getScreenHeight() / 50,
+                          right: ResponsiveDesign.getScreenHeight() / 50),
+                      child: CustomText(
+                        text1: "Activated QR",
+                        text2: "$QRCodeData",
+                        fontSize: ResponsiveDesign.getScreenWidth() / 22,
+                      ),
+                    ) : Container(),
+                    // Text("counter $counter"),
                     Container(
-                      height: ResponsiveDesign.getScreenHeight() / 9,
+                      height: ResponsiveDesign.getScreenHeight() / 7,
                       color: ProductColor.bodyBackground,
                       child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            SensorTimerText(patientTimer: patientTimer),
-                            SensorNextMeasurementText(
-                                dailyBloodResultList: dailyBloodResultList,
-                                patientTimer: patientTimer),
-                          ],
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              top: ResponsiveDesign.getScreenHeight() / 75),
+                          child: Column(
+                            children: [
+                              // getActivatedQRText(QRCodeData),
+                              SensorTimerText(patientTimer: patientTimer),
+                              SensorNextMeasurementText(
+                                  dailyBloodResultList: dailyBloodResultList,
+                                  patientTimer: patientTimer),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -297,7 +318,7 @@ class _HomePagePatientState extends State<HomePagePatient> {
                             ? _PatientHomePageCustomButton(
                                 action: goToDetailedPage,
                                 text: 'Detail LineChart',
-                                color: ProductColor.black,
+                                color: ProductColor.white,
                                 backgroundColor: ProductColor.redAccent,
                               )
                             : Container(),
@@ -329,8 +350,11 @@ class _HomePagePatientState extends State<HomePagePatient> {
                 )));
   }
 
-  void scanQRCode() {
-    print("QR Code will scan");
+  void scanQRCode() async {
+    await Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const QRCodeScanner()))
+        .then((value) => {QRCodeData = value});
+    setState(() {});
   }
 
   Padding getBloodResultRadioButtonTime(
@@ -492,17 +516,24 @@ class SensorNextMeasurementText extends StatelessWidget {
         height: ResponsiveDesign.getScreenHeight() / 25,
         // color: ProductColor.white,
         child: Center(
-          child: Text(
-              /*"Next Time : ${PatientTimerUtils.calculateSensorNextMeasurementTime(lastCreatedAt: dailyBloodResultList[0].createdAt, patientTimer: patientTimer)}"*/
+          child: _InfoTextDesign(text: _getStringDataToShow()),
+          /*Text(
+              */ /*"Next Time : ${PatientTimerUtils.calculateSensorNextMeasurementTime(lastCreatedAt: dailyBloodResultList[0].createdAt, patientTimer: patientTimer)}"*/ /*
               _getStringDataToShow(),
               style: TextStyle(
                   fontSize: ResponsiveDesign.getScreenWidth() / 20,
                   // color: ProductColor.bodyBackground,
-                  fontWeight: FontWeight.bold)),
+                  fontWeight: FontWeight.bold)),*/
         ),
       ),
     );
   }
+}
+
+Widget getActivatedQRText(String QRCodeData) {
+  return QRCodeData.isNotEmpty
+      ? _InfoTextDesign(text: "Activated QR : $QRCodeData")
+      : Container();
 }
 
 class SensorTimerText extends StatelessWidget {
@@ -519,22 +550,32 @@ class SensorTimerText extends StatelessWidget {
       padding: EdgeInsets.only(
         left: ResponsiveDesign.getScreenWidth() / 10,
         right: ResponsiveDesign.getScreenWidth() / 10,
-        top: ResponsiveDesign.getScreenHeight() / 50,
       ),
       child: Container(
         width: ResponsiveDesign.getScreenWidth(),
         height: ResponsiveDesign.getScreenHeight() / 25,
-        // color: ProductColor.white,
         child: Center(
-          child: Text(
-              "Sensor Timer : ${PatientTimerUtils.getReadableFormat(patientTimer)}",
-              style: TextStyle(
-                  fontSize: ResponsiveDesign.getScreenWidth() / 20,
-                  // color: ProductColor.white,
-                  fontWeight: FontWeight.bold)),
+          child: _InfoTextDesign(
+              text:
+                  "Sensor Timer : ${PatientTimerUtils.getReadableFormat(patientTimer)}"),
         ),
       ),
     );
+  }
+}
+
+class _InfoTextDesign extends StatelessWidget {
+  final String text;
+
+  _InfoTextDesign({required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(text,
+        style: TextStyle(
+            fontSize: ResponsiveDesign.getScreenWidth() / 20,
+            // color: ProductColor.white,
+            fontWeight: FontWeight.bold));
   }
 }
 
