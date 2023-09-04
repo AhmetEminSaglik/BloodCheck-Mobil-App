@@ -29,7 +29,6 @@ import '../../../CustomWidgets/linechart/BaseLineChart.dart';
 import '../../../CustomWidgets/linechart/LineChart6Monthly.dart';
 import '../../../CustomWidgets/linechart/LineChartWeekly.dart';
 import '../../../CustomWidgets/linechart/predata/BaseLineChartPreData.dart';
-import '../appbar/AppBarCubit.dart';
 import 'DetailLineChartPage.dart';
 
 class HomePagePatient extends StatefulWidget {
@@ -46,12 +45,8 @@ class HomePagePatient extends StatefulWidget {
 }
 
 class _HomePagePatientState extends State<HomePagePatient> {
-  // LineChartEmpty lineChartEmpty = LineChartEmpty();
-
-  // StatefulWidget? activatedLineChartWidget;
   late BaseLineChart activatedBaseLineChart;
 
-  // late BaseLineChartPreData _baseLineChartPreData;
   bool visibleAppBar =
       PermissionUtils.letRunForAdmin() || PermissionUtils.letRunForDoctor();
   bool visiblePatientTimer = PermissionUtils.letRunForDoctor();
@@ -70,7 +65,6 @@ class _HomePagePatientState extends State<HomePagePatient> {
   bool showBloodPressure = false;
   int radioValue = 1;
 
-  // bool listDataIsEmpty = false;4
   final CheckBoxVisibleBloodResultContent _checkBoxVisibleBloodResultContent =
       CheckBoxVisibleBloodResultContent();
   late BaseLineChartPreData _lineChartPreDataDaily;
@@ -114,15 +108,10 @@ class _HomePagePatientState extends State<HomePagePatient> {
 
   bool assignEmptyLineChart(List list) {
     if (list.isEmpty) {
-      /*TODO burasi statelesswidget olarak eklencek
-      activatedLineChartWidget = lineChartEmpty;*/
-      // listDataIsEmpty = true;
       return true;
     }
     return false;
   }
-
-  // List<Widget> checkBoxBloodResultContents = [];
 
   @override
   void initState() {
@@ -130,7 +119,6 @@ class _HomePagePatientState extends State<HomePagePatient> {
     retrieveBloodResultData();
     retrievePatientTimerData();
     FcmTokenUtils.updatePatientId(widget.patientId);
-    //  activatedLineChartWidget = lineChartEmpty;
   }
 
   void retrievePatientTimerData() async {
@@ -142,9 +130,6 @@ class _HomePagePatientState extends State<HomePagePatient> {
   static int counter = 0;
 
   void retrieveBloodResultData() async {
-    // context
-    //     .read<FcmNotificationCubit>()
-    //     .deactivateUpdatePatientLineChart;
     counter++;
     print(
         "counter : $counter; DATA RETRIEVED patient Id : ${widget.patientId}");
@@ -167,28 +152,8 @@ class _HomePagePatientState extends State<HomePagePatient> {
         monthlyBloodResultList.isNotEmpty) {
       isDataFound = true;
     }
-/*
-    print(
-        "DATA RETRIEVED dailyBloodResultList size :${dailyBloodResultList.length} ");
-    print(
-        "DATA RETRIEVED weeklyBloodResultList size :${weeklyBloodResultList.length} ");
-    print(
-        "DATA RETRIEVED monthlyBloodResultList size :${monthlyBloodResultList.length} ");*/
-    // setState(() {
     isLoading = false;
-    // });
     updateActivatedLineChart(radioValue);
-
-    //
-    // _customLineChartDataDaily =
-    //     CustomLineChartDataDaily(bloodListData: dailyBloodResultList);
-    //
-    // _customLineChartDataWeekly =
-    //     CustomLineChartDataWeekly(bloodListData: weeklyBloodResultList);
-    // _customLineChartDataMonthly =
-    //     CustomLineChartDataMonthly(bloodListData: monthlyBloodResultList);
-    // print(
-    //     "Data's retrieved agian : daily item ${dailyBloodResultList[0]} / ${dailyBloodResultList[dailyBloodResultList.length - 1]}");
   }
 
   @override
@@ -197,13 +162,6 @@ class _HomePagePatientState extends State<HomePagePatient> {
     super.deactivate();
     context.read<FcmNotificationCubit>().deactivateFcmNotifyPermission();
   }
-
-  /*@override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    context.read<FcmNotificationCubit>().deactivateFcmNotifyPermission();
-  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -241,6 +199,9 @@ class _HomePagePatientState extends State<HomePagePatient> {
                           ],
                         ),
                       ),
+                    ),
+                    SizedBox(
+                      height: ResponsiveDesign.getScreenHeight() / 50,
                     ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -324,39 +285,21 @@ class _HomePagePatientState extends State<HomePagePatient> {
                       ],
                     ),
                     _getPatientTimerButton(),
-                    SizedBox(
-                        child: Column(
+                    Column(
                       children: [
+                        _PatientHomePageCustomButton(
+                          action: scanQRCode,
+                          text: 'Scan QR Code',
+                          color: ProductColor.white,
+                          backgroundColor: ProductColor.bodyBackground,
+                        ),
                         isDataFound
-                            ? Container(
-                                width: ResponsiveDesign.getScreenWidth() -
-                                    ResponsiveDesign.getScreenWidth() / 3,
-                                height: ResponsiveDesign.getScreenHeight() / 20,
-                                child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                        backgroundColor:
-                                            ProductColor.redAccent),
-                                    onPressed: () {
-                                      activatedBaseLineChart.aspectRadio =
-                                          bigLineChartAspectRadio;
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  DetailLineChartPage(
-                                                    baseLineChart:
-                                                        activatedBaseLineChart,
-                                                  )));
-                                    },
-                                    child: Text(
-                                      "Detail LineChart",
-                                      style: TextStyle(
-                                          fontSize: ResponsiveDesign
-                                                  .getScreenHeight() /
-                                              37,
-                                          color: ProductColor.black,
-                                          fontWeight: FontWeight.bold),
-                                    )))
+                            ? _PatientHomePageCustomButton(
+                                action: goToDetailedPage,
+                                text: 'Detail LineChart',
+                                color: ProductColor.black,
+                                backgroundColor: ProductColor.redAccent,
+                              )
                             : Container(),
                         Padding(
                           padding: EdgeInsets.only(
@@ -368,12 +311,26 @@ class _HomePagePatientState extends State<HomePagePatient> {
                               child: activatedBaseLineChart),
                         ),
                       ],
-                    )),
+                    ),
                   ],
                 ),
               );
             }),
     );
+  }
+
+  void goToDetailedPage() {
+    activatedBaseLineChart.aspectRadio = bigLineChartAspectRadio;
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => DetailLineChartPage(
+                  baseLineChart: activatedBaseLineChart,
+                )));
+  }
+
+  void scanQRCode() {
+    print("QR Code will scan");
   }
 
   Padding getBloodResultRadioButtonTime(
@@ -471,6 +428,37 @@ class _HomePagePatientState extends State<HomePagePatient> {
       ScaffoldMessenger.of(context)
           .showSnackBar(CustomSnackBar.getSnackBar(msg));
     }
+  }
+}
+
+class _PatientHomePageCustomButton extends StatelessWidget {
+  late final Function() action;
+  late final String text;
+  late final Color color;
+  late final Color backgroundColor;
+
+  _PatientHomePageCustomButton(
+      {required this.action,
+      required this.text,
+      required this.color,
+      required this.backgroundColor});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: ResponsiveDesign.getScreenWidth() -
+          ResponsiveDesign.getScreenWidth() / 3,
+      child: ElevatedButton(
+          style: ElevatedButton.styleFrom(backgroundColor: backgroundColor),
+          onPressed: action,
+          child: Text(
+            text,
+            style: TextStyle(
+                fontSize: ResponsiveDesign.getScreenHeight() / 37,
+                color: color,
+                fontWeight: FontWeight.bold),
+          )),
+    );
   }
 }
 
@@ -573,12 +561,3 @@ class LoadingScreenWidget extends StatelessWidget {
     );
   }
 }
-
-/*AppBar getAppBar() {
-  return AppBar(
-    backgroundColor: ProductColor.appBarBackgroundColor,
-    title: BlocBuilder<AppBarCubit, Widget>(builder: (builder, titleWidget) {
-      return titleWidget;
-    }),
-  );
-}*/
