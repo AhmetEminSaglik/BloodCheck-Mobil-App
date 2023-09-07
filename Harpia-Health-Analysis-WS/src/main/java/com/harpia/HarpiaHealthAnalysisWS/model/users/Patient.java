@@ -3,7 +3,6 @@ package com.harpia.HarpiaHealthAnalysisWS.model.users;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor

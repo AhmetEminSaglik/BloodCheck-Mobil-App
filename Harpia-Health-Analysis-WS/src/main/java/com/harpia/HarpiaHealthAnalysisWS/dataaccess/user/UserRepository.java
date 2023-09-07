@@ -1,6 +1,5 @@
 package com.harpia.HarpiaHealthAnalysisWS.dataaccess.user;
 
-
 import com.harpia.HarpiaHealthAnalysisWS.model.users.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 

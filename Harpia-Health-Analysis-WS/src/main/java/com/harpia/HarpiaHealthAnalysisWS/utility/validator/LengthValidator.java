@@ -5,8 +5,6 @@ import com.harpia.HarpiaHealthAnalysisWS.utility.CustomLog;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.ErrorResult;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.Result;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.SuccessResult;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class LengthValidator {
     private static CustomLog log = new CustomLog(LengthValidator.class);

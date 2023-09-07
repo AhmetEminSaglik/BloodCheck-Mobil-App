@@ -10,8 +10,6 @@ import com.harpia.HarpiaHealthAnalysisWS.utility.result.ErrorDataResult;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.Result;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.SuccessDataResult;
 import com.harpia.HarpiaHealthAnalysisWS.utility.validator.LengthValidator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class SignupCredentialsValidation implements SignupValidationService, SignupCredentialsValidationService {
     private static CustomLog log = new CustomLog(SignupCredentialsValidation.class);

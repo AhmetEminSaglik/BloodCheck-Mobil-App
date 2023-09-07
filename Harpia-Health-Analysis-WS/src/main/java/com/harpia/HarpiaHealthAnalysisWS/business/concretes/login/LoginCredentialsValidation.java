@@ -8,8 +8,6 @@ import com.harpia.HarpiaHealthAnalysisWS.model.enums.EnumInputName;
 import com.harpia.HarpiaHealthAnalysisWS.utility.CustomLog;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.*;
 import com.harpia.HarpiaHealthAnalysisWS.utility.validator.LengthValidator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class LoginCredentialsValidation implements LoginValidationService, LoginCredentialsValidationService {
     private static CustomLog log = new CustomLog(LoginCredentialsValidation.class);

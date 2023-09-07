@@ -1,6 +1,5 @@
 package com.harpia.HarpiaHealthAnalysisWS.dataaccess.diabetic;
 
-
 import com.harpia.HarpiaHealthAnalysisWS.model.bloodresult.BloodResult;
 import org.springframework.data.jpa.repository.JpaRepository;
 

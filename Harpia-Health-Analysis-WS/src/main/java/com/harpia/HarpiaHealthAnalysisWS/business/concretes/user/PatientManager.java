@@ -2,7 +2,6 @@ package com.harpia.HarpiaHealthAnalysisWS.business.concretes.user;
 
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.user.PatientService;
 import com.harpia.HarpiaHealthAnalysisWS.dataaccess.user.PatientRepository;
-import com.harpia.HarpiaHealthAnalysisWS.model.users.Doctor;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.Patient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

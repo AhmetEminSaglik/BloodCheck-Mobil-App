@@ -14,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.print.Doc;
 import java.util.List;
 
 @RestController
@@ -49,13 +47,13 @@ public class DoctorController {
 
     public DataResult<Doctor> findById(@PathVariable long id) {
         Doctor personnel = (Doctor) userService.findById(id);
-        return new SuccessDataResult<>(personnel, "Healthcare Personnel retrived Succesfully");
+        return new SuccessDataResult<>(personnel, "Doctor retrieved Successfully");
     }
 
     @GetMapping("/{id}/patients")
     public ResponseEntity<DataResult<List<Patient>>> findPatientListOfDoctorId(@PathVariable long id) {
         List<Patient> patientList = patientService.findAllPatientByDoctorId(id);
-        String msg = "Patient List belongs to Doctor ID " + id + " is retrived";
+        String msg = "Patient List belongs to Doctor ID " + id + " is retrieved";
         DataResult<List<Patient>> result = new SuccessDataResult(patientList, msg);
         return ResponseEntity.status(HttpStatus.OK).body(result);
 

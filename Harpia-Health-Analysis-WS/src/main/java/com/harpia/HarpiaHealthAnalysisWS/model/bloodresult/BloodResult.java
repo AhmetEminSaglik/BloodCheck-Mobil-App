@@ -1,6 +1,5 @@
 package com.harpia.HarpiaHealthAnalysisWS.model.bloodresult;
 
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

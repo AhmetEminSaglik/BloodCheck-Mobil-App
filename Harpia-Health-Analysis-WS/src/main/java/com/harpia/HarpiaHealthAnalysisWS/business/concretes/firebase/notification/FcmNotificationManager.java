@@ -11,7 +11,6 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 public class FcmNotificationManager implements FcmNotificationService {
-    //    @Value("${FCM_SERVER_KEY}")
     private String fcmServerKey = "AAAAJPFxWhM:APA91bHwYHY3e-WIRWyF3TTmRiuO5SUtBAHyipnZ-iO5-CdnVdKhWHT0JwQU4jrSWZHV3HNjJlGXCvDHHlYzawPdywtBfADhH5KNMDN1L19BFQR1L6MwlJzyKUTdhw62iFlH-vIgceLU";
     private static CustomLog log = new CustomLog(FcmNotificationManager.class);
 

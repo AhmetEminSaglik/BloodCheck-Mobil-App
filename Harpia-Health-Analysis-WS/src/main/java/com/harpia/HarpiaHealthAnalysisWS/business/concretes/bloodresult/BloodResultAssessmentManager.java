@@ -103,8 +103,6 @@ public class BloodResultAssessmentManager implements BloodResultAssessmentServic
                 msgBody.append("-");
                 tooLow = true;
             }
-//            }
-
         }
         if (msgBody.length() > 0) {
             msgBody.deleteCharAt(msgBody.length() - 1);
@@ -139,7 +137,6 @@ public class BloodResultAssessmentManager implements BloodResultAssessmentServic
         FcmMessage fcmMessage = fcmService.generateFcmMsg(token, notification, data);
         log.info("sending fcm msg : " + fcmMessage);
         return fcmMessage;
-//        fcmService.sendNotification(fcmMessage);
     }
 
 
@@ -150,6 +147,5 @@ public class BloodResultAssessmentManager implements BloodResultAssessmentServic
     String createFcmMsgBody(String text, Color color) {
         return fcmService.generateTextWithHtmlColor(text, color);
     }
-
 
 }
