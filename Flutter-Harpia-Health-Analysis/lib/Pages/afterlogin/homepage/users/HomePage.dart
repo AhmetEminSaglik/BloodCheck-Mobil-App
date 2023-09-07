@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    enableBackgroudnExecution();
+    enableBackgroundExecution();
     prepareDrawer();
   }
 
@@ -72,7 +72,7 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-void enableBackgroudnExecution() async {
+void enableBackgroundExecution() async {
   const androidConfig = FlutterBackgroundAndroidConfig(
     notificationTitle: "flutter_background example app",
     notificationText:

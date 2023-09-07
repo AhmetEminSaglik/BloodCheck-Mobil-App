@@ -40,6 +40,7 @@ public class BloodResultController {
 
     @PostMapping
     public ResponseEntity<DataResult<BloodResult>> saveBloodResult(@RequestBody BloodResult bloodResult) {
+        log.info("Save Blood Result "+bloodResult);
         bloodResult = service.save(bloodResult);
         String msg = "Blood Results is saved, Notification is send";
         assessmentService.assessToSendFcmMsg(bloodResult);

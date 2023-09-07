@@ -4,6 +4,7 @@ import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.bloodresult.BloodRes
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.firebase.notification.FcmService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.firebase.token.FcmTokenService;
 import com.harpia.HarpiaHealthAnalysisWS.business.concretes.firebase.notification.FcmManager;
+import com.harpia.HarpiaHealthAnalysisWS.controller.bloodresult.BloodResultController;
 import com.harpia.HarpiaHealthAnalysisWS.model.bloodresult.BloodResult;
 import com.harpia.HarpiaHealthAnalysisWS.model.firebase.FcmData;
 import com.harpia.HarpiaHealthAnalysisWS.model.firebase.FcmMessage;
@@ -27,8 +28,10 @@ public class FakeSensors {
     private static CustomLog log = new CustomLog(FakeSensors.class);
     FcmTokenService fcmTokenService;
     FcmService fcmService;
+    BloodResultController bloodResultController;
 
-    public FakeSensors(FcmTokenService fcmTokenService, FcmService fcmService) {
+    public FakeSensors(BloodResultController bloodResultController, FcmTokenService fcmTokenService, FcmService fcmService) {
+        this.bloodResultController = bloodResultController;
         this.fcmTokenService = fcmTokenService;
         this.fcmService = fcmService;
     }
@@ -123,7 +126,8 @@ public class FakeSensors {
                     bloodResult.setPatientId(6); // patient id
                     bloodResultService.save(bloodResult);
                     log.info("Runnabledayiz : BloodResult : " + bloodResult);
-                    sendFcmNotificationBloodResult(bloodResult);
+                    bloodResultController.saveBloodResult(bloodResult);
+//                    sendFcmNotificationBloodResult(bloodResult);
                   /*  List<String> bloodResultSubItemNames = new ArrayList<>();
                     bloodResultSubItemNames.add("BloodSugar");
                     bloodResultSubItemNames.add("BloodPressure");

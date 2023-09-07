@@ -6,6 +6,7 @@ import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.firebase.notificatio
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.firebase.token.FcmTokenService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.user.UserRoleService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.user.UserService;
+import com.harpia.HarpiaHealthAnalysisWS.controller.bloodresult.BloodResultController;
 import com.harpia.HarpiaHealthAnalysisWS.controller.timer.PatientTimerController;
 import com.harpia.HarpiaHealthAnalysisWS.controller.user.PatientController;
 import com.harpia.HarpiaHealthAnalysisWS.model.bloodresult.BloodResult;
@@ -57,6 +58,8 @@ public class InitialDataLoader implements CommandLineRunner {
     private FcmTokenService fcmTokenService;
     @Autowired
     private FcmService fcmService;
+    @Autowired
+    BloodResultController bloodResultController;
 
     private static CustomLog log = new CustomLog(InitialDataLoader.class);
     private static Random random = new Random();
@@ -84,14 +87,13 @@ public class InitialDataLoader implements CommandLineRunner {
             saveBloodResult_per_24_hours(patient_24_hours);
 
 
-
 //            saveBloodResultPerMinuteForSixMonth(patient_6_Month);
 //            for (int i = 0; i < patientList.size() - 2; i++) {
-                saveBloodResultPerMinuteForSixMonth(patient_2_Data);
+            saveBloodResultPerMinuteForSixMonth(patient_2_Data);
 //            }
 
         }
-//        new FakeSensors(fcmTokenService,fcmService).runFakeSensors(timerController.findAllPatientTimers().getBody().getData(), bloodResultService);
+        new FakeSensors(bloodResultController,fcmTokenService, fcmService).runFakeSensors(timerController.findAllPatientTimers().getBody().getData(), bloodResultService);
     }
 
 
@@ -381,8 +383,8 @@ public class InitialDataLoader implements CommandLineRunner {
             user.setLastname(getName(i));
             user.setUsername("doc" + i);
             user.setPassword("pass");
-            user.setGraduate("Graduate "+i);
-            user.setSpecialization("Spelization "+i);
+            user.setGraduate("Graduate " + i);
+            user.setSpecialization("Spelization " + i);
             user.setRoleId(EnumUserRole.DOCTOR.getId());
             list.add(user);
         }

@@ -45,12 +45,17 @@ public class BloodResultAssessmentManager implements BloodResultAssessmentServic
         subItemMap.put(EnumBloodResultContent.MAGNESIUM.getName(), bloodResult.getMagnesium());
 
 //        sendFcmMessage(bloodResult.getPatientId(), subItemMap);
-        FcmMessage fcmMessage = createFcmMessage(bloodResult.getPatientId(), subItemMap);
-        Patient patient = patientService.findById(bloodResult.getPatientId());
-        sendMsgToPatient(fcmMessage);
+        try {
+            FcmMessage fcmMessage = createFcmMessage(bloodResult.getPatientId(), subItemMap);
+//            fcmMessage.getData().setPatientId(bloodResult.getPatientId());
+            Patient patient = patientService.findById(bloodResult.getPatientId());
+            sendMsgToPatient(fcmMessage);
 
-        patientFullName = " " + patient.getName() + " " + patient.getLastname();
-        sendMsgToDoctorOfPatient(bloodResult.getPatientId(), fcmMessage);
+            patientFullName = " " + patient.getName() + " " + patient.getLastname();
+            sendMsgToDoctorOfPatient(bloodResult.getPatientId(), fcmMessage);
+        } catch (Exception e) {
+            log.error("ERROR OCCURED : " + e.getMessage());
+        }
     }
 
     private void sendMsgToPatient(FcmMessage fcmMessage) {
