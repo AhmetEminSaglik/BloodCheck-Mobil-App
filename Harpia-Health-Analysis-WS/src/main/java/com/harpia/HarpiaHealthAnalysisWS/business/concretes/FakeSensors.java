@@ -109,10 +109,8 @@ public class FakeSensors {
         return new Runnable() {
             @Override
             public void run() {
-                log.info("While dongusunde");
                 if (fcmTokenService.findByUserId(6) != null) {
 
-                    log.info("Counter : " + counter);
                     if (counter % 3 == 0) {
                         rangeBound = LowRangeBound;// low
                     } else if (counter % 3 == 1) {
@@ -125,7 +123,6 @@ public class FakeSensors {
                     bloodResult.setBloodSugar(random.nextInt(30) + rangeBound + 10);
                     bloodResult.setPatientId(6); // patient id
                     bloodResultService.save(bloodResult);
-                    log.info("Runnabledayiz : BloodResult : " + bloodResult);
                     bloodResultController.saveBloodResult(bloodResult);
 //                    sendFcmNotificationBloodResult(bloodResult);
                   /*  List<String> bloodResultSubItemNames = new ArrayList<>();

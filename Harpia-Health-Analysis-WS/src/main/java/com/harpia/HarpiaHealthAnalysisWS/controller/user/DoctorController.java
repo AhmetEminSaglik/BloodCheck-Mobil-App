@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.xml.crypto.Data;
 import java.util.List;
 
 @RestController
@@ -40,14 +42,14 @@ public class DoctorController {
         List<User> doctorList = userService.findAllByRoleId(EnumUserRole.DOCTOR.getId());
         String msg = "Doctor list is retrieved successfully";
         DataResult<List<User>> dataResult = new SuccessDataResult<>(doctorList, msg);
-        return ResponseEntity.ok().body(dataResult);
+        return ResponseEntity.status(HttpStatus.OK).body(dataResult);
     }
 
     @GetMapping("/{id}")
-
-    public DataResult<Doctor> findById(@PathVariable long id) {
+    public ResponseEntity<DataResult<Doctor>> findById(@PathVariable long id) {
         Doctor personnel = (Doctor) userService.findById(id);
-        return new SuccessDataResult<>(personnel, "Doctor retrieved Successfully");
+        DataResult<Doctor> dataResult = new SuccessDataResult<>(personnel, "Doctor retrieved Successfully");
+        return ResponseEntity.status(HttpStatus.OK).body(dataResult);
     }
 
     @GetMapping("/{id}/patients")

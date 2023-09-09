@@ -35,7 +35,6 @@ public class PatientTimerController {
             msg = "Patient Timer is updated";
         }
         DataResult result = new SuccessDataResult(newPatientTimer, msg);
-        log.info("RESULT : " + result);
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 

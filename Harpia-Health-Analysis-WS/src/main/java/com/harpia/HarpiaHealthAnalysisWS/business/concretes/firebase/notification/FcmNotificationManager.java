@@ -14,10 +14,6 @@ public class FcmNotificationManager implements FcmNotificationService {
     private String fcmServerKey = "AAAAJPFxWhM:APA91bHwYHY3e-WIRWyF3TTmRiuO5SUtBAHyipnZ-iO5-CdnVdKhWHT0JwQU4jrSWZHV3HNjJlGXCvDHHlYzawPdywtBfADhH5KNMDN1L19BFQR1L6MwlJzyKUTdhw62iFlH-vIgceLU";
     private static CustomLog log = new CustomLog(FcmNotificationManager.class);
 
-    public FcmNotificationManager() {
-        log.info("fcmServerKey : " + fcmServerKey);
-    }
-
     @Override
     public ResponseEntity<String> sendNotification(FcmMessage message/*@RequestBody FcmMessage fcmMessage*/) {
 
@@ -26,15 +22,10 @@ public class FcmNotificationManager implements FcmNotificationService {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "key=" + fcmServerKey);
         headers.set("Content-Type", "application/json");
-        log.warn("KEY = " + fcmServerKey);
 
         HttpEntity<FcmMessage> entity = new HttpEntity<>(message, headers);
 
         ResponseEntity<String> response = restTemplate.postForEntity("https://fcm.googleapis.com/fcm/send", entity, String.class);
-
-        log.info("Response : " + response);
-        log.info(response.getStatusCode().toString());
-        log.info(response.getBody());
 
         return response;
     }

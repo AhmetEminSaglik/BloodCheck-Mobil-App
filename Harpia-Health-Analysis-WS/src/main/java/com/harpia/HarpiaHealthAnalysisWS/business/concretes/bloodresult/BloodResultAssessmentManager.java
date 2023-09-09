@@ -36,7 +36,6 @@ public class BloodResultAssessmentManager implements BloodResultAssessmentServic
 
     @Override
     public void assessToSendFcmMsg(BloodResult bloodResult) {
-        log.info("assess blood result : " + bloodResult);
         HashMap<String, Integer> subItemMap = new HashMap<>();
 
         subItemMap.put(EnumBloodResultContent.BLOOD_SUGAR.getName(), bloodResult.getBloodSugar());
@@ -60,7 +59,6 @@ public class BloodResultAssessmentManager implements BloodResultAssessmentServic
 
     private void sendMsgToPatient(FcmMessage fcmMessage) {
         fcmService.sendNotification(fcmMessage);
-        log.info("send to Patient : TOKEN : " + fcmMessage.getTo());
     }
 
     private void sendMsgToDoctorOfPatient(long patientId, FcmMessage fcmMessage) {
@@ -135,7 +133,6 @@ public class BloodResultAssessmentManager implements BloodResultAssessmentServic
         }
 
         FcmMessage fcmMessage = fcmService.generateFcmMsg(token, notification, data);
-        log.info("sending fcm msg : " + fcmMessage);
         return fcmMessage;
     }
 

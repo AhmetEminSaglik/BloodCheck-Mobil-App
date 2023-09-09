@@ -77,9 +77,10 @@ public class PatientController {
     }
 
     @GetMapping("/{id}")
-    public DataResult<Patient> findById(@PathVariable long id) {
+    public ResponseEntity<DataResult<Patient>> findById(@PathVariable long id) {
         Patient patient = (Patient) userService.findById(id);
-        return new SuccessDataResult<>(patient, "Patient retrived Succesfully");
+        DataResult<Patient> dataResult = new SuccessDataResult<>(patient, "Patient retrived Succesfully");
+        return ResponseEntity.status(HttpStatus.OK).body(dataResult);
     }
 
     @GetMapping
