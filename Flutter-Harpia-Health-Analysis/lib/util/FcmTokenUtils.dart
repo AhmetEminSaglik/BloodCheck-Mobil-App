@@ -45,13 +45,14 @@ class FcmTokenUtils {
           CustomNotificationUtil.showNotification(
               fcmData.msgTitle, fcmData.msg);
         }
-    /*    if (message.notification != null) {
+        /*    if (message.notification != null) {
           log.info(
               'Message also contained a notification: ${message.notification}');
         }*/
       });
     } catch (e) {
-      log.error("exception : $e");
+      // log.error(msgTitle: "FcmTokenUtils Exception", msg: "$e");
+      log.error("Exception Occurred $e");
     }
   }
 

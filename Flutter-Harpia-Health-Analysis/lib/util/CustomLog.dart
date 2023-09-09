@@ -10,7 +10,7 @@ class CustomLog {
   info(String text) {
     log("INFO --> $text", name: _className);
   }
-  error(String text) {
-    log("ERROR --> $text", name: _className);
+  error(String msg) {
+    log("",error: "ERROR --> $msg", name: _className);
   }
 }
