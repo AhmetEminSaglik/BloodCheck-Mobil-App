@@ -7,6 +7,7 @@ import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/drawer/
 import 'package:flutter_harpia_health_analysis/util/AppBarUtil.dart';
 import 'package:flutter_harpia_health_analysis/util/ProductColor.dart';
 
+import '../../../../util/CustomLog.dart';
 import '../../../../util/FcmTokenUtils.dart';
 import '../../../../util/SharedPrefUtils.dart';
 import '../drawer/AdminDrawer.dart';
@@ -20,6 +21,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  CustomLog log = CustomLog(className: "HomePage");
+
   int userId = SharedPrefUtils.getUserId();
   late final MainDrawer mainDrawer;
   late final AdminDrawer _adminDrawer;
@@ -40,7 +43,7 @@ class _HomePageState extends State<HomePage> {
     _patientDrawer = PatientDrawer(patientId: userId);
     mainDrawer =
         MainDrawer(drawerList: [_adminDrawer, _doctorDrawer, _patientDrawer]);
-    print("Drawer's are prepared");
+    log.info("Drawer's are prepared");
   }
 
   @override

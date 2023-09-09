@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../model/userrole/EnumUserRole.dart';
+import '../../../../util/CustomLog.dart';
 import '../../../../util/SharedPrefUtils.dart';
 
 class AppBarCubit extends Cubit<Widget> {
   Widget appBarTitleWidget = const Text("Empty Text");
   var backgroundColor = Colors.green;
+  CustomLog log = CustomLog(className: "AppBarCubit");
 
   AppBarCubit() : super(const Text("Empty Text"));
 
   void setTitle(Widget title) {
     appBarTitleWidget = AppBar(title: title);
-    print('new title : $title');
+    log.info('new title : $title');
     emit(appBarTitleWidget);
   }
 

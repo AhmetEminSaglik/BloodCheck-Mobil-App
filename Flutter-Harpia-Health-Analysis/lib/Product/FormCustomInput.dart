@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../core/ResponsiveDesign.dart';
+import '../util/CustomLog.dart';
 import '../util/ProductColor.dart';
+
+CustomLog log = CustomLog(className: "FormInputTextField");
 
 class FormInputTextField extends StatelessWidget {
   final TextEditingController controller;
@@ -54,8 +57,8 @@ class _InputTextFormField extends StatelessWidget {
       obscureText: obscureText,
       validator: (data) {
         if (data!.isEmpty && compulsoryArea) {
-          print("data!.isEmpty : ${data!.isEmpty}");
-          print("compulsoryArea : $compulsoryArea");
+          log.info("data!.isEmpty : ${data!.isEmpty}");
+          log.info("compulsoryArea : $compulsoryArea");
           return "Please enter $hint";
         }
         if (data.length > 0) {

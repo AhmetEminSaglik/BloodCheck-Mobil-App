@@ -3,6 +3,8 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
+import '../../util/CustomLog.dart';
+
 //https://www.udemy.com/course/flutter-ile-uygulama-gelistirme-kursu-android-ios/learn/lecture/23728946#overview
 // to delete all comment  lines --> ctrl + f -->//.* --> delete all comments
 void main() {
@@ -34,14 +36,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  CustomLog log = CustomLog(className: "HomePage");
   var flp = FlutterLocalNotificationsPlugin();
 
   Future<void> setup() async {
     var androidSetup =
-    const AndroidInitializationSettings("@mipmap/ic_launcher");
+        const AndroidInitializationSettings("@mipmap/ic_launcher");
     var iosSetup = const DarwinInitializationSettings();
     var instalationSetup =
-    InitializationSettings(android: androidSetup, iOS: iosSetup);
+        InitializationSettings(android: androidSetup, iOS: iosSetup);
     await flp.initialize(instalationSetup,
         onDidReceiveNotificationResponse: selectNotification);
   }
@@ -50,7 +53,7 @@ class _HomePageState extends State<HomePage> {
       NotificationResponse notificationResponse) async {
     var payload = notificationResponse.payload;
     if (payload != null) {
-      print("Notification is selected $payload");
+      log.info("Notification is selected $payload");
     }
   }
 
@@ -72,7 +75,8 @@ class _HomePageState extends State<HomePage> {
     var notificationDetail = NotificationDetails(
         android: androidNotificationDetail, iOS: iosNotificationDetail);
 
-    await flp.show(0, "Harpia Sağlık Analizi", "Çalışmalara Tam Gaz Devam Bulut Hocam.", notificationDetail,
+    await flp.show(0, "Harpia Sağlık Analizi",
+        "Çalışmalara Tam Gaz Devam Bulut Hocam.", notificationDetail,
         payload: "Payload Content");
   }
 
@@ -94,7 +98,7 @@ class _HomePageState extends State<HomePage> {
     await flp.zonedSchedule(
         0, "Delayed Title", "Delayed  Content", delayed, notificationDetail,
         uiLocalNotificationDateInterpretation:
-        UILocalNotificationDateInterpretation.absoluteTime,
+            UILocalNotificationDateInterpretation.absoluteTime,
         androidAllowWhileIdle: true,
         payload: "Delayed Payload Context");
   }

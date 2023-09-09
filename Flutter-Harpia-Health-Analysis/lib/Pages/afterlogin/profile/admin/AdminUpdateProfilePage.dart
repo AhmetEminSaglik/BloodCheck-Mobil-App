@@ -113,14 +113,14 @@ class _UpdateProfileButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
         child: CustomButton(
-          action: () {
-            _updateProfileProcess(context);
-          },
-          textColor: ProductColor.white,
-          text: "Update",
-          backgroundColor: ProductColor.pink,
-          fontSize: ResponsiveDesign.getScreenHeight() / 40,
-        )
+      action: () {
+        _updateProfileProcess(context);
+      },
+      textColor: ProductColor.white,
+      text: "Update",
+      backgroundColor: ProductColor.pink,
+      fontSize: ResponsiveDesign.getScreenHeight() / 40,
+    )
 
         /*ElevatedButton(
             onPressed: () {
@@ -168,11 +168,10 @@ class _UpdateProfileButton extends StatelessWidget {
           username: username.isNotEmpty ? username : defaultAdmin.username,
           password: password.isNotEmpty ? password : defaultAdmin.password,
         );
-        var request = HttpRequestAdmin();
-
         ResponseEntity? respEntity;
 
-        await request.update(admin).then((value) => respEntity = value);
+        await HttpRequestAdmin.update(admin)
+            .then((value) => respEntity = value);
 
         if (respEntity != null) {
           if (respEntity!.success) {

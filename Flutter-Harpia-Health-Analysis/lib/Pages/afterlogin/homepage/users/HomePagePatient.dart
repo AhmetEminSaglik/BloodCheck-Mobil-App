@@ -23,6 +23,7 @@ import '../../../../model/bloodresult/BloodResult.dart';
 import '../../../../model/bloodresult/CheckboxBloodResultSubItem.dart';
 import '../../../../model/enums/bloodresult/EnumBloodResultContent.dart';
 import '../../../../util/CustomAlertDialog.dart';
+import '../../../../util/CustomLog.dart';
 import '../../../../util/CustomSnackBar.dart';
 import '../../../../util/PermissionUtils.dart';
 import '../../../../util/ProductColor.dart';
@@ -47,6 +48,8 @@ class HomePagePatient extends StatefulWidget {
 }
 
 class _HomePagePatientState extends State<HomePagePatient> {
+  CustomLog log = CustomLog(className: "HomePagePatient");
+
   String QRCodeData = "";
   late BaseLineChart activatedBaseLineChart;
 
@@ -127,15 +130,10 @@ class _HomePagePatientState extends State<HomePagePatient> {
   void retrievePatientTimerData() async {
     patientTimer =
         await HttpRequestPatient.retrievePatientTimer(widget.patientId);
-    print("retrievePatientTimerData > patientTimer  : $patientTimer ");
+    log.info("retrievePatientTimerData() > patientTimer  : $patientTimer ");
   }
 
-  // static int counter = 0;
-
   void retrieveBloodResultData() async {
-    // counter++;
-    // print(
-    //     "counter : $counter; DATA RETRIEVED patient Id : ${widget.patientId}");
     dailyBloodResultList =
         await HttpRequestBloodResult.getDailyBloodResult(widget.patientId);
     weeklyBloodResultList =
@@ -188,19 +186,20 @@ class _HomePagePatientState extends State<HomePagePatient> {
                 physics: const AlwaysScrollableScrollPhysics(),
                 child: Column(
                   children: [
-                    QRCodeData.isNotEmpty ?
-                    Padding(
-                      padding: EdgeInsets.only(
-                          top: ResponsiveDesign.getScreenHeight() / 50,
-                          bottom: ResponsiveDesign.getScreenHeight() / 50,
-                          left: ResponsiveDesign.getScreenHeight() / 50,
-                          right: ResponsiveDesign.getScreenHeight() / 50),
-                      child: CustomText(
-                        text1: "Activated QR",
-                        text2: "$QRCodeData",
-                        fontSize: ResponsiveDesign.getScreenWidth() / 22,
-                      ),
-                    ) : Container(),
+                    QRCodeData.isNotEmpty
+                        ? Padding(
+                            padding: EdgeInsets.only(
+                                top: ResponsiveDesign.getScreenHeight() / 50,
+                                bottom: ResponsiveDesign.getScreenHeight() / 50,
+                                left: ResponsiveDesign.getScreenHeight() / 50,
+                                right: ResponsiveDesign.getScreenHeight() / 50),
+                            child: CustomText(
+                              text1: "Activated QR",
+                              text2: "$QRCodeData",
+                              fontSize: ResponsiveDesign.getScreenWidth() / 22,
+                            ),
+                          )
+                        : Container(),
                     // Text("counter $counter"),
                     Container(
                       height: ResponsiveDesign.getScreenHeight() / 7,

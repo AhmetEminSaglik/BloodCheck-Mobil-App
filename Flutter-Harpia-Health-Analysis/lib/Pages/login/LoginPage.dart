@@ -12,28 +12,30 @@ import 'package:flutter_harpia_health_analysis/model/user/User.dart';
 import 'package:flutter_harpia_health_analysis/util/CustomSnackBar.dart';
 import 'package:flutter_harpia_health_analysis/util/ProductColor.dart';
 import 'package:flutter_harpia_health_analysis/util/SharedPrefUtils.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../model/enums/user/EnumUserProp.dart';
+import '../../util/CustomLog.dart';
 import '../../util/CustomNotification.dart';
 import '../../util/FcmTokenUtils.dart';
+
+CustomLog log = CustomLog(className: "LoginPage");
 
 class LoginPage extends StatefulWidget {
   final String title;
 
-  const LoginPage({super.key, required this.title});
+  LoginPage({super.key, required this.title});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
+  CustomLog log = CustomLog(className: "LoginPage");
+
   late String token;
   var formKey = GlobalKey<FormState>();
 
-  Future<void> setUserDataSharedPref() async {
+/*  Future<void> setUserDataSharedPref() async {
     var sp = await SharedPreferences.getInstance();
-  }
+  }*/
 
   TextEditingController tfUsername = TextEditingController();
   TextEditingController tfPassword = TextEditingController();
@@ -42,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     super.initState();
     autoLogin();
-    print("Created TOKEN :  ${FcmTokenUtils.getToken()}");
+    log.info("Created TOKEN :  ${FcmTokenUtils.getToken()}");
     FcmTokenUtils.listenFcm(context);
     CustomNotificationUtil.initialize();
   }
@@ -253,7 +255,7 @@ class _LoginButton extends StatelessWidget {
         showInvalidUsernameOrPassword(
             context: context, msg: respEntity!.message);
       } else {
-        print("Gelen Data ${respEntity!.data}");
+        log.info("Gelen Data ${respEntity!.data}");
         User user = UserFactory.createUser(respEntity!.data);
         saveUserData(context, user);
         navigateToHomePage(context: context, roleId: user.roleId);
@@ -264,13 +266,10 @@ class _LoginButton extends StatelessWidget {
 
 Future<ResponseEntity?> login(
     {required String username, required String password}) async {
-  print("Come to login()");
   var request = HttpRequestUser();
   ResponseEntity? respEntity;
   await request.login(username, password).then((resp) async {
     Map<String, dynamic> jsonData = json.decode(resp.body);
-    print("respEntity : ${respEntity}");
-
     respEntity = ResponseEntity.fromJson(jsonData);
     return respEntity;
   });
@@ -283,7 +282,7 @@ void showInvalidUsernameOrPassword(
 }
 
 void saveUserData(BuildContext context, User user) async {
-  print("Login page -> saveUserData -> User : $user");
+  log.info("Login page -> saveUserData -> User : $user");
   await SharedPrefUtils.setLoginDataUser(user).then((value) {});
   updateCubits(context);
 }

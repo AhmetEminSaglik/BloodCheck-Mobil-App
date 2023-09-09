@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 
+import '../util/CustomLog.dart';
+
 class ResponsiveDesign {
+  static CustomLog log = CustomLog(className: "ResponsiveDesign");
+
   MediaQueryData mediaQueryData;
   static double _screenWidth = 0;
   static double _screenHeight = 0;
@@ -12,8 +16,7 @@ class ResponsiveDesign {
 
   static double getScreenWidth() {
     if (!_IsDataNull(_screenWidth)) {
-      if(_screenHeight>_screenWidth)
-      return _screenWidth;
+      if (_screenHeight > _screenWidth) return _screenWidth;
       return _screenHeight;
     }
     return -1;
@@ -21,24 +24,23 @@ class ResponsiveDesign {
 
   static double getScreenHeight() {
     if (!_IsDataNull(_screenHeight)) {
-      if(_screenHeight>_screenWidth)
-        return _screenHeight;
-        return _screenWidth;
+      if (_screenHeight > _screenWidth) return _screenHeight;
+      return _screenWidth;
     }
     return -1;
-
   }
 
-  static double getCertainWidth(){
+  static double getCertainWidth() {
     return _screenWidth;
   }
-  static double getCertainHeight(){
+
+  static double getCertainHeight() {
     return _screenHeight;
   }
 
   static bool _IsDataNull(double data) {
     if (data == 0) {
-      print("--> $data IS NULL");
+      log.info("$data IS NULL");
       return true;
     }
     return false;
