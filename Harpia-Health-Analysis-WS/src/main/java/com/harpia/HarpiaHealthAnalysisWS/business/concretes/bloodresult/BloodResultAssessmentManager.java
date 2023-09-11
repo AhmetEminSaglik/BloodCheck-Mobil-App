@@ -125,6 +125,7 @@ public class BloodResultAssessmentManager implements BloodResultAssessmentServic
             data.setShowNotification(true);
             notification.setTitle("DANGEROUS");
             notification.setBody("You should have a look urgently");
+            data.setPatientId(patientId);
             data.setMsgTitle(msgTitle.toString());
             data.setReasonCode(EnumFcmMessageReason.UPDATE_LINE_CHART.getCode());
             data.setReasonSend(EnumFcmMessageReason.UPDATE_LINE_CHART.getReason());

@@ -1,4 +1,3 @@
-/*
 package com.harpia.HarpiaHealthAnalysisWS.business.concretes;
 
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.bloodresult.BloodResultService;
@@ -132,8 +131,6 @@ public class InitialDataLoader implements CommandLineRunner {
         br2.setMagnesium(random.nextInt(150) + 50);
         br2.setPatientId(patient.getId());
         bloodResultList.add(br2);
-*/
-/*
         br3.setCreatedAt(LocalDateTime.now().minusDays(2));
         br3.setBloodPressure(random.nextInt(150) + 50);
         br3.setBloodSugar(random.nextInt(150) + 50);
@@ -141,7 +138,7 @@ public class InitialDataLoader implements CommandLineRunner {
         br3.setMagnesium(random.nextInt(150) + 50);
 
         br3.setPatientId(patient.getId());
-        bloodResultList.add(br3);*//*
+        bloodResultList.add(br3);
 
 
         Collections.reverse(bloodResultList);
@@ -398,4 +395,3 @@ public class InitialDataLoader implements CommandLineRunner {
     }
 
 }
-*/

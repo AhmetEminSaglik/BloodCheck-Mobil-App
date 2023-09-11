@@ -11,7 +11,7 @@ import 'package:logger/logger.dart';
 import '../business/factory/FcmMessageFactory.dart';
 
 class FcmTokenUtils {
-  static var logger = Logger();
+  static var log = Logger();
 
   // static CustomLog log = CustomLog(className: "FcmTokenUtils");
 
@@ -34,26 +34,15 @@ class FcmTokenUtils {
   static listenFcm(BuildContext context) {
     try {
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-        // log.info('--> LISTEN GELDI data ! $message');
-        // log.info('----> Message predata: ${message.data}');
-        logger.i("data geldi : ${message.data}");
-        // CustomNotification.showNotification(message.predata);
         FcmData fcmData = parseMapToFcmData(message.data);
-
-        if (_viewPatientIdPage != fcmData.patientId) {
+        if (_viewPatientIdPage == fcmData.patientId) {
           context.read<FcmNotificationCubit>().activateUpdatePatientLineChart();
         }
-
         processSendReason(fcmData.reasonCode);
-
         if (fcmData.showNotification) {
           CustomNotificationUtil.showNotification(
               fcmData.msgTitle, fcmData.msg);
         }
-        /*    if (message.notification != null) {
-          log.info(
-              'Message also contained a notification: ${message.notification}');
-        }*/
       });
     } catch (e) {
       // log.error(msgTitle: "FcmTokenUtils Exception", msg: "$e");

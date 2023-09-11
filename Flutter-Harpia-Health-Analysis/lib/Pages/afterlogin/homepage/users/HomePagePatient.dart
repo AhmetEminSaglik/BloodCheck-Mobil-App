@@ -168,6 +168,7 @@ class _HomePagePatientState extends State<HomePagePatient> {
   @override
   Widget build(BuildContext context) {
     context.read<FcmNotificationCubit>().activateFcmNotifyPermission();
+    log.i("Homepage Patient build ");
     return Scaffold(
       appBar: visibleAppBar ? AppBarUtil.getAppBar() : null,
       backgroundColor:
