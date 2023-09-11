@@ -70,7 +70,9 @@ public class InitialDataLoader implements CommandLineRunner {
         saveUserData(getAdminList());
 //         rest is the fake data
         saveUserData(getDoctorList());
-        saveUserData(getPatientList());
+//        saveUserData(getPatientList());
+        savePatient(getPatientList());
+
 //        saveBloodResult();
         savePatientTimer();
         if (!isSavedBloodResultsBefore()) {
@@ -93,7 +95,7 @@ public class InitialDataLoader implements CommandLineRunner {
 //            }
 
         }
-        new FakeSensors(bloodResultController, fcmTokenService, fcmService).runFakeSensors(timerController.findAllPatientTimers().getBody().getData(), bloodResultService);
+//        new FakeSensors(bloodResultController, fcmTokenService, fcmService).runFakeSensors(timerController.findAllPatientTimers().getBody().getData(), bloodResultService);
     }
 
 
@@ -305,6 +307,17 @@ public class InitialDataLoader implements CommandLineRunner {
             }
         }
     }
+    private void savePatient(List<Patient> list) {
+        for (int i = 0; i < list.size(); i++) {
+            String username = list.get(i).getUsername();
+            if (isUserRegistered(username)) {
+                log.info(username + " data is already registered.");
+            } else {
+                Patient patient = (Patient) patientController.savePatient(list.get(i)).getBody().getData();// userService.save(list.get(i));
+                log.info("Created Patient : "+patient);
+            }
+        }
+    }
 
     private List<UserRole> getStandartUserRoleList() {
         List<UserRole> list = new ArrayList<>();
@@ -363,8 +376,8 @@ public class InitialDataLoader implements CommandLineRunner {
         return list;
     }
 
-    private List<User> getPatientList() {
-        List<User> list = new ArrayList<>();
+    private List<Patient> getPatientList() {
+        List<Patient> list = new ArrayList<>();
         for (int i = 1; i <= 10; i++) {
             Patient user = new Patient();
             user.setName(getName(i));

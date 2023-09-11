@@ -5,10 +5,12 @@ import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.firebase.token.FcmTo
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.user.PatientService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.user.UserService;
 import com.harpia.HarpiaHealthAnalysisWS.business.concretes.signup.SignupUser;
+import com.harpia.HarpiaHealthAnalysisWS.controller.timer.PatientTimerController;
 import com.harpia.HarpiaHealthAnalysisWS.model.enums.EnumUserRole;
 import com.harpia.HarpiaHealthAnalysisWS.model.firebase.FcmData;
 import com.harpia.HarpiaHealthAnalysisWS.model.firebase.FcmMessage;
 import com.harpia.HarpiaHealthAnalysisWS.model.firebase.FcmNotification;
+import com.harpia.HarpiaHealthAnalysisWS.model.timer.PatientTimer;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.Doctor;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.Patient;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.User;
@@ -36,22 +38,25 @@ public class PatientController {
     FcmService fcmService;
     @Autowired
     FcmTokenService tokenService;
+    @Autowired
+    PatientTimerController timerController;
 
     @PostMapping()
-    public ResponseEntity<DataResult<User>> savePatient(@RequestBody Patient inputPatient) {
-        inputPatient.setRoleId(EnumUserRole.PATIENT.getId());
+    public ResponseEntity<DataResult<User>> savePatient(@RequestBody Patient patient) {
+        patient.setRoleId(EnumUserRole.PATIENT.getId());
         SignupUser signupUser = new SignupUser(userService);
-        DataResult<User> dataResult = signupUser.signup(inputPatient);
+        DataResult<User> dataResult = signupUser.signup(patient);
+        patient = (Patient) dataResult.getData();
 
-
+        saveDefaultPatientTimer(patient.getId());
         String token = "";
         try {
-            token = tokenService.findByUserId(inputPatient.getDoctorId()).getToken();
+            token = tokenService.findByUserId(patient.getDoctorId()).getToken();
             log.info("Token : " + token);
             if (token != null) {
                 FcmNotification fcmNotification = new FcmNotification();
                 String msgTitle = "New Patient Is Assigned";
-                String msgBody = inputPatient.getName() + " " + inputPatient.getLastname() + " is assigned to you";
+                String msgBody = patient.getName() + " " + patient.getLastname() + " is assigned to you";
                 fcmNotification.setBody(msgBody);
                 fcmNotification.setTitle(msgTitle);
 
@@ -117,5 +122,11 @@ public class PatientController {
         String msg = "Patient is updated";
         DataResult<Patient> result = new SuccessDataResult(patient, msg);
         return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
+
+    private void saveDefaultPatientTimer(long patientId) {
+        PatientTimer patientTimer = new PatientTimer();
+        patientTimer.setPatientId(patientId);
+        timerController.savePatientTimer(patientTimer);
     }
 }
