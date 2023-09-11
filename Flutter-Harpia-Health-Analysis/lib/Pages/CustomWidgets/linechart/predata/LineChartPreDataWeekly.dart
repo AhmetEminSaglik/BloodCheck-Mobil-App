@@ -9,11 +9,9 @@ class LineChartPreDataWeekly extends BaseLineChartPreData {
   @override
   void createBottomSideTitles() {
     int weeklyTotalIndexValue = rangeTotalIndexValue;
-    int day = now.day;
     int hour = now.hour;
     int minute = now.minute;
-    int passedDayCounter = (day % 7).toInt();
-    day %= 7;
+    int weekDay = now.weekday;
     int remainedTime = ((hour * 60 + minute) / 60).toInt();
     int weeklyTitleLength = EnumLineChartBottomSideWeeklyTitles.values.length;
     for (int i = 0; i < weeklyTitleLength; i++) {
@@ -21,7 +19,7 @@ class LineChartPreDataWeekly extends BaseLineChartPreData {
           index: weeklyTotalIndexValue - (remainedTime + ((i) * 24)),
           //24 : reset each 24 hours
           text: EnumLineChartBottomSideWeeklyTitles.getIndexName(
-              (passedDayCounter - i) % weeklyTitleLength)));
+              (weekDay - i) % weeklyTitleLength)));
     }
   }
 
