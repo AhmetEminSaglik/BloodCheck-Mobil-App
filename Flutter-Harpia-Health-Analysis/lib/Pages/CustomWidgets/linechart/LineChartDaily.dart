@@ -55,10 +55,18 @@ class LineChartDaily extends BaseLineChart {
               const AxisTitles(sideTitles: SideTitles(showTitles: false)),
         ),
         lineBarsData: [
-          getLineChartBarData(visible: isVisibleBloodSugar,lineChartBarData: getBloodSugarLineChartBarData()),
-          getLineChartBarData(visible:isVisibleBloodPressure,lineChartBarData: getBloodPressureLineChartBarData()),
-          getLineChartBarData(visible:isVisibleCalcium,lineChartBarData: getCalciumLineChartBarData()),
-          getLineChartBarData(visible:isVisibleMagnesium,lineChartBarData: getMagnesiumLineChartBarData()),
+          getLineChartBarData(
+              visible: isVisibleBloodSugar,
+              lineChartBarData: getBloodSugarLineChartBarData()),
+          getLineChartBarData(
+              visible: isVisibleBloodPressure,
+              lineChartBarData: getBloodPressureLineChartBarData()),
+          getLineChartBarData(
+              visible: isVisibleCalcium,
+              lineChartBarData: getCalciumLineChartBarData()),
+          getLineChartBarData(
+              visible: isVisibleMagnesium,
+              lineChartBarData: getMagnesiumLineChartBarData()),
         ]);
   }
 }

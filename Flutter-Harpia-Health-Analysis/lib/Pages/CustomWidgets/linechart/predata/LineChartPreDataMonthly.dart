@@ -28,7 +28,6 @@ class LineChartPreDataMonthly extends BaseLineChartPreData {
 
   @override
   String toString() {
-    // TODO: implement toString
     return "LineChartPreDataMonthly";
   }
 
