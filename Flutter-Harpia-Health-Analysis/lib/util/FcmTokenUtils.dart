@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_harpia_health_analysis/model/firebase/FcmData.dart';
 import 'package:flutter_harpia_health_analysis/model/firebase/FcmMessage.dart';
 import 'package:flutter_harpia_health_analysis/model/firebase/FcmNotificationCubit.dart';
+import 'package:flutter_harpia_health_analysis/model/firebase/enum/EnumFcmMessageReason.dart';
 import 'package:flutter_harpia_health_analysis/util/CustomNotification.dart';
 
 import '../business/factory/FcmMessageFactory.dart';
@@ -31,8 +32,8 @@ class FcmTokenUtils {
   static listenFcm(BuildContext context) {
     try {
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-        // log.info('--> LISTEN GELDI data ! ${message.data}');
-        // log.info('----> Message predata: ${message.data}');
+        log.info('--> LISTEN GELDI data ! $message');
+        log.info('----> Message predata: ${message.data}');
 
         // CustomNotification.showNotification(message.predata);
         FcmData fcmData = parseMapToFcmData(message.data);
@@ -40,6 +41,8 @@ class FcmTokenUtils {
         if (_viewPatientIdPage != fcmData.patientId) {
           context.read<FcmNotificationCubit>().activateUpdatePatientLineChart();
         }
+
+        processSendReason(fcmData.reasonCode);
 
         if (fcmData.showNotification) {
           CustomNotificationUtil.showNotification(
@@ -54,6 +57,22 @@ class FcmTokenUtils {
       // log.error(msgTitle: "FcmTokenUtils Exception", msg: "$e");
       log.error("Exception Occurred $e");
     }
+  }
+
+  static void processSendReason(int code) {
+    if (code ==
+        EnumFcmMessageReason.getCodeOfReason(
+            EnumFcmMessageReason.UPDATE_LINE_CHART.name)) {
+      log.todo(" CODE : $code --> Line Chart update islemi eklenecek --> Bu zaten yapildi sadece buraya eklenmeli");
+    }
+    if (code ==
+        EnumFcmMessageReason.getCodeOfReason(
+            EnumFcmMessageReason.UPDATE_SENSOR_TIMER.name)) {
+      log.todo(" CODE $code --> Sensor update islemi eklenecek -> Sadece Patient telefonu icin");
+    }
+    log.todo(" --> Sensor update islemi eklenecek -> Sadece Patient telefonu icin");
+    log.todo(" --> Line Chart update islemi eklenecek --> Bu zaten yapildi sadece buraya eklenmeli");
+
   }
 
   static FcmData parseMapToFcmData(Map<String, dynamic> map) {
@@ -88,7 +107,6 @@ class FcmTokenUtils {
       //     'Message also contained a notification: ${message.notification}');
       final title = message.notification?.title ?? "Title is Null";
       final body = message.notification?.body ?? "Body is Null";
-
       CustomNotificationUtil.showNotification(title, body);
     }
   }
