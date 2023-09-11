@@ -12,11 +12,11 @@ import 'package:flutter_harpia_health_analysis/model/user/User.dart';
 import 'package:flutter_harpia_health_analysis/util/CustomSnackBar.dart';
 import 'package:flutter_harpia_health_analysis/util/ProductColor.dart';
 import 'package:flutter_harpia_health_analysis/util/SharedPrefUtils.dart';
-import '../../util/CustomLog.dart';
+import 'package:logger/logger.dart';
 import '../../util/CustomNotification.dart';
 import '../../util/FcmTokenUtils.dart';
 
-CustomLog log = CustomLog(className: "LoginPage");
+var log = Logger(printer: PrettyPrinter(colors: false));
 
 class LoginPage extends StatefulWidget {
   final String title;
@@ -28,7 +28,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  CustomLog log = CustomLog(className: "LoginPage");
 
   late String token;
   var formKey = GlobalKey<FormState>();
@@ -44,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     super.initState();
     autoLogin();
-    log.info("Created TOKEN :  ${FcmTokenUtils.getToken()}");
+    log.i("Created TOKEN :  ${FcmTokenUtils.getToken()}");
     FcmTokenUtils.listenFcm(context);
     CustomNotificationUtil.initialize();
   }
@@ -255,7 +254,7 @@ class _LoginButton extends StatelessWidget {
         showInvalidUsernameOrPassword(
             context: context, msg: respEntity!.message);
       } else {
-        log.info("Gelen Data ${respEntity!.data}");
+        log.i("Gelen Data ${respEntity!.data}");
         User user = UserFactory.createUser(respEntity!.data);
         saveUserData(context, user);
         navigateToHomePage(context: context, roleId: user.roleId);
@@ -282,7 +281,7 @@ void showInvalidUsernameOrPassword(
 }
 
 void saveUserData(BuildContext context, User user) async {
-  log.info("Login page -> saveUserData -> User : $user");
+  log.i("Login page -> saveUserData -> User : $user");
   await SharedPrefUtils.setLoginDataUser(user).then((value) {});
   updateCubits(context);
 }

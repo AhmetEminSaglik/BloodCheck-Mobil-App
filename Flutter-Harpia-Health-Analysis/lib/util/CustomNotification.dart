@@ -1,10 +1,9 @@
 import 'package:flutter_harpia_health_analysis/util/ProductColor.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-
-import 'CustomLog.dart';
+import 'package:logger/logger.dart';
 
 class CustomNotificationUtil {
-  static CustomLog log = CustomLog(className: "CustomNotificationUtil");
+  static var log = Logger(printer: PrettyPrinter(colors: false));
 
   static var _flp = FlutterLocalNotificationsPlugin();
 
@@ -22,7 +21,7 @@ class CustomNotificationUtil {
       NotificationResponse notificationResponse) async {
     var payload = notificationResponse.payload;
     if (payload != null) {
-      log.info("Notification is selected $payload");
+      log.i("Notification is selected $payload");
     }
   }
 

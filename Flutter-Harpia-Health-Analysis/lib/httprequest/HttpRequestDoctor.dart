@@ -7,17 +7,18 @@ import 'package:flutter_harpia_health_analysis/model/user/Doctor.dart';
 import 'package:flutter_harpia_health_analysis/model/user/Patient.dart';
 import 'package:flutter_harpia_health_analysis/util/HttpUtil.dart';
 import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
 
 import '../util/CustomLog.dart';
 
 class HttpRequestDoctor {
   static const String _classUrl = "/doctors";
   static final String _baseUrl = BaseHttpRequestConfig.baseUrl + _classUrl;
-  static CustomLog log = CustomLog(className: "HttpRequestDoctor");
+  static var log = Logger(printer: PrettyPrinter(colors: false));
 
   static Future<List<Patient>> getPatientListOfDoctorId(int id) async {
     Uri url = Uri.parse("$_baseUrl/$id/patients");
-    log.info("URL : $url");
+    log.i("URL : $url");
     var resp = await http.get(url);
 
     Map<String, dynamic> jsonData = json.decode(resp.body);
@@ -28,7 +29,7 @@ class HttpRequestDoctor {
 
   static Future<List<Doctor>> getDoctorList() async {
     Uri url = Uri.parse(_baseUrl);
-    log.info("URL : $url");
+    log.i("URL : $url");
     var resp = await http.get(url);
     Map<String, dynamic> jsonData = json.decode(resp.body);
     var respEntity = ResponseEntity.fromJson(jsonData);
@@ -38,7 +39,7 @@ class HttpRequestDoctor {
 
   Future<http.Response> signUp(Doctor user) async {
     Uri url = Uri.parse("$_baseUrl");
-    log.info("URL : $url");
+    log.i("URL : $url");
     Map<String, dynamic> requestData = user.toJson();
     var resp = await http.post(url,
         headers: HttpUtil.header, body: jsonEncode(requestData));
@@ -48,7 +49,7 @@ class HttpRequestDoctor {
   static Future<http.Response> savePatientTimer(
       PatientTimer patientTimer) async {
     Uri url = Uri.parse("${BaseHttpRequestConfig.baseUrl}/timers");
-    log.info("URL : ${url}");
+    log.i("URL : ${url}");
     Map<String, dynamic> requestData = {
       "hours": patientTimer.hours,
       "minutes": patientTimer.minutes,
@@ -61,7 +62,7 @@ class HttpRequestDoctor {
 
   static Future<Doctor> findById(int id) async {
     Uri url = Uri.parse("$_baseUrl/$id");
-    log.info("URL : $url");
+    log.i("URL : $url");
 
     var resp = await http.get(url);
     Map<String, dynamic> jsonData = json.decode(resp.body);
@@ -71,7 +72,7 @@ class HttpRequestDoctor {
 
   Future<ResponseEntity> update(Doctor doctor) async {
     Uri url = Uri.parse("$_baseUrl");
-    log.info("URL : $url");
+    log.i("URL : $url");
     Map<String, dynamic> requestData = doctor.toJson();
     var resp = await http.put(url,
         headers: HttpUtil.header, body: jsonEncode(requestData));

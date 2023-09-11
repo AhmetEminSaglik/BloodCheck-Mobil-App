@@ -2,17 +2,16 @@ import 'dart:convert';
 import 'package:flutter_harpia_health_analysis/httprequest/BaseHttpRequest.dart';
 import 'package:flutter_harpia_health_analysis/util/HttpUtil.dart';
 import 'package:http/http.dart' as http;
-
-import '../util/CustomLog.dart';
+import 'package:logger/logger.dart';
 
 class HttpRequestUser {
   static const String _classUrl = "/users";
   static final String _baseUrl = BaseHttpRequestConfig.baseUrl + _classUrl;
-  static CustomLog log = CustomLog(className: "HttpRequestUser");
+  static var log = Logger(printer: PrettyPrinter(colors: false));
 
   Future<http.Response> login(String username, String password) async {
     Uri url = Uri.parse("$_baseUrl/login");
-    log.info("URL : $url");
+    log.i("URL : $url");
     Map<String, dynamic> requestData = {
       "username": username,
       "password": password,

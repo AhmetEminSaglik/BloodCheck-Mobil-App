@@ -1,21 +1,22 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_harpia_health_analysis/business/factory/BloodResultFactory.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/BaseHttpRequest.dart';
 import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
 import '../model/bloodresult/BloodResult.dart';
 import '../model/user/Patient.dart';
-import '../util/CustomLog.dart';
 import '../util/HttpUtil.dart';
 import 'ResponseEntity.dart';
 
 class HttpRequestBloodResult {
   static const String _classUrl = "/bloodresults";
   static final String _baseUrl = BaseHttpRequestConfig.baseUrl + _classUrl;
-  static CustomLog log = CustomLog(className: "HttpRequestBloodResult");
+  static var log = Logger(printer: PrettyPrinter(colors:false));
 
   static Future<List<BloodResult>> _sendBloodResultRequestToUrl(Uri url) async {
-    log.info("URL : $url");
+    log.i("URL : $url");
     var resp = await http.get(url);
     Map<String, dynamic> jsonData = json.decode(resp.body);
     var respEntity = ResponseEntity.fromJson(jsonData);
@@ -41,7 +42,7 @@ class HttpRequestBloodResult {
 
   Future<http.Response> signUp(Patient user) async {
     Uri url = Uri.parse(_baseUrl);
-    log.info("URL : $url");
+    log.i("URL : $url");
     Map<String, dynamic> requestData = user.toJson();
     var resp = await http.post(url,
         headers: HttpUtil.header, body: jsonEncode(requestData));

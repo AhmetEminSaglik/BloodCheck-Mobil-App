@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:logger/logger.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
@@ -36,7 +37,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  CustomLog log = CustomLog(className: "HomePage");
+  var log = Logger(printer: PrettyPrinter(colors: false));
   var flp = FlutterLocalNotificationsPlugin();
 
   Future<void> setup() async {
@@ -53,7 +54,7 @@ class _HomePageState extends State<HomePage> {
       NotificationResponse notificationResponse) async {
     var payload = notificationResponse.payload;
     if (payload != null) {
-      log.info("Notification is selected $payload");
+      log.i("Notification is selected $payload");
     }
   }
 

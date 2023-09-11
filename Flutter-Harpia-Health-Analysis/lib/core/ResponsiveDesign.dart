@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
-
-import '../util/CustomLog.dart';
+import 'package:flutter_harpia_health_analysis/business/QRCodeScanner.dart';
+import 'package:logger/logger.dart';
 
 class ResponsiveDesign {
-  static CustomLog log = CustomLog(className: "ResponsiveDesign");
+  static var log = Logger(printer: PrettyPrinter(colors: false));
 
   MediaQueryData mediaQueryData;
   static double _screenWidth = 0;
@@ -40,7 +40,7 @@ class ResponsiveDesign {
 
   static bool _IsDataNull(double data) {
     if (data == 0) {
-      log.info("$data IS NULL");
+      log.i("$data IS NULL");
       return true;
     }
     return false;

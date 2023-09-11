@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_harpia_health_analysis/core/ResponsiveDesign.dart';
 import 'package:flutter_harpia_health_analysis/model/specialitem/doctor/PatientTimer.dart';
 import 'package:flutter_harpia_health_analysis/util/ProductColor.dart';
-
-import '../../../util/CustomLog.dart';
+import 'package:logger/logger.dart';
 import '../../../util/CustomSnackBar.dart';
 import 'TimerHours.dart';
 import 'TimerMinute.dart';
@@ -23,7 +22,7 @@ class PatientTimerWidget extends StatefulWidget {
 }
 
 class _PatientTimerWidgetState extends State<PatientTimerWidget> {
-  static CustomLog log = CustomLog(className: "PatientTimerWidget");
+  static var log = Logger(printer: PrettyPrinter(colors: false));
 
   FixedExtentScrollController minuteCont =
       FixedExtentScrollController(initialItem: 5);
@@ -111,7 +110,7 @@ class _PatientTimerWidgetState extends State<PatientTimerWidget> {
       // minuteCont.jumpToItem(1);
       animateItemToRequestedIndex(
           showAnimatin: true, cont: minuteCont, index: 1);
-      log.info("minute zipladi, ${minuteCont.selectedItem}");
+      log.i("minute zipladi, ${minuteCont.selectedItem}");
       return true;
     }
     return false;

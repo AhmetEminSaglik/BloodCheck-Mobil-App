@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestPatient.dart';
 import 'package:flutter_harpia_health_analysis/model/userrole/EnumUserRole.dart';
 import 'package:flutter_harpia_health_analysis/util/CustomAlertDialog.dart';
+import 'package:logger/logger.dart';
 import '../../../Product/FormCustomInput.dart';
 import '../../../business/factory/UserFactory.dart';
 import '../../../core/ResponsiveDesign.dart';
@@ -11,13 +12,11 @@ import '../../../model/enums/diabetic/EnumDiabeticType.dart';
 import '../../../model/user/Doctor.dart';
 import '../../../model/user/Patient.dart';
 import '../../../model/user/User.dart';
-import '../../../util/CustomLog.dart';
 import '../../../util/ProductColor.dart';
 import 'dart:convert';
 
-CustomLog log = CustomLog(className: "PatientSignUpPage");
-
 class PatientSignUpPage extends StatefulWidget {
+  static var log = Logger(printer: PrettyPrinter(colors: false));
   const PatientSignUpPage({Key? key}) : super(key: key);
 
   @override
@@ -307,7 +306,7 @@ class _DiabeticTypeDropdownMenuButtonState
   }
 
   void validateItemWithAlertDialog({required int selectedItemIndex}) async {
-    log.info("SELECTED ITEM : ${widget.selectedDiabeticTypeValue}");
+    log.i("SELECTED ITEM : ${widget.selectedDiabeticTypeValue}");
     var result = await showDialog(
         context: context,
         builder: (builder) => CustomAlertDialog.getAlertDialogValidateProcess(
@@ -324,7 +323,7 @@ class _DiabeticTypeDropdownMenuButtonState
         widget.selectedDiabeticTypeValue = 0;
       });
     }
-    log.info("SELECTED NO ANSWER  ITEM : ${widget.selectedDiabeticTypeValue}");
+    log.i("SELECTED NO ANSWER  ITEM : ${widget.selectedDiabeticTypeValue}");
   }
 }
 
@@ -398,7 +397,7 @@ class _SignUpButton extends StatelessWidget {
       request.signUp(patient).then((resp) async {
         // debugPrint(resp.body);
         Map<String, dynamic> jsonData = json.decode(resp.body);
-        // log.info("res.body : ${resp.body}");
+        // log.i("res.body : ${resp.body}");
         var respEntity = ResponseEntity.fromJson(jsonData);
         if (!respEntity.success) {
           showAlertDialogInvalidUsername(

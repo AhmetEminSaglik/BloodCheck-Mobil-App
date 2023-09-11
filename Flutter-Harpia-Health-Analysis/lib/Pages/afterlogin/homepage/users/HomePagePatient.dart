@@ -16,6 +16,7 @@ import 'package:flutter_harpia_health_analysis/model/specialitem/doctor/PatientT
 import 'package:flutter_harpia_health_analysis/util/AppBarUtil.dart';
 import 'package:flutter_harpia_health_analysis/util/FcmTokenUtils.dart';
 import 'package:flutter_harpia_health_analysis/util/PatientTimerUtils.dart';
+import 'package:logger/logger.dart';
 import '../../../../business/QRCodeScanner.dart';
 import '../../../../httprequest/HttpRequestBloodResult.dart';
 import '../../../../httprequest/ResponseEntity.dart';
@@ -23,7 +24,6 @@ import '../../../../model/bloodresult/BloodResult.dart';
 import '../../../../model/bloodresult/CheckboxBloodResultSubItem.dart';
 import '../../../../model/enums/bloodresult/EnumBloodResultContent.dart';
 import '../../../../util/CustomAlertDialog.dart';
-import '../../../../util/CustomLog.dart';
 import '../../../../util/CustomSnackBar.dart';
 import '../../../../util/PermissionUtils.dart';
 import '../../../../util/ProductColor.dart';
@@ -48,7 +48,7 @@ class HomePagePatient extends StatefulWidget {
 }
 
 class _HomePagePatientState extends State<HomePagePatient> {
-  CustomLog log = CustomLog(className: "HomePagePatient");
+  static var log = Logger(printer: PrettyPrinter(colors: false));
 
   String QRCodeData = "";
   late BaseLineChart activatedBaseLineChart;
@@ -130,7 +130,8 @@ class _HomePagePatientState extends State<HomePagePatient> {
   void retrievePatientTimerData() async {
     patientTimer =
         await HttpRequestPatient.retrievePatientTimer(widget.patientId);
-    log.info("retrievePatientTimerData() > patientTimer  : $patientTimer ");
+    log.i("retrievePatientTimerData() > patientTimer  : $patientTimer ");
+    log.i("2222222222 : $patientTimer ");
   }
 
   void retrieveBloodResultData() async {

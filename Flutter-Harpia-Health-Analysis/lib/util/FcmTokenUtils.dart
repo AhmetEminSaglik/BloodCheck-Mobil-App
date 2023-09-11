@@ -6,12 +6,14 @@ import 'package:flutter_harpia_health_analysis/model/firebase/FcmMessage.dart';
 import 'package:flutter_harpia_health_analysis/model/firebase/FcmNotificationCubit.dart';
 import 'package:flutter_harpia_health_analysis/model/firebase/enum/EnumFcmMessageReason.dart';
 import 'package:flutter_harpia_health_analysis/util/CustomNotification.dart';
+import 'package:logger/logger.dart';
 
 import '../business/factory/FcmMessageFactory.dart';
-import 'CustomLog.dart';
 
 class FcmTokenUtils {
-  static CustomLog log = CustomLog(className: "FcmTokenUtils");
+  static var logger = Logger();
+
+  // static CustomLog log = CustomLog(className: "FcmTokenUtils");
 
   static late String _token;
 
@@ -32,9 +34,9 @@ class FcmTokenUtils {
   static listenFcm(BuildContext context) {
     try {
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-        log.info('--> LISTEN GELDI data ! $message');
-        log.info('----> Message predata: ${message.data}');
-
+        // log.info('--> LISTEN GELDI data ! $message');
+        // log.info('----> Message predata: ${message.data}');
+        logger.i("data geldi : ${message.data}");
         // CustomNotification.showNotification(message.predata);
         FcmData fcmData = parseMapToFcmData(message.data);
 
@@ -55,7 +57,7 @@ class FcmTokenUtils {
       });
     } catch (e) {
       // log.error(msgTitle: "FcmTokenUtils Exception", msg: "$e");
-      log.error("Exception Occurred $e");
+      // log.error("Exception Occurred $e");
     }
   }
 
@@ -63,16 +65,17 @@ class FcmTokenUtils {
     if (code ==
         EnumFcmMessageReason.getCodeOfReason(
             EnumFcmMessageReason.UPDATE_LINE_CHART.name)) {
-      log.todo(" CODE : $code --> Line Chart update islemi eklenecek --> Bu zaten yapildi sadece buraya eklenmeli");
+      // log.todo(" CODE : $code --> Line Chart update islemi eklenecek --> Bu zaten yapildi sadece buraya eklenmeli");
     }
     if (code ==
         EnumFcmMessageReason.getCodeOfReason(
             EnumFcmMessageReason.UPDATE_SENSOR_TIMER.name)) {
-      log.todo(" CODE $code --> Sensor update islemi eklenecek -> Sadece Patient telefonu icin");
+      // log.todo(" CODE $code --> Sensor update islemi eklenecek -> Sadece Patient telefonu icin");
     }
-    log.todo(" --> Sensor update islemi eklenecek -> Sadece Patient telefonu icin");
-    log.todo(" --> Line Chart update islemi eklenecek --> Bu zaten yapildi sadece buraya eklenmeli");
 
+    // log.todo(" --> Sensor update islemi eklenecek -> Sadece Patient telefonu icin");
+    // logger.t(" --> Sensor update islemi eklenecek -> Sadece Patient telefonu icin");
+    // logger.i(" --> Line Chart update islemi eklenecek --> Bu zaten yapildi sadece buraya eklenmeli");
   }
 
   static FcmData parseMapToFcmData(Map<String, dynamic> map) {

@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/listview/patient/ListviewBuilderPatient.dart';
-import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestDoctor.dart';
 import 'package:flutter_harpia_health_analysis/util/AppBarUtil.dart';
 import 'package:flutter_harpia_health_analysis/util/PermissionUtils.dart';
-import '../../../../model/user/Patient.dart';
-import '../../../../util/ProductColor.dart';
-import '../appbar/AppBarCubit.dart';
 
 class HomePageDoctor extends StatefulWidget {
   final int doctorId;

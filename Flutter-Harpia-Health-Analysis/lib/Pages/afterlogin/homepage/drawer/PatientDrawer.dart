@@ -4,8 +4,8 @@ import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/users/H
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/profile/doctor/DoctorProfile.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestPatient.dart';
+import 'package:logger/logger.dart';
 import '../../../../model/user/Patient.dart';
-import '../../../../util/CustomLog.dart';
 import '../../../../util/SafeLogoutDrawerItem.dart';
 import '../../../../util/SharedPrefUtils.dart';
 import '../../profile/patient/PatientProfile.dart';
@@ -19,7 +19,7 @@ class PatientDrawer extends StatefulWidget {
 }
 
 class _PatientDrawerState extends State<PatientDrawer> {
-  CustomLog log = CustomLog(className: "PatientDrawer");
+  static var log = Logger(printer: PrettyPrinter(colors: false));
 
   static String name = SharedPrefUtils.getName();
   static String lastname = SharedPrefUtils.getLastname();

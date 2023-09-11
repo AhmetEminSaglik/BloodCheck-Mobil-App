@@ -3,7 +3,7 @@ import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/drawer/
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/profile/doctor/DoctorProfile.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_harpia_health_analysis/util/SharedPrefUtils.dart';
-import '../../../../util/CustomLog.dart';
+import 'package:logger/logger.dart';
 import '../../../../util/SafeLogoutDrawerItem.dart';
 import '../appbar/AppBarCubit.dart';
 import '../users/HomePageDoctor.dart';
@@ -15,8 +15,7 @@ class DoctorDrawer extends StatefulWidget {
 
 class _DoctorDrawerState extends State<DoctorDrawer> {
   late int doctorId = SharedPrefUtils.getUserId();
-  CustomLog log = CustomLog(className: "DoctorDrawer");
-
+  static var log = Logger(printer: PrettyPrinter(colors: false));
 
   @override
   void initState() {

@@ -3,11 +3,10 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
-import '../util/CustomLog.dart';
-
-CustomLog log = CustomLog(className: "QRCodeScanner");
+var log = Logger(printer: PrettyPrinter(colors: false));
 
 class QRCodeScanner extends StatefulWidget {
   const QRCodeScanner({Key? key}) : super(key: key);
@@ -34,7 +33,7 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
   }
 */
   void goBackPage(BuildContext context, String readData) {
-    log.info("Read QR Data : $readData");
+    log.i("Read QR Data : $readData");
     Navigator.pop(context, readData);
   }
 
@@ -147,7 +146,8 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
           borderLength: 30,
           borderWidth: 10,
           cutOutSize: scanArea),
-      onPermissionSet: (ctrl, permission) => _onPermissionSet(context, ctrl, permission),
+      onPermissionSet: (ctrl, permission) =>
+          _onPermissionSet(context, ctrl, permission),
     );
   }
 
@@ -170,7 +170,7 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
 
   void _onPermissionSet(
       BuildContext context, QRViewController ctrl, bool permission) {
-    log.info('${DateTime.now().toIso8601String()}_onPermissionSet $permission');
+    log.i('${DateTime.now().toIso8601String()}_onPermissionSet $permission');
     if (!permission) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('no Permission')),
