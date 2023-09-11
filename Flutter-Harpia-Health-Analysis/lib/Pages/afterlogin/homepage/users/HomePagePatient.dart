@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/linechart/LineChartDaily.dart';
@@ -17,6 +18,7 @@ import 'package:flutter_harpia_health_analysis/util/AppBarUtil.dart';
 import 'package:flutter_harpia_health_analysis/util/FcmTokenUtils.dart';
 import 'package:flutter_harpia_health_analysis/util/PatientTimerUtils.dart';
 import 'package:logger/logger.dart';
+
 import '../../../../business/QRCodeScanner.dart';
 import '../../../../httprequest/HttpRequestBloodResult.dart';
 import '../../../../httprequest/ResponseEntity.dart';
@@ -162,12 +164,12 @@ class _HomePagePatientState extends State<HomePagePatient> {
   void deactivate() {
     // TODO: implement deactivate
     super.deactivate();
-    context.read<FcmNotificationCubit>().deactivateFcmNotifyPermission();
+    context.read<FcmNotificationCubit>().disableUpdatingPatientPage();
   }
 
   @override
   Widget build(BuildContext context) {
-    context.read<FcmNotificationCubit>().activateFcmNotifyPermission();
+    context.read<FcmNotificationCubit>().enableUpdatingPatientPage();
     log.i("Homepage Patient build ");
     return Scaffold(
       appBar: visibleAppBar ? AppBarUtil.getAppBar() : null,
@@ -179,7 +181,7 @@ class _HomePagePatientState extends State<HomePagePatient> {
               builder: (builder, refreshLineChart) {
               context
                   .read<FcmNotificationCubit>()
-                  .deactivateUpdatePatientLineChart();
+                  .disableUpdatePatientLineChart();
               if (refreshLineChart) {
                 retrieveBloodResultData();
                 refreshLineChart = false;
@@ -213,7 +215,22 @@ class _HomePagePatientState extends State<HomePagePatient> {
                           child: Column(
                             children: [
                               // getActivatedQRText(QRCodeData),
-                              SensorTimerText(patientTimer: patientTimer),
+                              BlocBuilder<FcmNotificationCubit, bool>(
+                                builder: (builder, refreshSensorTimer) {
+                                  context
+                                      .read<FcmNotificationCubit>()
+                                      .disableUpdateSensorTimer();
+                                  if (refreshSensorTimer) {
+                                    retrievePatientTimerData();
+                                    refreshSensorTimer = false;
+                                    log.i("Sensor Timer Updatelendi");
+                                  }
+                                  // setState(() {});
+                                  return SensorTimerText(
+                                      patientTimer: patientTimer);
+                                },
+                              ),
+
                               SensorNextMeasurementText(
                                   dailyBloodResultList: dailyBloodResultList,
                                   patientTimer: patientTimer),

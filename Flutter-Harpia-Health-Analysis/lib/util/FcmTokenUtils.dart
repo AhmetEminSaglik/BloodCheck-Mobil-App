@@ -50,19 +50,29 @@ class FcmTokenUtils {
 
   static void processSendReason(BuildContext context, FcmData fcmData) {
     int code = fcmData.reasonCode;
-    if (code == EnumFcmMessageReason.getCodeOfReason(EnumFcmMessageReason.UPDATE_LINE_CHART.name)) {
+    if (code ==
+        EnumFcmMessageReason.getCodeOfReason(
+            EnumFcmMessageReason.UPDATE_LINE_CHART.name)) {
       updateLineChartInPatientPage(context, fcmData.patientId);
-      log.i(
-          "[TODO] : $code --> Line Chart update islemi eklenecek --> Bu zaten yapildi sadece buraya eklenmeli");
     }
-    if (code == EnumFcmMessageReason.getCodeOfReason(EnumFcmMessageReason.UPDATE_SENSOR_TIMER.name)) {
+    if (code ==
+        EnumFcmMessageReason.getCodeOfReason(
+            EnumFcmMessageReason.UPDATE_SENSOR_TIMER.name)) {
+      updateSensorTimerInPatientPage(context, fcmData.patientId);
     }
   }
 
   static void updateLineChartInPatientPage(
       BuildContext context, int patientId) {
     if (_viewPatientIdPage == patientId) {
-      context.read<FcmNotificationCubit>().activateUpdatePatientLineChart();
+      context.read<FcmNotificationCubit>().enableUpdatingPatientLineChart();
+    }
+  }
+
+  static void updateSensorTimerInPatientPage(
+      BuildContext context, int patientId) {
+    if (_viewPatientIdPage == patientId) {
+      context.read<FcmNotificationCubit>().enableUpdateSensorTimer();
     }
   }
 
