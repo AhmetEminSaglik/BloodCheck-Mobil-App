@@ -17,6 +17,7 @@ public class FcmNotificationManager implements FcmNotificationService {
     @Override
     public ResponseEntity<String> sendNotification(FcmMessage message/*@RequestBody FcmMessage fcmMessage*/) {
 
+        log.info(" GONDERILECEK FCM MSG : "+message);
         RestTemplate restTemplate = new RestTemplate();
 
         HttpHeaders headers = new HttpHeaders();

@@ -1,10 +1,9 @@
 package com.harpia.HarpiaHealthAnalysisWS.controller.timer;
 
-import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.firebase.notification.FcmNotificationService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.firebase.notification.FcmService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.firebase.token.FcmTokenService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.timer.PatientTimerService;
-import com.harpia.HarpiaHealthAnalysisWS.business.concretes.firebase.notification.FcmManager;
+import com.harpia.HarpiaHealthAnalysisWS.controller.firebase.FcmTokenController;
 import com.harpia.HarpiaHealthAnalysisWS.model.firebase.FcmData;
 import com.harpia.HarpiaHealthAnalysisWS.model.firebase.FcmMessage;
 import com.harpia.HarpiaHealthAnalysisWS.model.firebase.FcmNotification;
@@ -18,17 +17,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/timers")
-@CrossOrigin
 public class PatientTimerController {
     private static CustomLog log = new CustomLog(PatientTimerController.class);
 
     @Autowired
     PatientTimerService service;
+    //    @Autowired
+//    FcmTokenService fcmTokenService;
     @Autowired
-    FcmTokenService fcmTokenService;
+    FcmTokenController fcmTokenController;
     @Autowired
     FcmService fcmService;
 
@@ -44,6 +45,8 @@ public class PatientTimerController {
             newPatientTimer.setMinutes(patientTimer.getMinutes());
             newPatientTimer = service.save(newPatientTimer);
             msg = "Patient Timer is updated";
+//            log.info("PATIENT TIMER UPDATE FCMMSG GONDERILECEK");
+//            log.info("FcmTokenController :"+fcmTokenController);
             sendFcmMessage(patientTimer.getPatientId());
         }
         DataResult result = new SuccessDataResult(newPatientTimer, msg);
@@ -69,12 +72,18 @@ public class PatientTimerController {
     private void sendFcmMessage(long patientId) {
         String msgTitle = "Updated Notification";
         String msgBody = "Patient Timer is Updated";
-
+        log.info("patient Timer > sendFcmMessage ");
         FcmNotification notification = createNotification(msgTitle, msgBody);
         FcmData data = createData(msgTitle, msgBody, patientId, true);
         FcmMessage fcmMessage = createFcmMessage(patientId, notification, data);
-
         fcmService.sendNotification(fcmMessage);
+  /*      try {
+            FcmMessage fcmMessage = createFcmMessage(patientId, notification, data);
+        fcmService.sendNotification(fcmMessage);
+        }catch ( Exception e){
+            log.error("Exception Occured : "+e.getMessage());
+        }*/
+
     }
 
     private FcmNotification createNotification(String msgTitle, String msgBody) {
@@ -94,8 +103,15 @@ public class PatientTimerController {
     }
 
     private FcmMessage createFcmMessage(long patientId, FcmNotification notification, FcmData data) {
+        log.info("patient Timer > sendFcmMessage  > createFcmMessage Patient Id : " + patientId);
         FcmMessage fcmMessage = new FcmMessage();
-        fcmMessage.setTo(fcmTokenService.findByUserId(patientId).getToken());
+
+//        fcmTokenController.
+//        log.info(" TOKEN : Alicak " + fcmTokenService.findByUserId(patientId).getToken());
+//        log.info(" fcmTokenService  " + fcmTokenService);
+//        String token = fcmTokenService.findByUserId(patientId).getToken();
+        String token = Objects.requireNonNull(fcmTokenController.findTokenByPatientId(patientId).getBody()).getData().getToken();
+        fcmMessage.setTo(token);
         fcmMessage.setNotification(notification);
         fcmMessage.setData(data);
         return fcmMessage;

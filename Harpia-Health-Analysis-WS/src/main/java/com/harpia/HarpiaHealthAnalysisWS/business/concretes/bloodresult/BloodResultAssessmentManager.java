@@ -8,6 +8,7 @@ import com.harpia.HarpiaHealthAnalysisWS.model.bloodresult.BloodResult;
 import com.harpia.HarpiaHealthAnalysisWS.model.bloodresult.BloodResultAssessmentValue;
 import com.harpia.HarpiaHealthAnalysisWS.model.bloodresult.ItemRangeValue;
 import com.harpia.HarpiaHealthAnalysisWS.model.enums.EnumBloodResultContent;
+import com.harpia.HarpiaHealthAnalysisWS.model.enums.EnumFcmMessageReason;
 import com.harpia.HarpiaHealthAnalysisWS.model.firebase.FcmData;
 import com.harpia.HarpiaHealthAnalysisWS.model.firebase.FcmMessage;
 import com.harpia.HarpiaHealthAnalysisWS.model.firebase.FcmNotification;
@@ -125,6 +126,8 @@ public class BloodResultAssessmentManager implements BloodResultAssessmentServic
             notification.setTitle("DANGEROUS");
             notification.setBody("You should have a look urgently");
             data.setMsgTitle(msgTitle.toString());
+            data.setReasonCode(EnumFcmMessageReason.UPDATE_LINE_CHART.getCode());
+            data.setReasonSend(EnumFcmMessageReason.UPDATE_LINE_CHART.getReason());
             data.setMsg(msgBody.toString());
         } else {
             data.setShowNotification(false);

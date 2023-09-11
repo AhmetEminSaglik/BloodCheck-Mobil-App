@@ -4,6 +4,8 @@ public class FcmData {
     String url = "";
     String msgTitle = "";
     String msg = "";
+    String reasonSend = "";
+    int reasonCode;
     boolean showNotification = false;
     long patientId;
 
@@ -47,12 +49,30 @@ public class FcmData {
         this.patientId = patientId;
     }
 
+    public String getReasonSend() {
+        return reasonSend;
+    }
+
+    public void setReasonSend(String reasonSend) {
+        this.reasonSend = reasonSend;
+    }
+
+    public int getReasonCode() {
+        return reasonCode;
+    }
+
+    public void setReasonCode(int reasonCode) {
+        this.reasonCode = reasonCode;
+    }
+
     @Override
     public String toString() {
         return "FcmData{" +
                 "url='" + url + '\'' +
                 ", msgTitle='" + msgTitle + '\'' +
                 ", msg='" + msg + '\'' +
+                ", reasonSend='" + reasonSend + '\'' +
+                ", reasonCode=" + reasonCode +
                 ", showNotification=" + showNotification +
                 ", patientId=" + patientId +
                 '}';
