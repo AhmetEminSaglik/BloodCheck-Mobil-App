@@ -16,6 +16,7 @@ import 'package:flutter_harpia_health_analysis/model/specialitem/doctor/PatientT
 import 'package:flutter_harpia_health_analysis/model/specialitem/doctor/PatientTimerWidget.dart';
 import 'package:flutter_harpia_health_analysis/util/AppBarUtil.dart';
 import 'package:flutter_harpia_health_analysis/util/FcmTokenUtils.dart';
+import 'package:flutter_harpia_health_analysis/util/IndexColorUtil.dart';
 import 'package:flutter_harpia_health_analysis/util/PatientTimerUtils.dart';
 import 'package:logger/logger.dart';
 
@@ -51,6 +52,8 @@ class HomePagePatient extends StatefulWidget {
 
 class _HomePagePatientState extends State<HomePagePatient> {
   static var log = Logger(printer: PrettyPrinter(colors: false));
+  Color btnTextColor = ProductColor.black;
+  Color btnBackgroundColor = ProductColor.bodyBackground;
 
   String QRCodeData = "";
   late BaseLineChart activatedBaseLineChart;
@@ -323,21 +326,22 @@ class _HomePagePatientState extends State<HomePagePatient> {
                             )),
                       ],
                     ),
-                    _getPatientTimerButton(),
+
                     Column(
                       children: [
-                        _PatientHomePageCustomButton(
+                        _getPatientTimerButton(),
+                        _CustomButton(
                           action: scanQRCode,
                           text: 'Scan QR Code',
                           color: ProductColor.white,
                           backgroundColor: ProductColor.bodyBackground,
                         ),
                         isDataFound
-                            ? _PatientHomePageCustomButton(
+                            ? _CustomButton(
                                 action: goToDetailedPage,
                                 text: 'Detail LineChart',
                                 color: ProductColor.white,
-                                backgroundColor: ProductColor.redAccent,
+                                backgroundColor: ProductColor.pink,
                               )
                             : Container(),
                         Padding(
@@ -426,11 +430,12 @@ class _HomePagePatientState extends State<HomePagePatient> {
 
   Widget _getPatientTimerButton() {
     if (visiblePatientTimer) {
-      return ElevatedButton(
-          onPressed: () {
-            showAlertDialogSetUpPatientTimer();
-          },
-          child: Text("Set Patient Timer"));
+      return _CustomButton(
+          action: showAlertDialogSetUpPatientTimer,
+          text: "Set Patient Timer",
+          color: ProductColor.white,
+          backgroundColor: ProductColor.black
+      );
     } else {
       return SizedBox.shrink();
     }
@@ -472,8 +477,50 @@ class _HomePagePatientState extends State<HomePagePatient> {
     }
   }
 }
+int customBtnCounter=0;
+class _CustomButton extends StatelessWidget {
 
-class _PatientHomePageCustomButton extends StatelessWidget {
+  late final Function() action;
+  late final String text;
+  late final Color color;
+  late final Color backgroundColor;
+
+  _CustomButton(
+      {required this.action,
+      required this.text,
+      /* required this.*/ color,
+      /*required this.*/ backgroundColor}) {
+    if (color == null || backgroundColor == null) {
+      this.color = ButtonItemColor.getTextColor(index: customBtnCounter);
+      this.backgroundColor = ButtonItemColor.getBackgroundColor(index: customBtnCounter);
+      customBtnCounter++;
+    }else{
+      this.color=color;
+      this.backgroundColor=backgroundColor;
+
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: ResponsiveDesign.getScreenWidth() -
+          ResponsiveDesign.getScreenWidth() / 3,
+      child: ElevatedButton(
+          style: ElevatedButton.styleFrom(backgroundColor: backgroundColor),
+          onPressed: action,
+          child: Text(
+            text,
+            style: TextStyle(
+                fontSize: ResponsiveDesign.getScreenHeight() / 40,
+                color: color,
+                fontWeight: FontWeight.bold),
+          )),
+    );
+  }
+}
+
+/*class _PatientHomePageCustomButton extends StatelessWidget {
   late final Function() action;
   late final String text;
   late final Color color;
@@ -502,7 +549,7 @@ class _PatientHomePageCustomButton extends StatelessWidget {
           )),
     );
   }
-}
+}*/
 
 class SensorNextMeasurementText extends StatelessWidget {
   const SensorNextMeasurementText({

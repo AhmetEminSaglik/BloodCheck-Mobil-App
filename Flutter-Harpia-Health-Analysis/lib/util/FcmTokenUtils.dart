@@ -33,6 +33,7 @@ class FcmTokenUtils {
 
   static listenFcm(BuildContext context) {
     try {
+      log.e("NOTIFICAITON ALINDI");
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
         FcmData fcmData = parseMapToFcmData(message.data);
 
