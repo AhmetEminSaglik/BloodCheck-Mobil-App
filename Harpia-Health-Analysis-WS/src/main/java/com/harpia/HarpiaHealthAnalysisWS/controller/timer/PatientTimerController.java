@@ -4,6 +4,7 @@ import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.firebase.notificatio
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.firebase.token.FcmTokenService;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.timer.PatientTimerService;
 import com.harpia.HarpiaHealthAnalysisWS.controller.firebase.FcmTokenController;
+import com.harpia.HarpiaHealthAnalysisWS.model.enums.EnumFcmMessageReason;
 import com.harpia.HarpiaHealthAnalysisWS.model.firebase.FcmData;
 import com.harpia.HarpiaHealthAnalysisWS.model.firebase.FcmMessage;
 import com.harpia.HarpiaHealthAnalysisWS.model.firebase.FcmNotification;
@@ -74,7 +75,7 @@ public class PatientTimerController {
         String msgBody = "Patient Timer is Updated";
         log.info("patient Timer > sendFcmMessage ");
         FcmNotification notification = createNotification(msgTitle, msgBody);
-        FcmData data = createData(msgTitle, msgBody, patientId, true);
+        FcmData data = createData(msgTitle, msgBody, patientId, false);
         FcmMessage fcmMessage = createFcmMessage(patientId, notification, data);
         fcmService.sendNotification(fcmMessage);
   /*      try {
@@ -97,6 +98,8 @@ public class PatientTimerController {
         FcmData data = new FcmData();
         data.setPatientId(patientId);
         data.setShowNotification(showNotification);
+        data.setReasonSend(EnumFcmMessageReason.UPDATE_SENSOR_TIMER.getReason());
+        data.setReasonCode(EnumFcmMessageReason.UPDATE_SENSOR_TIMER.getCode());
         data.setMsgTitle(msgTitle);
         data.setMsg(msgBody);
         return data;
