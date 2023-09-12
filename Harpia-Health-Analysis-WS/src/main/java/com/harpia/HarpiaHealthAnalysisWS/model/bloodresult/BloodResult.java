@@ -2,16 +2,14 @@ package com.harpia.HarpiaHealthAnalysisWS.model.bloodresult;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "blood_result")
+@Table(name = "blood_results")
 public class BloodResult {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,23 +26,10 @@ public class BloodResult {
     @Column(name = "magnesium")
     private int magnesium;
     @Column(name = "created_at", columnDefinition = "TIMESTAMP")
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime createdAt;
 
     public BloodResult(int counter) {
         createdAt = LocalDateTime.now().minusMinutes(counter);
-    }
-
-    @Override
-    public String toString() {
-        return "BloodResult{" +
-                "id=" + id +
-                ", patientId=" + patientId +
-                ", bloodSugar=" + bloodSugar +
-                ", bloodPressure=" + bloodPressure +
-                ", calcium=" + calcium +
-                ", magnesium=" + magnesium +
-                ", createdAt=" + createdAt +
-                '}';
     }
 
     public Long getId() {
@@ -101,5 +86,18 @@ public class BloodResult {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    @Override
+    public String toString() {
+        return "BloodResult{" +
+                "id=" + id +
+                ", patientId=" + patientId +
+                ", bloodSugar=" + bloodSugar +
+                ", bloodPressure=" + bloodPressure +
+                ", calcium=" + calcium +
+                ", magnesium=" + magnesium +
+                ", createdAt=" + createdAt +
+                '}';
     }
 }
