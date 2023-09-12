@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/appbar/AppBarCubit.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/drawer/DrawerCubit.dart';
+import 'package:flutter_harpia_health_analysis/Product/CustomButton.dart';
 import 'package:flutter_harpia_health_analysis/business/factory/UserFactory.dart';
 import 'package:flutter_harpia_health_analysis/core/ResponsiveDesign.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestUser.dart';
@@ -28,7 +29,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
   late String token;
   var formKey = GlobalKey<FormState>();
 
@@ -225,20 +225,17 @@ class _LoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        width: ResponsiveDesign.getScreenWidth() / 1.5,
-        height: ResponsiveDesign.getScreenHeight() / 15,
-        child: ElevatedButton(
-            onPressed: () {
-              loginManuelProcess(context);
-            },
-            style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateColor.resolveWith((states) => Colors.pink),
-                foregroundColor:
-                    MaterialStateColor.resolveWith((states) => Colors.white)),
-            child: Text("login",
-                style: TextStyle(
-                    fontSize: ResponsiveDesign.getScreenWidth() / 20))));
+      width: ResponsiveDesign.getScreenWidth() / 1.5,
+      height: ResponsiveDesign.getScreenHeight() / 15,
+      child: CustomButton(
+        action: () {
+          loginManuelProcess(context);
+        },
+        textColor: ProductColor.white,
+        backgroundColor: ProductColor.pink,
+        text: "Login",
+      ),
+    );
   }
 
   void loginManuelProcess(BuildContext context) async {
@@ -292,7 +289,8 @@ void updateCubits(BuildContext context) {
 }
 
 void navigateToHomePage({required BuildContext context, required int roleId}) {
-  Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage()));
+  Navigator.push(
+      context, MaterialPageRoute(builder: (context) => const HomePage()));
 }
 
 class _TextFieldInputLength {

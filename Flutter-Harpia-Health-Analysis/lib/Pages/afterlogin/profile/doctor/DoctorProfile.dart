@@ -63,22 +63,14 @@ class _DoctorProfileState extends State<DoctorProfile> {
                   renderPage(),
                   PermissionUtils.letRunForDoctor()
                       ? Text(
-                    "My Profile",
-                    style: TextStyle(
-                      fontSize: ResponsiveDesign.getScreenHeight() / 30,
-                      color: ProductColor.black,
-                    ),
-                  )
+                          "My Profile",
+                          style: TextStyle(
+                            fontSize: ResponsiveDesign.getScreenHeight() / 30,
+                            color: ProductColor.black,
+                          ),
+                        )
                       : Container(),
-                  PermissionUtils.letRunForPatient()
-                      ? Text(
-                    "My Doctor Profile",
-                    style: TextStyle(
-                      fontSize: ResponsiveDesign.getScreenHeight() / 30,
-                      color: ProductColor.black,
-                    ),
-                  )
-                      : Container(),
+                  _getProfileTitleForDoctor(),
                   SizedBox(height: spaceHeight),
                   PermissionUtils.letRunForDoctor()
                       ? CustomTextWithSizeBox(
@@ -108,18 +100,36 @@ class _DoctorProfileState extends State<DoctorProfile> {
                       space: spaceHeight,
                       text1: "Graduate",
                       text2: doctor.graduate),
-                  PermissionUtils.letRunForDoctor()
-                      ? CustomButton(
-                          action: () {
-                            updateProfile();
-                          },
-                          text: "Update Profile",
-                        )
-                      : Container(),
+                  _getUpdateProfileButtonForDoctor(),
                 ],
               ),
             ),
     );
+  }
+
+  Widget _getProfileTitleForDoctor() {
+    if (PermissionUtils.letRunForPatient()) {
+      return Text(
+        "My Doctor Profile",
+        style: TextStyle(
+          fontSize: ResponsiveDesign.getScreenHeight() / 30,
+          color: ProductColor.black,
+        ),
+      );
+    }
+    return Container();
+  }
+
+  Widget _getUpdateProfileButtonForDoctor() {
+    if (PermissionUtils.letRunForDoctor()) {
+      return CustomButton(
+        action: () {
+          updateProfile();
+        },
+        text: "Update Profile",
+      );
+    }
+    return Container();
   }
 
   retrieveData() async {

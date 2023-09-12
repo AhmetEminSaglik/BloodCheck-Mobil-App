@@ -63,6 +63,7 @@ class _HomePagePatientState extends State<HomePagePatient> {
   bool visibleAppBar =
       PermissionUtils.letRunForAdmin() || PermissionUtils.letRunForDoctor();
   bool visiblePatientTimer = PermissionUtils.letRunForDoctor();
+  bool visibleQrScanner = PermissionUtils.letRunForPatient();
   bool isLoading = true;
   List<BloodResult> dailyBloodResultList = [];
   List<BloodResult> weeklyBloodResultList = [];
@@ -335,29 +336,9 @@ class _HomePagePatientState extends State<HomePagePatient> {
                     Column(
                       children: [
                         _getPatientTimerButton(),
-                        _CustomButton(
-                          action: scanQRCode,
-                          text: 'Scan QR Code',
-                          color: ProductColor.white,
-                          backgroundColor: ProductColor.bodyBackground,
-                        ),
-                        isDataFound
-                            ? _CustomButton(
-                                action: goToDetailedPage,
-                                text: 'Detail LineChart',
-                                color: ProductColor.white,
-                                backgroundColor: ProductColor.pink,
-                              )
-                            : Container(),
-                        Padding(
-                          padding: EdgeInsets.only(
-                            left: ResponsiveDesign.getScreenWidth() / 50,
-                            right: ResponsiveDesign.getScreenWidth() / 10,
-                          ),
-                          child: SizedBox(
-                              height: ResponsiveDesign.getScreenHeight() / 2.55,
-                              child: activatedBaseLineChart),
-                        ),
+                        _getQRScannerButton(),
+                        _getDetailedLineChartButton(),
+                        _getLineChart(),
                       ],
                     ),
                   ],
@@ -446,6 +427,42 @@ class _HomePagePatientState extends State<HomePagePatient> {
     }
   }
 
+  Widget _getQRScannerButton() {
+    if (visibleQrScanner) {
+      return _CustomButton(
+        action: scanQRCode,
+        text: 'Scan QR Code',
+        color: ProductColor.white,
+        backgroundColor: ProductColor.bodyBackground,
+      );
+    }
+    return Container();
+  }
+
+  Widget _getDetailedLineChartButton() {
+    if (isDataFound) {
+      return _CustomButton(
+        action: goToDetailedPage,
+        text: 'Detail LineChart',
+        color: ProductColor.white,
+        backgroundColor: ProductColor.pink,
+      );
+    }
+    return Container();
+  }
+
+  Widget _getLineChart() {
+    return Padding(
+      padding: EdgeInsets.only(
+        left: ResponsiveDesign.getScreenWidth() / 50,
+        right: ResponsiveDesign.getScreenWidth() / 10,
+      ),
+      child: SizedBox(
+          height: ResponsiveDesign.getScreenHeight() / 2.55,
+          child: activatedBaseLineChart),
+    );
+  }
+
   void showAlertDialogSetUpPatientTimer() async {
     var resp = await showDialog(
         context: context,
@@ -525,37 +542,6 @@ class _CustomButton extends StatelessWidget {
     );
   }
 }
-
-/*class _PatientHomePageCustomButton extends StatelessWidget {
-  late final Function() action;
-  late final String text;
-  late final Color color;
-  late final Color backgroundColor;
-
-  _PatientHomePageCustomButton(
-      {required this.action,
-      required this.text,
-      required this.color,
-      required this.backgroundColor});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: ResponsiveDesign.getScreenWidth() -
-          ResponsiveDesign.getScreenWidth() / 3,
-      child: ElevatedButton(
-          style: ElevatedButton.styleFrom(backgroundColor: backgroundColor),
-          onPressed: action,
-          child: Text(
-            text,
-            style: TextStyle(
-                fontSize: ResponsiveDesign.getScreenHeight() / 37,
-                color: color,
-                fontWeight: FontWeight.bold),
-          )),
-    );
-  }
-}*/
 
 class SensorNextMeasurementText extends StatelessWidget {
   const SensorNextMeasurementText({

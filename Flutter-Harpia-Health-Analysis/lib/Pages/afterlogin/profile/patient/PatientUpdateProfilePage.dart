@@ -113,30 +113,14 @@ class _UpdateProfileButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      // width: ResponsiveDesign.getScreenWidth() / 1.5,
-      // height: ResponsiveDesign.getScreenHeight() / 15,
-      child: CustomButton(
-        action: () {
-          _updateProfileProcess(context);
-        },
-        textColor: ProductColor.white,
-        text: "Update",
-        backgroundColor: ProductColor.pink,
-        fontSize: ResponsiveDesign.getScreenHeight() /40,
-      ),
-      /*ElevatedButton(
-            onPressed: () {
-              _updateProfileProcess(context);
-            },
-            style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateColor.resolveWith((states) => Colors.pink),
-                foregroundColor:
-                    MaterialStateColor.resolveWith((states) => Colors.white)),
-            child: Text("Update Profile",
-                style: TextStyle(
-                    fontSize: ResponsiveDesign.getScreenWidth() / 20)))*/
+    return CustomButton(
+      action: () {
+        _updateProfileProcess(context);
+      },
+      textColor: ProductColor.white,
+      text: "Update",
+      backgroundColor: ProductColor.pink,
+      fontSize: ResponsiveDesign.getScreenHeight() /40,
     );
   }
 
