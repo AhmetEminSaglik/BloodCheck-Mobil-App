@@ -2,16 +2,19 @@ import 'dart:convert';
 import 'package:flutter_harpia_health_analysis/httprequest/BaseHttpRequest.dart';
 import 'package:flutter_harpia_health_analysis/util/HttpUtil.dart';
 import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
 import '../model/firebase/FcmToken.dart';
+import '../util/CustomLog.dart';
 
 class HttpRequestFirebase {
   static const String _classUrl = "/firebase/token";
   static final String _baseUrl = BaseHttpRequestConfig.baseUrl + _classUrl;
+  static var log = Logger(printer: PrettyPrinter(colors: false));
 
   static void saveToken(FcmToken fcmToken) async {
     Uri url = Uri.parse(_baseUrl);
-    print("URL : ${url}");
-    print("REQUEST TOKEN :  : ${fcmToken.token}");
+    log.i("URL : ${url}");
+    log.i("REQUEST TOKEN :  : ${fcmToken.token}");
 
     Map<String, dynamic> requestData = {
       "userId": fcmToken.userId,
@@ -19,6 +22,6 @@ class HttpRequestFirebase {
     };
     var resp = await http.post(url,
         headers: HttpUtil.header, body: jsonEncode(requestData));
-    print(" RESP Result : ${resp.body}");
+    log.i(" RESP Result : ${resp.body}");
   }
 }

@@ -4,11 +4,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_harpia_health_analysis/model/firebase/FcmData.dart';
 import 'package:flutter_harpia_health_analysis/model/firebase/FcmMessage.dart';
 import 'package:flutter_harpia_health_analysis/model/firebase/FcmNotificationCubit.dart';
+import 'package:flutter_harpia_health_analysis/model/firebase/enum/EnumFcmMessageReason.dart';
 import 'package:flutter_harpia_health_analysis/util/CustomNotification.dart';
+import 'package:logger/logger.dart';
 
 import '../business/factory/FcmMessageFactory.dart';
 
 class FcmTokenUtils {
+  static var log = Logger(printer: PrettyPrinter(colors: false));
+
+  // static CustomLog log = CustomLog(className: "FcmTokenUtils");
+
   static late String _token;
 
   static Future<void> createToken() async {
@@ -27,49 +33,62 @@ class FcmTokenUtils {
 
   static listenFcm(BuildContext context) {
     try {
+      log.e("NOTIFICAITON ALINDI");
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-        // print('Got a message whilst in the foreground!');
-        print('--> LISTEN GELDI data ! ${message.data}');
-
-        // print('--> Got a message whilst in the foreground!$message');
-        print('----> Message predata: ${message.data}');
-
-        // CustomNotification.showNotification(message.predata);
         FcmData fcmData = parseMapToFcmData(message.data);
 
-        if (_viewPatientIdPage != fcmData.patientId) {
-          context.read<FcmNotificationCubit>().activateUpdatePatientLineChart();
-        }
-
+        processSendReason(context, fcmData);
         if (fcmData.showNotification) {
-          print("---> fcmdata.showNotification : ${fcmData.showNotification}");
           CustomNotificationUtil.showNotification(
               fcmData.msgTitle, fcmData.msg);
-        } else {
-          print("---> fcmdata showNotification is FALSE : $fcmData");
-        }
-        if (message.notification != null) {
-          print(
-              'Message also contained a notification: ${message.notification}');
         }
       });
     } catch (e) {
-      print("exception : $e");
+      // log.error(msgTitle: "FcmTokenUtils Exception", msg: "$e");
+      // log.error("Exception Occurred $e");
+    }
+  }
+
+  static void processSendReason(BuildContext context, FcmData fcmData) {
+    int code = fcmData.reasonCode;
+    if (code ==
+        EnumFcmMessageReason.getCodeOfReason(
+            EnumFcmMessageReason.UPDATE_LINE_CHART.name)) {
+      updateLineChartInPatientPage(context, fcmData.patientId);
+    }
+    if (code ==
+        EnumFcmMessageReason.getCodeOfReason(
+            EnumFcmMessageReason.UPDATE_SENSOR_TIMER.name)) {
+      updateSensorTimerInPatientPage(context, fcmData.patientId);
+    }
+  }
+
+  static void updateLineChartInPatientPage(
+      BuildContext context, int patientId) {
+    if (_viewPatientIdPage == patientId) {
+      context.read<FcmNotificationCubit>().enableUpdatingPatientLineChart();
+    }
+  }
+
+  static void updateSensorTimerInPatientPage(
+      BuildContext context, int patientId) {
+    if (_viewPatientIdPage == patientId) {
+      context.read<FcmNotificationCubit>().enableUpdateSensorTimer();
     }
   }
 
   static FcmData parseMapToFcmData(Map<String, dynamic> map) {
-    String data = "";
-    for (var entry in map.entries) {
-      print("entry.key : ${entry.key}");
-      print("entry.value : ${entry.value}");
+    // String data = "";
+    /*for (var entry in map.entries) {
+      log.info("entry.key : ${entry.key}");
+      log.info("entry.value : ${entry.value}");
       data += entry.value;
     }
-    print("DATA : $data ");
-    print("map : $map ");
+    log.info("DATA : $data ");
+    log.info("map : $map ");*/
     FcmMessage message = FcmMessageFactory.createFcmMessage(map);
     return message.fcmData;
-    /* print("FcmMessage : $message");
+    /* log.info("FcmMessage : $message");
     CustomNotificationUtil.showNotification(
         message.fcmData.msgTitle, message.fcmData.msg);
     return data;*/
@@ -82,14 +101,14 @@ class FcmTokenUtils {
   }
 
   static Future<void> _backgroundHandler(RemoteMessage message) async {
-    print('Got a message whilst in the background!');
-    print('Message predata: ${message.data}');
+    // log.info('Got a message whilst in the background!');
+    // log.info('Message predata: ${message.data}');
 
     if (message.notification != null) {
-      print('Message also contained a notification: ${message.notification}');
+      // log.info(
+      //     'Message also contained a notification: ${message.notification}');
       final title = message.notification?.title ?? "Title is Null";
       final body = message.notification?.body ?? "Body is Null";
-
       CustomNotificationUtil.showNotification(title, body);
     }
   }

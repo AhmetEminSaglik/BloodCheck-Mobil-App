@@ -3,7 +3,10 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+
+var log = Logger(printer: PrettyPrinter(colors: false));
 
 class QRCodeScanner extends StatefulWidget {
   const QRCodeScanner({Key? key}) : super(key: key);
@@ -30,13 +33,12 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
   }
 */
   void goBackPage(BuildContext context, String readData) {
-    print("DONECEK DATA : $readData");
+    log.i("Read QR Data : $readData");
     Navigator.pop(context, readData);
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: Column(
         children: <Widget>[
@@ -144,39 +146,35 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
           borderLength: 30,
           borderWidth: 10,
           cutOutSize: scanArea),
-      onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
+      onPermissionSet: (ctrl, permission) =>
+          _onPermissionSet(context, ctrl, permission),
     );
   }
 
   void _onQRViewCreated(QRViewController controller) {
     // setState(() {
-      this.controller = controller;
+    this.controller = controller;
     // });
     controller.scannedDataStream.listen((scanData) {
       // setState(() {
-        result = scanData;
-        if (result != null && result!.code != null) {
-          if (result!.code!.isNotEmpty) {
-            goBackPage(context, result!.code!);
-            controller!.dispose();
-          }
+      result = scanData;
+      if (result != null && result!.code != null) {
+        if (result!.code!.isNotEmpty) {
+          goBackPage(context, result!.code!);
+          controller!.dispose();
         }
+      }
       // });
     });
   }
 
-  void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
-    log('${DateTime.now().toIso8601String()}_onPermissionSet $p');
-    if (!p) {
+  void _onPermissionSet(
+      BuildContext context, QRViewController ctrl, bool permission) {
+    log.i('${DateTime.now().toIso8601String()}_onPermissionSet $permission');
+    if (!permission) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('no Permission')),
       );
     }
   }
-
-  /*@override
-  void dispose() {
-    controller?.dispose();
-    super.dispose();
-  }*/
 }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/drawer/DrawerCubit.dart';
-import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/users/HomePagePatient.dart';
+import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/users/patient/HomePagePatient.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/profile/doctor/DoctorProfile.dart';
-import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestDoctor.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestPatient.dart';
+import 'package:logger/logger.dart';
 import '../../../../model/user/Patient.dart';
 import '../../../../util/SafeLogoutDrawerItem.dart';
 import '../../../../util/SharedPrefUtils.dart';
@@ -19,6 +19,8 @@ class PatientDrawer extends StatefulWidget {
 }
 
 class _PatientDrawerState extends State<PatientDrawer> {
+  static var log = Logger(printer: PrettyPrinter(colors: false));
+
   static String name = SharedPrefUtils.getName();
   static String lastname = SharedPrefUtils.getLastname();
   late Patient patient;
@@ -39,8 +41,6 @@ class _PatientDrawerState extends State<PatientDrawer> {
 
   retrievePatient() async {
     patient = await HttpRequestPatient.findPatientById(widget.patientId);
-    print("Patient Id : ${patient.id}");
-    print("doctorId Id : ${patient.doctorId}");
   }
 
   preparePageList() {

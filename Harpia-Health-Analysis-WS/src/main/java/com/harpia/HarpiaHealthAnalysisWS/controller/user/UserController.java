@@ -4,12 +4,16 @@ import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.login.LoginValidatio
 import com.harpia.HarpiaHealthAnalysisWS.business.concretes.login.LoginCredentialsValidation;
 import com.harpia.HarpiaHealthAnalysisWS.dataaccess.user.UserRepository;
 import com.harpia.HarpiaHealthAnalysisWS.model.LoginCredentials;
+import com.harpia.HarpiaHealthAnalysisWS.model.users.Patient;
 import com.harpia.HarpiaHealthAnalysisWS.model.users.User;
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.user.UserService;
 import com.harpia.HarpiaHealthAnalysisWS.utility.CustomLog;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.DataResult;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.SuccessDataResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -22,18 +26,22 @@ public class UserController {
     @Autowired
     private UserService service;
 
+
     @GetMapping()
-    public DataResult<List<User>> findAllUserList() {
-        return new SuccessDataResult<>(service.findAll(), "All users retrived successfully");
+    public ResponseEntity<DataResult<List<User>>> findAllUserList() {
+        DataResult<List<User>> dataResult = new SuccessDataResult<>(service.findAll(), "All users retrived successfully");
+        return ResponseEntity.status(HttpStatus.OK).body(dataResult);
     }
 
     @Autowired
     UserRepository repository;
 
     @GetMapping("/time/minutes/{min}")
-    public DataResult<List<User>> findByLastCreatedMinusMinutes(@PathVariable int min) {
+    public ResponseEntity<DataResult<List<User>>> findByLastCreatedMinusMinutes(@PathVariable int min) {
         LocalDateTime localDateTime = LocalDateTime.now().minusMinutes(min);
-        return new SuccessDataResult<>(repository.findAllByCreatedAtAfter(localDateTime));
+        DataResult<List<User>> dataResult = new SuccessDataResult<>(repository.findAllByCreatedAtAfter(localDateTime));
+        return ResponseEntity.status(HttpStatus.OK).body(dataResult);
+
     }
 
     @GetMapping("/{id}")
@@ -43,7 +51,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public DataResult<User> login(@RequestBody LoginCredentials loginCreds) {
+    public ResponseEntity<DataResult<User>> login(@RequestBody LoginCredentials loginCreds) {
         LoginValidationService loginService = new LoginCredentialsValidation(service);
 //        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 //        loginCreds.setPassword(passwordEncoder.encode(loginCreds.getPassword()));
@@ -52,7 +60,7 @@ public class UserController {
 //        passwordEncoder.matches()
         DataResult<User> result = loginService.validateLoginCredentials(loginCreds.getUsername(), loginCreds.getPassword());
         System.out.println(result.getData().getId().getClass().getSimpleName());
-        return result;
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
 }

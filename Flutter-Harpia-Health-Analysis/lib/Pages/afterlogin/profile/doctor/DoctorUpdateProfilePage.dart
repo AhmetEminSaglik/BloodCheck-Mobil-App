@@ -137,15 +137,14 @@ class _UpdateProfileButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-        child: CustomButton(
+    return CustomButton(
       action: () {
         _updateProfileProcess(context);
       },
       text: "Update",
       textColor: ProductColor.white,
       backgroundColor: ProductColor.pink,
-    ));
+    );
   }
 
   void resetTextFields(List<TextEditingController> list) {

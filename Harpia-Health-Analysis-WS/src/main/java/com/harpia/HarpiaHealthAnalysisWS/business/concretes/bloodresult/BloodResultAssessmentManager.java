@@ -8,6 +8,7 @@ import com.harpia.HarpiaHealthAnalysisWS.model.bloodresult.BloodResult;
 import com.harpia.HarpiaHealthAnalysisWS.model.bloodresult.BloodResultAssessmentValue;
 import com.harpia.HarpiaHealthAnalysisWS.model.bloodresult.ItemRangeValue;
 import com.harpia.HarpiaHealthAnalysisWS.model.enums.EnumBloodResultContent;
+import com.harpia.HarpiaHealthAnalysisWS.model.enums.EnumFcmMessageReason;
 import com.harpia.HarpiaHealthAnalysisWS.model.firebase.FcmData;
 import com.harpia.HarpiaHealthAnalysisWS.model.firebase.FcmMessage;
 import com.harpia.HarpiaHealthAnalysisWS.model.firebase.FcmNotification;
@@ -36,7 +37,6 @@ public class BloodResultAssessmentManager implements BloodResultAssessmentServic
 
     @Override
     public void assessToSendFcmMsg(BloodResult bloodResult) {
-        log.info("assess blood result : " + bloodResult);
         HashMap<String, Integer> subItemMap = new HashMap<>();
 
         subItemMap.put(EnumBloodResultContent.BLOOD_SUGAR.getName(), bloodResult.getBloodSugar());
@@ -60,7 +60,6 @@ public class BloodResultAssessmentManager implements BloodResultAssessmentServic
 
     private void sendMsgToPatient(FcmMessage fcmMessage) {
         fcmService.sendNotification(fcmMessage);
-        log.info("send to Patient : TOKEN : " + fcmMessage.getTo());
     }
 
     private void sendMsgToDoctorOfPatient(long patientId, FcmMessage fcmMessage) {
@@ -126,7 +125,10 @@ public class BloodResultAssessmentManager implements BloodResultAssessmentServic
             data.setShowNotification(true);
             notification.setTitle("DANGEROUS");
             notification.setBody("You should have a look urgently");
+            data.setPatientId(patientId);
             data.setMsgTitle(msgTitle.toString());
+            data.setReasonCode(EnumFcmMessageReason.UPDATE_LINE_CHART.getCode());
+            data.setReasonSend(EnumFcmMessageReason.UPDATE_LINE_CHART.getReason());
             data.setMsg(msgBody.toString());
         } else {
             data.setShowNotification(false);
@@ -135,7 +137,6 @@ public class BloodResultAssessmentManager implements BloodResultAssessmentServic
         }
 
         FcmMessage fcmMessage = fcmService.generateFcmMsg(token, notification, data);
-        log.info("sending fcm msg : " + fcmMessage);
         return fcmMessage;
     }
 

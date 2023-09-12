@@ -36,7 +36,6 @@ abstract class BaseLineChartPreData {
   void setBloodListSubItemsFlSpotValue() {
     List<int> yIndexValue = [];
     bloodListSubItemsFlSpot.bloodResultList.forEach((tmp) {
-
       bloodListSubItemsFlSpot.bloodSugarList
           .add(getFlSpotOfItem(tmp.bloodSugar, tmp.createdAt));
       bloodListSubItemsFlSpot.bloodPressureList

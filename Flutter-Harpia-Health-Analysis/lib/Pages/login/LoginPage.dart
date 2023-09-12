@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/appbar/AppBarCubit.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/drawer/DrawerCubit.dart';
-import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/users/HomePage.dart';
+import 'package:flutter_harpia_health_analysis/Product/CustomButton.dart';
 import 'package:flutter_harpia_health_analysis/business/factory/UserFactory.dart';
 import 'package:flutter_harpia_health_analysis/core/ResponsiveDesign.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestUser.dart';
@@ -12,16 +12,17 @@ import 'package:flutter_harpia_health_analysis/model/user/User.dart';
 import 'package:flutter_harpia_health_analysis/util/CustomSnackBar.dart';
 import 'package:flutter_harpia_health_analysis/util/ProductColor.dart';
 import 'package:flutter_harpia_health_analysis/util/SharedPrefUtils.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../model/enums/user/EnumUserProp.dart';
+import 'package:logger/logger.dart';
 import '../../util/CustomNotification.dart';
 import '../../util/FcmTokenUtils.dart';
+import '../afterlogin/homepage/users/patient/HomePage.dart';
+
+var log = Logger(printer: PrettyPrinter(colors: false));
 
 class LoginPage extends StatefulWidget {
   final String title;
 
-  const LoginPage({super.key, required this.title});
+  LoginPage({super.key, required this.title});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -31,9 +32,9 @@ class _LoginPageState extends State<LoginPage> {
   late String token;
   var formKey = GlobalKey<FormState>();
 
-  Future<void> setUserDataSharedPref() async {
+/*  Future<void> setUserDataSharedPref() async {
     var sp = await SharedPreferences.getInstance();
-  }
+  }*/
 
   TextEditingController tfUsername = TextEditingController();
   TextEditingController tfPassword = TextEditingController();
@@ -42,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     super.initState();
     autoLogin();
-    print("Created TOKEN :  ${FcmTokenUtils.getToken()}");
+    log.i("Created TOKEN :  ${FcmTokenUtils.getToken()}");
     FcmTokenUtils.listenFcm(context);
     CustomNotificationUtil.initialize();
   }
@@ -224,20 +225,17 @@ class _LoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        width: ResponsiveDesign.getScreenWidth() / 1.5,
-        height: ResponsiveDesign.getScreenHeight() / 15,
-        child: ElevatedButton(
-            onPressed: () {
-              loginManuelProcess(context);
-            },
-            style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateColor.resolveWith((states) => Colors.pink),
-                foregroundColor:
-                    MaterialStateColor.resolveWith((states) => Colors.white)),
-            child: Text("login",
-                style: TextStyle(
-                    fontSize: ResponsiveDesign.getScreenWidth() / 20))));
+      width: ResponsiveDesign.getScreenWidth() / 1.5,
+      height: ResponsiveDesign.getScreenHeight() / 15,
+      child: CustomButton(
+        action: () {
+          loginManuelProcess(context);
+        },
+        textColor: ProductColor.white,
+        backgroundColor: ProductColor.pink,
+        text: "Login",
+      ),
+    );
   }
 
   void loginManuelProcess(BuildContext context) async {
@@ -253,7 +251,7 @@ class _LoginButton extends StatelessWidget {
         showInvalidUsernameOrPassword(
             context: context, msg: respEntity!.message);
       } else {
-        print("Gelen Data ${respEntity!.data}");
+        log.i("Gelen Data ${respEntity!.data}");
         User user = UserFactory.createUser(respEntity!.data);
         saveUserData(context, user);
         navigateToHomePage(context: context, roleId: user.roleId);
@@ -264,13 +262,10 @@ class _LoginButton extends StatelessWidget {
 
 Future<ResponseEntity?> login(
     {required String username, required String password}) async {
-  print("Come to login()");
   var request = HttpRequestUser();
   ResponseEntity? respEntity;
   await request.login(username, password).then((resp) async {
     Map<String, dynamic> jsonData = json.decode(resp.body);
-    print("respEntity : ${respEntity}");
-
     respEntity = ResponseEntity.fromJson(jsonData);
     return respEntity;
   });
@@ -283,7 +278,7 @@ void showInvalidUsernameOrPassword(
 }
 
 void saveUserData(BuildContext context, User user) async {
-  print("Login page -> saveUserData -> User : $user");
+  log.i("Login page -> saveUserData -> User : $user");
   await SharedPrefUtils.setLoginDataUser(user).then((value) {});
   updateCubits(context);
 }
@@ -294,7 +289,8 @@ void updateCubits(BuildContext context) {
 }
 
 void navigateToHomePage({required BuildContext context, required int roleId}) {
-  Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+  Navigator.push(
+      context, MaterialPageRoute(builder: (context) => const HomePage()));
 }
 
 class _TextFieldInputLength {

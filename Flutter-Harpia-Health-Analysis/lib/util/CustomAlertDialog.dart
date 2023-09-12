@@ -76,7 +76,6 @@ class CustomAlertDialog {
             Spacer(),
             TextButton(
                 onPressed: () {
-                  print("donecek deger : ${patientTimerWidget.patientTimer}");
                   Navigator.of(context).pop(PatientTimerAlertBoxRespond(
                       result: true,
                       patientTimer: patientTimerWidget.patientTimer));

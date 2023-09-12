@@ -4,24 +4,22 @@ import 'BaseLineChartPreData.dart';
 
 class LineChartPreDataWeekly extends BaseLineChartPreData {
   LineChartPreDataWeekly({required super.bloodResultList})
-      : super(rangeTotalIndexValue: 168);
+      : super(rangeTotalIndexValue: 24 * 7); // 24 hours for 1 week
 
   @override
   void createBottomSideTitles() {
     int weeklyTotalIndexValue = rangeTotalIndexValue;
-    int day = now.day;
     int hour = now.hour;
     int minute = now.minute;
-    int passedDayCounter = (day % 7).toInt();
-    day %= 7;
-    int remainedTime = ((hour * 60 + minute) / 60).toInt();
+    int weekDay = now.weekday;
+    int remainedTime = (hour * 60 + minute) ~/ 60;
     int weeklyTitleLength = EnumLineChartBottomSideWeeklyTitles.values.length;
     for (int i = 0; i < weeklyTitleLength; i++) {
       bottomTitle.add(LineChartSideTitle(
           index: weeklyTotalIndexValue - (remainedTime + ((i) * 24)),
           //24 : reset each 24 hours
           text: EnumLineChartBottomSideWeeklyTitles.getIndexName(
-              (passedDayCounter - i) % weeklyTitleLength)));
+              (weekDay - i) % weeklyTitleLength)));
     }
   }
 

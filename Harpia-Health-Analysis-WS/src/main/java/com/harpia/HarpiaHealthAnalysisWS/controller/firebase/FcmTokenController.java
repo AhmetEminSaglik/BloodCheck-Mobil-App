@@ -1,6 +1,7 @@
 package com.harpia.HarpiaHealthAnalysisWS.controller.firebase;
 
 import com.harpia.HarpiaHealthAnalysisWS.business.abstracts.firebase.token.FcmTokenService;
+import com.harpia.HarpiaHealthAnalysisWS.model.firebase.FcmMessage;
 import com.harpia.HarpiaHealthAnalysisWS.model.firebase.FcmToken;
 import com.harpia.HarpiaHealthAnalysisWS.utility.CustomLog;
 import com.harpia.HarpiaHealthAnalysisWS.utility.result.DataResult;
@@ -45,5 +46,11 @@ public class FcmTokenController {
         DataResult dataResult = new SuccessDataResult(fcmToken, msg);
         return ResponseEntity.status(HttpStatus.OK).body(dataResult);
     }
+
+//    @PostMapping()
+//    public  ResponseEntity<DataResult<FcmMessage>> sendFcmMessage(@RequestBody FcmMessage fcmMessage,@RequestParam long patientId){
+//
+//    }
+
 
 }

@@ -1,4 +1,9 @@
+
+import 'package:logger/logger.dart';
+
 class FcmNotification {
+  static var log = Logger(printer: PrettyPrinter(colors: false));
+
   late String _title;
   late String _body;
 
@@ -8,7 +13,7 @@ class FcmNotification {
   }
 
   factory FcmNotification.fromJson(Map<String, dynamic> json) {
-    print('gelen json : $json');
+    log.i('gelen json : $json');
     return FcmNotification(
         title: json["title"] as String, body: json["body"] as String);
   }

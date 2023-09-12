@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "firebase_token", uniqueConstraints = @UniqueConstraint(columnNames = "user_id"))
+@Table(name = "firebase_tokens", uniqueConstraints = @UniqueConstraint(columnNames = "user_id"))
 public class FcmToken {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

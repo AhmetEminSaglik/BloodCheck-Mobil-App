@@ -16,17 +16,17 @@ public class BloodResultParseManager implements BloodResultParseService {
 
     @Override
     public List<BloodResult> parseToDaily(List<BloodResult> list) {
-        return getSelectedDataToShow(list, 10);
+        return getSelectedDataToShow(list, 20);
     }
 
     @Override
     public List<BloodResult> parseToWeekly(List<BloodResult> list) {
-        return getSelectedDataToShow(list, 60);
+        return getSelectedDataToShow(list, 60*2);
     }
 
     @Override
     public List<BloodResult> parseToMonthly(List<BloodResult> list) {
-        return getSelectedDataToShow(list, 60 * 4);
+        return getSelectedDataToShow(list, 60 * 6);
     }
 
     /**

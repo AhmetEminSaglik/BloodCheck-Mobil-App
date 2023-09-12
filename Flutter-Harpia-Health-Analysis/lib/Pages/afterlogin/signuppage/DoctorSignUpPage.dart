@@ -3,6 +3,7 @@ import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestDoctor.dar
 import 'package:flutter_harpia_health_analysis/model/user/Doctor.dart';
 import 'package:flutter_harpia_health_analysis/model/userrole/EnumUserRole.dart';
 import 'package:flutter_harpia_health_analysis/util/CustomAlertDialog.dart';
+import '../../../Product/CustomButton.dart';
 import '../../../Product/FormCustomInput.dart';
 import '../../../business/factory/UserFactory.dart';
 import '../../../core/ResponsiveDesign.dart';
@@ -116,18 +117,13 @@ class _SignUpButton extends StatelessWidget {
     return SizedBox(
         width: ResponsiveDesign.getScreenWidth() / 1.5,
         height: ResponsiveDesign.getScreenHeight() / 15,
-        child: ElevatedButton(
-            onPressed: () {
+        child: CustomButton(
+            action: () {
               _signUpProcess(context);
             },
-            style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateColor.resolveWith((states) => Colors.pink),
-                foregroundColor:
-                    MaterialStateColor.resolveWith((states) => Colors.white)),
-            child: Text("Sign in",
-                style: TextStyle(
-                    fontSize: ResponsiveDesign.getScreenWidth() / 20))));
+            text: "Sign Up",
+            textColor: ProductColor.white,
+            backgroundColor: ProductColor.pink));
   }
 
   void resetTextFields(List<TextEditingController> list) {

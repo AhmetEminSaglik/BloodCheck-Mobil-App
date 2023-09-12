@@ -111,30 +111,15 @@ class _UpdateProfileButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-        child: CustomButton(
-          action: () {
-            _updateProfileProcess(context);
-          },
-          textColor: ProductColor.white,
-          text: "Update",
-          backgroundColor: ProductColor.pink,
-          fontSize: ResponsiveDesign.getScreenHeight() / 40,
-        )
-
-        /*ElevatedButton(
-            onPressed: () {
-              _updateProfileProcess(context);
-            },
-            style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateColor.resolveWith((states) => Colors.pink),
-                foregroundColor:
-                    MaterialStateColor.resolveWith((states) => Colors.white)),
-            child: Text("Update Profile",
-                style: TextStyle(
-                    fontSize: ResponsiveDesign.getScreenWidth() / 20)))*/
-        );
+    return CustomButton(
+      action: () {
+    _updateProfileProcess(context);
+      },
+      textColor: ProductColor.white,
+      text: "Update",
+      backgroundColor: ProductColor.pink,
+      fontSize: ResponsiveDesign.getScreenHeight() / 40,
+    );
   }
 
   void resetTextFields(List<TextEditingController> list) {
@@ -168,11 +153,10 @@ class _UpdateProfileButton extends StatelessWidget {
           username: username.isNotEmpty ? username : defaultAdmin.username,
           password: password.isNotEmpty ? password : defaultAdmin.password,
         );
-        var request = HttpRequestAdmin();
-
         ResponseEntity? respEntity;
 
-        await request.update(admin).then((value) => respEntity = value);
+        await HttpRequestAdmin.update(admin)
+            .then((value) => respEntity = value);
 
         if (respEntity != null) {
           if (respEntity!.success) {

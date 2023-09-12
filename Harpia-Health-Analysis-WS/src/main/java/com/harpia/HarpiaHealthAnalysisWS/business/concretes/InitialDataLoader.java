@@ -70,7 +70,9 @@ public class InitialDataLoader implements CommandLineRunner {
         saveUserData(getAdminList());
 //         rest is the fake data
         saveUserData(getDoctorList());
-        saveUserData(getPatientList());
+//        saveUserData(getPatientList());
+        savePatient(getPatientList());
+
 //        saveBloodResult();
         savePatientTimer();
         if (!isSavedBloodResultsBefore()) {
@@ -93,13 +95,12 @@ public class InitialDataLoader implements CommandLineRunner {
 //            }
 
         }
-        new FakeSensors(bloodResultController,fcmTokenService, fcmService).runFakeSensors(timerController.findAllPatientTimers().getBody().getData(), bloodResultService);
+//        new FakeSensors(bloodResultController, fcmTokenService, fcmService).runFakeSensors(timerController.findAllPatientTimers().getBody().getData(), bloodResultService);
     }
 
 
     boolean isSavedBloodResultsBefore() {
         List<BloodResult> retrivedBloodResultList = bloodResultService.findAll();
-        log.info("KAYITLI DATA : " + retrivedBloodResultList.size());
         if (retrivedBloodResultList.size() > 1) {
             return true;
         }
@@ -107,9 +108,7 @@ public class InitialDataLoader implements CommandLineRunner {
     }
 
     void saveBloodResult_2_Data(Patient patient) {
-        log.info("SAVELENECEK PATIENT ID : " + patient);
         PatientTimer patientTimer = timerController.findPatientTimerByPatientId(patient.getId()).getBody().getData();
-        log.info(patientTimer.toString());
         List<BloodResult> bloodResultList = new ArrayList<>();
         BloodResult br1 = new BloodResult(1);
         BloodResult br2 = new BloodResult(2);
@@ -132,7 +131,6 @@ public class InitialDataLoader implements CommandLineRunner {
         br2.setMagnesium(random.nextInt(150) + 50);
         br2.setPatientId(patient.getId());
         bloodResultList.add(br2);
-/*
         br3.setCreatedAt(LocalDateTime.now().minusDays(2));
         br3.setBloodPressure(random.nextInt(150) + 50);
         br3.setBloodSugar(random.nextInt(150) + 50);
@@ -140,21 +138,15 @@ public class InitialDataLoader implements CommandLineRunner {
         br3.setMagnesium(random.nextInt(150) + 50);
 
         br3.setPatientId(patient.getId());
-        bloodResultList.add(br3);*/
+        bloodResultList.add(br3);
 
-        log.info("bloodResultList size: " + bloodResultList.size());
+
         Collections.reverse(bloodResultList);
-        bloodResultList.forEach(e -> {
-            log.info("RECORD : " + e);
-        });
-//        log.info(" br1 : "+br1);
-//        log.info(" br2 : "+br2);
         bloodResultService.saveList(bloodResultList);
     }
 
     void saveBloodResultPerMinuteForSixMonth(Patient patient) {
         PatientTimer patientTimer = timerController.findPatientTimerByPatientId(patient.getId()).getBody().getData();
-        log.info(patientTimer.toString());
         final int maxMinutes = 60 * 24 * 30 * 6;//(24 * 17 + 16) * 60;
         int minutesCounter = 0;
         int sensorTestTime = 3;
@@ -173,24 +165,20 @@ public class InitialDataLoader implements CommandLineRunner {
         }
 
         Collections.reverse(bloodResultList);
-        log.info("bloodResultList size: " + bloodResultList.size());
         bloodResultService.saveList(bloodResultList);
     }
 
     void saveBloodResult_per_24_hours(Patient patient) {
-        log.info("24 hours bloodResult Patient id : " + patient.getId());
 
 //        int retrivedBloodResultData = retrivedBloodResultList.size();
 //        List<Patient> patientList = patientController.getPatientList().getBody().getData();
 //        Patient patient = patientList.get(patientList.size() - 1);
         PatientTimer patientTimer = timerController.findPatientTimerByPatientId(patient.getId()).getBody().getData();
-        log.info(patientTimer.toString());
         final int maxDays = 24;
         int minutesCounter = 0;
         int sensorTestTime = 1;
         int createdTime = 0;//useMinute * minutesCounter;
         List<BloodResult> bloodResultList = new ArrayList<>();
-        log.info("NOW : " + LocalDateTime.now());
         while (createdTime < maxDays) {
             BloodResult bloodResult = new BloodResult(createdTime);
             bloodResult.setBloodPressure(random.nextInt(150) + 50);
@@ -202,29 +190,23 @@ public class InitialDataLoader implements CommandLineRunner {
             bloodResult.setCreatedAt(LocalDateTime.now().minusDays(sensorTestTime * minutesCounter));
             minutesCounter++;
             createdTime = sensorTestTime * minutesCounter;
-            log.info("Created Blood Result : " + bloodResult);
         }
 
         Collections.reverse(bloodResultList);
-        log.info("bloodResultList size: " + bloodResultList.size());
-        bloodResultList.forEach(e -> log.info(e.toString()));
         bloodResultService.saveList(bloodResultList);
     }
 
     void saveBloodResult_6_Hours_Saved_5_Hours_Before(Patient patient) {
-        log.info("6 hours bloodResult Patient id : " + patient.getId());
 
 //        int retrivedBloodResultData = retrivedBloodResultList.size();
 //        List<Patient> patientList = patientController.getPatientList().getBody().getData();
 //        Patient patient = patientList.get(patientList.size() - 1);
         PatientTimer patientTimer = timerController.findPatientTimerByPatientId(patient.getId()).getBody().getData();
-        log.info(patientTimer.toString());
         final int maxMinutes = 24 * 60;
         int minutesCounter = 0;
         int sensorTestTime = 6 * 60;
         int createdTime = 0;//useMinute * minutesCounter;
         List<BloodResult> bloodResultList = new ArrayList<>();
-        log.info("NOW : " + LocalDateTime.now());
         while (createdTime < maxMinutes) {
             BloodResult bloodResult = new BloodResult(createdTime);
             bloodResult.setBloodPressure(random.nextInt(150) + 50);
@@ -239,8 +221,6 @@ public class InitialDataLoader implements CommandLineRunner {
         }
 
         Collections.reverse(bloodResultList);
-        log.info("bloodResultList size: " + bloodResultList.size());
-        bloodResultList.forEach(e -> log.info(e.toString()));
         bloodResultService.saveList(bloodResultList);
     }
 
@@ -250,7 +230,6 @@ public class InitialDataLoader implements CommandLineRunner {
 //        List<Patient> patientList = patientController.getPatientList().getBody().getData();
 //        Patient patient = patientList.get(patientList.size() - 1);
         PatientTimer patientTimer = timerController.findPatientTimerByPatientId(patient.getId()).getBody().getData();
-        log.info(patientTimer.toString());
         final int maxMinutes = (24 * 17 + 16) * 60;
 //        final int maxMinutes = (24 * 29) * 60;
         int minutesCounter = 0;
@@ -270,7 +249,6 @@ public class InitialDataLoader implements CommandLineRunner {
         }
 
         Collections.reverse(bloodResultList);
-        log.info("bloodResultList size: " + bloodResultList.size());
         bloodResultService.saveList(bloodResultList);
     }
 
@@ -283,10 +261,6 @@ public class InitialDataLoader implements CommandLineRunner {
         });
         int firstPatientIndex = (patientTimerList.size() - 1);
         patientTimerList.set(firstPatientIndex, new PatientTimer(0, 1, 17, patientList.get(firstPatientIndex).getId()));
-//        patientTimerList.set(0, new PatientTimer(0, 1, 17, patientList.get(0).getId()));
-        System.out.println("-------------------------------- " + patientTimerList.get(0));
-        System.out.println("-------------------------------- " + patientTimerList.get(patientTimerList.size() - 1));
-        patientTimerList.forEach(e -> log.info(timerController.savePatientTimer(e).toString()));
     }
 
     private void saveBloodResult() {
@@ -326,10 +300,21 @@ public class InitialDataLoader implements CommandLineRunner {
         for (int i = 0; i < list.size(); i++) {
             String username = list.get(i).getUsername();
             if (isUserRegistered(username)) {
-                System.out.println(list.get(i).getClass().getSimpleName() + " -----> data is already registered.");
+                log.info(username + " data is already registered.");
             } else {
                 User user = userService.save(list.get(i));
                 System.out.println(user);
+            }
+        }
+    }
+    private void savePatient(List<Patient> list) {
+        for (int i = 0; i < list.size(); i++) {
+            String username = list.get(i).getUsername();
+            if (isUserRegistered(username)) {
+                log.info(username + " data is already registered.");
+            } else {
+                Patient patient = (Patient) patientController.savePatient(list.get(i)).getBody().getData();// userService.save(list.get(i));
+                log.info("Created Patient : "+patient);
             }
         }
     }
@@ -391,8 +376,8 @@ public class InitialDataLoader implements CommandLineRunner {
         return list;
     }
 
-    private List<User> getPatientList() {
-        List<User> list = new ArrayList<>();
+    private List<Patient> getPatientList() {
+        List<Patient> list = new ArrayList<>();
         for (int i = 1; i <= 10; i++) {
             Patient user = new Patient();
             user.setName(getName(i));

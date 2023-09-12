@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_harpia_health_analysis/core/ResponsiveDesign.dart';
 import 'package:flutter_harpia_health_analysis/model/specialitem/doctor/PatientTimer.dart';
 import 'package:flutter_harpia_health_analysis/util/ProductColor.dart';
-
+import 'package:logger/logger.dart';
 import '../../../util/CustomSnackBar.dart';
 import 'TimerHours.dart';
 import 'TimerMinute.dart';
@@ -16,21 +16,25 @@ class PatientTimerWidget extends StatefulWidget {
   final PatientTimer _patientTimer = PatientTimer();
 
   PatientTimer get patientTimer => _patientTimer;
-  /*TODO Istenirse patient'indirek kayitli timeri cekilir ve ekrana o bastirilir.
+/*TODO Istenirse patient'indirek kayitli timeri cekilir ve ekrana o bastirilir.
      *  Eger bunu eklersem, doctor sureyi degistirmeyi kaydetmeye calistigi zamanda zaten kayitli degil istek atmam, server gereksiz mesgul olmaz.
   * */
 }
 
 class _PatientTimerWidgetState extends State<PatientTimerWidget> {
-  FixedExtentScrollController minuteCont = FixedExtentScrollController(initialItem: 5);
-  FixedExtentScrollController hourCont = FixedExtentScrollController(initialItem: 10);
+  static var log = Logger(printer: PrettyPrinter(colors: false));
+
+  FixedExtentScrollController minuteCont =
+      FixedExtentScrollController(initialItem: 5);
+  FixedExtentScrollController hourCont =
+      FixedExtentScrollController(initialItem: 10);
+
   @override
   void initState() {
     super.initState();
-    widget._patientTimer.minutes=minuteCont.initialItem;
-    widget._patientTimer.hours=hourCont.initialItem;
+    widget._patientTimer.minutes = minuteCont.initialItem;
+    widget._patientTimer.hours = hourCont.initialItem;
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +110,7 @@ class _PatientTimerWidgetState extends State<PatientTimerWidget> {
       // minuteCont.jumpToItem(1);
       animateItemToRequestedIndex(
           showAnimatin: true, cont: minuteCont, index: 1);
-      print("minute zipladi, ${minuteCont.selectedItem}");
+      log.i("minute zipladi, ${minuteCont.selectedItem}");
       return true;
     }
     return false;

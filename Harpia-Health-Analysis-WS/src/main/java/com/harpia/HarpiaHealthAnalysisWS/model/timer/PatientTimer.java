@@ -17,9 +17,9 @@ public class PatientTimer {
     @Column
     private long id;
     @Column
-    private int hours;
+    private int hours = 0;
     @Column
-    private int minutes;
+    private int minutes = 1;
     @Column(name = "patient_id")
     @NonNull
     private long patientId;

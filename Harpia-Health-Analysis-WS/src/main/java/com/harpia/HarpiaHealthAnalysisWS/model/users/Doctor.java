@@ -6,7 +6,7 @@ import lombok.*;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "doctor")
+@Table(name = "doctors")
 @Getter
 @Setter
 public class Doctor extends User {
