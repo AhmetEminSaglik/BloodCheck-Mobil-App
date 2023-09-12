@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_harpia_health_analysis/Product/CustomButton.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestPatient.dart';
 import 'package:flutter_harpia_health_analysis/model/userrole/EnumUserRole.dart';
 import 'package:flutter_harpia_health_analysis/util/CustomAlertDialog.dart';
@@ -17,6 +18,7 @@ import 'dart:convert';
 
 class PatientSignUpPage extends StatefulWidget {
   static var log = Logger(printer: PrettyPrinter(colors: false));
+
   const PatientSignUpPage({Key? key}) : super(key: key);
 
   @override
@@ -48,6 +50,12 @@ class _PatientSignUpPageState extends State<PatientSignUpPage> {
   _DiabeticTypeDropdownMenuButton diabeticTypeDropDownMenu =
       _DiabeticTypeDropdownMenuButton();
   _DoctorDropdownMenuButton doctorDropDownMenu = _DoctorDropdownMenuButton();
+
+  void resetPicklist() {
+    diabeticTypeDropDownMenu = _DiabeticTypeDropdownMenuButton();
+    doctorDropDownMenu = _DoctorDropdownMenuButton();
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -100,6 +108,7 @@ class _PatientSignUpPageState extends State<PatientSignUpPage> {
                       tfLastname: tfLastname,
                       selectedDiabeticType: diabeticTypeDropDownMenu,
                       selectedDoctorId: doctorDropDownMenu,
+                      page: this,
                     )
                   ],
                 ),
@@ -125,34 +134,28 @@ class _DoctorDropdownMenuButton extends StatefulWidget {
 }
 
 class _DoctorDropdownMenuButtonState extends State<_DoctorDropdownMenuButton> {
-  @override
-  void initState() {
-    super.initState();
-    retriveDoctorList();
-  }
-
   void retriveDoctorList() async {
-    // isLoading = true;
-    setState(() {});
-    var resp = await HttpRequestDoctor.getDoctorList();
-    // isLoading = false;
-    setState(() {
-      widget.doctorList = resp;
-      int index = 0;
-      resp.forEach((element) {
-        index++;
-        widget.items.add(
-          DoctorPicklistItem(
-              index: index,
-              id: element.id,
-              name: "${element.name} ${element.lastname}"),
-        );
+    if (widget.doctorList.isEmpty) {
+      var resp = await HttpRequestDoctor.getDoctorList();
+      setState(() {
+        widget.doctorList = resp;
+        int index = 0;
+        resp.forEach((element) {
+          index++;
+          widget.items.add(
+            DoctorPicklistItem(
+                index: index,
+                id: element.id,
+                name: "${element.name} ${element.lastname}"),
+          );
+        });
       });
-    });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    retriveDoctorList();
     return SizedBox(
       width: ResponsiveDesign.getScreenWidth() / 1.5,
       child: Container(
@@ -331,6 +334,7 @@ class _SignUpButton extends StatelessWidget {
   final TextEditingController tfUsername, tfPassword, tfName, tfLastname;
   final _DiabeticTypeDropdownMenuButton selectedDiabeticType;
   final _DoctorDropdownMenuButton selectedDoctorId;
+  final _PatientSignUpPageState page;
   GlobalKey<FormState> formKey;
 
   _SignUpButton(
@@ -340,25 +344,22 @@ class _SignUpButton extends StatelessWidget {
       required this.tfName,
       required this.tfLastname,
       required this.selectedDiabeticType,
-      required this.selectedDoctorId}); //({super.key /*,required this.screenInfo*/});
+      required this.selectedDoctorId,
+      required this.page}); //({super.key /*,required this.screenInfo*/});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        width: ResponsiveDesign.getScreenWidth() / 1.5,
-        height: ResponsiveDesign.getScreenHeight() / 15,
-        child: ElevatedButton(
-            onPressed: () {
-              _signUpProcess(context, selectedDiabeticType, selectedDoctorId);
-            },
-            style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateColor.resolveWith((states) => Colors.pink),
-                foregroundColor:
-                    MaterialStateColor.resolveWith((states) => Colors.white)),
-            child: Text("Sign Up",
-                style: TextStyle(
-                    fontSize: ResponsiveDesign.getScreenWidth() / 20))));
+      width: ResponsiveDesign.getScreenWidth() / 1.5,
+      height: ResponsiveDesign.getScreenHeight() / 15,
+      child: CustomButton(
+          action: () {
+            _signUpProcess(context, selectedDiabeticType, selectedDoctorId);
+          },
+          text: "Sign Up",
+          textColor: ProductColor.white,
+          backgroundColor: ProductColor.pink),
+    );
   }
 
   void resetPageInputs(
@@ -366,8 +367,7 @@ class _SignUpButton extends StatelessWidget {
       _DoctorDropdownMenuButton doctorDropDown,
       _DiabeticTypeDropdownMenuButton diabeticDropDown) {
     list.forEach((e) => e.text = "");
-    // doctorDropDown.selectedDoctorId = 0;
-    // diabeticDropDown.selectedDiabeticTypeValue = 0;
+    page.resetPicklist();
   }
 
   void _signUpProcess(
