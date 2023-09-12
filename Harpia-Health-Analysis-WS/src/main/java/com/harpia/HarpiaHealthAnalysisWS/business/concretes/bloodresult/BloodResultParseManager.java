@@ -18,7 +18,6 @@ public class BloodResultParseManager implements BloodResultParseService {
     public List<BloodResult> parseToDaily(List<BloodResult> list) {
         return getSelectedDataToShow(list, 20);
     }
-//    public List<BloodResult> parseToDaily(List<BloodResult> list) {return getSelectedDataToShow(list, 10);}
 
     @Override
     public List<BloodResult> parseToWeekly(List<BloodResult> list) {
