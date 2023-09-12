@@ -60,7 +60,7 @@ class _InputTextFormField extends StatelessWidget {
           log.i("compulsoryArea : $compulsoryArea");
           return "Please enter $hint";
         }
-        if (data.length > 0) {
+        if (data.isNotEmpty) {
           compulsoryArea = true;
         }
         if (data.length < _TextFieldInputLength.min && compulsoryArea) {

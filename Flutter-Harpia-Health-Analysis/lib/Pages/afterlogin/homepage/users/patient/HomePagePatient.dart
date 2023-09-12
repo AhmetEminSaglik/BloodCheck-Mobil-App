@@ -554,7 +554,7 @@ class SensorNextMeasurementText extends StatelessWidget {
   final PatientTimer patientTimer;
 
   String _getStringDataToShow() {
-    if (dailyBloodResultList.length > 0) {
+    if (dailyBloodResultList.isNotEmpty) {
       return "Next Time : ${PatientTimerUtils.calculateSensorNextMeasurementTime(lastCreatedAt: dailyBloodResultList[0].createdAt, patientTimer: patientTimer)}";
     }
     return "Not found record Blood Result";
