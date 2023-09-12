@@ -6,7 +6,7 @@ import '../../../../../model/enums/diabetic/EnumDiabeticType.dart';
 import '../../../../../model/user/Patient.dart';
 import '../../../../../util/IndexColorUtil.dart';
 import '../../../../../util/ProductColor.dart';
-import '../../users/HomePagePatient.dart';
+import '../../users/patient/HomePagePatient.dart';
 
 class ListviewBuilderPatient extends StatefulWidget {
   int doctorId;

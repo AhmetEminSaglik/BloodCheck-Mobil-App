@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/appbar/AppBarCubit.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/drawer/DrawerCubit.dart';
-import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/users/HomePage.dart';
 import 'package:flutter_harpia_health_analysis/business/factory/UserFactory.dart';
 import 'package:flutter_harpia_health_analysis/core/ResponsiveDesign.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestUser.dart';
@@ -15,6 +14,7 @@ import 'package:flutter_harpia_health_analysis/util/SharedPrefUtils.dart';
 import 'package:logger/logger.dart';
 import '../../util/CustomNotification.dart';
 import '../../util/FcmTokenUtils.dart';
+import '../afterlogin/homepage/users/patient/HomePage.dart';
 
 var log = Logger(printer: PrettyPrinter(colors: false));
 
@@ -292,7 +292,7 @@ void updateCubits(BuildContext context) {
 }
 
 void navigateToHomePage({required BuildContext context, required int roleId}) {
-  Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+  Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage()));
 }
 
 class _TextFieldInputLength {

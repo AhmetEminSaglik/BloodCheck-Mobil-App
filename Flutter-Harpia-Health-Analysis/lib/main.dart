@@ -1,3 +1,4 @@
+import 'package:auto_orientation/auto_orientation.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_harpia_health_analysis/Pages/afterlogin/profile/ProfilUp
 import 'package:flutter_harpia_health_analysis/firebase_options.dart';
 import 'package:flutter_harpia_health_analysis/model/firebase/FcmNotificationCubit.dart';
 import 'package:flutter_harpia_health_analysis/util/FcmTokenUtils.dart';
+import 'Pages/afterlogin/homepage/users/patient/DetailLineChartCubit.dart';
 import 'core/ResponsiveDesign.dart';
 import 'Pages/login/LoginPage.dart';
 
@@ -14,6 +16,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await FcmTokenUtils.createToken();
+  AutoOrientation.portraitAutoMode();
   runApp(const MyApp());
 }
 /*
@@ -43,6 +46,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => AppBarCubit()),
         BlocProvider(create: (context) => FcmNotificationCubit()),
         BlocProvider(create: (context) => ProfilUpdatedCubit()),
+        BlocProvider(create: (context) => DetailLineChartCubit()),
+
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

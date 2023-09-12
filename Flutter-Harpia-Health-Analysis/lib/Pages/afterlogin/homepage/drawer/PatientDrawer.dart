@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/drawer/DrawerCubit.dart';
-import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/users/HomePagePatient.dart';
+import 'package:flutter_harpia_health_analysis/Pages/afterlogin/homepage/users/patient/HomePagePatient.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_harpia_health_analysis/Pages/afterlogin/profile/doctor/DoctorProfile.dart';
 import 'package:flutter_harpia_health_analysis/httprequest/HttpRequestPatient.dart';

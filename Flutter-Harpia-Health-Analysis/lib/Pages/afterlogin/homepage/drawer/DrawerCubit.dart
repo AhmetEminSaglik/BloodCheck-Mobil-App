@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../model/userrole/EnumUserRole.dart';
 import '../../../../util/SharedPrefUtils.dart';
-import '../users/HomePageDoctor.dart';
-import '../users/HomePagePatient.dart';
+import '../users/doctor/HomePageDoctor.dart';
+import '../users/patient/HomePagePatient.dart';
 import '../users/admin/HomePageAdmin.dart';
 
 class DrawerCubit extends Cubit<Widget> {

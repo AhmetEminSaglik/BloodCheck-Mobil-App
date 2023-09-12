@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:auto_orientation/auto_orientation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_harpia_health_analysis/Pages/CustomWidgets/linechart/LineChartDaily.dart';
@@ -20,21 +21,22 @@ import 'package:flutter_harpia_health_analysis/util/IndexColorUtil.dart';
 import 'package:flutter_harpia_health_analysis/util/PatientTimerUtils.dart';
 import 'package:logger/logger.dart';
 
-import '../../../../business/QRCodeScanner.dart';
-import '../../../../httprequest/HttpRequestBloodResult.dart';
-import '../../../../httprequest/ResponseEntity.dart';
-import '../../../../model/bloodresult/BloodResult.dart';
-import '../../../../model/bloodresult/CheckboxBloodResultSubItem.dart';
-import '../../../../model/enums/bloodresult/EnumBloodResultContent.dart';
-import '../../../../util/CustomAlertDialog.dart';
-import '../../../../util/CustomSnackBar.dart';
-import '../../../../util/PermissionUtils.dart';
-import '../../../../util/ProductColor.dart';
-import '../../../CustomWidgets/CheckBoxVisibleBloodResultContent.dart';
-import '../../../CustomWidgets/linechart/BaseLineChart.dart';
-import '../../../CustomWidgets/linechart/LineChart6Monthly.dart';
-import '../../../CustomWidgets/linechart/LineChartWeekly.dart';
-import '../../../CustomWidgets/linechart/predata/BaseLineChartPreData.dart';
+import '../../../../../business/QRCodeScanner.dart';
+import '../../../../../httprequest/HttpRequestBloodResult.dart';
+import '../../../../../httprequest/ResponseEntity.dart';
+import '../../../../../model/bloodresult/BloodResult.dart';
+import '../../../../../model/bloodresult/CheckboxBloodResultSubItem.dart';
+import '../../../../../model/enums/bloodresult/EnumBloodResultContent.dart';
+import '../../../../../util/CustomAlertDialog.dart';
+import '../../../../../util/CustomSnackBar.dart';
+import '../../../../../util/PermissionUtils.dart';
+import '../../../../../util/ProductColor.dart';
+import '../../../../CustomWidgets/CheckBoxVisibleBloodResultContent.dart';
+import '../../../../CustomWidgets/linechart/BaseLineChart.dart';
+import '../../../../CustomWidgets/linechart/LineChart6Monthly.dart';
+import '../../../../CustomWidgets/linechart/LineChartWeekly.dart';
+import '../../../../CustomWidgets/linechart/predata/BaseLineChartPreData.dart';
+import 'DetailLineChartCubit.dart';
 import 'DetailLineChartPage.dart';
 
 class HomePagePatient extends StatefulWidget {
@@ -114,6 +116,9 @@ class _HomePagePatientState extends State<HomePagePatient> {
         );
         break;
     }
+    context
+        .read<DetailLineChartCubit>()
+        .updateBaseLineChart(activatedBaseLineChart);
     setState(() {});
   }
 
@@ -364,12 +369,13 @@ class _HomePagePatientState extends State<HomePagePatient> {
 
   void goToDetailedPage() {
     activatedBaseLineChart.aspectRadio = bigLineChartAspectRadio;
+    AutoOrientation.landscapeAutoMode();
     Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => DetailLineChartPage(
                   baseLineChart: activatedBaseLineChart,
-                )));
+                ))).then((value) => AutoOrientation.portraitAutoMode());
   }
 
   void scanQRCode() async {
@@ -434,8 +440,7 @@ class _HomePagePatientState extends State<HomePagePatient> {
           action: showAlertDialogSetUpPatientTimer,
           text: "Set Patient Timer",
           color: ProductColor.white,
-          backgroundColor: ProductColor.black
-      );
+          backgroundColor: ProductColor.black);
     } else {
       return SizedBox.shrink();
     }
@@ -477,9 +482,10 @@ class _HomePagePatientState extends State<HomePagePatient> {
     }
   }
 }
-int customBtnCounter=0;
-class _CustomButton extends StatelessWidget {
 
+int customBtnCounter = 0;
+
+class _CustomButton extends StatelessWidget {
   late final Function() action;
   late final String text;
   late final Color color;
@@ -492,12 +498,12 @@ class _CustomButton extends StatelessWidget {
       /*required this.*/ backgroundColor}) {
     if (color == null || backgroundColor == null) {
       this.color = ButtonItemColor.getTextColor(index: customBtnCounter);
-      this.backgroundColor = ButtonItemColor.getBackgroundColor(index: customBtnCounter);
+      this.backgroundColor =
+          ButtonItemColor.getBackgroundColor(index: customBtnCounter);
       customBtnCounter++;
-    }else{
-      this.color=color;
-      this.backgroundColor=backgroundColor;
-
+    } else {
+      this.color = color;
+      this.backgroundColor = backgroundColor;
     }
   }
 

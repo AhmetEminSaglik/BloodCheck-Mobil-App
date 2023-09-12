@@ -6,7 +6,7 @@ import 'package:flutter_harpia_health_analysis/util/SharedPrefUtils.dart';
 import 'package:logger/logger.dart';
 import '../../../../util/SafeLogoutDrawerItem.dart';
 import '../appbar/AppBarCubit.dart';
-import '../users/HomePageDoctor.dart';
+import '../users/doctor/HomePageDoctor.dart';
 
 class DoctorDrawer extends StatefulWidget {
   @override

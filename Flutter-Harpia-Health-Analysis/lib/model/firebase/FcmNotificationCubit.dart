@@ -9,14 +9,14 @@ class FcmNotificationCubit extends Cubit<bool> {
   FcmNotificationCubit() : super(false);
 
   void enableUpdatingPatientPage() {
-    log.e("Patient Page update is AVAILABLE");
+    // log.e("Patient Page update is AVAILABLE");
     isAllowedUpdatePatientPage = true;
     // emit(letPermissionFcmNotifyPatientPage); // if I add this line, retrive data 3 times.
     //if I do not add, it works just once.
   }
 
   void disableUpdatingPatientPage() {
-    log.e("Patient Page update is NOT AVAILABLE");
+    // log.e("Patient Page update is NOT AVAILABLE");
     isAllowedUpdatePatientPage = false;
     // emit(letPermissionFcmNotifyPatientPage);
   }
