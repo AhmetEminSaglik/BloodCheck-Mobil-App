@@ -1,0 +1,21 @@
+# IntelliJ IDEA
+.idea/
+*.iml
+# Other
+*.DS_Store
+*.log
+*.tmp
+*.tmp.*
+*.swp
+*.swo
+target/
+
+src/main/resources/aes-bloodcheck-project-firebase-adminsdk-wpxqn-156f2f1339.json
+src/main/todo.txt
+src/main/resources/google-services.json
+src/main/java/com/ahmeteminsaglik/ws/controller/firebase/FCMSendMessage.java
+todo.txt
+
+# Created by https://www.toptal.com/developers/gitignore/api/flutter
+# Edit at https://www.toptal.com/developers/gitignore?templates=flutter
+# End of https://www.toptal.com/developers/gitignore/api/flutter
