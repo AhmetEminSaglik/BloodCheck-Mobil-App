@@ -1,9 +1,9 @@
-import 'package:blood_check/Pages/afterlogin/homepage/appbar/AppBarCubit.dart';
-import 'package:blood_check/Pages/afterlogin/homepage/drawer/DrawerCubit.dart';
-import 'package:blood_check/Pages/afterlogin/homepage/users/doctor/HomePageDoctor.dart';
-import 'package:blood_check/Pages/afterlogin/profile/doctor/DoctorProfile.dart';
-import 'package:blood_check/util/SafeLogoutDrawerItem.dart';
-import 'package:blood_check/util/SharedPrefUtils.dart';
+import 'package:bloodcheck/Pages/afterlogin/homepage/appbar/AppBarCubit.dart';
+import 'package:bloodcheck/Pages/afterlogin/homepage/drawer/DrawerCubit.dart';
+import 'package:bloodcheck/Pages/afterlogin/homepage/users/doctor/HomePageDoctor.dart';
+import 'package:bloodcheck/Pages/afterlogin/profile/doctor/DoctorProfile.dart';
+import 'package:bloodcheck/util/SafeLogoutDrawerItem.dart';
+import 'package:bloodcheck/util/SharedPrefUtils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';

@@ -1,4 +1,4 @@
-package com.ahmeteminsaglik.blood_check
+package com.ahmeteminsaglik.bloodcheck
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,5 +1,5 @@
-import 'package:blood_check/model/bloodresult/CheckboxBloodResultSubItem.dart';
-import 'package:blood_check/model/enums/bloodresult/EnumBloodResultContent.dart';
+import 'package:bloodcheck/model/bloodresult/CheckboxBloodResultSubItem.dart';
+import 'package:bloodcheck/model/enums/bloodresult/EnumBloodResultContent.dart';
 
 class CheckBoxVisibleBloodResultContent {
   Map<String, CheckboxBloodResultSubItem> subItemMap = Map();

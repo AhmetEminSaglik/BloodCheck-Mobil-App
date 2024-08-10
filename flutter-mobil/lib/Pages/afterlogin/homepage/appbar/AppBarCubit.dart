@@ -1,5 +1,5 @@
-import 'package:blood_check/model/userrole/EnumUserRole.dart';
-import 'package:blood_check/util/SharedPrefUtils.dart';
+import 'package:bloodcheck/model/userrole/EnumUserRole.dart';
+import 'package:bloodcheck/util/SharedPrefUtils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';

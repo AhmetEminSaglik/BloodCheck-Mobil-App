@@ -1,4 +1,4 @@
-import 'package:blood_check/model/specialitem/doctor/PatientTimer.dart';
+import 'package:bloodcheck/model/specialitem/doctor/PatientTimer.dart';
 
 class PatientTimerUtils {
   static String getReadableFormat(PatientTimer timer) {

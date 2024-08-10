@@ -1,5 +1,5 @@
-import 'package:blood_check/model/LineChartData/LineChartSideTitle.dart';
-import 'package:blood_check/model/enums/linechart/bottomtitles/EnumLineChartBottomSideTitles.dart';
+import 'package:bloodcheck/model/LineChartData/LineChartSideTitle.dart';
+import 'package:bloodcheck/model/enums/linechart/bottomtitles/EnumLineChartBottomSideTitles.dart';
 
 import 'BaseLineChartPreData.dart';
 

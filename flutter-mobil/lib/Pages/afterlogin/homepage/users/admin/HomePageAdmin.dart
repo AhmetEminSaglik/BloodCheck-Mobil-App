@@ -1,5 +1,5 @@
-import 'package:blood_check/Pages/afterlogin/homepage/listview/doctor/ListviewBuilderDoctor.dart';
-import 'package:blood_check/Pages/afterlogin/homepage/listview/patient/ListviewBuilderPatient.dart';
+import 'package:bloodcheck/Pages/afterlogin/homepage/listview/doctor/ListviewBuilderDoctor.dart';
+import 'package:bloodcheck/Pages/afterlogin/homepage/listview/patient/ListviewBuilderPatient.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 

@@ -1,22 +1,22 @@
 import 'dart:convert';
 
-import 'package:blood_check/Product/CustomButton.dart';
-import 'package:blood_check/Product/FormCustomInput.dart';
-import 'package:blood_check/core/ResponsiveDesign.dart';
-import 'package:blood_check/httprequest/HttpRequestDoctor.dart';
-import 'package:blood_check/httprequest/HttpRequestPatient.dart';
-import 'package:blood_check/httprequest/ResponseEntity.dart';
-import 'package:blood_check/model/enums/diabetic/EnumDiabeticType.dart';
-import 'package:blood_check/model/user/Doctor.dart';
-import 'package:blood_check/model/userrole/EnumUserRole.dart';
-import 'package:blood_check/util/CustomAlertDialog.dart';
-import 'package:blood_check/util/ProductColor.dart';
+import 'package:bloodcheck/Product/CustomButton.dart';
+import 'package:bloodcheck/Product/FormCustomInput.dart';
+import 'package:bloodcheck/core/ResponsiveDesign.dart';
+import 'package:bloodcheck/httprequest/HttpRequestDoctor.dart';
+import 'package:bloodcheck/httprequest/HttpRequestPatient.dart';
+import 'package:bloodcheck/httprequest/ResponseEntity.dart';
+import 'package:bloodcheck/model/enums/diabetic/EnumDiabeticType.dart';
+import 'package:bloodcheck/model/user/Doctor.dart';
+import 'package:bloodcheck/model/userrole/EnumUserRole.dart';
+import 'package:bloodcheck/util/CustomAlertDialog.dart';
+import 'package:bloodcheck/util/ProductColor.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
-import 'package:blood_check/business/factory/UserFactory.dart';
-import 'package:blood_check/model/user/Patient.dart';
-import 'package:blood_check/model/user/User.dart';
+import 'package:bloodcheck/business/factory/UserFactory.dart';
+import 'package:bloodcheck/model/user/Patient.dart';
+import 'package:bloodcheck/model/user/User.dart';
 
 class PatientSignUpPage extends StatefulWidget {
   static var log = Logger(printer: PrettyPrinter(colors: false));

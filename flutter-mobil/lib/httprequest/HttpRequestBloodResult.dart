@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 
-import 'package:blood_check/business/factory/BloodResultFactory.dart';
+import 'package:bloodcheck/business/factory/BloodResultFactory.dart';
 import '../model/bloodresult/BloodResult.dart';
 import '../model/user/Patient.dart';
 import '../util/HttpUtil.dart';

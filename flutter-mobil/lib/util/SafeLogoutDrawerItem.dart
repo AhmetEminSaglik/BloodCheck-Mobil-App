@@ -1,4 +1,4 @@
-import 'package:blood_check/util/SharedPrefUtils.dart';
+import 'package:bloodcheck/util/SharedPrefUtils.dart';
 import 'package:flutter/material.dart';
 
 class SafeLogoutDrawerItem extends StatefulWidget {

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:blood_check/httprequest/BaseHttpRequest.dart';
-import 'package:blood_check/util/HttpUtil.dart';
+import 'package:bloodcheck/httprequest/BaseHttpRequest.dart';
+import 'package:bloodcheck/util/HttpUtil.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 

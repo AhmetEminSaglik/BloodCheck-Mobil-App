@@ -1,8 +1,8 @@
-import 'package:blood_check/core/ResponsiveDesign.dart';
-import 'package:blood_check/model/specialitem/doctor/PatientTimer.dart';
-import 'package:blood_check/model/specialitem/doctor/PatientTimerAlertBoxRespond.dart';
-import 'package:blood_check/model/userrole/EnumUserRole.dart';
-import 'package:blood_check/util/ProductColor.dart';
+import 'package:bloodcheck/core/ResponsiveDesign.dart';
+import 'package:bloodcheck/model/specialitem/doctor/PatientTimer.dart';
+import 'package:bloodcheck/model/specialitem/doctor/PatientTimerAlertBoxRespond.dart';
+import 'package:bloodcheck/model/userrole/EnumUserRole.dart';
+import 'package:bloodcheck/util/ProductColor.dart';
 import 'package:flutter/material.dart';
 
 import '../model/specialitem/doctor/PatientTimerWidget.dart';

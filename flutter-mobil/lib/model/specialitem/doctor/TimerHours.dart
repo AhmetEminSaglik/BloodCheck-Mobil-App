@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:blood_check/util/ProductColor.dart';
+import 'package:bloodcheck/util/ProductColor.dart';
 
 class TimerHours extends StatelessWidget {
   int hours;

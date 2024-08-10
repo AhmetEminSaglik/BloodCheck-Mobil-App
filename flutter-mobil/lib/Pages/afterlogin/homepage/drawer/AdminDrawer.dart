@@ -1,11 +1,11 @@
-import 'package:blood_check/Pages/afterlogin/homepage/appbar/AppBarCubit.dart';
-import 'package:blood_check/Pages/afterlogin/homepage/drawer/DrawerCubit.dart';
-import 'package:blood_check/Pages/afterlogin/homepage/users/admin/HomePageAdmin.dart';
-import 'package:blood_check/Pages/afterlogin/profile/admin/AdminProfile.dart';
-import 'package:blood_check/Pages/afterlogin/signuppage/DoctorSignUpPage.dart';
-import 'package:blood_check/Pages/afterlogin/signuppage/PatientSignUpPage.dart';
-import 'package:blood_check/util/SafeLogoutDrawerItem.dart';
-import 'package:blood_check/util/SharedPrefUtils.dart';
+import 'package:bloodcheck/Pages/afterlogin/homepage/appbar/AppBarCubit.dart';
+import 'package:bloodcheck/Pages/afterlogin/homepage/drawer/DrawerCubit.dart';
+import 'package:bloodcheck/Pages/afterlogin/homepage/users/admin/HomePageAdmin.dart';
+import 'package:bloodcheck/Pages/afterlogin/profile/admin/AdminProfile.dart';
+import 'package:bloodcheck/Pages/afterlogin/signuppage/DoctorSignUpPage.dart';
+import 'package:bloodcheck/Pages/afterlogin/signuppage/PatientSignUpPage.dart';
+import 'package:bloodcheck/util/SafeLogoutDrawerItem.dart';
+import 'package:bloodcheck/util/SharedPrefUtils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

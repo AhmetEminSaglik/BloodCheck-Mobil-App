@@ -1,8 +1,8 @@
-import 'package:blood_check/Pages/CustomWidgets/CheckBoxVisibleBloodResultContent.dart';
-import 'package:blood_check/Pages/CustomWidgets/linechart/predata/BaseLineChartPreData.dart';
-import 'package:blood_check/core/ResponsiveDesign.dart';
-import 'package:blood_check/model/enums/bloodresult/EnumBloodResultContent.dart';
-import 'package:blood_check/util/ProductColor.dart';
+import 'package:bloodcheck/Pages/CustomWidgets/CheckBoxVisibleBloodResultContent.dart';
+import 'package:bloodcheck/Pages/CustomWidgets/linechart/predata/BaseLineChartPreData.dart';
+import 'package:bloodcheck/core/ResponsiveDesign.dart';
+import 'package:bloodcheck/model/enums/bloodresult/EnumBloodResultContent.dart';
+import 'package:bloodcheck/util/ProductColor.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 

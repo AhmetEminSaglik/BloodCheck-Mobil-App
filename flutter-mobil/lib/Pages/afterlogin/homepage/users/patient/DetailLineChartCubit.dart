@@ -1,7 +1,7 @@
-import 'package:blood_check/Pages/CustomWidgets/CheckBoxVisibleBloodResultContent.dart';
-import 'package:blood_check/Pages/CustomWidgets/linechart/BaseLineChart.dart';
-import 'package:blood_check/Pages/CustomWidgets/linechart/LineChart6Monthly.dart';
-import 'package:blood_check/Pages/CustomWidgets/linechart/predata/LineChartPreDataMonthly.dart';
+import 'package:bloodcheck/Pages/CustomWidgets/CheckBoxVisibleBloodResultContent.dart';
+import 'package:bloodcheck/Pages/CustomWidgets/linechart/BaseLineChart.dart';
+import 'package:bloodcheck/Pages/CustomWidgets/linechart/LineChart6Monthly.dart';
+import 'package:bloodcheck/Pages/CustomWidgets/linechart/predata/LineChartPreDataMonthly.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DetailLineChartCubit extends Cubit<BaseLineChart> {

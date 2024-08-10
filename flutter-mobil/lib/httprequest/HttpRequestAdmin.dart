@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:blood_check/business/factory/UserFactory.dart';
-import 'package:blood_check/model/user/Admin.dart';
-import 'package:blood_check/util/HttpUtil.dart';
+import 'package:bloodcheck/business/factory/UserFactory.dart';
+import 'package:bloodcheck/model/user/Admin.dart';
+import 'package:bloodcheck/util/HttpUtil.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 

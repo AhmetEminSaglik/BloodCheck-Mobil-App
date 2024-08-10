@@ -1,7 +1,7 @@
-import 'package:blood_check/Pages/CustomWidgets/linechart/BaseLineChart.dart';
-import 'package:blood_check/Pages/afterlogin/homepage/users/patient/DetailLineChartCubit.dart';
-import 'package:blood_check/core/ResponsiveDesign.dart';
-import 'package:blood_check/util/AppBarUtil.dart';
+import 'package:bloodcheck/Pages/CustomWidgets/linechart/BaseLineChart.dart';
+import 'package:bloodcheck/Pages/afterlogin/homepage/users/patient/DetailLineChartCubit.dart';
+import 'package:bloodcheck/core/ResponsiveDesign.dart';
+import 'package:bloodcheck/util/AppBarUtil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

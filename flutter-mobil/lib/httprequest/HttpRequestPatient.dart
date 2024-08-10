@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-import 'package:blood_check/httprequest/BaseHttpRequest.dart';
-import 'package:blood_check/model/specialitem/doctor/PatientTimer.dart';
+import 'package:bloodcheck/httprequest/BaseHttpRequest.dart';
+import 'package:bloodcheck/model/specialitem/doctor/PatientTimer.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 
-import 'package:blood_check/business/factory/UserFactory.dart';
+import 'package:bloodcheck/business/factory/UserFactory.dart';
 import '../model/user/Doctor.dart';
 import '../model/user/Patient.dart';
 import '../util/HttpUtil.dart';

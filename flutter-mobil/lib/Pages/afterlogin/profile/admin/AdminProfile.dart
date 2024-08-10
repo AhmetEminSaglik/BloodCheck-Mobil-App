@@ -1,10 +1,10 @@
-import 'package:blood_check/Pages/afterlogin/profile/ProfilUpdatedCubit.dart';
-import 'package:blood_check/Product/CustomButton.dart';
-import 'package:blood_check/Product/CustomText.dart';
-import 'package:blood_check/core/ResponsiveDesign.dart';
-import 'package:blood_check/httprequest/HttpRequestAdmin.dart';
-import 'package:blood_check/model/user/Admin.dart';
-import 'package:blood_check/util/ProductColor.dart';
+import 'package:bloodcheck/Pages/afterlogin/profile/ProfilUpdatedCubit.dart';
+import 'package:bloodcheck/Product/CustomButton.dart';
+import 'package:bloodcheck/Product/CustomText.dart';
+import 'package:bloodcheck/core/ResponsiveDesign.dart';
+import 'package:bloodcheck/httprequest/HttpRequestAdmin.dart';
+import 'package:bloodcheck/model/user/Admin.dart';
+import 'package:bloodcheck/util/ProductColor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

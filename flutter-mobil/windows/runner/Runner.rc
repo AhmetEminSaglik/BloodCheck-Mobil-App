@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.ahmeteminsaglik" "\0"
-            VALUE "FileDescription", "blood_check" "\0"
+            VALUE "FileDescription", "bloodcheck" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "blood_check" "\0"
+            VALUE "InternalName", "bloodcheck" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2024 com.ahmeteminsaglik. All rights reserved." "\0"
-            VALUE "OriginalFilename", "blood_check.exe" "\0"
-            VALUE "ProductName", "blood_check" "\0"
+            VALUE "OriginalFilename", "bloodcheck.exe" "\0"
+            VALUE "ProductName", "bloodcheck" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

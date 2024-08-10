@@ -1,9 +1,9 @@
-import 'package:blood_check/Pages/afterlogin/homepage/users/doctor/HomePageDoctor.dart';
-import 'package:blood_check/core/ResponsiveDesign.dart';
-import 'package:blood_check/httprequest/HttpRequestDoctor.dart';
-import 'package:blood_check/model/user/Doctor.dart';
-import 'package:blood_check/util/IndexColorUtil.dart';
-import 'package:blood_check/util/ProductColor.dart';
+import 'package:bloodcheck/Pages/afterlogin/homepage/users/doctor/HomePageDoctor.dart';
+import 'package:bloodcheck/core/ResponsiveDesign.dart';
+import 'package:bloodcheck/httprequest/HttpRequestDoctor.dart';
+import 'package:bloodcheck/model/user/Doctor.dart';
+import 'package:bloodcheck/util/IndexColorUtil.dart';
+import 'package:bloodcheck/util/ProductColor.dart';
 import 'package:flutter/material.dart';
 
 class ListviewBuilderDoctor extends StatefulWidget {

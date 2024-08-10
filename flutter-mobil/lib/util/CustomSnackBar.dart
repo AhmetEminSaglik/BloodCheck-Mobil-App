@@ -1,5 +1,5 @@
-import 'package:blood_check/core/ResponsiveDesign.dart';
-import 'package:blood_check/util/ProductColor.dart';
+import 'package:bloodcheck/core/ResponsiveDesign.dart';
+import 'package:bloodcheck/util/ProductColor.dart';
 import 'package:flutter/material.dart';
 
 class CustomSnackBar {

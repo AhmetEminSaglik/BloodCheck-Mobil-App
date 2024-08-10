@@ -1,6 +1,7 @@
 # Flutter/Dart
 android/app/google-services.json
 lib/firebase_options.dart
+firebase.json
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies

@@ -1,10 +1,10 @@
 import 'package:auto_orientation/auto_orientation.dart';
-import 'package:blood_check/Pages/afterlogin/homepage/appbar/AppBarCubit.dart';
-import 'package:blood_check/Pages/afterlogin/homepage/drawer/DrawerCubit.dart';
-import 'package:blood_check/Pages/afterlogin/profile/ProfilUpdatedCubit.dart';
-import 'package:blood_check/firebase_options.dart';
-import 'package:blood_check/model/firebase/FcmNotificationCubit.dart';
-import 'package:blood_check/util/FcmTokenUtils.dart';
+import 'package:bloodcheck/Pages/afterlogin/homepage/appbar/AppBarCubit.dart';
+import 'package:bloodcheck/Pages/afterlogin/homepage/drawer/DrawerCubit.dart';
+import 'package:bloodcheck/Pages/afterlogin/profile/ProfilUpdatedCubit.dart';
+import 'package:bloodcheck/firebase_options.dart';
+import 'package:bloodcheck/model/firebase/FcmNotificationCubit.dart';
+import 'package:bloodcheck/util/FcmTokenUtils.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

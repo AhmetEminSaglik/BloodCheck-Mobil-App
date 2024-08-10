@@ -1,4 +1,4 @@
-import 'package:blood_check/Pages/CustomWidgets/linechart/BaseLineChart.dart';
+import 'package:bloodcheck/Pages/CustomWidgets/linechart/BaseLineChart.dart';
 import 'package:fl_chart/fl_chart.dart';
 
 class LineChart6Monthly extends BaseLineChart {

@@ -1,6 +1,6 @@
-import 'package:blood_check/Pages/afterlogin/homepage/listview/patient/ListviewBuilderPatient.dart';
-import 'package:blood_check/util/AppBarUtil.dart';
-import 'package:blood_check/util/PermissionUtils.dart';
+import 'package:bloodcheck/Pages/afterlogin/homepage/listview/patient/ListviewBuilderPatient.dart';
+import 'package:bloodcheck/util/AppBarUtil.dart';
+import 'package:bloodcheck/util/PermissionUtils.dart';
 import 'package:flutter/material.dart';
 
 class HomePageDoctor extends StatefulWidget {

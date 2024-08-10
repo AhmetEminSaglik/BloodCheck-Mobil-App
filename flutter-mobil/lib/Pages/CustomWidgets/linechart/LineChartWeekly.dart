@@ -1,5 +1,5 @@
-import 'package:blood_check/Pages/CustomWidgets/linechart/BaseLineChart.dart';
-import 'package:blood_check/core/ResponsiveDesign.dart';
+import 'package:bloodcheck/Pages/CustomWidgets/linechart/BaseLineChart.dart';
+import 'package:bloodcheck/core/ResponsiveDesign.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 

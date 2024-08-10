@@ -1,8 +1,8 @@
 import 'dart:math';
 
-import 'package:blood_check/model/LineChartData/BloodListSubItemsFlSpot.dart';
-import 'package:blood_check/model/LineChartData/LineChartSideTitle.dart';
-import 'package:blood_check/model/bloodresult/BloodResult.dart';
+import 'package:bloodcheck/model/LineChartData/BloodListSubItemsFlSpot.dart';
+import 'package:bloodcheck/model/LineChartData/LineChartSideTitle.dart';
+import 'package:bloodcheck/model/bloodresult/BloodResult.dart';
 import 'package:fl_chart/fl_chart.dart';
 
 abstract class BaseLineChartPreData {

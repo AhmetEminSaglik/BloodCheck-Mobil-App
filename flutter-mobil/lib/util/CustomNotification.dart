@@ -1,4 +1,4 @@
-import 'package:blood_check/util/ProductColor.dart';
+import 'package:bloodcheck/util/ProductColor.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:logger/logger.dart';
 

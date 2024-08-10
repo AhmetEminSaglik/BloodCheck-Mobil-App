@@ -1,5 +1,5 @@
-import 'package:blood_check/model/userrole/EnumUserRole.dart';
-import 'package:blood_check/util/SharedPrefUtils.dart';
+import 'package:bloodcheck/model/userrole/EnumUserRole.dart';
+import 'package:bloodcheck/util/SharedPrefUtils.dart';
 
 class PermissionUtils {
   static bool letRunForAdmin() {

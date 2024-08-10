@@ -1,6 +1,6 @@
 {
-    "name": "blood_check",
-    "short_name": "blood_check",
+    "name": "bloodcheck",
+    "short_name": "bloodcheck",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

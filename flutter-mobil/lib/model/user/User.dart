@@ -1,7 +1,7 @@
-import 'package:blood_check/exceptions/UnknowUserRoleIdException.dart';
-import 'package:blood_check/model/user/Admin.dart';
-import 'package:blood_check/model/user/Doctor.dart';
-import 'package:blood_check/model/userrole/EnumUserRole.dart';
+import 'package:bloodcheck/exceptions/UnknowUserRoleIdException.dart';
+import 'package:bloodcheck/model/user/Admin.dart';
+import 'package:bloodcheck/model/user/Doctor.dart';
+import 'package:bloodcheck/model/userrole/EnumUserRole.dart';
 
 import 'Patient.dart';
 

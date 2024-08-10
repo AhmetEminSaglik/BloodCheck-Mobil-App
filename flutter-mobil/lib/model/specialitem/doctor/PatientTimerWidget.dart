@@ -1,7 +1,7 @@
-import 'package:blood_check/core/ResponsiveDesign.dart';
-import 'package:blood_check/model/specialitem/doctor/PatientTimer.dart';
-import 'package:blood_check/util/CustomSnackBar.dart';
-import 'package:blood_check/util/ProductColor.dart';
+import 'package:bloodcheck/core/ResponsiveDesign.dart';
+import 'package:bloodcheck/model/specialitem/doctor/PatientTimer.dart';
+import 'package:bloodcheck/util/CustomSnackBar.dart';
+import 'package:bloodcheck/util/ProductColor.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 

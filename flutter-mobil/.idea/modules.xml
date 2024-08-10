@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/blood_check.iml" filepath="$PROJECT_DIR$/blood_check.iml" />
-      <module fileurl="file://$PROJECT_DIR$/android/blood_check_android.iml" filepath="$PROJECT_DIR$/android/blood_check_android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bloodcheck.iml" filepath="$PROJECT_DIR$/bloodcheck.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/bloodcheckandroid.iml" filepath="$PROJECT_DIR$/android/bloodcheckandroid.iml" />
     </modules>
   </component>
 </project>
