@@ -26,18 +26,25 @@ class FcmData {
   }
   static var log = Logger(printer: PrettyPrinter(colors: false));
   factory FcmData.fromJson(Map<String, dynamic> json) {
-    print('-----------');
+
+    log.i("Gelen Json : $json");
+
     json.forEach((key, value) {
    print('$key: $value\n');
  });
  print('-----------');
-    bool showNotification = bool.parse(json["showNotification"] as String);
-    int patientId = int.parse(json["patientId"] as String);
+
+    bool showNotification = bool.parse(json["showNotification"]  as String);
+    int? patientId;
+
+    if(json["patientId"]){
+    patientId = int.parse(json["patientId"] as String);
+    }
     int reasonCode = int.parse(json["reasonCode"] as String);
     return FcmData(
       msgTitle: json["msgTitle"] as String,
       msg: json["msg"] as String,
-      patientId: patientId,
+      patientId: 0,
       showNotification: showNotification,
       reasonCode: reasonCode,
       reasonSend: json["reasonSend"] as String,

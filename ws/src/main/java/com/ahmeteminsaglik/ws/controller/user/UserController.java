@@ -59,7 +59,7 @@ public class UserController {
 //        List<User> userList=service.findAll();
 //        passwordEncoder.matches()
         DataResult<User> result = loginService.validateLoginCredentials(loginCreds.getUsername(), loginCreds.getPassword());
-        System.out.println(result.getData().getId().getClass().getSimpleName());
+        System.out.println("Login process --> "+result.getData().getId().getClass().getSimpleName());
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 

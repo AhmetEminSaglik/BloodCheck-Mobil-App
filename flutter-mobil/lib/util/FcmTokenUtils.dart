@@ -19,6 +19,9 @@ class FcmTokenUtils {
 
   static Future<void> createToken() async {
     _token = (await FirebaseMessaging.instance.getToken())!;
+    FirebaseMessaging.instance.subscribeToTopic("Istanbul");
+    // FirebaseMessaging.instance.deleteToken();
+    // log.i("Token : $_token");
   }
 
   static String getToken() {
@@ -33,20 +36,21 @@ class FcmTokenUtils {
 
   static listenFcm(BuildContext context) {
     try {
-      log.e("NOTIFICAITON ALINDI");
+      log.i("NOTIFICAITON ALINDI");
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-        log.e("GELEN MESSAGE : \n$message");
+        log.i("GELEN MESSAGE : \n$message");
         print('-----------');
         print("message.notification.title : ${message.notification?.title}");
         print("message.notification.body : ${message.notification?.body}");
         print('-----------');
-        FcmData fcmData = parseMapToFcmData(message.data);
+        // FcmData fcmData = parseMapToFcmData(message.data);
+        // log.i("gelen fcm : \n $fcmData");
 
-        processSendReason(context, fcmData);
-        if (fcmData.showNotification) {
+        // processSendReason(context, fcmData);
+        // if (fcmData.showNotification) {
           CustomNotificationUtil.showNotification(
-              fcmData.msgTitle, fcmData.msg);
-        }
+              message.notification?.title ??"deneme", message.notification?.body ?? "Body denmee");
+        // }
       });
     } catch (e) {
       // log.error(msgTitle: "FcmTokenUtils Exception", msg: "$e");

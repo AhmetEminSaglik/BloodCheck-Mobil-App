@@ -37,7 +37,7 @@ class FcmNotificationCubit extends Cubit<bool> {
   }
 
   void enableUpdateSensorTimer() {
-    log.e("SENSOR  update is AVAILABLE");
+    log.i("SENSOR  update is AVAILABLE");
     updateSensorTimer = true;
     emit(updateSensorTimer);
   }

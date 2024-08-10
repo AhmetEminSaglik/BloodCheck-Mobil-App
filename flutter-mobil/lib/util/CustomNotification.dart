@@ -26,8 +26,10 @@ class CustomNotificationUtil {
   }
 
   static Future<void> showNotification(String title, String msg) async {
+    log.i("ShowNotification'a girdi");
     var androidNotificationDetail = AndroidNotificationDetails(
-        ("channel Id"), "channel Name",
+        // "channel Id", "channel Name",
+        "0","general",
         channelDescription: "Demo channel description",
         priority: Priority.high,
         importance: Importance.max,

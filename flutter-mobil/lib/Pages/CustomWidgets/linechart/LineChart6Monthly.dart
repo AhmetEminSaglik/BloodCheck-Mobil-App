@@ -9,7 +9,7 @@ class LineChart6Monthly extends BaseLineChart {
       required super.checkBoxVisibleBloodResultContent,
       double aspectRadio = 1.40})
       : super(aspectRadio: aspectRadio) {
-    extraMsg = "Not Completed Yet";
+    extraMsg = "Not Implemented Yet";
   }
 
   @override

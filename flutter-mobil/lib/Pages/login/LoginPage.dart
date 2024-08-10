@@ -14,6 +14,7 @@ import 'package:bloodcheck/util/CustomSnackBar.dart';
 import 'package:bloodcheck/util/FcmTokenUtils.dart';
 import 'package:bloodcheck/util/ProductColor.dart';
 import 'package:bloodcheck/util/SharedPrefUtils.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
@@ -44,11 +45,31 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     super.initState();
     autoLogin();
-    log.i("Created TOKEN :  ${FcmTokenUtils.getToken()}");
-    FcmTokenUtils.listenFcm(context);
-    CustomNotificationUtil.initialize();
+    // log.i("Created TOKEN :  ${FcmTokenUtils.getToken()}");
+    // FcmTokenUtils.listenFcm(context);
+    func();
   }
+void func() async{
+await  CustomNotificationUtil.initialize();
+   // FirebaseMessaging.instance;
+   await FirebaseMessaging.instance.getToken();
+  await FirebaseMessaging.instance.subscribeToTopic("Istanbul");
+   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+     log.i("GELEN MESSAGE : \n$message");
+     print('-----------');
+     print("message.notification.title : ${message.notification?.title}");
+     print("message.notification.body : ${message.notification?.body}");
+     print('-----------');
+     // FcmData fcmData = parseMapToFcmData(message.data);
+     // log.i("gelen fcm : \n $fcmData");
 
+     // processSendReason(context, fcmData);
+     // if (fcmData.showNotification) {
+     CustomNotificationUtil.showNotification(
+         message.notification?.title ??"deneme", message.notification?.body ?? "Body denmee");
+     // }
+   });
+}
   void autoLogin() async {
     await SharedPrefUtils.initiliazeSharedPref();
     String username = SharedPrefUtils.getUsername();
