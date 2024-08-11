@@ -9,4 +9,8 @@ public interface FcmTokenService {
     FcmToken findByToken(String token);
 
     FcmToken findByUserId(long patientId);
+
+    FcmToken findByUserIdAndToken(long patientId, String token);
+
+    void delete(FcmToken fcmToken);
 }

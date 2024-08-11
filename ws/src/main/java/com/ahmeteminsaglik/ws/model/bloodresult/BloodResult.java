@@ -26,10 +26,10 @@ public class BloodResult {
     @Column(name = "magnesium")
     private int magnesium;
     @Column(name = "created_at", columnDefinition = "TIMESTAMP")
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     public BloodResult(int counter) {
-        createdAt = LocalDateTime.now().minusMinutes(counter);
+        createdAt.minusMinutes(counter);
     }
 
     public Long getId() {

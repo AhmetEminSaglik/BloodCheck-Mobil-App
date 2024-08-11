@@ -1,18 +1,16 @@
 package com.ahmeteminsaglik.ws.controller.user;
 
 import com.ahmeteminsaglik.ws.business.abstracts.login.LoginValidationService;
+import com.ahmeteminsaglik.ws.business.abstracts.user.UserService;
 import com.ahmeteminsaglik.ws.business.concretes.login.LoginCredentialsValidation;
 import com.ahmeteminsaglik.ws.dataaccess.user.UserRepository;
 import com.ahmeteminsaglik.ws.model.LoginCredentials;
-import com.ahmeteminsaglik.ws.model.users.Patient;
 import com.ahmeteminsaglik.ws.model.users.User;
-import com.ahmeteminsaglik.ws.business.abstracts.user.UserService;
 import com.ahmeteminsaglik.ws.utility.CustomLog;
 import com.ahmeteminsaglik.ws.utility.result.DataResult;
 import com.ahmeteminsaglik.ws.utility.result.SuccessDataResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -59,9 +57,8 @@ public class UserController {
 //        List<User> userList=service.findAll();
 //        passwordEncoder.matches()
         DataResult<User> result = loginService.validateLoginCredentials(loginCreds.getUsername(), loginCreds.getPassword());
-        System.out.println("Login process --> "+result.getData().getId().getClass().getSimpleName());
+        System.out.println("Login process --> " + result.getData().getId());
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
-
 }
 

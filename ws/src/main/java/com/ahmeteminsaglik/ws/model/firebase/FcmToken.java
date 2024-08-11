@@ -5,11 +5,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
+
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "firebase_tokens", uniqueConstraints = @UniqueConstraint(columnNames = "user_id"))
+@Table(name = "firebase_tokens"/*, uniqueConstraints = @UniqueConstraint(columnNames = "user_id")*/)
 public class FcmToken {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,5 +30,17 @@ public class FcmToken {
                 ", userId=" + userId +
                 ", token='" + token + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof FcmToken fcmToken)) return false;
+        return userId == fcmToken.userId && Objects.equals(token, fcmToken.token);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId, token);
     }
 }

@@ -49,6 +49,8 @@ public class BloodResultAssessmentManager implements BloodResultAssessmentServic
             FcmMessage fcmMessage = createFcmMessage(bloodResult.getPatientId(), subItemMap);
 //            fcmMessage.getData().setPatientId(bloodResult.getPatientId());
             Patient patient = patientService.findById(bloodResult.getPatientId());
+            fcmMessage.setTo(fcmTokenService.findByUserId(patient.getId()).getToken());
+            System.out.println("gelen token : "+fcmMessage.getTo());
             sendMsgToPatient(fcmMessage);
 
             patientFullName = " " + patient.getName() + " " + patient.getLastname();

@@ -14,10 +14,6 @@ public class FcmTokenManager implements FcmTokenService {
     @Autowired
     TokenRepository repository;
 
-    public FcmTokenManager() {
-        log.info("FCM TOKEN MANAGER IS CREATED > TokenRepository : "+repository);
-    }
-
     @Override
     public FcmToken save(FcmToken fcmToken) {
         return repository.save(fcmToken);
@@ -31,5 +27,15 @@ public class FcmTokenManager implements FcmTokenService {
     @Override
     public FcmToken findByUserId(long patientId) {
         return repository.findByUserId(patientId);
+    }
+
+    @Override
+    public FcmToken findByUserIdAndToken(long patientId, String token) {
+        return repository.findByUserIdAndToken(patientId, token);
+    }
+
+    @Override
+    public void delete(FcmToken fcmToken) {
+        repository.delete(fcmToken);
     }
 }

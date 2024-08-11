@@ -11,4 +11,5 @@ public interface PatientTimerService {
 
     List<PatientTimer> findAll();
 
+    PatientTimer update(PatientTimer patientTimer);
 }

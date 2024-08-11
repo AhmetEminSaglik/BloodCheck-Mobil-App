@@ -1,7 +1,6 @@
 package com.ahmeteminsaglik.ws.controller.timer;
 
 import com.ahmeteminsaglik.ws.business.abstracts.firebase.notification.FcmService;
-import com.ahmeteminsaglik.ws.business.abstracts.firebase.token.FcmTokenService;
 import com.ahmeteminsaglik.ws.business.abstracts.timer.PatientTimerService;
 import com.ahmeteminsaglik.ws.controller.firebase.FcmTokenController;
 import com.ahmeteminsaglik.ws.model.enums.EnumFcmMessageReason;
@@ -41,15 +40,21 @@ public class PatientTimerController {
         if (newPatientTimer == null) {
             newPatientTimer = service.save(patientTimer);
             msg = "Patient Timer is created";
-        } else {
-            newPatientTimer.setHours(patientTimer.getHours());
-            newPatientTimer.setMinutes(patientTimer.getMinutes());
-            newPatientTimer = service.save(newPatientTimer);
-            msg = "Patient Timer is updated";
-//            log.info("PATIENT TIMER UPDATE FCMMSG GONDERILECEK");
-//            log.info("FcmTokenController :"+fcmTokenController);
-            sendFcmMessage(patientTimer.getPatientId());
+        DataResult result = new SuccessDataResult(newPatientTimer, msg);
+        return ResponseEntity.status(HttpStatus.CREATED).body(result);
         }
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+    }
+
+    @PutMapping()
+    public ResponseEntity<DataResult<PatientTimer>> updatePatientTimer(@RequestBody PatientTimer patientTimer) {
+        PatientTimer newPatientTimer = service.findByPatientId(patientTimer.getPatientId());
+
+        service.update(patientTimer);
+        String msg = "Patient Timer is updated";
+        sendFcmMessage(patientTimer.getPatientId());
+
         DataResult result = new SuccessDataResult(newPatientTimer, msg);
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
@@ -113,7 +118,7 @@ public class PatientTimerController {
 //        log.info(" TOKEN : Alicak " + fcmTokenService.findByUserId(patientId).getToken());
 //        log.info(" fcmTokenService  " + fcmTokenService);
 //        String token = fcmTokenService.findByUserId(patientId).getToken();
-        String token = Objects.requireNonNull(fcmTokenController.findTokenByPatientId(patientId).getBody()).getData().getToken();
+        String token = Objects.requireNonNull(fcmTokenController.findTokenByUserId(patientId).getBody()).getData().getToken();
         fcmMessage.setTo(token);
         fcmMessage.setNotification(notification);
         fcmMessage.setData(data);
