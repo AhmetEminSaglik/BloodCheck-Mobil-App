@@ -87,14 +87,13 @@ class FcmTokenUtils {
   }
 
   static FcmData parseMapToFcmData(Map<String, dynamic> map) {
-    // String data = "";
-    /*for (var entry in map.entries) {
-      log.info("entry.key : ${entry.key}");
-      log.info("entry.value : ${entry.value}");
+    String data = "";
+    for (var entry in map.entries) {
+      print("-> key-value >>> : [${entry.key}] =[${entry.value}]");
       data += entry.value;
     }
-    log.info("DATA : $data ");
-    log.info("map : $map ");*/
+    log.i("DATA : $data ");
+    log.i("map : $map ");
     FcmMessage message = FcmMessageFactory.createFcmMessage(map);
     return message.fcmData;
     /* log.info("FcmMessage : $message");

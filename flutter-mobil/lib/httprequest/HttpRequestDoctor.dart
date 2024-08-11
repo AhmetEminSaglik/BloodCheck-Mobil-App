@@ -55,7 +55,7 @@ class HttpRequestDoctor {
       "minutes": patientTimer.minutes,
       "patientId": patientTimer.patientId,
     };
-    var resp = await http.post(url,
+    var resp = await http.put(url,
         headers: HttpUtil.header, body: jsonEncode(requestData));
     return resp;
   }

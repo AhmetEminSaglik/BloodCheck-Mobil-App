@@ -53,7 +53,7 @@ abstract class BaseLineChartPreData {
     });
     _minY = yIndexValue.reduce(min);
     _maxY = yIndexValue.reduce(max);
-    _lineChartMaxY = _maxY + 25;
+    _lineChartMaxY = _maxY + 10;
     _lineChartMinY = _minY - 25;
     bloodListSubItemsFlSpot.bloodSugarList.forEach((element) {});
   }

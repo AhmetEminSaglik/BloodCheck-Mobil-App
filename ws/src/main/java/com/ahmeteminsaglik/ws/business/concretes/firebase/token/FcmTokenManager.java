@@ -7,6 +7,8 @@ import com.ahmeteminsaglik.ws.utility.CustomLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class FcmTokenManager implements FcmTokenService {
     private static CustomLog log = new CustomLog(FcmTokenManager.class);
@@ -27,6 +29,11 @@ public class FcmTokenManager implements FcmTokenService {
     @Override
     public FcmToken findByUserId(long patientId) {
         return repository.findByUserId(patientId);
+    }
+
+    @Override
+    public List<FcmToken> findAllByUserId(long patientId) {
+        return repository.findAllByUserId(patientId);
     }
 
     @Override

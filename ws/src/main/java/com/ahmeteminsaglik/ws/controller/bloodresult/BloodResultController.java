@@ -32,7 +32,9 @@ public class BloodResultController {
 
     @GetMapping
     public ResponseEntity<DataResult<BloodResult>> findAllBloodResult() {
+        log.info("Butun BloodResultlar aliniyor");
         List<BloodResult> list = service.findAllPatientByOrderByIdDesc();
+        log.info("Butun BloodResultlar list'eye atandi : "+list.size());
         String msg = "All Blood Results are retrived. Size : " + list.size() + '.';
         DataResult dataResult = new SuccessDataResult(list, msg);
         return ResponseEntity.status(HttpStatus.OK).body(dataResult);

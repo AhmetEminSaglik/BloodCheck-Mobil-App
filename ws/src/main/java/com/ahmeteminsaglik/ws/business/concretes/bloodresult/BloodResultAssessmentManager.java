@@ -12,6 +12,7 @@ import com.ahmeteminsaglik.ws.model.enums.EnumFcmMessageReason;
 import com.ahmeteminsaglik.ws.model.firebase.FcmData;
 import com.ahmeteminsaglik.ws.model.firebase.FcmMessage;
 import com.ahmeteminsaglik.ws.model.firebase.FcmNotification;
+import com.ahmeteminsaglik.ws.model.firebase.FcmToken;
 import com.ahmeteminsaglik.ws.model.users.Patient;
 import com.ahmeteminsaglik.ws.utility.CustomLog;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.awt.*;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -46,10 +48,12 @@ public class BloodResultAssessmentManager implements BloodResultAssessmentServic
 
 //        sendFcmMessage(bloodResult.getPatientId(), subItemMap);
         try {
+
             FcmMessage fcmMessage = createFcmMessage(bloodResult.getPatientId(), subItemMap);
+            System.out.println("Gelen FCM Message : "+fcmMessage);;
 //            fcmMessage.getData().setPatientId(bloodResult.getPatientId());
             Patient patient = patientService.findById(bloodResult.getPatientId());
-            fcmMessage.setTo(fcmTokenService.findByUserId(patient.getId()).getToken());
+            fcmMessage.setTo(fcmTokenService.findAllByUserId(patient.getId()).getLast().getToken());
             System.out.println("gelen token : "+fcmMessage.getTo());
             sendMsgToPatient(fcmMessage);
 
@@ -66,7 +70,13 @@ public class BloodResultAssessmentManager implements BloodResultAssessmentServic
 
     private void sendMsgToDoctorOfPatient(long patientId, FcmMessage fcmMessage) {
         long doctorId = patientService.findById(patientId).getDoctorId();
-        String token = fcmTokenService.findByUserId(doctorId).getToken();
+//        String token = fcmTokenService.findByUserId(doctorId).getToken();
+        List<FcmToken> list = fcmTokenService.findAllByUserId(doctorId);
+        if (list.isEmpty()) {
+            log.info("Doctor has not been login before. Could not send Notification to Doctor");
+            return;
+        }
+        String token = fcmTokenService.findAllByUserId(doctorId).getLast().getToken();
         fcmMessage.setTo(token);
 
         if (fcmMessage.getData().isShowNotification()) {
@@ -75,9 +85,13 @@ public class BloodResultAssessmentManager implements BloodResultAssessmentServic
             sbTitle.insert(dangerous.length(), patientFullName.toUpperCase());
             fcmMessage.getData().setMsgTitle(sbTitle.toString());
 
+            String body = "Patient's blood result values are out of normal bounds.";
+
+//            body = fcmService.generateTextWithHtmlColor(body,Color.);
             FcmNotification notification = fcmMessage.getNotification();
             notification.setTitle(notification.getTitle() + ": " + patientFullName);
-            notification.setBody("Patient's blood result values are out of normal bounds.");
+//            notification.setBody("Patient's blood result values are out of normal bounds.");
+            notification.setBody(body);
         }
         fcmService.sendNotification(fcmMessage);
     }
@@ -119,24 +133,27 @@ public class BloodResultAssessmentManager implements BloodResultAssessmentServic
             msgTitle.append(createFcmMsgTitle("- LOW", Color.BLUE));
         }
 
-        String token = fcmTokenService.findByUserId(patientId).getToken();
+        String token = fcmTokenService.findAllByUserId(patientId).getLast().getToken();
+//        System.out.println("gelen First " + fcmTokenService.findAllByUserId(patientId).getLast());
         FcmNotification notification = new FcmNotification();
 
         FcmData data = new FcmData();
         if (msgTitle.toString().contains(dangerous)) {
             data.setShowNotification(true);
+//            notification.setTitle(fcmService.generateTextWithHtmlColor("DANGEROUS",Color.RED));
             notification.setTitle("DANGEROUS");
             notification.setBody("You should have a look urgently");
-            data.setPatientId(patientId);
             data.setMsgTitle(msgTitle.toString());
-            data.setReasonCode(EnumFcmMessageReason.UPDATE_LINE_CHART.getCode());
-            data.setReasonSend(EnumFcmMessageReason.UPDATE_LINE_CHART.getReason());
+
             data.setMsg(msgBody.toString());
         } else {
             data.setShowNotification(false);
             notification.setTitle("");
             notification.setBody("");
         }
+        data.setPatientId(patientId);
+        data.setReasonCode(EnumFcmMessageReason.UPDATE_LINE_CHART.getCode());
+        data.setReasonSend(EnumFcmMessageReason.UPDATE_LINE_CHART.getReason());
 
         FcmMessage fcmMessage = fcmService.generateFcmMsg(token, notification, data);
         return fcmMessage;

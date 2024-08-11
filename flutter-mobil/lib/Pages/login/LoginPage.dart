@@ -8,6 +8,7 @@ import 'package:bloodcheck/business/factory/UserFactory.dart';
 import 'package:bloodcheck/core/ResponsiveDesign.dart';
 import 'package:bloodcheck/httprequest/HttpRequestUser.dart';
 import 'package:bloodcheck/httprequest/ResponseEntity.dart';
+import 'package:bloodcheck/model/firebase/FcmData.dart';
 import 'package:bloodcheck/model/user/User.dart';
 import 'package:bloodcheck/util/CustomNotification.dart';
 import 'package:bloodcheck/util/CustomSnackBar.dart';
@@ -49,27 +50,34 @@ class _LoginPageState extends State<LoginPage> {
     // FcmTokenUtils.listenFcm(context);
     func();
   }
-void func() async{
-await  CustomNotificationUtil.initialize();
-   // FirebaseMessaging.instance;
-   await FirebaseMessaging.instance.getToken();
-  await FirebaseMessaging.instance.subscribeToTopic("Istanbul");
-   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-     log.i("GELEN MESSAGE : \n$message");
-     print('-----------');
-     print("message.notification.title : ${message.notification?.title}");
-     print("message.notification.body : ${message.notification?.body}");
-     print('-----------');
-     // FcmData fcmData = parseMapToFcmData(message.data);
-     // log.i("gelen fcm : \n $fcmData");
 
-     // processSendReason(context, fcmData);
-     // if (fcmData.showNotification) {
-     CustomNotificationUtil.showNotification(
-         message.notification?.title ??"deneme", message.notification?.body ?? "Body denmee");
-     // }
-   });
-}
+  void func() async {
+    await CustomNotificationUtil.initialize();
+    // FirebaseMessaging.instance;
+    await FirebaseMessaging.instance.getToken();
+    await FirebaseMessaging.instance.subscribeToTopic("Istanbul");
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      log.i("GELEN MESSAGE : \n$message");
+      print('-----------');
+      print("message.notification.title : ${message.notification?.title}");
+      print("message.notification.body : ${message.notification?.body}");
+      print('-----------');
+      FcmData fcmData = FcmTokenUtils.parseMapToFcmData(message.data);
+      log.i("gelen fcm : \n $fcmData");
+
+      FcmTokenUtils.processSendReason(context, fcmData);
+      if (fcmData.showNotification) {
+        String title = message.notification?.title ?? "";
+        String body = message.notification?.body ?? "";
+        if (!title.isEmpty) {
+          CustomNotificationUtil.showNotification(
+              message.notification?.title ?? "deneme",
+              message.notification?.body ?? "Body denmee");
+        }
+      }
+    });
+  }
+
   void autoLogin() async {
     await SharedPrefUtils.initiliazeSharedPref();
     String username = SharedPrefUtils.getUsername();
