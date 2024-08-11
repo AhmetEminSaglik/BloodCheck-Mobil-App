@@ -34,6 +34,12 @@ class SharedPrefUtils {
     HttpRequestFirebase.saveToken(fcmToken);
   }
 
+  static void deleteToken() {
+    FcmToken fcmToken = FcmToken(
+        userId: SharedPrefUtils.getUserId(), token: FcmTokenUtils.getToken());
+    HttpRequestFirebase.deleteToken(fcmToken);
+  }
+
   static int getRoleId() {
     var value = _sp.getInt(EnumUserProp.ROLE_ID.name);
     return value ?? -1;

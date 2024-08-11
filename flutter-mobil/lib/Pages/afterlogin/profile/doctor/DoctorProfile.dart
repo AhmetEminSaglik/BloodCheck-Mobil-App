@@ -50,61 +50,64 @@ class _DoctorProfileState extends State<DoctorProfile> {
   Widget build(BuildContext context) {
     retrieveData();
     return Scaffold(
+      // resizeToAvoidBottomInset: true,
       backgroundColor: ProductColor.bodyBackground,
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
-          : Padding(
-              padding: EdgeInsets.only(
-                left: ResponsiveDesign.getScreenWidth() / 20,
-                right: ResponsiveDesign.getCertainWidth() / 20,
-                top: ResponsiveDesign.getScreenHeight() / 40,
+          : SingleChildScrollView(
+            child: Padding(
+                padding: EdgeInsets.only(
+                  left: ResponsiveDesign.getScreenWidth() / 20,
+                  right: ResponsiveDesign.getCertainWidth() / 20,
+                  top: ResponsiveDesign.getScreenHeight() / 40,
+                ),
+                child: Column(
+                  children: [
+                    renderPage(),
+                    PermissionUtils.letRunForDoctor()
+                        ? Text(
+                            "My Profile",
+                            style: TextStyle(
+                              fontSize: ResponsiveDesign.getScreenHeight() / 30,
+                              color: ProductColor.black,
+                            ),
+                          )
+                        : Container(),
+                    _getProfileTitleForDoctor(),
+                    SizedBox(height: spaceHeight),
+                    PermissionUtils.letRunForDoctor()
+                        ? CustomTextWithSizeBox(
+                            space: spaceHeight,
+                            text1: "Username",
+                            text2: doctor.username.isNotEmpty
+                                ? doctor.username
+                                : unknowData,
+                          )
+                        : Container(),
+                    CustomTextWithSizeBox(
+                        space: spaceHeight,
+                        text1: "Name",
+                        text2: doctor.name.isNotEmpty ? doctor.name : unknowData),
+                    CustomTextWithSizeBox(
+                      space: spaceHeight,
+                      text1: "Lastname",
+                      text2: doctor.lastname.isNotEmpty
+                          ? doctor.lastname
+                          : unknowData,
+                    ),
+                    CustomTextWithSizeBox(
+                        space: spaceHeight,
+                        text1: "Specialization",
+                        text2: doctor.specialization),
+                    CustomTextWithSizeBox(
+                        space: spaceHeight,
+                        text1: "Graduate",
+                        text2: doctor.graduate),
+                    _getUpdateProfileButtonForDoctor(),
+                  ],
+                ),
               ),
-              child: Column(
-                children: [
-                  renderPage(),
-                  PermissionUtils.letRunForDoctor()
-                      ? Text(
-                          "My Profile",
-                          style: TextStyle(
-                            fontSize: ResponsiveDesign.getScreenHeight() / 30,
-                            color: ProductColor.black,
-                          ),
-                        )
-                      : Container(),
-                  _getProfileTitleForDoctor(),
-                  SizedBox(height: spaceHeight),
-                  PermissionUtils.letRunForDoctor()
-                      ? CustomTextWithSizeBox(
-                          space: spaceHeight,
-                          text1: "Username",
-                          text2: doctor.username.isNotEmpty
-                              ? doctor.username
-                              : unknowData,
-                        )
-                      : Container(),
-                  CustomTextWithSizeBox(
-                      space: spaceHeight,
-                      text1: "Name",
-                      text2: doctor.name.isNotEmpty ? doctor.name : unknowData),
-                  CustomTextWithSizeBox(
-                    space: spaceHeight,
-                    text1: "Lastname",
-                    text2: doctor.lastname.isNotEmpty
-                        ? doctor.lastname
-                        : unknowData,
-                  ),
-                  CustomTextWithSizeBox(
-                      space: spaceHeight,
-                      text1: "Specialization",
-                      text2: doctor.specialization),
-                  CustomTextWithSizeBox(
-                      space: spaceHeight,
-                      text1: "Graduate",
-                      text2: doctor.graduate),
-                  _getUpdateProfileButtonForDoctor(),
-                ],
-              ),
-            ),
+          ),
     );
   }
 

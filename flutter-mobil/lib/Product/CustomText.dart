@@ -67,7 +67,7 @@ class CustomText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: ResponsiveDesign.getScreenHeight() / 18,
+        height: ResponsiveDesign.getScreenHeight() / 13,
         decoration: BoxDecoration(
             color: backgroundColor,
             // border: Border.all(color: Colors.red, width: 2.5),

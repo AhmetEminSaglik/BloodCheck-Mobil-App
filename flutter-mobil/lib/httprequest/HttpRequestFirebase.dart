@@ -25,4 +25,18 @@ class HttpRequestFirebase {
         headers: HttpUtil.header, body: jsonEncode(requestData));
     log.i(" RESP Result : ${resp.body}");
   }
+
+  static void deleteToken(FcmToken fcmToken) async {
+    Uri url = Uri.parse(_baseUrl);
+    log.i("URL : ${url}");
+    log.i("Delete REQUEST TOKEN :  : ${fcmToken.token}");
+
+    Map<String, dynamic> requestData = {
+      "userId": fcmToken.userId,
+      "token": fcmToken.token,
+    };
+    var resp = await http.delete(url,
+        headers: HttpUtil.header, body: jsonEncode(requestData));
+    log.i(" RESP Result : ${resp.body}");
+  }
 }

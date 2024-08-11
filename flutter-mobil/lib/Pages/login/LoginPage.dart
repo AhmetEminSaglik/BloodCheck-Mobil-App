@@ -128,7 +128,7 @@ class _LoginPageLogo extends StatelessWidget {
       padding: EdgeInsets.only(bottom: ResponsiveDesign.getScreenHeight() / 50),
       child: SizedBox(
         width: ResponsiveDesign.getScreenWidth() / 4,
-        child: Image.asset("images/blood_icon_logo.png"),
+        child: Image.asset("assets/blood_icon_logo.png"),
       ),
     );
   }

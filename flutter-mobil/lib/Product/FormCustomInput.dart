@@ -115,5 +115,5 @@ class _InputTextFieldPadding extends StatelessWidget {
 
 class _TextFieldInputLength {
   static int min = 3;
-  static int max = 10;
+  static int max = 30;
 }
