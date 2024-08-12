@@ -11,6 +11,7 @@ public interface FcmTokenService {
     FcmToken findByToken(String token);
 
     FcmToken findByUserId(long patientId);
+
     List<FcmToken> findAllByUserId(long patientId);
 
     FcmToken findByUserIdAndToken(long patientId, String token);

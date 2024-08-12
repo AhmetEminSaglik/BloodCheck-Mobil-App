@@ -1,6 +1,5 @@
 Manifest-Version: 1.0
-Main-Class: ws.HarpiaHealthAnalysisWsAppl
- ication
+Main-Class: com.ahmeteminsaglik.ws.BloodCheckWsApplication
 Class-Path: istack-commons-runtime-3.0.12.jar jul-to-slf4j-1.7.33.jar cl
  assmate-1.5.1.jar opencensus-contrib-http-util-0.31.1.jar spring-webmvc
  -5.3.15.jar auto-value-annotations-1.9.jar gax-2.19.4.jar gax-grpc-2.19

@@ -35,7 +35,8 @@ public class FcmToken {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof FcmToken fcmToken)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
+        FcmToken fcmToken = (FcmToken) o;
         return userId == fcmToken.userId && Objects.equals(token, fcmToken.token);
     }
 

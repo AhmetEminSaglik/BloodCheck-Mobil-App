@@ -53,7 +53,10 @@ public class BloodResultAssessmentManager implements BloodResultAssessmentServic
             System.out.println("Gelen FCM Message : "+fcmMessage);;
 //            fcmMessage.getData().setPatientId(bloodResult.getPatientId());
             Patient patient = patientService.findById(bloodResult.getPatientId());
-            fcmMessage.setTo(fcmTokenService.findAllByUserId(patient.getId()).getLast().getToken());
+//            fcmMessage.setTo(fcmTokenService.findAllByUserId(patient.getId()).getLast().getToken());
+
+            List<FcmToken> list = fcmTokenService.findAllByUserId(patient.getId());
+            fcmMessage.setTo(list.get(list.size() - 1).getToken());
             System.out.println("gelen token : "+fcmMessage.getTo());
             sendMsgToPatient(fcmMessage);
 
@@ -76,7 +79,7 @@ public class BloodResultAssessmentManager implements BloodResultAssessmentServic
             log.info("Doctor has not been login before. Could not send Notification to Doctor");
             return;
         }
-        String token = fcmTokenService.findAllByUserId(doctorId).getLast().getToken();
+        String token = list.get(list.size() - 1).getToken();
         fcmMessage.setTo(token);
 
         if (fcmMessage.getData().isShowNotification()) {
@@ -132,8 +135,8 @@ public class BloodResultAssessmentManager implements BloodResultAssessmentServic
 
             msgTitle.append(createFcmMsgTitle("- LOW", Color.BLUE));
         }
-
-        String token = fcmTokenService.findAllByUserId(patientId).getLast().getToken();
+        List<FcmToken> list = fcmTokenService.findAllByUserId(patientId);
+        String token = list.get(list.size() - 1).getToken();
 //        System.out.println("gelen First " + fcmTokenService.findAllByUserId(patientId).getLast());
         FcmNotification notification = new FcmNotification();
 

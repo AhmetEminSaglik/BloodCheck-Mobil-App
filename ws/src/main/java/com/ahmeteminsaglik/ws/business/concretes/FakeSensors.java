@@ -1,5 +1,5 @@
-package com.ahmeteminsaglik.ws.business.concretes;/*
-package ws.business.concretes;
+/*
+package com.ahmeteminsaglik.ws.business.concretes;
 
 import com.ahmeteminsaglik.ws.business.abstracts.bloodresult.BloodResultService;
 import com.ahmeteminsaglik.ws.business.abstracts.firebase.notification.FcmService;
@@ -50,30 +50,26 @@ public class FakeSensors {
 //        System.out.println("PATITENT TIMER LIST SIZE :" + patientTimerList.size());
 //        this.bloodResultService
 //        List<Runnable> runableList = new ArrayList<>();
-        */
-/*List<Runnable> runableList = new ArrayList<>();
+List<Runnable> runableList = new ArrayList<>();
         patientTimerList.forEach(e -> {
             runableList.add(getBloodResultAndSaveToDB(e, bloodResultService));
         });
         for (int i = 0; i < patientTimerList.size(); i++) {
             addRunnableToExecutorService(runableList.get(i), patientTimerList.get(i));
-        }*//*
+        }
 
 
 //        bloodResultService=bloodResultService;
-      */
-/*  List<Runnable> runableList = new ArrayList<>();
+  List<Runnable> runableList = new ArrayList<>();
         patientTimerList.forEach(e -> {
             runableList.add(getRunnable(e));
         });
         for (int i = 0; i < patientTimerList.size(); i++) {3
             addRunnableToExecutorService(runableList.get(i), patientTimerList.get(i));
-        }*//*
+        }
 
 
     }
-*/
-/*
     public static void main(String[] args) {
         List<PatientTimer> patientTimerList = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
@@ -88,7 +84,7 @@ public class FakeSensors {
         }
 //        executorService.scheduleAtFixedRate(runnable2, 0, 1, TimeUnit.SECONDS);
     }
-*//*
+
 
 
 
@@ -132,8 +128,7 @@ public class FakeSensors {
                     bloodResultService.save(bloodResult);
                     bloodResultController.saveBloodResult(bloodResult);
 //                    sendFcmNotificationBloodResult(bloodResult);
-                  */
-/*  List<String> bloodResultSubItemNames = new ArrayList<>();
+  List<String> bloodResultSubItemNames = new ArrayList<>();
                     bloodResultSubItemNames.add("BloodSugar");
                     bloodResultSubItemNames.add("BloodPressure");
                     bloodResultSubItemNames.add("Calcium");
@@ -148,7 +143,7 @@ public class FakeSensors {
                         sendFcmNotification(bloodResultSubItemNames, bloodResulListValues);
                     } catch (Exception e) {
                         log.error("EXCEPTION OCCURED : " + e.getMessage());
-                    }*//*
+                    }
 
                     counter++;
 
@@ -236,15 +231,15 @@ public class FakeSensors {
 //                fcmMessage.getData().setShowNotification(true);
             } else if (bloodResult.getBloodPressure() > HighRangeBound) {
                 log.info("getBloodPressure is TOO HIGH : " + bloodResult.getBloodPressure());
-                String msg = "Blood Pressure : " + bloodResult.getBloodPressure() + "\nBlood Sugar : " + bloodResult.getBloodSugar();*/
-/* +
+                String msg = "Blood Pressure : " + bloodResult.getBloodPressure() + "\nBlood Sugar : " + bloodResult.getBloodSugar();
+ +
                         "\nAAAAAAAA : " + bloodResult.getBloodPressure() + "\nBlood Sugar : " + bloodResult.getBloodSugar() +
                         "\nBBBBBBB : " + bloodResult.getBloodPressure() + "\nBlood Sugar : " + bloodResult.getBloodSugar() +
                         "\nCCCCCCCCCC : " + bloodResult.getBloodPressure() + "\nBlood Sugar : " + bloodResult.getBloodSugar() +
                         "\nDDDDDDDD : " + bloodResult.getBloodPressure() + "\nBlood Sugar : " + bloodResult.getBloodSugar() +
                         "\nEEEEEEE : " + bloodResult.getBloodPressure() + "\nBlood Sugar : " + bloodResult.getBloodSugar() +
                         "\nFFFFFFFFF : " + bloodResult.getBloodPressure() + "\nBlood Sugar : " + bloodResult.getBloodSugar() +
-                        "\nGGGGGGGG : " + bloodResult.getBloodPressure() + "\nBlood Sugar : " + bloodResult.getBloodSugar();*//*
+                        "\nGGGGGGGG : " + bloodResult.getBloodPressure() + "\nBlood Sugar : " + bloodResult.getBloodSugar();
 
                 fcmMessage = getFcmMessageHighBoundRange(msg);
 //                fcmMessage.getData().setShowNotification(true);
