@@ -35,6 +35,16 @@ public class UserManager implements UserService {
     }
 
     @Override
+    public List<User> findAllByCreatedAtAfter(LocalDateTime localDateTime) {
+        return userRepository.findAllByCreatedAtAfter(localDateTime);
+    }
+
+    @Override
+    public void delete(User user) {
+        userRepository.delete(user);
+    }
+
+    @Override
     public User findById(long id) {
         return userRepository.findById(id).get();
     }

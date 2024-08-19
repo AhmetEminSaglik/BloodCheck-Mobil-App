@@ -21,4 +21,8 @@ public interface UserService {
     List<User> findAll();
 
     List<User> findAllByRoleId(int roleId);
+
+    List<User> findAllByCreatedAtAfter(LocalDateTime localDateTime);
+
+    void delete(User user);
 }

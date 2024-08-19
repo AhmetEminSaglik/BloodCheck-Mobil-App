@@ -1,0 +1,57 @@
+/* DeleteAccount.css */
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0; /* Arka plan rengi */
+  }
+  
+  .delete-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ekranın tamamını kaplar */
+  }
+  
+  .delete-card {
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #fff; /* Kart arka plan rengi */
+    width: 300px; /* Kart genişliği */
+  }
+  
+  .delete-title {
+    text-align: center;
+    color: #333; /* Başlık rengi */
+  }
+  
+  .delete-button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 4px;
+    border: none;
+    background-color: #e53935; /* Buton rengi */
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .delete-button:hover {
+    background-color: #c62828; /* Buton hover rengi */
+  }
+  
+  .delete-message {
+    text-align: center;
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  
+  .delete-message.success {
+    color: green; /* Başarılı mesaj rengi */
+  }
+  
+  .delete-message.error {
+    color: red; /* Hata mesajı rengi */
+  }

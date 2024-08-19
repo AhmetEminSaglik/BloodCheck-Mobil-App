@@ -22,7 +22,7 @@ public class AdminController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/save")
+    @PostMapping()
     public ResponseEntity<DataResult<User>> saveAdmin(@RequestBody Admin inputAdmin) {
         inputAdmin.setRoleId(EnumUserRole.ADMIN.getId());
         SignupUser signupUser = new SignupUser(userService);
