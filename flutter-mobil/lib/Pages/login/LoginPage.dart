@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:bloodcheck/Pages/afterlogin/homepage/appbar/AppBarCubit.dart';
@@ -274,6 +275,37 @@ class _LoginButton extends StatelessWidget {
       String username = tfUsername.text;
       String pass = tfPassword.text;
       ResponseEntity? respEntity;
+
+      try {
+        await login(username: username, password: pass)
+            .timeout(Duration(seconds: 5))
+            .then((value) => respEntity = value);
+
+        if (respEntity != null && !respEntity!.success) {
+          showInvalidUsernameOrPassword(
+              context: context, msg: respEntity!.message);
+        } else {
+          log.i("Gelen Data ${respEntity!.data}");
+          User user = UserFactory.createUser(respEntity!.data);
+          saveUserData(context, user);
+          navigateToHomePage(context: context, roleId: user.roleId);
+        }
+      } on TimeoutException {
+        String msg = "Timeout: Unable to reach the server.";
+        ScaffoldMessenger.of(context)
+            .showSnackBar(CustomSnackBar.getSnackBar(msg));
+      } catch (e) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(CustomSnackBar.getSnackBar(e.toString()));
+      }
+    }
+  }
+  /*void loginManuelProcess(BuildContext context) async {
+    bool controlResult = formKey.currentState!.validate();
+    if (controlResult) {
+      String username = tfUsername.text;
+      String pass = tfPassword.text;
+      ResponseEntity? respEntity;
       await login(username: username, password: pass)
           .then((value) => respEntity = value);
 
@@ -287,7 +319,7 @@ class _LoginButton extends StatelessWidget {
         navigateToHomePage(context: context, roleId: user.roleId);
       }
     }
-  }
+  }*/
 }
 
 Future<ResponseEntity?> login(

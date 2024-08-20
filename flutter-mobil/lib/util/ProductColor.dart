@@ -18,6 +18,7 @@ class ProductColor {
   static const _fLSpotColorBloodPressure = Color(0xFFBA13E8);
   static const _fLSpotColorMagnesium = Color(0xFF2630DE);
   static const _fLSpotColorCalcium = Color(0xFF0C806E);
+  static const _grey = Color(0xFF636363);
 
   static get darkBlue => _darkBlue;
 
@@ -32,6 +33,8 @@ class ProductColor {
   static get redAccent => _redAccent;
 
   static get pink => _pink;
+
+  static get grey => _grey;
 
   static get bodyBackground => _bodyBackground;
 

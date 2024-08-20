@@ -1,21 +1,47 @@
 # Flutter/Dart
+build/
+.dart_tool/
+pubspec.lock
+
+# IDE
+.idea/
+*.iml
+
+# Android
+android/.gradle/
+android/app/build/
 android/app/google-services.json
+
+# iOS
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/Pods/
+ios/Runner.xcworkspace/
+
+
+# macOS
+macos/Flutter/Flutter.framework
+macos/Flutter/Flutter.podspec
+
+# Windows
+windows/Flutter/Flutter.podspec
+windows/flutter/generated_plugin_registrant.cc
+windows/flutter/generated_plugins.cmake
+
+# Geçici dosyalar
+*.log
+*.tmp
+*.swp
+
+*.gradle
+*.jks
 lib/firebase_options.dart
 firebase.json
-.dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
 .packages
-pubspec.lock
-build/
-ios/Flutter/Flutter.framework
-ios/Flutter/Flutter.podspec
 ios/Flutter/Generated.xcconfig
-ios/Pods/
 ios/Podfile.lock
-ios/Runner.xcworkspace/
-android/.gradle/
-android/app/build/
 android/app/intermediates/
 android/app/outputs/
 android/local.properties
