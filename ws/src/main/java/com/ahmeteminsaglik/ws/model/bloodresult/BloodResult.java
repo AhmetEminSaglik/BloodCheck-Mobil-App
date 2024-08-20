@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 
 @Entity
 @NoArgsConstructor
@@ -26,7 +28,7 @@ public class BloodResult {
     @Column(name = "magnesium")
     private int magnesium;
     @Column(name = "created_at", columnDefinition = "TIMESTAMP")
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private OffsetDateTime createdAt = OffsetDateTime.now().withOffsetSameInstant(ZoneOffset.UTC);
 
     public BloodResult(int counter) {
         createdAt.minusMinutes(counter);
@@ -80,11 +82,11 @@ public class BloodResult {
         this.magnesium = magnesium;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public OffsetDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(OffsetDateTime createdAt) {
         this.createdAt = createdAt;
     }
 

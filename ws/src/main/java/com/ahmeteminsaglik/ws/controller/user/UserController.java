@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 @RestController
@@ -35,7 +37,7 @@ public class UserController {
 
     @GetMapping("/time/minutes/{min}")
     public ResponseEntity<DataResult<List<User>>> findByLastCreatedMinusMinutes(@PathVariable int min) {
-        LocalDateTime localDateTime = LocalDateTime.now().minusMinutes(min);
+        OffsetDateTime localDateTime = OffsetDateTime.now().minusMinutes(min);
         DataResult<List<User>> dataResult = new SuccessDataResult<>(service.findAllByCreatedAtAfter(localDateTime));
         return ResponseEntity.status(HttpStatus.OK).body(dataResult);
 
@@ -56,7 +58,12 @@ public class UserController {
 //        List<User> userList=service.findAll();
 //        passwordEncoder.matches()
         DataResult<User> result = loginService.validateLoginCredentials(loginCreds.getUsername(), loginCreds.getPassword());
-        System.out.println("Login process --> " + result.getData().getId());
+        if (result.getData() == null) {
+            System.out.println("Login is failed : Data is not found");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(result);
+        } else {
+            System.out.println("Login process --> " + result.getData().getId());
+        }
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 

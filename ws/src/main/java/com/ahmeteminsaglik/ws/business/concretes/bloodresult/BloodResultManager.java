@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Service
@@ -30,7 +31,7 @@ public class BloodResultManager implements BloodResultService {
     }
 
     @Override
-    public List<BloodResult> findAllByPatientIdAndCreatedAtAfter(int patientId, LocalDateTime time) {
+    public List<BloodResult> findAllByPatientIdAndCreatedAtAfter(int patientId, OffsetDateTime time) {
         return repository.findAllByPatientIdAndCreatedAtAfterOrderByIdDesc(patientId, time);
     }
 

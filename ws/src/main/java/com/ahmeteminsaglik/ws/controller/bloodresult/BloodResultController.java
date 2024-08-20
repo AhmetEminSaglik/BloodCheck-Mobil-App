@@ -15,10 +15,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 @RestController
 @RequestMapping("/bloodresults")
+@CrossOrigin
 public class BloodResultController {
     @Autowired
     BloodResultService service;
@@ -64,8 +67,12 @@ public class BloodResultController {
         if (min > sixMonth) {
             throw new InvalidRequestedBloodResultDateException(min);
         }
-        LocalDateTime time = LocalDateTime.now().minusMinutes(min);
+//        LocalDateTime time = OffsetDateTime.now().minusMinutes(min);
+        OffsetDateTime time = OffsetDateTime.now().minusMinutes(min);
         List<BloodResult> list = service.findAllByPatientIdAndCreatedAtAfter(patientId, time);
+//        OffsetDateTime tenDaysAgo = now.minusDays(10);
+
+
         String msg = "BloodResult List belongs to Patient ID " + patientId + " is retrived. Size : " + list.size() + '.';
         DataResult dataResult = new SuccessDataResult(list, msg);
         return ResponseEntity.status(HttpStatus.OK).body(dataResult);
@@ -74,8 +81,12 @@ public class BloodResultController {
     @GetMapping("/patient/{patientId}/sixmonth")
     public ResponseEntity<DataResult<List<BloodResult>>> findSixMonthBloodResultData(@PathVariable int patientId) {
         int sixMonth = 60 * 24 * 30 * 6;
-        LocalDateTime time = LocalDateTime.now().minusMinutes(sixMonth);
+//        LocalDateTime time = OffsetDateTime.now().minusMinutes(sixMonth);
+        OffsetDateTime time = OffsetDateTime.now().minusMinutes(sixMonth);
         List<BloodResult> list = service.findAllByPatientIdAndCreatedAtAfter(patientId, time);
+//        List<BloodResult> list = service.findAllByPatientIdAndCreatedAtAfter(patientId, time);
+
+
         String msg = "BloodResult List belongs to Patient ID " + patientId + " is retrived for 6 months data. Size of List is : " + list.size() + '.';
         DataResult dataResult = new SuccessDataResult(list, msg);
         return ResponseEntity.status(HttpStatus.OK).body(dataResult);

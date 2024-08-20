@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Service
@@ -35,7 +36,7 @@ public class UserManager implements UserService {
     }
 
     @Override
-    public List<User> findAllByCreatedAtAfter(LocalDateTime localDateTime) {
+    public List<User> findAllByCreatedAtAfter(OffsetDateTime localDateTime) {
         return userRepository.findAllByCreatedAtAfter(localDateTime);
     }
 
@@ -60,7 +61,7 @@ public class UserManager implements UserService {
     }
 
     @Override
-    public List<User> findAllByCreatedTimeAfter(LocalDateTime time) {
+    public List<User> findAllByCreatedTimeAfter(OffsetDateTime time) {
         return userRepository.findAllByCreatedAtAfter(time);
     }
 }
