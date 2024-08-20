@@ -13,7 +13,7 @@ const Login = ({ setIsAuthenticated }) => {
     e.preventDefault();
     setErrorMessage(''); // Önceki hata mesajını temizle
     try {
-      const response = await axios.post('http://localhost:8080/api/1.0/users/login', {
+      const response = await axios.post('http://52.213.25.200:8080/api/1.0/users/login', {
         username,
         password,
       });

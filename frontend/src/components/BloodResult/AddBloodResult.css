@@ -1,0 +1,58 @@
+/* AddBloodResult.css */
+body, html {
+    height: 100%; /* Sayfanın tamamını kapsaması için */
+    margin: 0; /* Varsayılan margin'i kaldır */
+    display: flex;
+    align-items: center; /* Dikey ortalama */
+    justify-content: center; /* Yatay ortalama */
+    background-color: #f0f0f0; /* Arka plan rengi */
+  }
+  .add-blood-result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  width: 500px;
+  margin: 0 auto; /* Sayfanın ortasında görünmesi için */
+}
+
+.input-group {
+  margin-bottom: 15px;
+  width: 80%; /* Genişliği tam yap */
+}
+
+input {
+  width: 100%; /* Genişliği tam yap */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+label {
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+button {
+  padding: 10px 15px;
+  width: 40%;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+/* AddBloodResult.css */
+.error {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}

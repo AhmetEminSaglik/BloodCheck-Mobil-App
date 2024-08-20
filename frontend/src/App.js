@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import Login from './Login'; // Login bileşenini içe aktar
-import DeleteAccount from './DeleteAccount'; // DeleteAccount bileşenini içe aktar
+import Login from './components/Login/Login'; // Login bileşenini içe aktar
+import DeleteAccount from './components/DeleteAccount/DeleteAccount'; // DeleteAccount bileşenini içe aktar
+import AddBloodResult from './components/BloodResult/AddBloodResult';
+// import PatientInfo from './components/PatientInfo/PatientInfo'; 
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -11,7 +13,10 @@ function App() {
       <Routes>
         <Route path="/login" 
         element={<Login setIsAuthenticated={setIsAuthenticated} />} />
-       
+       <Route path="/blood-results/add"
+       element={<AddBloodResult/>}/>
+          {/* <Route path="/patient-info" */}
+       {/* element={<PatientInfo/>}/> */}
         <Route path="/delete-account" 
         element={isAuthenticated ? <DeleteAccount /> : <Navigate to="/login" replace />} />
         <Route path="*" element={<Navigate to="/login" replace />} />

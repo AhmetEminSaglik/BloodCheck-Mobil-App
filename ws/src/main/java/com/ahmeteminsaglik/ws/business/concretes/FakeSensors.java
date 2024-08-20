@@ -1,10 +1,8 @@
-/*
 package com.ahmeteminsaglik.ws.business.concretes;
 
 import com.ahmeteminsaglik.ws.business.abstracts.bloodresult.BloodResultService;
 import com.ahmeteminsaglik.ws.business.abstracts.firebase.notification.FcmService;
 import com.ahmeteminsaglik.ws.business.abstracts.firebase.token.FcmTokenService;
-import com.ahmeteminsaglik.ws.business.concretes.firebase.notification.FcmManager;
 import com.ahmeteminsaglik.ws.controller.bloodresult.BloodResultController;
 import com.ahmeteminsaglik.ws.model.bloodresult.BloodResult;
 import com.ahmeteminsaglik.ws.model.firebase.FcmData;
@@ -12,8 +10,6 @@ import com.ahmeteminsaglik.ws.model.firebase.FcmMessage;
 import com.ahmeteminsaglik.ws.model.firebase.FcmNotification;
 import com.ahmeteminsaglik.ws.model.timer.PatientTimer;
 import com.ahmeteminsaglik.ws.utility.CustomLog;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.awt.*;
 import java.util.*;
@@ -22,16 +18,24 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-@Component
-public class FakeSensors {
-    ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
+//@Component
+public class FakeSensor {
+    private final long duration;
+    private final String name;
+
+    public FakeSensor(long duration, String name) {
+        this.duration = duration;
+        this.name = name;
+    }
+
+    //    ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
     Random random = new Random();
-    private static CustomLog log = new CustomLog(FakeSensors.class);
+    private static CustomLog log = new CustomLog(FakeSensor.class);
     FcmTokenService fcmTokenService;
     FcmService fcmService;
     BloodResultController bloodResultController;
 
-    public FakeSensors(BloodResultController bloodResultController, FcmTokenService fcmTokenService, FcmService fcmService) {
+    public FakeSensor(BloodResultController bloodResultController, FcmTokenService fcmTokenService, FcmService fcmService) {
         this.bloodResultController = bloodResultController;
         this.fcmTokenService = fcmTokenService;
         this.fcmService = fcmService;
@@ -339,4 +343,3 @@ List<Runnable> runableList = new ArrayList<>();
 
 
 }
-*/
