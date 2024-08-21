@@ -49,6 +49,45 @@ class CustomAlertDialog {
       ],
     );
   }
+  static AlertDialog getAlertDialogHowToLogin(
+      {required BuildContext context,
+        required String title,
+        // required String subTitle,
+        required String msg}) {
+
+    // int subTitleLines = _calculateLines(subTitle, ResponsiveDesign.getScreenWidth() / 20);
+    int msgLines = _calculateLines(msg, ResponsiveDesign.getScreenWidth() / 22);
+    // int totalLines = subTitleLines + msgLines;
+    double lineHeight = ResponsiveDesign.getScreenHeight() / 28;
+    double contentHeight = (msgLines * lineHeight) + ResponsiveDesign.getScreenHeight() / 50;
+
+    return AlertDialog(
+      title: Text("${EnumUserRole.getRoleName(3)} $title", textAlign: TextAlign.center),
+      content: SizedBox(
+        height: contentHeight,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              // Text(subTitle, style: TextStyle(fontSize: ResponsiveDesign.getScreenWidth() / 20,  color:Colors.green )),
+              SizedBox(height: ResponsiveDesign.getScreenHeight() / 50),
+              Text(msg, style: TextStyle(fontSize: ResponsiveDesign.getScreenWidth() / 22))
+            ],
+          ),
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text(
+            "Ok",
+            style: TextStyle(fontSize: ResponsiveDesign.getScreenWidth() / 20),
+          ),
+        ),
+      ],
+    );
+  }
 
   static int _calculateLines(String text, double fontSize) {
     // Satır sayısını hesapla

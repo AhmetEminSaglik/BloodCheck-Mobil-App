@@ -11,6 +11,7 @@ import 'package:bloodcheck/httprequest/HttpRequestUser.dart';
 import 'package:bloodcheck/httprequest/ResponseEntity.dart';
 import 'package:bloodcheck/model/firebase/FcmData.dart';
 import 'package:bloodcheck/model/user/User.dart';
+import 'package:bloodcheck/util/CustomAlertDialog.dart';
 import 'package:bloodcheck/util/CustomNotification.dart';
 import 'package:bloodcheck/util/CustomSnackBar.dart';
 import 'package:bloodcheck/util/FcmTokenUtils.dart';
@@ -116,7 +117,9 @@ class _LoginPageState extends State<LoginPage> {
                       formKey: formKey,
                       tfUsername: tfUsername,
                       tfPassword: tfPassword,
-                    )
+                    ),
+                    SizedBox(height: 25),
+                    _HelpButton()
                   ],
                 ),
               )
@@ -244,6 +247,42 @@ class _InputTextFormField extends StatelessWidget {
   }
 }
 
+class _HelpButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: ResponsiveDesign.getScreenWidth() / 1.5,
+      height: ResponsiveDesign.getScreenHeight() / 15,
+      child: CustomButton(
+        action: () {
+          String msg =
+              "username: doctor1"
+              "\npassword: pass"
+              "\nor"
+              "\nusername: patient1"
+              "\npassword: pass"
+              "\n\n5 Doctor and 20 patients"
+              "\nare saved for demo."
+              "\n\nYou can switch number"
+              "\nfor doctor 1-5,"
+              "\nfor patient 1-20."
+              "\n\nHopes you having fun.";
+          showDialog(
+              context: context,
+              builder: (builder) => CustomAlertDialog.getAlertDialogHowToLogin(
+                  context: context,
+                  title: "How to Login?",
+                  msg: msg));
+        },
+        textColor: ProductColor.white,
+        backgroundColor: ProductColor.bodyBackground,
+        text: "How to Login?",
+      ),
+    );
+    // TODO: implement build
+  }
+}
+
 class _LoginButton extends StatelessWidget {
   final TextEditingController tfUsername, tfPassword;
   GlobalKey<FormState> formKey;
@@ -300,7 +339,7 @@ class _LoginButton extends StatelessWidget {
       }
     }
   }
-  /*void loginManuelProcess(BuildContext context) async {
+/*void loginManuelProcess(BuildContext context) async {
     bool controlResult = formKey.currentState!.validate();
     if (controlResult) {
       String username = tfUsername.text;
