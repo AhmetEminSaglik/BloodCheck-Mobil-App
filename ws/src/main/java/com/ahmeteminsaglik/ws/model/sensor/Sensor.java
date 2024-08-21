@@ -23,7 +23,7 @@ public class Sensor {
     @Column
     private String code;
     @Column(name = "created_at", columnDefinition = "TIMESTAMP")
-    private OffsetDateTime createdAt = OffsetDateTime.now();
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     public long getId() {
         return id;
@@ -41,11 +41,11 @@ public class Sensor {
         this.code = code;
     }
 
-    public OffsetDateTime getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(OffsetDateTime createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 

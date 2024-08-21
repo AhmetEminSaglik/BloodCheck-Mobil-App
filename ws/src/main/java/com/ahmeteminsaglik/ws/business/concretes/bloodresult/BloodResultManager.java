@@ -31,7 +31,7 @@ public class BloodResultManager implements BloodResultService {
     }
 
     @Override
-    public List<BloodResult> findAllByPatientIdAndCreatedAtAfter(int patientId, OffsetDateTime time) {
+    public List<BloodResult> findAllByPatientIdAndCreatedAtAfter(int patientId, LocalDateTime time) {
         return repository.findAllByPatientIdAndCreatedAtAfterOrderByIdDesc(patientId, time);
     }
 

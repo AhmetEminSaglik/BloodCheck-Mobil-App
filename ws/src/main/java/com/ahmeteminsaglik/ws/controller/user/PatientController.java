@@ -14,10 +14,11 @@ import com.ahmeteminsaglik.ws.model.timer.PatientTimer;
 import com.ahmeteminsaglik.ws.model.users.Doctor;
 import com.ahmeteminsaglik.ws.model.users.Patient;
 import com.ahmeteminsaglik.ws.model.users.User;
-import com.ahmeteminsaglik.ws.utility.CustomLog;
 import com.ahmeteminsaglik.ws.utility.exception.response.FailedSendNotificationToDoctorException;
 import com.ahmeteminsaglik.ws.utility.result.DataResult;
 import com.ahmeteminsaglik.ws.utility.result.SuccessDataResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +30,7 @@ import java.util.List;
 @RequestMapping("/patients")
 @CrossOrigin
 public class PatientController {
-    private static CustomLog log = new CustomLog(PatientController.class);
+    private static final Logger log = LoggerFactory.getLogger(PatientController.class);
     @Autowired
     private UserService userService;
     @Autowired
@@ -43,11 +44,12 @@ public class PatientController {
 
     @PostMapping()
     public ResponseEntity<DataResult<User>> savePatient(@RequestBody Patient patient) {
+        log.info("POST > savePatient ");
         patient.setRoleId(EnumUserRole.PATIENT.getId());
         SignupUser signupUser = new SignupUser(userService);
         DataResult<User> dataResult = signupUser.signup(patient);
         patient = (Patient) dataResult.getData();
-
+        log.info("Patient is signup successfully.");
         saveDefaultPatientTimer(patient.getId());
         String token = "";
         try {
@@ -56,7 +58,7 @@ public class PatientController {
             if (token != null) {
                 FcmNotification fcmNotification = new FcmNotification();
                 String msgTitle = "New Patient Is Assigned";
-                String msgBody = patient.getName() + " " + patient.getLastname() + " is assigned to you";
+                String msgBody = patient.getName() + " " + patient.getLastname() + " is assigned to you.";
                 fcmNotification.setBody(msgBody);
                 fcmNotification.setTitle(msgTitle);
 
@@ -70,61 +72,66 @@ public class PatientController {
                 log.info(" FCM MESSAGE IS SEND : " + fcmMessage);
             }
         } catch (Exception e) {
-            log.error("Exception Occured : " + e.getMessage());
+            log.error("Exception OCCURRED : " + e.getMessage());
 
             if (dataResult.isSuccess() && token.isEmpty()) {
                 String msg = FailedSendNotificationToDoctorException.customErrorMsg + " " + dataResult.getMessage();
                 dataResult = new SuccessDataResult<>(dataResult.getData(), msg);
             }
-            log.info(" FCM GONDERILEMEDI ERROR OCCURED " + e.getMessage());
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(dataResult);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<DataResult<Patient>> findById(@PathVariable long id) {
+        log.info("GET > findById ");
+        log.info("(Param) Patient Id : " + id);
         Patient patient = (Patient) userService.findById(id);
-        DataResult<Patient> dataResult = new SuccessDataResult<>(patient, "Patient retrived Succesfully");
+        DataResult<Patient> dataResult = new SuccessDataResult<>(patient, "Patient is retrieved Successfully.");
+        log.info(dataResult.getMessage());
         return ResponseEntity.status(HttpStatus.OK).body(dataResult);
     }
 
     @GetMapping
     public ResponseEntity<DataResult<List<Patient>>> getPatientList() {
-        List<User> userList = userService.findAllByRoleId(EnumUserRole.PATIENT.getId());
-        String msg = "PatientList is retrived successfully";
-        DataResult result = new SuccessDataResult(userList, msg);
-        return ResponseEntity.status(HttpStatus.OK).body(result);
+        log.info("GET > getPatientList ");
+        List<Patient> patientList = patientService.findAll();
+        String msg = "All Patients are retrieved Successfully. (Size: " + patientList.size() + ")";
+        log.info(msg);
+        DataResult<List<Patient>> dataResult = new SuccessDataResult<>(patientList, msg);
+        return ResponseEntity.status(HttpStatus.OK).body(dataResult);
     }
 
     @GetMapping("/{id}/doctors")
     public ResponseEntity<DataResult<Doctor>> findResponsibleDoctorByPatientId(@PathVariable long id) {
-//        List<Patient> patientList = patientService.findAllPatientByDoctorId(id);
+        log.info("GET > findResponsibleDoctorByPatientId ");
+        log.info("(Param) Patient Id : " + id);
         DataResult<Doctor> result = null;
         try {
-            log.info("Given Patient Id : " + id);
             Patient patient = patientService.findById(id);
             long doctorId = patient.getDoctorId();
-            log.info("Found Doctor Id : " + doctorId);
+            log.info("Found Doctor Id : " + doctorId + " of patient.");
             Doctor doctor = (Doctor) userService.findById(doctorId);
-            log.info("Found Doctor Data : " + doctor);
-            String msg = "Doctor (" + doctor.getId() + ") who is responsible with patient ID(" + id + ") is retrieved";
-            result = new SuccessDataResult(doctor, msg);
+            String msg = "Doctor (" + doctor.getId() + ") who is responsible with patient ID(" + id + ") is retrieved.";
+            log.info(msg);
+            result = new SuccessDataResult<>(doctor, msg);
         } catch (Exception e) {
-            log.error("EXCEPTION OCCURED : " + e.getMessage());
+            log.error("EXCEPTION OCCURRED : " + e.getMessage());
         }
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
     @PutMapping()
     public ResponseEntity<DataResult<Patient>> updatePatient(@RequestBody Patient patient) {
-        log.info("Update Patient");
+        log.info("PUT > updatePatient ");
         patient = (Patient) userService.save(patient);
         String msg = "Patient is updated";
-        DataResult<Patient> result = new SuccessDataResult(patient, msg);
+        DataResult<Patient> result = new SuccessDataResult<>(patient, msg);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
     private void saveDefaultPatientTimer(long patientId) {
+        log.info("saveDefaultPatientTimer process is started.");
         PatientTimer patientTimer = new PatientTimer();
         patientTimer.setPatientId(patientId);
         timerController.savePatientTimer(patientTimer);

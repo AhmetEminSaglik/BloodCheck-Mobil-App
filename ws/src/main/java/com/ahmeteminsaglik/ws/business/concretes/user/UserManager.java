@@ -36,7 +36,7 @@ public class UserManager implements UserService {
     }
 
     @Override
-    public List<User> findAllByCreatedAtAfter(OffsetDateTime localDateTime) {
+    public List<User> findAllByCreatedAtAfter(LocalDateTime localDateTime) {
         return userRepository.findAllByCreatedAtAfter(localDateTime);
     }
 
@@ -61,7 +61,7 @@ public class UserManager implements UserService {
     }
 
     @Override
-    public List<User> findAllByCreatedTimeAfter(OffsetDateTime time) {
+    public List<User> findAllByCreatedTimeAfter(LocalDateTime time) {
         return userRepository.findAllByCreatedAtAfter(time);
     }
 }

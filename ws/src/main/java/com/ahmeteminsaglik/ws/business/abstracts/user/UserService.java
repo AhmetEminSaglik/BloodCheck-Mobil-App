@@ -17,13 +17,13 @@ public interface UserService {
 
     User findByUsername(String username);
 
-    List<User> findAllByCreatedTimeAfter(OffsetDateTime time);
+    List<User> findAllByCreatedTimeAfter(LocalDateTime time);
 
     List<User> findAll();
 
     List<User> findAllByRoleId(int roleId);
 
-    List<User> findAllByCreatedAtAfter(OffsetDateTime localDateTime);
+    List<User> findAllByCreatedAtAfter(LocalDateTime localDateTime);
 
     void delete(User user);
 }

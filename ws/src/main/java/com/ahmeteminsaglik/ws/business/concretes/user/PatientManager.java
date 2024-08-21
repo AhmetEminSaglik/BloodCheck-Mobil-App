@@ -3,7 +3,8 @@ package com.ahmeteminsaglik.ws.business.concretes.user;
 import com.ahmeteminsaglik.ws.business.abstracts.user.PatientService;
 import com.ahmeteminsaglik.ws.dataaccess.user.PatientRepository;
 import com.ahmeteminsaglik.ws.model.users.Patient;
-import com.ahmeteminsaglik.ws.utility.CustomLog;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +12,8 @@ import java.util.List;
 
 @Service
 public class PatientManager implements PatientService {
-    private static CustomLog log = new CustomLog(PatientManager.class);
+//private static CustomLog log = new CustomLog(PatientManager.class);
+private static final Logger log = LoggerFactory.getLogger(PatientManager.class);
 
     @Autowired
     PatientRepository repository;
@@ -33,5 +35,10 @@ public class PatientManager implements PatientService {
 //            System.out.println("patient Id ile gelen Doctor : ");
 //        });
         return repository.findById(patientId);//.get(0);
+    }
+
+    @Override
+    public List<Patient> findAll() {
+        return repository.findAll();
     }
 }

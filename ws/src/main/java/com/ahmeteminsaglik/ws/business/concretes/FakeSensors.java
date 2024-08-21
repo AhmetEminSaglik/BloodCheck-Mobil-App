@@ -142,7 +142,7 @@ List<Runnable> runableList = new ArrayList<>();
                     try {
                         sendFcmNotification(bloodResultSubItemNames, bloodResulListValues);
                     } catch (Exception e) {
-                        log.error("EXCEPTION OCCURED : " + e.getMessage());
+                        log.error("EXCEPTION OCCURRED : " + e.getMessage());
                     }
 
                     counter++;

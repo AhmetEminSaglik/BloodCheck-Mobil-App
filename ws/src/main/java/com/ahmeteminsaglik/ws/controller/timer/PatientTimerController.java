@@ -8,9 +8,10 @@ import com.ahmeteminsaglik.ws.model.firebase.FcmData;
 import com.ahmeteminsaglik.ws.model.firebase.FcmMessage;
 import com.ahmeteminsaglik.ws.model.firebase.FcmNotification;
 import com.ahmeteminsaglik.ws.model.timer.PatientTimer;
-import com.ahmeteminsaglik.ws.utility.CustomLog;
 import com.ahmeteminsaglik.ws.utility.result.DataResult;
 import com.ahmeteminsaglik.ws.utility.result.SuccessDataResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +22,9 @@ import java.util.Objects;
 
 @RestController
 @RequestMapping("/timers")
+@CrossOrigin
 public class PatientTimerController {
-    private static CustomLog log = new CustomLog(PatientTimerController.class);
+    private static final Logger log = LoggerFactory.getLogger(PatientTimerController.class);
 
     @Autowired
     PatientTimerService service;
@@ -35,47 +37,66 @@ public class PatientTimerController {
 
     @PostMapping()
     public ResponseEntity<DataResult<PatientTimer>> savePatientTimer(@RequestBody PatientTimer patientTimer) {
+        log.info("POST > savePatientTimer ");
+        log.info("(Param) patientTimer: " + patientTimer);
         PatientTimer newPatientTimer = service.findByPatientId(patientTimer.getPatientId());
+        log.info("Found patientTimer: " + newPatientTimer);
         String msg;
+        DataResult<PatientTimer> dataResult;
         if (newPatientTimer == null) {
             newPatientTimer = service.save(patientTimer);
-            msg = "Patient Timer is created";
-        DataResult result = new SuccessDataResult(newPatientTimer, msg);
-        return ResponseEntity.status(HttpStatus.CREATED).body(result);
+            msg = "Patient Timer is created.";
+            dataResult = new SuccessDataResult<>(newPatientTimer, msg);
+            log.info(dataResult.getMessage());
+            return ResponseEntity.status(HttpStatus.CREATED).body(dataResult);
+        } else {
+            msg = "PatientTimer is not created. Because patient has already a patientTimer.";
+            dataResult = new SuccessDataResult<>(null, msg);
+            log.info(dataResult.getMessage());
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
         }
-
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
     }
 
     @PutMapping()
     public ResponseEntity<DataResult<PatientTimer>> updatePatientTimer(@RequestBody PatientTimer patientTimer) {
+        log.info("PUT > updatePatientTimer ");
+        log.info("(Param) patientTimer: " + patientTimer);
         PatientTimer newPatientTimer = service.findByPatientId(patientTimer.getPatientId());
 
         service.update(patientTimer);
         String msg = "Patient Timer is updated";
         sendFcmMessage(patientTimer.getPatientId());
 
-        DataResult result = new SuccessDataResult(newPatientTimer, msg);
+        DataResult<PatientTimer> result = new SuccessDataResult<>(newPatientTimer, msg);
+        log.info(msg);
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
     @GetMapping("/patients/{id}")
     public ResponseEntity<DataResult<PatientTimer>> findPatientTimerByPatientId(@PathVariable long id) {
+        log.info("PUT > findPatientTimerByPatientId ");
+        log.info("(Param) id: " + id);
         PatientTimer timer = service.findByPatientId(id);
-        String msg = "PatientTimer belongs to Patient ID " + id + " is retrived";
-        DataResult result = new SuccessDataResult(timer, msg);
+        String msg = "PatientTimer belongs to Patient ID " + id + " is retrieved.";
+        DataResult<PatientTimer> result = new SuccessDataResult<>(timer, msg);
+        log.info(msg);
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
     @GetMapping
     public ResponseEntity<DataResult<List<PatientTimer>>> findAllPatientTimers() {
+        log.info("PUT > findAllPatientTimers ");
         List<PatientTimer> list = service.findAll();
-        String msg = "All patientTimers are retrived";
-        DataResult result = new SuccessDataResult(list, msg);
+        String msg = "All patientTimers are retrieved (Size:"+list.size()+").";
+        DataResult<List<PatientTimer>> result = new SuccessDataResult<>(list, msg);
+        log.info(msg);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
     private void sendFcmMessage(long patientId) {
+        log.info("> sendFcmMessage ");
+        log.info("(Param) id: " + patientId);
+
         String msgTitle = "Updated Notification";
         String msgBody = "Patient Timer is Updated";
         log.info("patient Timer > sendFcmMessage ");
@@ -83,45 +104,52 @@ public class PatientTimerController {
         FcmData data = createData(msgTitle, msgBody, patientId, false);
         FcmMessage fcmMessage = createFcmMessage(patientId, notification, data);
         fcmService.sendNotification(fcmMessage);
+        log.info("FcmMessage is send.");
   /*      try {
             FcmMessage fcmMessage = createFcmMessage(patientId, notification, data);
         fcmService.sendNotification(fcmMessage);
         }catch ( Exception e){
-            log.error("Exception Occured : "+e.getMessage());
+            log.error("Exception OCCURRED : "+e.getMessage());
         }*/
 
     }
 
     private FcmNotification createNotification(String msgTitle, String msgBody) {
+        log.info("Notification will be created.");
         FcmNotification notification = new FcmNotification();
         notification.setTitle(msgTitle);
         notification.setBody(msgBody);
+        log.info("Notification is created: "+notification);
         return notification;
     }
 
     private FcmData createData(String msgTitle, String msgBody, long patientId, boolean showNotification) {
         FcmData data = new FcmData();
+        log.info("FcmData will be created.");
         data.setPatientId(patientId);
         data.setShowNotification(showNotification);
         data.setReasonSend(EnumFcmMessageReason.UPDATE_SENSOR_TIMER.getReason());
         data.setReasonCode(EnumFcmMessageReason.UPDATE_SENSOR_TIMER.getCode());
         data.setMsgTitle(msgTitle);
         data.setMsg(msgBody);
+        log.info("FcmData is created.");
         return data;
     }
 
     private FcmMessage createFcmMessage(long patientId, FcmNotification notification, FcmData data) {
-        log.info("patient Timer > sendFcmMessage  > createFcmMessage Patient Id : " + patientId);
+//        log.info("patient Timer > sendFcmMessage  > createFcmMessage Patient Id : " + patientId);
         FcmMessage fcmMessage = new FcmMessage();
 
 //        fcmTokenController.
 //        log.info(" TOKEN : Alicak " + fcmTokenService.findByUserId(patientId).getToken());
 //        log.info(" fcmTokenService  " + fcmTokenService);
 //        String token = fcmTokenService.findByUserId(patientId).getToken();
+        log.info("FcmMessage will be created.");
         String token = Objects.requireNonNull(fcmTokenController.findTokenByUserId(patientId).getBody()).getData().getToken();
         fcmMessage.setTo(token);
         fcmMessage.setNotification(notification);
         fcmMessage.setData(data);
+        log.info("FcmMessage is be created.");
         return fcmMessage;
     }
 }

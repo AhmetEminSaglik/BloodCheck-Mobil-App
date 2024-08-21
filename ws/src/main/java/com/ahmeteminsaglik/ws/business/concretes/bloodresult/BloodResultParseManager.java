@@ -34,9 +34,9 @@ public class BloodResultParseManager implements BloodResultParseService {
     /**
      * parse to Six Month Data to Daily, Weekly or Monthly
      */
-    private List<BloodResult> parseToRequestedTime(List<BloodResult> bloodResultList, OffsetDateTime lastDate) {
+    private List<BloodResult> parseToRequestedTime(List<BloodResult> bloodResultList, LocalDateTime lastDate) {
         List<BloodResult> newBloodResultList = new ArrayList<>();
-        OffsetDateTime now = OffsetDateTime.now();
+        LocalDateTime now = LocalDateTime.now();
         for (int i = 0; i < bloodResultList.size(); i++) {
             if (bloodResultList.get(i).getCreatedAt().isBefore(now) &&
                     bloodResultList.get(i).getCreatedAt().isAfter(lastDate)) {
@@ -59,8 +59,8 @@ public class BloodResultParseManager implements BloodResultParseService {
         List<BloodResult> brGroup = new ArrayList<>();
         List<BloodResult> selectedData = new ArrayList<>();
         int counterTimeMinus = 1;
-        OffsetDateTime startTime = OffsetDateTime.now();
-        OffsetDateTime endTime = OffsetDateTime.now().minusMinutes(tmpMinute * counterTimeMinus);
+        LocalDateTime startTime = LocalDateTime.now();
+        LocalDateTime endTime = LocalDateTime.now().minusMinutes(tmpMinute * counterTimeMinus);
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getCreatedAt().isEqual(startTime) ||
                     list.get(i).getCreatedAt().isBefore(startTime) &&

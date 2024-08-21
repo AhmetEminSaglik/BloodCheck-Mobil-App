@@ -8,4 +8,5 @@ import java.util.List;
 public interface PatientService {
     List<Patient> findAllPatientByDoctorId(long doctorId);
     Patient findById(long patientId);
+    List<Patient> findAll();
 }

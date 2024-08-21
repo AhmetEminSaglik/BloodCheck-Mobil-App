@@ -1,5 +1,6 @@
 package com.ahmeteminsaglik.ws.model.bloodresult;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -28,7 +29,7 @@ public class BloodResult {
     @Column(name = "magnesium")
     private int magnesium;
     @Column(name = "created_at", columnDefinition = "TIMESTAMP")
-    private OffsetDateTime createdAt = OffsetDateTime.now().withOffsetSameInstant(ZoneOffset.UTC);
+    private LocalDateTime  createdAt = LocalDateTime.now();
 
     public BloodResult(int counter) {
         createdAt.minusMinutes(counter);
@@ -82,11 +83,11 @@ public class BloodResult {
         this.magnesium = magnesium;
     }
 
-    public OffsetDateTime getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(OffsetDateTime createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 

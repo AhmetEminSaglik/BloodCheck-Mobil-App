@@ -14,7 +14,8 @@ import com.ahmeteminsaglik.ws.model.firebase.FcmMessage;
 import com.ahmeteminsaglik.ws.model.firebase.FcmNotification;
 import com.ahmeteminsaglik.ws.model.firebase.FcmToken;
 import com.ahmeteminsaglik.ws.model.users.Patient;
-import com.ahmeteminsaglik.ws.utility.CustomLog;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,9 @@ import java.util.Map;
 public class BloodResultAssessmentManager implements BloodResultAssessmentService {
     private final String dangerous = "DANGEROUS:";
     private String patientFullName = "";
-    private static CustomLog log = new CustomLog(BloodResultAssessmentManager.class);
+    //    private static CustomLog log = new CustomLog(BloodResultAssessmentManager.class);
+
+    private static final Logger log = LoggerFactory.getLogger(BloodResultAssessmentManager.class);
 
     private BloodResultAssessmentValue bloodResultAssessmentValue = new BloodResultAssessmentValue();
     @Autowired
@@ -63,7 +66,7 @@ public class BloodResultAssessmentManager implements BloodResultAssessmentServic
             patientFullName = " " + patient.getName() + " " + patient.getLastname();
             sendMsgToDoctorOfPatient(bloodResult.getPatientId(), fcmMessage);
         } catch (Exception e) {
-            log.error("ERROR OCCURED : " + e.getMessage());
+            log.error("ERROR OCCURRED : " + e.getMessage());
         }
     }
 

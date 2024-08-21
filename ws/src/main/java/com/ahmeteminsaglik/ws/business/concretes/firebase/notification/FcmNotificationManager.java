@@ -49,7 +49,7 @@ public class FcmNotificationManager implements FcmNotificationService {
             FirebaseMessaging.getInstance().send(message);
             return ResponseEntity.status(HttpStatus.OK).body("Success");
         } catch (FirebaseMessagingException e) {
-            return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("Firebase Sending message has been occured an error.");
+            return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("Firebase Sending message has been OCCURRED an error.");
         }
 
     }
