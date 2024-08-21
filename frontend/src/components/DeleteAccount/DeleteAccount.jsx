@@ -1,32 +1,32 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom'; // Kullanıcı bilgilerini almak için useLocation kullanıyoruz
-import axios from 'axios'; // Axios'u içe aktar
-import './DeleteAccount.css'; // CSS dosyasını içe aktar
+import { useLocation } from 'react-router-dom';
+import axios from 'axios'; 
+import './DeleteAccount.css'; 
+import ApiUrl from '../ApiURL/ApiURL';
 
 const DeleteAccount = () => {
-  const location = useLocation(); // Kullanıcı bilgilerini almak için kullanıyoruz
-  const { username, password } = location.state || {}; // Kullanıcı adı ve şifreyi al
+  const location = useLocation(); 
+  const { username, password } = location.state || {}; 
   const [message, setMessage] = useState('');
   const [messageClass, setMessageClass] = useState('');
   
   const handleDelete = async () => {
     try {
-      const response = await axios.delete('http://localhost:8080/api/1.0/users', {
+      const response = await axios.delete(ApiUrl.getUsersUrl(), {
         data: {
           username,
           password,
         },
       });
 
-      // Hesap silme işlemi başarılı ise mesaj göster
       if (response.status === 200) {
-        setMessage('Your account has been successfully deleted.'); // Başarılı mesaj
-        setMessageClass('success'); // Başarılı mesaj sınıfını ayarla
+        setMessage('Your account has been successfully deleted.'); 
+        setMessageClass('success'); 
       }
     } catch (error) {
       console.error('Delete account error:', error);
-      setMessage('Account is not found.'); // Hata mesajı
-      setMessageClass('error'); // Hata mesajı sınıfını ayarla
+      setMessage('Account is not found.'); 
+      setMessageClass('error');
     
   };
   };
@@ -38,7 +38,7 @@ const DeleteAccount = () => {
         <p>Are you sure you want to delete your account?</p>
         <p>(This process can not be undone.)</p>
            <button className="delete-button" onClick={handleDelete}>Delete My Account</button>
-        {message && <p className={`delete-message ${messageClass}`}>{message}</p>} {/* Mesajı göster */}
+        {message && <p className={`delete-message ${messageClass}`}>{message}</p>} {}
       </div>
     </div>
   );

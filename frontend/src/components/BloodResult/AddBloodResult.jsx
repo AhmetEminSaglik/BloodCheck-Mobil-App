@@ -1,6 +1,8 @@
 // AddBloodResult.jsx
 import React, { useState } from 'react';
+import axios from 'axios'; 
 import './AddBloodResult.css';
+import ApiUrl from '../ApiURL/ApiURL';
 
 const AddBloodResult = () => {
     const [patientId, setPatientId] = useState('');
@@ -16,21 +18,18 @@ const AddBloodResult = () => {
     const fetchPatientName = async () => {
 
         try {
-            const response = await fetch(`http://localhost:8080/api/1.0/patients/${patientId}`);
-
-            if (!response.ok) {
-                setIsPatientFound(false);
-                // throw new Error('Hasta bulunamadı');
-                return null;
+            var url=`${ApiUrl.getPatientsUrl()}/${patientId}`;
+            const response = await axios.get(url);
+            
+            if (response.data.success) {
+                const data = response.data.data;
+                setPatientName(`${data.name} ${data.lastname}`);
+                setIsPatientFound(true);
             }
-            const data = await response.json();
-
-            setPatientName(`${data.data.name} ${data.data.lastname}`);
-            setIsPatientFound(true);
-
         } catch (error) {
+            setIsPatientFound(false);
             console.error('Fetch error:', error);
-            return null; // Hata durumunda null döndür
+            return null; 
         }
     };
 
@@ -72,23 +71,22 @@ const AddBloodResult = () => {
                 magnesium,
             });
 
-
-            const response = await fetch('http://localhost:8080/api/1.0/bloodresults', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
+            try {
+                var url=ApiUrl.getBloodResultsUrl();
+                const response = await axios.post(url,{
+                    patientId:patientId,
                     bloodSugar: bloodSugar,
                     bloodPressure: bloodPressure,
                     calcium: calcium,
                     magnesium: magnesium,
-                }),
-            });
+                });
 
-            const data = await response.json();
-            setResponseData(data);
-        }else{
+                const data = response.data;
+                setResponseData(data);
+            } catch (error) {
+                console.error('Axios POST error:', error);
+            }
+        } else {
             alert("Please type available values");
         }
     };
@@ -96,7 +94,7 @@ const AddBloodResult = () => {
     const isFormValid = Object.keys(errors).length === 0 && patientId > 0 && isPatientFound === true;
 
     const handleInputFocus = () => {
-        setResponseData(null); // İnput odaklandığında yanıt mesajını temizle
+        setResponseData(null); 
     };
 
     return (
@@ -111,7 +109,7 @@ const AddBloodResult = () => {
                     value={patientId}
                     onChange={(e) => setPatientId(e.target.value)}
                     onFocus={handleInputFocus}
-                    onBlur={fetchPatientName} // Hasta ID'si girildiğinde adı getir
+                    onBlur={fetchPatientName} 
                 />
                 <label style={{ color: isPatientFound === true ? 'green' : isPatientFound === false ? 'red' : 'inherit' }}>
                     {isPatientFound === true ? `Found Patient: ${patientName}` : isPatientFound === false ? 'Patient is not Found' : ''}
@@ -126,8 +124,8 @@ const AddBloodResult = () => {
                     value={bloodSugar}
                     onChange={(e) => setBloodSugar(e.target.value)}
                     onFocus={handleInputFocus}
-                    min="0" // Minimum değer
-                    max="200" // Maksimum değer
+                    min="0"  
+                    max="200"  
                 />
                 {errors.bloodSugar && <span className="error">{errors.bloodSugar}</span>}
             </div>
@@ -138,8 +136,8 @@ const AddBloodResult = () => {
                     value={bloodPressure}
                     onChange={(e) => setBloodPressure(e.target.value)}
                     onFocus={handleInputFocus}
-                    min="0" // Minimum değer
-                    max="200" // Maksimum değer
+                    min="0"  
+                    max="200"  
                 />
                 {errors.bloodPressure && (
                     <span className="error">{errors.bloodPressure}</span>
@@ -152,8 +150,8 @@ const AddBloodResult = () => {
                     value={calcium}
                     onChange={(e) => setCalcium(e.target.value)}
                     onFocus={handleInputFocus}
-                    min="0" // Minimum değer
-                    max="200" // Maksimum değer
+                    min="0" 
+                    max="200"
                 />
                 {errors.calcium && <span className="error">{errors.calcium}</span>}
             </div>
@@ -164,8 +162,8 @@ const AddBloodResult = () => {
                     value={magnesium}
                     onChange={(e) => setMagnesium(e.target.value)}
                     onFocus={handleInputFocus}
-                    min="0" // Minimum değer
-                    max="200" // Maksimum değer
+                    min="0" 
+                    max="200" 
                 />
                 {errors.magnesium && <span className="error">{errors.magnesium}</span>}
             </div>
@@ -173,8 +171,6 @@ const AddBloodResult = () => {
                 onClick={handleSave}>
                 Save
             </button>
-            {/* {responseMessage && <p>{responseMessage}</p>} */}
-
             <label style={{ color: responseData && responseData.success === true ? 'green' : 'red' }}>
                 {responseData && <p>{responseData.message}</p>}
             </label>

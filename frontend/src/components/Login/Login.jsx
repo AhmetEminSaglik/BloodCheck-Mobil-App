@@ -1,31 +1,32 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Yönlendirme için useNavigate kullanıyoruz
-import axios from 'axios'; // Axios'u içe aktar
-import './Login.css'; // CSS dosyasını içe aktar
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios'; 
+import './Login.css'; 
+import ApiUrl from '../ApiURL/ApiURL';
 
 const Login = ({ setIsAuthenticated }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState(''); // Hata mesajı durumu
-  const navigate = useNavigate(); // Yönlendirme için useNavigate hook'u
+  const [errorMessage, setErrorMessage] = useState(''); 
+  const navigate = useNavigate(); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrorMessage(''); // Önceki hata mesajını temizle
+    setErrorMessage(''); 
     try {
-      const response = await axios.post('http://52.213.25.200:8080/api/1.0/users/login', {
+      var url=`${ApiUrl.getUsersUrl()}/login`;
+      const response = await axios.post(url, {
         username,
         password,
       });
 
-      // Giriş başarılı ise DeleteAccount sayfasına yönlendir
       if (response.status === 200) {
         setIsAuthenticated(true);
         navigate('/delete-account', { state: { username, password } });
       }
     } catch (error) {
       console.error('Login error:', error);
-      setErrorMessage('Invalid Username or password.'); // Hata mesajı
+      setErrorMessage('Invalid Username or password.'); 
     }
   };
 
@@ -50,7 +51,7 @@ const Login = ({ setIsAuthenticated }) => {
           />
           <button type="submit" className="login-button">Login</button>
         </form>
-        {errorMessage && <p className="login-error-message">{errorMessage}</p>} {/* Hata mesajı göster */}
+        {errorMessage && <p className="login-error-message">{errorMessage}</p>} 
       </div>
     </div>
   );
