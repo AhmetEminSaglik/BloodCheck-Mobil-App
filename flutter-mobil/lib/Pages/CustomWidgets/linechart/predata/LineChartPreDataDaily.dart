@@ -1,6 +1,5 @@
 import 'package:bloodcheck/model/LineChartData/LineChartSideTitle.dart';
 import 'package:bloodcheck/model/enums/linechart/bottomtitles/EnumLineChartBottomSideTitles.dart';
-import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:logger/logger.dart';
 
 import 'BaseLineChartPreData.dart';
@@ -41,12 +40,10 @@ class LineChartPreDataDaily extends BaseLineChartPreData {
 
   @override
   double getItemFlSpotXValue({required DateTime itemCreatedAt}) {
-    // print("---->  now : $now  --> GELEN itemCreatedAt : $itemCreatedAt  FlutterTimezone.getLocalTimezone : ${FlutterTimezone.getLocalTimezone}");
-    //todo This must be changed to phone's location. In Turkey, +3 to AWS Server
-    itemCreatedAt=itemCreatedAt.add(Duration(hours: 3));
-    // log.i("---->   now : $now\n now.toUtc : ${now.toUtc()}\n itemCreatedAt : $itemCreatedAt}");
+// todo completed. Dynamic time
+    itemCreatedAt = itemCreatedAt.add(DateTime.now().timeZoneOffset);
     Duration diff = now.difference(itemCreatedAt);
-    
+
     double diffMinutes = rangeTotalIndexValue -
         diff.inMinutes /
             divideMinutesFasterProcess; // minutes used as 1 digit instead of 2 digit. For example 60 minutes -> 6
