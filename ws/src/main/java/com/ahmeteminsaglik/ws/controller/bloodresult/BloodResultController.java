@@ -5,6 +5,7 @@ import com.ahmeteminsaglik.ws.business.abstracts.bloodresult.BloodResultParseSer
 import com.ahmeteminsaglik.ws.business.abstracts.bloodresult.BloodResultService;
 import com.ahmeteminsaglik.ws.business.abstracts.firebase.notification.FcmService;
 import com.ahmeteminsaglik.ws.model.bloodresult.BloodResult;
+import com.ahmeteminsaglik.ws.utility.CustomUTCTime;
 import com.ahmeteminsaglik.ws.utility.exception.response.InvalidRequestedBloodResultDateException;
 import com.ahmeteminsaglik.ws.utility.result.DataResult;
 import com.ahmeteminsaglik.ws.utility.result.SuccessDataResult;
@@ -75,8 +76,8 @@ public class BloodResultController {
         if (min > sixMonth) {
             throw new InvalidRequestedBloodResultDateException(min);
         }
-//        LocalDateTime time = LocalDateTime.now().minusMinutes(min);
-        LocalDateTime time = LocalDateTime.now().minusMinutes(min);
+//        LocalDateTime time = CustomUTCTime.getUTCTime().minusMinutes(min);
+        LocalDateTime time = CustomUTCTime.getUTCTime().minusMinutes(min);
         List<BloodResult> list = service.findAllByPatientIdAndCreatedAtAfter(patientId, time);
 //        LocalDateTime tenDaysAgo = now.minusDays(10);
         String msg = "BloodResult List belongs to Patient ID " + patientId + " is retrieved. Size : " + list.size() + '.';
@@ -90,8 +91,8 @@ public class BloodResultController {
         log.info("GET > findSixMonthBloodResultData");
         log.info("(Param) Patient Id : " + patientId);
         int sixMonth = 60 * 24 * 30 * 6;
-//        LocalDateTime time = LocalDateTime.now().minusMinutes(sixMonth);
-        LocalDateTime time = LocalDateTime.now().minusMinutes(sixMonth);
+//        LocalDateTime time = CustomUTCTime.getUTCTime().minusMinutes(sixMonth);
+        LocalDateTime time = CustomUTCTime.getUTCTime().minusMinutes(sixMonth);
         List<BloodResult> list = service.findAllByPatientIdAndCreatedAtAfter(patientId, time);
 //        List<BloodResult> list = service.findAllByPatientIdAndCreatedAtAfter(patientId, time);
         String msg = "BloodResult List belongs to Patient ID " + patientId + " is retrieved for 6 months data. Size of List is : " + list.size() + '.';

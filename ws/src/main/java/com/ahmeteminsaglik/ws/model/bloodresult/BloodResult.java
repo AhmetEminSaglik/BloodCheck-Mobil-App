@@ -1,19 +1,22 @@
 package com.ahmeteminsaglik.ws.model.bloodresult;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ahmeteminsaglik.ws.utility.CustomUTCTime;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "blood_results")
 public class BloodResult {
+    private static final Logger log = LoggerFactory.getLogger(BloodResult.class);
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
@@ -29,7 +32,8 @@ public class BloodResult {
     @Column(name = "magnesium")
     private int magnesium;
     @Column(name = "created_at", columnDefinition = "TIMESTAMP")
-    private LocalDateTime  createdAt = LocalDateTime.now();
+    private LocalDateTime createdAt = CustomUTCTime.getUTCTime();
+
 
     public BloodResult(int counter) {
         createdAt.minusMinutes(counter);

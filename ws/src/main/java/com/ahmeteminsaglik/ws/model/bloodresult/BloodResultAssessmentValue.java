@@ -19,10 +19,10 @@ public class BloodResultAssessmentValue {
 //        list.add(calcium);
     }
 
-    private final ItemRangeValue bloodSugarRange = new ItemRangeValue(50, 150);
-    private final ItemRangeValue bloodPressureRange = new ItemRangeValue(50, 150);
-    private final ItemRangeValue magnesiumRange = new ItemRangeValue(50, 150);
-    private final ItemRangeValue calciumRange = new ItemRangeValue(50, 150);
+    private final ItemRangeValue bloodSugarRange = new ItemRangeValue(20, 170);
+    private final ItemRangeValue bloodPressureRange = new ItemRangeValue(20, 170);
+    private final ItemRangeValue magnesiumRange = new ItemRangeValue(20, 170);
+    private final ItemRangeValue calciumRange = new ItemRangeValue(20, 170);
 
     public HashMap<String, ItemRangeValue> getMap() {
         return map;

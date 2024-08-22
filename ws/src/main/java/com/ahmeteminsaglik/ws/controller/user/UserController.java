@@ -5,6 +5,7 @@ import com.ahmeteminsaglik.ws.business.abstracts.user.UserService;
 import com.ahmeteminsaglik.ws.business.concretes.login.LoginCredentialsValidation;
 import com.ahmeteminsaglik.ws.model.LoginCredentials;
 import com.ahmeteminsaglik.ws.model.users.User;
+import com.ahmeteminsaglik.ws.utility.CustomUTCTime;
 import com.ahmeteminsaglik.ws.utility.result.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +40,7 @@ public class UserController {
     public ResponseEntity<DataResult<List<User>>> findByLastCreatedMinusMinutes(@PathVariable int min) {
         log.info("GET > findByLastCreatedMinusMinutes ");
         log.info("(Param) min : " + min);
-        LocalDateTime localDateTime = LocalDateTime.now().minusMinutes(min);
+        LocalDateTime localDateTime = CustomUTCTime.getUTCTime().minusMinutes(min);
         List<User> users = service.findAllByCreatedAtAfter(localDateTime);
         String msg = "Retrieved all users that created last in  (" + min + ") minutes (Size:" + users.size() + ")";
         DataResult<List<User>> dataResult = new SuccessDataResult<>(users, msg);

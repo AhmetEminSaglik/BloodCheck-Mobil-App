@@ -53,17 +53,26 @@ public class BloodResultAssessmentManager implements BloodResultAssessmentServic
         try {
 
             FcmMessage fcmMessage = createFcmMessage(bloodResult.getPatientId(), subItemMap);
-            System.out.println("Gelen FCM Message : "+fcmMessage);;
+            System.out.println("Gelen FCM Message : " + fcmMessage);
+            ;
 //            fcmMessage.getData().setPatientId(bloodResult.getPatientId());
             Patient patient = patientService.findById(bloodResult.getPatientId());
 //            fcmMessage.setTo(fcmTokenService.findAllByUserId(patient.getId()).getLast().getToken());
 
             List<FcmToken> list = fcmTokenService.findAllByUserId(patient.getId());
+            if(!list.isEmpty()){
             fcmMessage.setTo(list.get(list.size() - 1).getToken());
-            System.out.println("gelen token : "+fcmMessage.getTo());
+            }else{
+                fcmMessage.setTo("");
+            }
+            System.out.println("gelen token : " + fcmMessage.getTo());
+            log.info("Token: " + fcmMessage.getTo());
+            log.info("fcmMessage.getTo().isBlank() : "+fcmMessage.getTo().isBlank());
+            if (!fcmMessage.getTo().isBlank()) {
             sendMsgToPatient(fcmMessage);
-
+            }
             patientFullName = " " + patient.getName() + " " + patient.getLastname();
+            log.info("-----");
             sendMsgToDoctorOfPatient(bloodResult.getPatientId(), fcmMessage);
         } catch (Exception e) {
             log.error("ERROR OCCURRED : " + e.getMessage());
@@ -139,7 +148,14 @@ public class BloodResultAssessmentManager implements BloodResultAssessmentServic
             msgTitle.append(createFcmMsgTitle("- LOW", Color.BLUE));
         }
         List<FcmToken> list = fcmTokenService.findAllByUserId(patientId);
-        String token = list.get(list.size() - 1).getToken();
+        String token;
+        if (list.isEmpty()) {
+            token = "";
+            log.info("Token is not found.");
+        } else {
+            log.info("Token List (must be>0) :" + list.size());
+            token = list.get(list.size() - 1).getToken();
+        }
 //        System.out.println("gelen First " + fcmTokenService.findAllByUserId(patientId).getLast());
         FcmNotification notification = new FcmNotification();
 
@@ -148,7 +164,7 @@ public class BloodResultAssessmentManager implements BloodResultAssessmentServic
             data.setShowNotification(true);
 //            notification.setTitle(fcmService.generateTextWithHtmlColor("DANGEROUS",Color.RED));
             notification.setTitle("DANGEROUS");
-            notification.setBody("You should have a look urgently");
+            notification.setBody("Your blood results are out of normal.\nYour doctor is informed.");
             data.setMsgTitle(msgTitle.toString());
 
             data.setMsg(msgBody.toString());

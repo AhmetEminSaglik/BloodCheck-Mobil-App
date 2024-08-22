@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+
+  spring-boot-app:
+    image: ahmeteminsaglik/ws-bloodcheck
+    ports:
+      - "8080:8080"
+    networks:
+      - bloodcheck-network
+
+  react-app:
+    image: ahmeteminsaglik/react-bloodcheck
+    ports:
+      - "3000:80"
+    networks:
+      - bloodcheck-network
+
+networks:
+  bloodcheck-network:
+    driver: bridge      

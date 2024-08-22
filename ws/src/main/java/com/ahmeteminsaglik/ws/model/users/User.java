@@ -1,5 +1,6 @@
 package com.ahmeteminsaglik.ws.model.users;
 
+import com.ahmeteminsaglik.ws.utility.CustomUTCTime;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -30,7 +31,7 @@ public abstract class User {
     private String password;
 
     @Column(name = "created_at", columnDefinition = "TIMESTAMP")
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime createdAt = CustomUTCTime.getUTCTime();
 
     public Long getId() {
         return id;

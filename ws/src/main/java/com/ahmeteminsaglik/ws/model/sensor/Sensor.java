@@ -1,5 +1,6 @@
 package com.ahmeteminsaglik.ws.model.sensor;
 
+import com.ahmeteminsaglik.ws.utility.CustomUTCTime;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -23,7 +24,7 @@ public class Sensor {
     @Column
     private String code;
     @Column(name = "created_at", columnDefinition = "TIMESTAMP")
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime createdAt = CustomUTCTime.getUTCTime();
 
     public long getId() {
         return id;

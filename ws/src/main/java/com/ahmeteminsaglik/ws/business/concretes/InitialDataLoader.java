@@ -21,6 +21,7 @@ import com.ahmeteminsaglik.ws.model.users.Patient;
 import com.ahmeteminsaglik.ws.model.users.User;
 import com.ahmeteminsaglik.ws.model.users.role.UserRole;
 import com.ahmeteminsaglik.ws.utility.CustomLog;
+import com.ahmeteminsaglik.ws.utility.CustomUTCTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -85,7 +86,7 @@ public class InitialDataLoader implements CommandLineRunner {
             bloodResult.setCalcium(random.nextInt(maxBound) + minBound);
             bloodResult.setPatientId(patientTimer.getPatientId());
             bloodResults.add(bloodResult);
-            bloodResult.setCreatedAt(LocalDateTime.now().minusMinutes((long) minutesCounter * sensorTestTime));
+            bloodResult.setCreatedAt(CustomUTCTime.getUTCTime().minusMinutes((long) minutesCounter * sensorTestTime));
             minutesCounter++;
             createdTime = sensorTestTime * minutesCounter;
         }
@@ -141,7 +142,7 @@ public class InitialDataLoader implements CommandLineRunner {
         BloodResult br3 = new BloodResult(3);
 
 //        br1.setId(10l);
-        br1.setCreatedAt(LocalDateTime.now().minusHours(2));
+        br1.setCreatedAt(CustomUTCTime.getUTCTime().minusHours(2));
         br1.setBloodPressure(random.nextInt(150) + 50);
         br1.setBloodSugar(random.nextInt(150) + 50);
         br1.setCalcium(random.nextInt(150) + 50);
@@ -150,14 +151,14 @@ public class InitialDataLoader implements CommandLineRunner {
         br1.setPatientId(patient.getId());
         bloodResultList.add(br1);
 //        br2.setId(20l);
-        br2.setCreatedAt(LocalDateTime.now().minusHours(2).minusMinutes(30));
+        br2.setCreatedAt(CustomUTCTime.getUTCTime().minusHours(2).minusMinutes(30));
         br2.setBloodPressure(random.nextInt(150) + 50);
         br2.setBloodSugar(random.nextInt(150) + 50);
         br2.setCalcium(random.nextInt(150) + 50);
         br2.setMagnesium(random.nextInt(150) + 50);
         br2.setPatientId(patient.getId());
         bloodResultList.add(br2);
-        br3.setCreatedAt(LocalDateTime.now().minusDays(2));
+        br3.setCreatedAt(CustomUTCTime.getUTCTime().minusDays(2));
         br3.setBloodPressure(random.nextInt(150) + 50);
         br3.setBloodSugar(random.nextInt(150) + 50);
         br3.setCalcium(random.nextInt(150) + 50);
@@ -213,7 +214,7 @@ public class InitialDataLoader implements CommandLineRunner {
             bloodResult.setCalcium(random.nextInt(150) + 50);
             bloodResult.setPatientId(patient.getId());
             bloodResultList.add(bloodResult);
-            bloodResult.setCreatedAt(LocalDateTime.now().minusDays(sensorTestTime * minutesCounter));
+            bloodResult.setCreatedAt(CustomUTCTime.getUTCTime().minusDays(sensorTestTime * minutesCounter));
             minutesCounter++;
             createdTime = sensorTestTime * minutesCounter;
         }
@@ -241,7 +242,7 @@ public class InitialDataLoader implements CommandLineRunner {
             bloodResult.setCalcium(random.nextInt(150) + 50);
             bloodResult.setPatientId(patient.getId());
             bloodResultList.add(bloodResult);
-            bloodResult.setCreatedAt(LocalDateTime.now().minusHours(3 * minutesCounter + 5));
+            bloodResult.setCreatedAt(CustomUTCTime.getUTCTime().minusHours(3 * minutesCounter + 5));
             minutesCounter++;
             createdTime = sensorTestTime * minutesCounter;
         }

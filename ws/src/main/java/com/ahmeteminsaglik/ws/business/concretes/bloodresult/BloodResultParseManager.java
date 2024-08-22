@@ -3,6 +3,7 @@ package com.ahmeteminsaglik.ws.business.concretes.bloodresult;
 import com.ahmeteminsaglik.ws.business.abstracts.bloodresult.BloodResultParseService;
 import com.ahmeteminsaglik.ws.model.bloodresult.BloodResult;
 import com.ahmeteminsaglik.ws.utility.CustomLog;
+import com.ahmeteminsaglik.ws.utility.CustomUTCTime;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -36,7 +37,7 @@ public class BloodResultParseManager implements BloodResultParseService {
      */
     private List<BloodResult> parseToRequestedTime(List<BloodResult> bloodResultList, LocalDateTime lastDate) {
         List<BloodResult> newBloodResultList = new ArrayList<>();
-        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime now = CustomUTCTime.getUTCTime();
         for (int i = 0; i < bloodResultList.size(); i++) {
             if (bloodResultList.get(i).getCreatedAt().isBefore(now) &&
                     bloodResultList.get(i).getCreatedAt().isAfter(lastDate)) {
@@ -59,8 +60,8 @@ public class BloodResultParseManager implements BloodResultParseService {
         List<BloodResult> brGroup = new ArrayList<>();
         List<BloodResult> selectedData = new ArrayList<>();
         int counterTimeMinus = 1;
-        LocalDateTime startTime = LocalDateTime.now();
-        LocalDateTime endTime = LocalDateTime.now().minusMinutes(tmpMinute * counterTimeMinus);
+        LocalDateTime startTime = CustomUTCTime.getUTCTime();
+        LocalDateTime endTime = CustomUTCTime.getUTCTime().minusMinutes(tmpMinute * counterTimeMinus);
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getCreatedAt().isEqual(startTime) ||
                     list.get(i).getCreatedAt().isBefore(startTime) &&
