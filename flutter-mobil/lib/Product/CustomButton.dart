@@ -9,7 +9,7 @@ class CustomButton extends StatelessWidget {
   Color backgroundColor = ProductColor.white;
 
   Color textColor = ProductColor.bodyBackgroundDark;
-  double fontSize = ResponsiveDesign.getScreenHeight() / 40;
+  double fontSize = ResponsiveDesign.getScreenHeight() / 45;
 
   CustomButton(
       {required this.action,
@@ -25,8 +25,8 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: ResponsiveDesign.getScreenWidth() / 1.6,
-      height: ResponsiveDesign.getScreenHeight() / 15,
+      width: ResponsiveDesign.getScreenWidth() / 2,
+      height: ResponsiveDesign.getScreenHeight() / 20,
       child: ElevatedButton(
         onPressed: action,
         style: ButtonStyle(

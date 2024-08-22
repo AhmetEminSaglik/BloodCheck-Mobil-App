@@ -111,7 +111,7 @@ class _PatientTimerWidgetState extends State<PatientTimerWidget> {
       // minuteCont.jumpToItem(1);
       animateItemToRequestedIndex(
           showAnimatin: true, cont: minuteCont, index: 1);
-      log.i("minute zipladi, ${minuteCont.selectedItem}");
+      // log.i("minute zipladi, ${minuteCont.selectedItem}");
       return true;
     }
     return false;

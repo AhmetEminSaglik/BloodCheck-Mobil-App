@@ -141,8 +141,8 @@ class _HomePagePatientState extends State<HomePagePatient> {
   void retrievePatientTimerData() async {
     patientTimer =
         await HttpRequestPatient.retrievePatientTimer(widget.patientId);
-    log.i("retrievePatientTimerData() > patientTimer  : $patientTimer ");
-    log.i("2222222222 : $patientTimer ");
+    // log.i("retrievePatientTimerData() > patientTimer  : $patientTimer ");
+    // log.i("2222222222 : $patientTimer ");
   }
 
   void retrieveBloodResultData() async {
@@ -179,7 +179,7 @@ class _HomePagePatientState extends State<HomePagePatient> {
   @override
   Widget build(BuildContext context) {
     context.read<FcmNotificationCubit>().enableUpdatingPatientPage();
-    log.i("Homepage Patient build ");
+    // log.i("Homepage Patient build ");
     return Scaffold(
       appBar: visibleAppBar ? AppBarUtil.getAppBar() : null,
       backgroundColor:
@@ -232,7 +232,7 @@ class _HomePagePatientState extends State<HomePagePatient> {
                                   if (refreshSensorTimer) {
                                     retrievePatientTimerData();
                                     refreshSensorTimer = false;
-                                    log.i("Sensor Timer Updatelendi");
+                                    // log.i("Sensor Timer Updatelendi");
                                   }
                                   // setState(() {});
                                   return SensorTimerText(
@@ -649,7 +649,7 @@ class LoadingScreenWidget extends StatelessWidget {
         children: [
           Text(
             "Please Wait",
-            style: TextStyle(
+              style: TextStyle(
                 fontSize: ResponsiveDesign.getScreenWidth() / 12,
                 color: ProductColor.white),
           ),

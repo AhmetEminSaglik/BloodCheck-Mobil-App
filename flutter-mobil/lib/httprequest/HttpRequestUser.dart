@@ -12,7 +12,7 @@ class HttpRequestUser {
 
   Future<http.Response> login(String username, String password) async {
     Uri url = Uri.parse("$_baseUrl/login");
-    log.i("URL : $url");
+    // log.i("URL : $url");
     Map<String, dynamic> requestData = {
       "username": username,
       "password": password,

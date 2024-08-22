@@ -15,7 +15,7 @@ class HttpRequestFirebase {
   static void saveToken(FcmToken fcmToken) async {
     Uri url = Uri.parse(_baseUrl);
     log.i("URL : ${url}");
-    log.i("REQUEST TOKEN :  : ${fcmToken.token}");
+    // log.i("REQUEST TOKEN :  : ${fcmToken.token}");
 
     Map<String, dynamic> requestData = {
       "userId": fcmToken.userId,
@@ -23,13 +23,13 @@ class HttpRequestFirebase {
     };
     var resp = await http.post(url,
         headers: HttpUtil.header, body: jsonEncode(requestData));
-    log.i(" RESP Result : ${resp.body}");
+    // log.i(" RESP Result : ${resp.body}");
   }
 
   static void deleteToken(FcmToken fcmToken) async {
     Uri url = Uri.parse(_baseUrl);
     log.i("URL : ${url}");
-    log.i("Delete REQUEST TOKEN :  : ${fcmToken.token}");
+    // log.i("Delete REQUEST TOKEN :  : ${fcmToken.token}");
 
     Map<String, dynamic> requestData = {
       "userId": fcmToken.userId,
@@ -37,6 +37,6 @@ class HttpRequestFirebase {
     };
     var resp = await http.delete(url,
         headers: HttpUtil.header, body: jsonEncode(requestData));
-    log.i(" RESP Result : ${resp.body}");
+    // log.i(" RESP Result : ${resp.body}");
   }
 }

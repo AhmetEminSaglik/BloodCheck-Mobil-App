@@ -28,12 +28,12 @@ class FcmData {
   static var log = Logger(printer: PrettyPrinter(colors: false));
 
   factory FcmData.fromJson(Map<String, dynamic> json) {
-    log.i("Gelen Json : $json");
+    // log.i("Gelen Json : $json");
 
     json.forEach((key, value) {
-      print('$key: $value\n');
+      // print('$key: $value\n');
     });
-    print('-----------');
+    // print('-----------');
 
     return FcmData(
       msgTitle: json["msgTitle"] as String,

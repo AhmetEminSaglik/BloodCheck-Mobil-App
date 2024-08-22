@@ -16,7 +16,7 @@ class HttpRequestBloodResult {
   static var log = Logger(printer: PrettyPrinter(colors: false));
 
   static Future<List<BloodResult>> _sendBloodResultRequestToUrl(Uri url) async {
-    log.i("URL : $url");
+    // log.i("URL : $url");
     var resp = await http.get(url);
     Map<String, dynamic> jsonData = json.decode(resp.body);
     var respEntity = ResponseEntity.fromJson(jsonData);
@@ -42,7 +42,7 @@ class HttpRequestBloodResult {
 
   Future<http.Response> signUp(Patient user) async {
     Uri url = Uri.parse(_baseUrl);
-    log.i("URL : $url");
+    // log.i("URL : $url");
     Map<String, dynamic> requestData = user.toJson();
     var resp = await http.post(url,
         headers: HttpUtil.header, body: jsonEncode(requestData));

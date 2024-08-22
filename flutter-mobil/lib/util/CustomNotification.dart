@@ -21,12 +21,12 @@ class CustomNotificationUtil {
       NotificationResponse notificationResponse) async {
     var payload = notificationResponse.payload;
     if (payload != null) {
-      log.i("Notification is selected $payload");
+      // log.i("Notification is selected $payload");
     }
   }
 
   static Future<void> showNotification(String title, String msg) async {
-    log.i("ShowNotification'a girdi");
+    // log.i("ShowNotification'a girdi");
     var androidNotificationDetail = AndroidNotificationDetails(
         // "channel Id", "channel Name",
         "0","general",

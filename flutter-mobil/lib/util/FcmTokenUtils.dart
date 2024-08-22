@@ -19,7 +19,7 @@ class FcmTokenUtils {
 
   static Future<void> createToken() async {
     _token = (await FirebaseMessaging.instance.getToken())!;
-    FirebaseMessaging.instance.subscribeToTopic("Istanbul");
+    // FirebaseMessaging.instance.subscribeToTopic("Istanbul");
     // FirebaseMessaging.instance.deleteToken();
     // log.i("Token : $_token");
   }
@@ -36,13 +36,13 @@ class FcmTokenUtils {
 
   static listenFcm(BuildContext context) {
     try {
-      log.i("NOTIFICAITON ALINDI");
+      // log.i("NOTIFICAITON ALINDI");
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-        log.i("GELEN MESSAGE : \n$message");
-        print('-----------');
-        print("message.notification.title : ${message.notification?.title}");
-        print("message.notification.body : ${message.notification?.body}");
-        print('-----------');
+        // log.i("GELEN MESSAGE : \n$message");
+        // print('-----------');
+        // print("message.notification.title : ${message.notification?.title}");
+        // print("message.notification.body : ${message.notification?.body}");
+        // print('-----------');
         // FcmData fcmData = parseMapToFcmData(message.data);
         // log.i("gelen fcm : \n $fcmData");
 
@@ -89,11 +89,11 @@ class FcmTokenUtils {
   static FcmData parseMapToFcmData(Map<String, dynamic> map) {
     String data = "";
     for (var entry in map.entries) {
-      print("-> key-value >>> : [${entry.key}] =[${entry.value}]");
+      // print("-> key-value >>> : [${entry.key}] =[${entry.value}]");
       data += entry.value;
     }
-    log.i("DATA : $data ");
-    log.i("map : $map ");
+    // log.i("DATA : $data ");
+    // log.i("map : $map ");
     FcmMessage message = FcmMessageFactory.createFcmMessage(map);
     return message.fcmData;
     /* log.info("FcmMessage : $message");

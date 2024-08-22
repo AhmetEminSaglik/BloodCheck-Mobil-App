@@ -311,7 +311,7 @@ class _DiabeticTypeDropdownMenuButtonState
   }
 
   void validateItemWithAlertDialog({required int selectedItemIndex}) async {
-    log.i("SELECTED ITEM : ${widget.selectedDiabeticTypeValue}");
+    // log.i("SELECTED ITEM : ${widget.selectedDiabeticTypeValue}");
     var result = await showDialog(
         context: context,
         builder: (builder) => CustomAlertDialog.getAlertDialogValidateProcess(
@@ -328,7 +328,7 @@ class _DiabeticTypeDropdownMenuButtonState
         widget.selectedDiabeticTypeValue = 0;
       });
     }
-    log.i("SELECTED NO ANSWER  ITEM : ${widget.selectedDiabeticTypeValue}");
+    // log.i("SELECTED NO ANSWER  ITEM : ${widget.selectedDiabeticTypeValue}");
   }
 }
 

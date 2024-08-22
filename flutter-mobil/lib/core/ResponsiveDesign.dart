@@ -39,7 +39,7 @@ class ResponsiveDesign {
 
   static bool _IsDataNull(double data) {
     if (data == 0) {
-      log.i("$data IS NULL");
+      // log.i("$data IS NULL");
       return true;
     }
     return false;

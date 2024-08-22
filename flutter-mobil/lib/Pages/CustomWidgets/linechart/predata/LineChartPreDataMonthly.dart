@@ -34,6 +34,7 @@ class LineChartPreDataMonthly extends BaseLineChartPreData {
 
   @override
   double getItemFlSpotXValue({required DateTime itemCreatedAt}) {
+    itemCreatedAt = itemCreatedAt.add(now.timeZoneOffset);
     Duration diff = now.difference(itemCreatedAt);
     double diffHours = (rangeTotalIndexValue - diff.inHours / 4)
         .toDouble(); // each 4 hours, add a new bloodResult Data

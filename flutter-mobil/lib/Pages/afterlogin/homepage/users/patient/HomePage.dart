@@ -42,7 +42,7 @@ class _HomePageState extends State<HomePage> {
     _patientDrawer = PatientDrawer(patientId: userId);
     mainDrawer =
         MainDrawer(drawerList: [_adminDrawer, _doctorDrawer, _patientDrawer]);
-    log.i("Drawer's are prepared");
+    // log.i("Drawer's are prepared");
   }
 
   @override

@@ -41,7 +41,8 @@ class LineChartPreDataDaily extends BaseLineChartPreData {
   @override
   double getItemFlSpotXValue({required DateTime itemCreatedAt}) {
 // todo completed. Dynamic time
-    itemCreatedAt = itemCreatedAt.add(DateTime.now().timeZoneOffset);
+    itemCreatedAt = itemCreatedAt.add(now.timeZoneOffset);
+     // print('now : $now | itemCreatedAt: $itemCreatedAt ');
     Duration diff = now.difference(itemCreatedAt);
 
     double diffMinutes = rangeTotalIndexValue -

@@ -57,8 +57,8 @@ class _InputTextFormField extends StatelessWidget {
       obscureText: obscureText,
       validator: (data) {
         if (data!.isEmpty && compulsoryArea) {
-          log.i("data!.isEmpty : ${data!.isEmpty}");
-          log.i("compulsoryArea : $compulsoryArea");
+          // log.i("data!.isEmpty : ${data!.isEmpty}");
+          // log.i("compulsoryArea : $compulsoryArea");
           return "Please enter $hint";
         }
         if (data.isNotEmpty) {

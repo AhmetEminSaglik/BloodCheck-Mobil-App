@@ -31,19 +31,19 @@ class FcmNotificationCubit extends Cubit<bool> {
   }
 
   void disableUpdatePatientLineChart() {
-    log.i("Line Chart update is NOT AVAILABLE");
+    // log.i("Line Chart update is NOT AVAILABLE");
     updateLineChart = false;
     emit(updateLineChart);
   }
 
   void enableUpdateSensorTimer() {
-    log.i("SENSOR  update is AVAILABLE");
+    // log.i("SENSOR  update is AVAILABLE");
     updateSensorTimer = true;
     emit(updateSensorTimer);
   }
 
   void disableUpdateSensorTimer() {
-    log.i("SENSOR  update is NOT AVAILABLE");
+    // log.i("SENSOR  update is NOT AVAILABLE");
     updateSensorTimer = false;
     emit(updateSensorTimer);
   }

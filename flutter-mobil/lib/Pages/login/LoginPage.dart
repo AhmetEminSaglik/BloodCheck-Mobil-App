@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:bloodcheck/Pages/afterlogin/homepage/appbar/AppBarCubit.dart';
 import 'package:bloodcheck/Pages/afterlogin/homepage/drawer/DrawerCubit.dart';
@@ -59,13 +60,13 @@ class _LoginPageState extends State<LoginPage> {
     await FirebaseMessaging.instance.getToken();
     await FirebaseMessaging.instance.subscribeToTopic("Istanbul");
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      log.i("GELEN MESSAGE : \n$message");
-      print('-----------');
-      print("message.notification.title : ${message.notification?.title}");
-      print("message.notification.body : ${message.notification?.body}");
-      print('-----------');
+      // log.i("GELEN MESSAGE : \n$message");
+      // print('-----------');
+      // print("message.notification.title : ${message.notification?.title}");
+      // print("message.notification.body : ${message.notification?.body}");
+      // print('-----------');
       FcmData fcmData = FcmTokenUtils.parseMapToFcmData(message.data);
-      log.i("gelen fcm : \n $fcmData");
+      // log.i("gelen fcm : \n $fcmData");
 
       FcmTokenUtils.processSendReason(context, fcmData);
       if (fcmData.showNotification) {
@@ -73,8 +74,8 @@ class _LoginPageState extends State<LoginPage> {
         String body = message.notification?.body ?? "";
         if (!title.isEmpty) {
           CustomNotificationUtil.showNotification(
-              message.notification?.title ?? "deneme",
-              message.notification?.body ?? "Body denmee");
+              message.notification?.title ?? "Notification TITLE is NULL",
+              message.notification?.body ?? "Notification BODY is NULL");
         }
       }
     });
@@ -255,8 +256,7 @@ class _HelpButton extends StatelessWidget {
       height: ResponsiveDesign.getScreenHeight() / 15,
       child: CustomButton(
         action: () {
-          String msg =
-              "username: doctor1"
+          String msg = "username: doctor1"
               "\npassword: pass"
               "\nor"
               "\nusername: patient1"
@@ -270,9 +270,7 @@ class _HelpButton extends StatelessWidget {
           showDialog(
               context: context,
               builder: (builder) => CustomAlertDialog.getAlertDialogHowToLogin(
-                  context: context,
-                  title: "How to Login?",
-                  msg: msg));
+                  context: context, title: "How to Login?", msg: msg));
         },
         textColor: ProductColor.white,
         backgroundColor: ProductColor.bodyBackground,
@@ -324,11 +322,15 @@ class _LoginButton extends StatelessWidget {
           showInvalidUsernameOrPassword(
               context: context, msg: respEntity!.message);
         } else {
-          log.i("Gelen Data ${respEntity!.data}");
+          // log.i("Gelen Data ${respEntity!.data}");
           User user = UserFactory.createUser(respEntity!.data);
           saveUserData(context, user);
           navigateToHomePage(context: context, roleId: user.roleId);
         }
+      } on SocketException {
+        String msg = "Could not connect to server. Server could be down.";
+        ScaffoldMessenger.of(context)
+            .showSnackBar(CustomSnackBar.getSnackBar(msg));
       } on TimeoutException {
         String msg = "Timeout: Unable to reach the server.";
         ScaffoldMessenger.of(context)
@@ -379,7 +381,7 @@ void showInvalidUsernameOrPassword(
 }
 
 void saveUserData(BuildContext context, User user) async {
-  log.i("Login page -> saveUserData -> User : $user");
+  // log.i("Login page -> saveUserData -> User : $user");
   await SharedPrefUtils.setLoginDataUser(user).then((value) {});
   updateCubits(context);
 }

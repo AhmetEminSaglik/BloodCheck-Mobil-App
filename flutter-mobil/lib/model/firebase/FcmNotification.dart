@@ -12,7 +12,7 @@ class FcmNotification {
   }
 
   factory FcmNotification.fromJson(Map<String, dynamic> json) {
-    log.i('gelen json : $json');
+    // log.i('gelen json : $json');
     return FcmNotification(
         title: json["title"] as String, body: json["body"] as String);
   }

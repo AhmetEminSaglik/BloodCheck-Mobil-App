@@ -13,7 +13,7 @@ class AppBarCubit extends Cubit<Widget> {
 
   void setTitle(Widget title) {
     appBarTitleWidget = AppBar(title: title);
-    log.i('new title : $title');
+    // log.i('new title : $title');
     emit(appBarTitleWidget);
   }
 

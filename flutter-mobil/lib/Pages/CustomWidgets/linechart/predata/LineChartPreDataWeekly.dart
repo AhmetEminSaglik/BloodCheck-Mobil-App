@@ -32,6 +32,7 @@ class LineChartPreDataWeekly extends BaseLineChartPreData {
 
   @override
   double getItemFlSpotXValue({required DateTime itemCreatedAt}) {
+    itemCreatedAt = itemCreatedAt.add(now.timeZoneOffset);
     Duration diff = now.difference(itemCreatedAt);
     double diffHours = (rangeTotalIndexValue - diff.inHours).toDouble();
     return diffHours;

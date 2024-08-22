@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
       NotificationResponse notificationResponse) async {
     var payload = notificationResponse.payload;
     if (payload != null) {
-      log.i("Notification is selected $payload");
+      // log.i("Notification is selected $payload");
     }
   }
 

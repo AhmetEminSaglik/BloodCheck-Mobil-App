@@ -19,7 +19,7 @@ class HttpRequestPatient {
 
   static Future<List<Patient>> getPatientList() async {
     Uri url = Uri.parse(_baseUrl);
-    log.i("URL : $url");
+    // log.i("URL : $url");
     var resp = await http.get(url);
     log.i(resp.body);
     Map<String, dynamic> jsonData = json.decode(resp.body);
@@ -30,9 +30,9 @@ class HttpRequestPatient {
 
   Future<http.Response> signUp(Patient user) async {
     Uri url = Uri.parse(_baseUrl);
-    log.i("URL : $url");
+    // log.i("URL : $url");
     Map<String, dynamic> requestData = user.toJson();
-    log.i("to json  $requestData");
+    // log.i("to json  $requestData");
     var resp = await http.post(url,
         headers: HttpUtil.header, body: jsonEncode(requestData));
     return resp;
@@ -41,7 +41,7 @@ class HttpRequestPatient {
   static Future<PatientTimer> retrievePatientTimer(int patientId) async {
     Uri url = Uri.parse(
         "${BaseHttpRequestConfig.baseUrl}/timers$_classUrl/$patientId");
-    log.i("URL : $url");
+    // log.i("URL : $url");
     var resp = await http.get(url);
     log.i(resp.body);
     Map<String, dynamic> jsonData = json.decode(resp.body);
@@ -52,18 +52,18 @@ class HttpRequestPatient {
 
   static Future<Doctor> findResponsibleDoctorByPatientId(int patientId) async {
     Uri url = Uri.parse("$_baseUrl/$patientId/doctors");
-    log.i("URL : $url");
+    // log.i("URL : $url");
     var resp = await http.get(url);
     log.i(resp.body);
     Map<String, dynamic> jsonData = json.decode(resp.body);
     var respEntity = ResponseEntity.fromJson(jsonData);
-    log.i("respEntity.data : ${respEntity}");
+    // log.i("respEntity.data : ${respEntity}");
     return UserFactory.createDoctor(respEntity.data);
   }
 
   static Future<Patient> findPatientById(int patientId) async {
     Uri url = Uri.parse("$_baseUrl/$patientId");
-    log.i("URL : $url");
+    // log.i("URL : $url");
     var resp = await http.get(url);
     log.i(resp.body);
     Map<String, dynamic> jsonData = json.decode(resp.body);
@@ -73,7 +73,7 @@ class HttpRequestPatient {
 
   Future<ResponseEntity> update(Patient patient) async {
     Uri url = Uri.parse("$_baseUrl");
-    log.i("URL : $url");
+    // log.i("URL : $url");
     Map<String, dynamic> requestData = patient.toJson();
     var resp = await http.put(url,
         headers: HttpUtil.header, body: jsonEncode(requestData));
