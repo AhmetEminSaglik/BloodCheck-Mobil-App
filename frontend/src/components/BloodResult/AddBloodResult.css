@@ -20,9 +20,16 @@ body, html {
   margin: 0 auto; /* Sayfanın ortasında görünmesi için */
 }
 
-.input-group {
+.input-group {  
   margin-bottom: 15px;
   width: 80%; /* Genişliği tam yap */
+}
+.input-group-listview {  
+  height: 35px;
+  width: 100%;
+}
+.input-label {
+  margin-bottom: 0.5rem;
 }
 
 input {
