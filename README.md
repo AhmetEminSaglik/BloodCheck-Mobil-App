@@ -22,12 +22,12 @@
 
 ## <span id="about-project">1-) About The Project</span>
 
-***BloodCheck Mobil App*** is a demo mobil medical app. There are 3 different user: admin, doctor and patient. Mainly, doctor can patients that assigned to him/her. Patient can see only his/her own blood results which are measured by mock sensor which creates random values. The most important side of the project is to get real time blood result values. If values are abnormal, then both user patient and patient's doctor got a notification as a emergency situation. <a href="https://play.google.com/store/apps/details?id=com.ahmeteminsaglik.bloodcheck">You can download the app from Play Store</a>
+***BloodCheck Mobil App*** is a demo mobile medical app. There are 3 different users: admin, doctor and patient. Mainly, doctors can see the patients assigned to him/her. Patients can see only his/her blood results which are measured by a mock sensor which creates random values. The most important side of the project is to get real-time blood result values. If values are abnormal, then both the user patient and the patient's doctor get a notification as an emergency. You can download the app from <a href="https://play.google.com/store/apps/details?id=com.ahmeteminsaglik.bloodcheck">Play Store</a>
 
 ## <span id="why-project-created">2-) Why The Project Is Created?</span >
 
-Project is created to for these purpose: 
-- Using Real Time Notification (FCM - Firebase Cloud Messaging)
+The project is created for these purpose: 
+- Using Real-Time Notification (FCM - Firebase Cloud Messaging)
 - Create a FullStack project
 - Deploy Project (Backend and Mobil)
 
@@ -67,12 +67,5 @@ Project is created to for these purpose:
 
 ## <span id="image">4-) Images </span>
 
-!["images/Readme/1.png"](images/Readme/1.png) 
-!["images/Readme/2.png"](images/Readme/2.png) 
-!["images/Readme/3.png"](images/Readme/3.png) 
-!["images/Readme/4.png"](images/Readme/4.png) 
-!["images/Readme/5.png"](images/Readme/5.png) 
-!["images/Readme/6.png"](images/Readme/6.png) 
-
-
-<br> <br>
+<img src="images/Readme/1.png" alt="images/Readme/1.png" width="33%"><img src="images/Readme/2.png" alt="images/Readme/2.png" width="33%"><img src="images/Readme/3.png" alt="images/Readme/3.png" width="33%">
+<img src="images/Readme/4.png" alt="images/Readme/4.png" width="33%"><img src="images/Readme/5.png" alt="images/Readme/5.png" width="33%"><img src="images/Readme/6.png" alt="images/Readme/6.png" width="33%">
