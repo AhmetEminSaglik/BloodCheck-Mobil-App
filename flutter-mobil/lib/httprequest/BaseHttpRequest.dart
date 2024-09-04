@@ -3,7 +3,7 @@ class BaseHttpRequestConfig {
   static const String _port = "8080";
   static const String _localhost = "http://192.168.1.56:$_port";
   // static const String _remotehost = "https://ws-bloodcheck.onrender.com";
-  static const String _remotehost = "http://remote_host_Ip:$_port";
+  static const String _remotehost = "http://remote-Host-IP:$_port";
   static const String _host =_remotehost;
   // static const String _host =_localhost;
   static const String _apiVersion = "/api/1.0";
@@ -12,3 +12,4 @@ class BaseHttpRequestConfig {
   static String get baseUrl => _baseUrl;
   static String get apiVersion => _apiVersion;
 }
+

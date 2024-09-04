@@ -59,7 +59,7 @@ class _PatientDrawerState extends State<PatientDrawer> {
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          const DrawerHeader(child: Text("Patient Drawer Header")),
+          const DrawerHeader(child: Text(""/*"Patient Drawer Header"*/)),
           _buildDrawerListTile(
               context: context, title: "HomePage", selectedIndex: 0),
           _buildDrawerListTile(

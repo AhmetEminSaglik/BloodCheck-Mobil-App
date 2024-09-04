@@ -34,7 +34,7 @@ class BloodResult {
         magnesium: json["magnesium"] as int,
         calcium: json["calcium"] as int,
         bloodSugar: json["bloodSugar"] as int,
-        createdAt: createdDate);
+        createdAt: createdDate.add(DateTime.now().timeZoneOffset));
   }
 
   Map<String, dynamic> toJson() {

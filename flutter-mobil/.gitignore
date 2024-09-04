@@ -18,15 +18,14 @@ ios/Flutter/Flutter.podspec
 ios/Pods/
 ios/Runner.xcworkspace/
 
-
 # macOS
+macos/
 macos/Flutter/Flutter.framework
 macos/Flutter/Flutter.podspec
 
 # Windows
+windows/
 windows/Flutter/Flutter.podspec
-windows/flutter/generated_plugin_registrant.cc
-windows/flutter/generated_plugins.cmake
 
 # Geçici dosyalar
 *.log
