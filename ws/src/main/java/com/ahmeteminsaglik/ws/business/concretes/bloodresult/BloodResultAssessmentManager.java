@@ -5,7 +5,7 @@ import com.ahmeteminsaglik.ws.business.abstracts.firebase.notification.FcmServic
 import com.ahmeteminsaglik.ws.business.abstracts.firebase.token.FcmTokenService;
 import com.ahmeteminsaglik.ws.business.abstracts.user.PatientService;
 import com.ahmeteminsaglik.ws.model.bloodresult.BloodResult;
-import com.ahmeteminsaglik.ws.model.bloodresult.BloodResultAssessmentValue;
+import com.ahmeteminsaglik.ws.model.bloodresult.BloodResultBound;
 import com.ahmeteminsaglik.ws.model.bloodresult.ItemRangeValue;
 import com.ahmeteminsaglik.ws.model.enums.EnumBloodResultContent;
 import com.ahmeteminsaglik.ws.model.enums.EnumFcmMessageReason;
@@ -32,7 +32,7 @@ public class BloodResultAssessmentManager implements BloodResultAssessmentServic
 
     private static final Logger log = LoggerFactory.getLogger(BloodResultAssessmentManager.class);
 
-    private BloodResultAssessmentValue bloodResultAssessmentValue = new BloodResultAssessmentValue();
+    private BloodResultBound bloodResultBound = new BloodResultBound();
     @Autowired
     FcmService fcmService;
     @Autowired
@@ -118,7 +118,7 @@ public class BloodResultAssessmentManager implements BloodResultAssessmentServic
 
         StringBuffer msgBody = new StringBuffer();
         StringBuffer msgTitle = new StringBuffer();
-        Map<String, ItemRangeValue> boundMap = bloodResultAssessmentValue.getMap();
+        Map<String, ItemRangeValue> boundMap = bloodResultBound.getRangeMap();
 
         for (String subItem : itemMap.keySet()) {
             int lowBound = boundMap.get(subItem).getLowBound();

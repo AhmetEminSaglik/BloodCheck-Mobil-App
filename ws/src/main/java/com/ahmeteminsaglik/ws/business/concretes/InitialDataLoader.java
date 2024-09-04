@@ -76,8 +76,8 @@ public class InitialDataLoader implements CommandLineRunner {
         int minutesCounter = 0;
         int createdTime = 0;
         List<BloodResult> bloodResults = new ArrayList<>();
-        int maxBound = 101;
-        int minBound = 10;
+        int maxBound = 81;
+        int minBound = 20;
         while (createdTime < maxMinutes) {
             BloodResult bloodResult = new BloodResult(createdTime);
             bloodResult.setBloodPressure(random.nextInt(maxBound) + minBound);
@@ -110,7 +110,7 @@ public class InitialDataLoader implements CommandLineRunner {
                 Patient patient = patientList.get(i);
                 PatientTimer patientTimer = timerService.findByPatientId(patient.getId());
                 int totalMinute = getTotalMinuteOfPatientTimer(patientTimer);
-                if (totalMinute <= 100) {
+                if (totalMinute <= 70) {
                     saveBloodResultDataForPatient(patientTimer, 60 * (25)); // 25 hours
                 } else if (totalMinute <= 240) {
                     saveBloodResultDataForPatient(patientTimer, (60 * 24) * 8); // 8 days
@@ -143,26 +143,26 @@ public class InitialDataLoader implements CommandLineRunner {
 
 //        br1.setId(10l);
         br1.setCreatedAt(CustomUTCTime.getUTCTime().minusHours(2));
-        br1.setBloodPressure(random.nextInt(150) + 50);
-        br1.setBloodSugar(random.nextInt(150) + 50);
-        br1.setCalcium(random.nextInt(150) + 50);
-        br1.setMagnesium(random.nextInt(150) + 50);
+        br1.setBloodPressure(random.nextInt(70) + 30);
+        br1.setBloodSugar(random.nextInt(70) + 30);
+        br1.setCalcium(random.nextInt(70) + 30);
+        br1.setMagnesium(random.nextInt(70) + 30);
 
         br1.setPatientId(patient.getId());
         bloodResultList.add(br1);
 //        br2.setId(20l);
         br2.setCreatedAt(CustomUTCTime.getUTCTime().minusHours(2).minusMinutes(30));
-        br2.setBloodPressure(random.nextInt(150) + 50);
-        br2.setBloodSugar(random.nextInt(150) + 50);
-        br2.setCalcium(random.nextInt(150) + 50);
-        br2.setMagnesium(random.nextInt(150) + 50);
+        br2.setBloodPressure(random.nextInt(70) + 30);
+        br2.setBloodSugar(random.nextInt(70) + 30);
+        br2.setCalcium(random.nextInt(70) + 30);
+        br2.setMagnesium(random.nextInt(70) + 30);
         br2.setPatientId(patient.getId());
         bloodResultList.add(br2);
         br3.setCreatedAt(CustomUTCTime.getUTCTime().minusDays(2));
-        br3.setBloodPressure(random.nextInt(150) + 50);
-        br3.setBloodSugar(random.nextInt(150) + 50);
-        br3.setCalcium(random.nextInt(150) + 50);
-        br3.setMagnesium(random.nextInt(150) + 50);
+        br3.setBloodPressure(random.nextInt(70) + 30);
+        br3.setBloodSugar(random.nextInt(70) + 30);
+        br3.setCalcium(random.nextInt(70) + 30);
+        br3.setMagnesium(random.nextInt(70) + 30);
 
         br3.setPatientId(patient.getId());
         bloodResultList.add(br3);
@@ -181,10 +181,10 @@ public class InitialDataLoader implements CommandLineRunner {
         List<BloodResult> bloodResultList = new ArrayList<>();
         while (createdTime < maxMinutes) {
             BloodResult bloodResult = new BloodResult(createdTime);
-            bloodResult.setBloodPressure(random.nextInt(150) + 50);
-            bloodResult.setBloodSugar(random.nextInt(150) + 50);
-            bloodResult.setMagnesium(random.nextInt(150) + 50);
-            bloodResult.setCalcium(random.nextInt(150) + 50);
+            bloodResult.setBloodPressure(random.nextInt(70) + 30);
+            bloodResult.setBloodSugar(random.nextInt(70) + 30);
+            bloodResult.setMagnesium(random.nextInt(70) + 30);
+            bloodResult.setCalcium(random.nextInt(70) + 30);
             bloodResult.setPatientId(patient.getId());
             bloodResultList.add(bloodResult);
             minutesCounter++;
@@ -208,10 +208,10 @@ public class InitialDataLoader implements CommandLineRunner {
         List<BloodResult> bloodResultList = new ArrayList<>();
         while (createdTime < maxDays) {
             BloodResult bloodResult = new BloodResult(createdTime);
-            bloodResult.setBloodPressure(random.nextInt(150) + 50);
-            bloodResult.setBloodSugar(random.nextInt(150) + 50);
-            bloodResult.setMagnesium(random.nextInt(150) + 50);
-            bloodResult.setCalcium(random.nextInt(150) + 50);
+            bloodResult.setBloodPressure(random.nextInt(70) + 30);
+            bloodResult.setBloodSugar(random.nextInt(70) + 30);
+            bloodResult.setMagnesium(random.nextInt(70) + 30);
+            bloodResult.setCalcium(random.nextInt(70) + 30);
             bloodResult.setPatientId(patient.getId());
             bloodResultList.add(bloodResult);
             bloodResult.setCreatedAt(CustomUTCTime.getUTCTime().minusDays(sensorTestTime * minutesCounter));
@@ -236,10 +236,10 @@ public class InitialDataLoader implements CommandLineRunner {
         List<BloodResult> bloodResultList = new ArrayList<>();
         while (createdTime < maxMinutes) {
             BloodResult bloodResult = new BloodResult(createdTime);
-            bloodResult.setBloodPressure(random.nextInt(150) + 50);
-            bloodResult.setBloodSugar(random.nextInt(150) + 50);
-            bloodResult.setMagnesium(random.nextInt(150) + 50);
-            bloodResult.setCalcium(random.nextInt(150) + 50);
+            bloodResult.setBloodPressure(random.nextInt(70) + 30);
+            bloodResult.setBloodSugar(random.nextInt(70) + 30);
+            bloodResult.setMagnesium(random.nextInt(70) + 30);
+            bloodResult.setCalcium(random.nextInt(70) + 30);
             bloodResult.setPatientId(patient.getId());
             bloodResultList.add(bloodResult);
             bloodResult.setCreatedAt(CustomUTCTime.getUTCTime().minusHours(3 * minutesCounter + 5));
@@ -265,10 +265,10 @@ public class InitialDataLoader implements CommandLineRunner {
         List<BloodResult> bloodResultList = new ArrayList<>();
         while (createdTime < maxMinutes) {
             BloodResult bloodResult = new BloodResult(createdTime);
-            bloodResult.setBloodPressure(random.nextInt(150) + 50);
-            bloodResult.setBloodSugar(random.nextInt(150) + 50);
-            bloodResult.setMagnesium(random.nextInt(150) + 50);
-            bloodResult.setCalcium(random.nextInt(150) + 50);
+            bloodResult.setBloodPressure(random.nextInt(70) + 30);
+            bloodResult.setBloodSugar(random.nextInt(70) + 30);
+            bloodResult.setMagnesium(random.nextInt(70) + 30);
+            bloodResult.setCalcium(random.nextInt(70) + 30);
             bloodResult.setPatientId(patient.getId());
             bloodResultList.add(bloodResult);
             minutesCounter++;
@@ -284,10 +284,10 @@ public class InitialDataLoader implements CommandLineRunner {
         List<PatientTimer> patientTimerList = new ArrayList<>();
 
         /*
-        1-10 --> --> 36 saat
-        11-30--> --> 8 gun
-        31-60  --> --> 31 gun
-        120- 240--> --> 31 gun
+        1-10 --> --> 36 hours
+        11-30--> --> 8 days
+        31-60  --> --> 31 days
+        120- 240--> --> 31 days
          */
         for (int i = 0; i < patientList.size(); i++) {
             Patient tmp = patientList.get(i);
@@ -335,12 +335,12 @@ public class InitialDataLoader implements CommandLineRunner {
     private void saveBloodResult() {
         List<Patient> patientList = (List<Patient>) patientController.getPatientList().getBody().getData();
         for (int i = 0; i < patientList.size(); i++) {
-            int bloodResultNumber = 50;//random.nextInt(70) + 30;
+            int bloodResultNumber = 30;//random.nextInt(70) + 30;
             List<BloodResult> bloodResultList = new ArrayList<>();
             for (int j = 0; j < bloodResultNumber; j++) {
                 BloodResult bloodResult = new BloodResult(j * (i + 1) * 5);
-                bloodResult.setBloodPressure(random.nextInt(100) + 50);
-                bloodResult.setBloodSugar(random.nextInt(100) + 50);
+                bloodResult.setBloodPressure(random.nextInt(70) + 30);
+                bloodResult.setBloodSugar(random.nextInt(70) + 30);
                 bloodResult.setPatientId(patientList.get(i).getId());
                 bloodResultList.add(bloodResult);
             }

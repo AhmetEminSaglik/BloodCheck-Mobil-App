@@ -5,6 +5,8 @@ import com.ahmeteminsaglik.ws.business.abstracts.bloodresult.BloodResultParseSer
 import com.ahmeteminsaglik.ws.business.abstracts.bloodresult.BloodResultService;
 import com.ahmeteminsaglik.ws.business.abstracts.firebase.notification.FcmService;
 import com.ahmeteminsaglik.ws.model.bloodresult.BloodResult;
+import com.ahmeteminsaglik.ws.model.bloodresult.BloodResultBound;
+import com.ahmeteminsaglik.ws.model.bloodresult.ItemRangeValue;
 import com.ahmeteminsaglik.ws.utility.CustomUTCTime;
 import com.ahmeteminsaglik.ws.utility.exception.response.InvalidRequestedBloodResultDateException;
 import com.ahmeteminsaglik.ws.utility.result.DataResult;
@@ -17,8 +19,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/bloodresults")
@@ -91,10 +93,8 @@ public class BloodResultController {
         log.info("GET > findSixMonthBloodResultData");
         log.info("(Param) Patient Id : " + patientId);
         int sixMonth = 60 * 24 * 30 * 6;
-//        LocalDateTime time = CustomUTCTime.getUTCTime().minusMinutes(sixMonth);
         LocalDateTime time = CustomUTCTime.getUTCTime().minusMinutes(sixMonth);
         List<BloodResult> list = service.findAllByPatientIdAndCreatedAtAfter(patientId, time);
-//        List<BloodResult> list = service.findAllByPatientIdAndCreatedAtAfter(patientId, time);
         String msg = "BloodResult List belongs to Patient ID " + patientId + " is retrieved for 6 months data. Size of List is : " + list.size() + '.';
         log.info(msg);
         DataResult<List<BloodResult>> dataResult = new SuccessDataResult<>(list, msg);
@@ -142,6 +142,13 @@ public class BloodResultController {
         String msg = "BloodResult List belongs to Patient ID " + patientId + " is retrieved for MONTHLY data. Size of List is : " + bloodResultList.size() + '.';
         DataResult<List<BloodResult>> dataResult = new SuccessDataResult<>(bloodResultList, msg);
         log.info(msg);
+        return ResponseEntity.status(HttpStatus.OK).body(dataResult);
+    }
+
+    @GetMapping("/bounds")
+    public ResponseEntity<DataResult<Map<String, ItemRangeValue>>> getBloodResultAssessmentValue() {
+        BloodResultBound bounds = new BloodResultBound();
+        DataResult<Map<String, ItemRangeValue>> dataResult = new SuccessDataResult<>(bounds.getRangeMap());
         return ResponseEntity.status(HttpStatus.OK).body(dataResult);
     }
 

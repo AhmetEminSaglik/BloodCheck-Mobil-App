@@ -14,7 +14,6 @@ src/main/resources/aes-bloodcheck-project-firebase-adminsdk-wpxqn-156f2f1339.jso
 src/main/todo.txt
 src/main/java/com/ahmeteminsaglik/ws/controller/firebase/FCMSendMessage.java
 src/main/resources/service-key.json
-src/main/resources/application.properties
 docker-key-pair.pem
 todo.txt
 
