@@ -3,6 +3,7 @@ package com.ahmeteminsaglik.ws.business.concretes.user;
 import com.ahmeteminsaglik.ws.business.abstracts.user.UserService;
 import com.ahmeteminsaglik.ws.dataaccess.user.UserRepository;
 import com.ahmeteminsaglik.ws.model.users.User;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,6 +44,13 @@ public class UserManager implements UserService {
     @Override
     public void delete(User user) {
         userRepository.delete(user);
+    }
+
+    @Override
+    @Transactional
+    public void deleteAll() {
+        userRepository.deleteAll();
+        userRepository.resetAutoIncrement();
     }
 
     @Override

@@ -2,6 +2,8 @@ package com.ahmeteminsaglik.ws.dataaccess.user;
 
 import com.ahmeteminsaglik.ws.model.users.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
@@ -22,5 +24,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findAllByCreatedAtAfter(LocalDateTime time);
 
     List<User> findAllByRoleIdOrderByIdDesc(int roleId);
+
+    @Modifying
+    @Query(value = "ALTER TABLE users AUTO_INCREMENT = 1", nativeQuery = true)
+    void resetAutoIncrement();
 
 }
