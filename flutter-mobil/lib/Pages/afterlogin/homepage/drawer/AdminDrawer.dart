@@ -1,3 +1,4 @@
+import 'package:bloodcheck/Pages/afterlogin/datamanipulator/DataManipulatorPage.dart';
 import 'package:bloodcheck/Pages/afterlogin/homepage/appbar/AppBarCubit.dart';
 import 'package:bloodcheck/Pages/afterlogin/homepage/drawer/DrawerCubit.dart';
 import 'package:bloodcheck/Pages/afterlogin/homepage/users/admin/HomePageAdmin.dart';
@@ -20,6 +21,7 @@ class _AdminDrawerState extends State<AdminDrawer> {
     AdminProfile(adminId: SharedPrefUtils.getUserId()),
     const DoctorSignUpPage(),
     const PatientSignUpPage(),
+    const DataManipulatorPage(),
   ];
   int selectedIndex = 0;
 
@@ -45,6 +47,8 @@ class _AdminDrawerState extends State<AdminDrawer> {
               context: context, title: "Sign Up Doctor", selectedIndex: 2),
           _buildDrawerListTile(
               context: context, title: "Sign Up Patient", selectedIndex: 3),
+          _buildDrawerListTile(
+              context: context, title: "Data Manipulator", selectedIndex: 4),
           SafeLogoutDrawerItem(),
         ],
       ),
