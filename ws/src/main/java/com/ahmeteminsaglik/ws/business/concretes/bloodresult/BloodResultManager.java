@@ -3,6 +3,7 @@ package com.ahmeteminsaglik.ws.business.concretes.bloodresult;
 import com.ahmeteminsaglik.ws.business.abstracts.bloodresult.BloodResultService;
 import com.ahmeteminsaglik.ws.dataaccess.diabetic.BloodResultRepository;
 import com.ahmeteminsaglik.ws.model.bloodresult.BloodResult;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,5 +44,12 @@ public class BloodResultManager implements BloodResultService {
     @Override
     public List<BloodResult> findAllPatientByOrderByIdDesc() {
         return repository.findAllPatientByOrderByIdDesc();
+    }
+
+    @Override
+    @Transactional
+    public void deleteAll() {
+        repository.deleteAll();
+        repository.resetAutoIncrement();
     }
 }

@@ -10,7 +10,7 @@ import lombok.NonNull;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "patient_timer", uniqueConstraints = @UniqueConstraint(columnNames = "patient_id"))
+@Table(name = "patient_timers", uniqueConstraints = @UniqueConstraint(columnNames = "patient_id"))
 public class PatientTimer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

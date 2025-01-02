@@ -1,3 +1,36 @@
+version: '3.8'
+services:
+
+  db-mysql:
+    image: mysql
+    environment:
+      MYSQL_DATABASE: 'bloodcheck'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+#      MYSQL_ROOT_PASSWORD: 'Root.123'
+    ports:
+      - '3306:3306'
+    networks:
+      - db-network
+#    expose:
+#      - '3306'
+
+  app:
+    image:  ahmeteminsaglik/ws-bloodcheck:1.2
+    depends_on:
+      - db-mysql
+    networks:
+      - db-network
+
+#    environment:
+#      SPRING_DATASOURCE_URL: jdbc:mysql://db-mysql:3306/bloodcheck
+#      SPRING_DATASOURCE_USERNAME: root
+#      SPRING_DATASOURCE_PASSWORD: Root.123
+
+networks:
+  db-network:
+    driver: bridge
+
+
 #version: '3.8'
 #
 #services:

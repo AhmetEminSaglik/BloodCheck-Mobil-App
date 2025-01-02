@@ -1,8 +1,9 @@
 class ApiUrl {
-    static localhost= "http://localhost:8080/api/1.0/";
-    static remotehost = "http://remote_host_IP:8080/api/1.0/";
-    static BASE_URL=this.localhost;
-    // static BASE_URL=this.remotehost;
+    static localhost= "http://localhost:8081/";
+    // static remotehost = "http://172.17.0.1:8081/";
+    static remotehost = "http://remoteIp:8081/";
+    // static BASE_URL=this.localhost;
+    static BASE_URL=this.remotehost;
 
     static getBloodResultsUrl() {
         return `${this.BASE_URL}bloodresults`;
