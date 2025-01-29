@@ -1,3 +1,4 @@
+/*
 package com.ahmeteminsaglik.ws.model.users.role;
 
 import jakarta.persistence.*;
@@ -17,3 +18,4 @@ public class UserRole {
     @Column()
     String role;
 }
+*/

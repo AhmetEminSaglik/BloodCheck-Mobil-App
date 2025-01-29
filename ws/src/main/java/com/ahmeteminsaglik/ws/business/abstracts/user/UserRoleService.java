@@ -1,3 +1,4 @@
+/*
 package com.ahmeteminsaglik.ws.business.abstracts.user;
 
 import com.ahmeteminsaglik.ws.business.abstracts.util.DeleteService;
@@ -14,3 +15,4 @@ public interface UserRoleService extends DeleteService {
 
     List<UserRole> findAll();
 }
+*/

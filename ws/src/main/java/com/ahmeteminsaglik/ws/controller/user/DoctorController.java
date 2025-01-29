@@ -4,7 +4,7 @@ import com.ahmeteminsaglik.ws.business.abstracts.user.DoctorService;
 import com.ahmeteminsaglik.ws.business.abstracts.user.PatientService;
 import com.ahmeteminsaglik.ws.business.abstracts.user.UserService;
 import com.ahmeteminsaglik.ws.business.concretes.signup.SignupUser;
-import com.ahmeteminsaglik.ws.model.enums.EnumUserRole;
+import com.ahmeteminsaglik.ws.model.enums.EnumAuthority;
 import com.ahmeteminsaglik.ws.model.users.Doctor;
 import com.ahmeteminsaglik.ws.model.users.Patient;
 import com.ahmeteminsaglik.ws.model.users.User;
@@ -36,7 +36,7 @@ public class DoctorController {
     @PostMapping()
     public ResponseEntity<DataResult<User>> saveDoctor(@RequestBody Doctor doctor) {
         log.info("POST > saveDoctor ");
-        doctor.setRoleId(EnumUserRole.DOCTOR.getId());
+        doctor.setRoleId(EnumAuthority.ROLE_DOCTOR.getId());
         SignupUser signupUser = new SignupUser(userService);
         DataResult<User> dataResult = signupUser.signup(doctor);
         log.info("Doctor signup successfully.");

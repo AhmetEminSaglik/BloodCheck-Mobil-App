@@ -2,7 +2,7 @@ package com.ahmeteminsaglik.ws.controller.user;
 
 import com.ahmeteminsaglik.ws.business.abstracts.user.UserService;
 import com.ahmeteminsaglik.ws.business.concretes.signup.SignupUser;
-import com.ahmeteminsaglik.ws.model.enums.EnumUserRole;
+import com.ahmeteminsaglik.ws.model.enums.EnumAuthority;
 import com.ahmeteminsaglik.ws.model.users.Admin;
 import com.ahmeteminsaglik.ws.model.users.User;
 import com.ahmeteminsaglik.ws.utility.result.DataResult;
@@ -26,7 +26,7 @@ public class AdminController {
     public ResponseEntity<DataResult<User>> saveAdmin(@RequestBody Admin admin) {
         log.info("POST > saveAdmin ");
 //        log.info("(Param) admin: " + admin);
-        admin.setRoleId(EnumUserRole.ADMIN.getId());
+        admin.setRoleId(EnumAuthority.ROLE_ADMIN.getId());
         SignupUser signupUser = new SignupUser(userService);
         DataResult<User> dataResult = signupUser.signup(admin);
         log.info("Admin signup successfully.");

@@ -1,3 +1,4 @@
+/*
 package com.ahmeteminsaglik.ws.model.enums;
 
 public enum EnumUserRole {
@@ -20,3 +21,4 @@ public enum EnumUserRole {
         return this.role;
     }
 }
+*/

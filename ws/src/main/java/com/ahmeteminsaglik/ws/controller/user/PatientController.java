@@ -6,7 +6,7 @@ import com.ahmeteminsaglik.ws.business.abstracts.user.PatientService;
 import com.ahmeteminsaglik.ws.business.abstracts.user.UserService;
 import com.ahmeteminsaglik.ws.business.concretes.signup.SignupUser;
 import com.ahmeteminsaglik.ws.controller.timer.PatientTimerController;
-import com.ahmeteminsaglik.ws.model.enums.EnumUserRole;
+import com.ahmeteminsaglik.ws.model.enums.EnumAuthority;
 import com.ahmeteminsaglik.ws.model.firebase.FcmData;
 import com.ahmeteminsaglik.ws.model.firebase.FcmMessage;
 import com.ahmeteminsaglik.ws.model.firebase.FcmNotification;
@@ -45,7 +45,7 @@ public class PatientController {
     @PostMapping()
     public ResponseEntity<DataResult<User>> savePatient(@RequestBody Patient patient) {
         log.info("POST > savePatient ");
-        patient.setRoleId(EnumUserRole.PATIENT.getId());
+        patient.setRoleId(EnumAuthority.ROLE_PATIENT.getId());
         SignupUser signupUser = new SignupUser(userService);
         DataResult<User> dataResult = signupUser.signup(patient);
         patient = (Patient) dataResult.getData();

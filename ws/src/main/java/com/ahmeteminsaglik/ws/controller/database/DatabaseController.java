@@ -3,13 +3,11 @@ package com.ahmeteminsaglik.ws.controller.database;
 import com.ahmeteminsaglik.ws.business.abstracts.bloodresult.BloodResultService;
 import com.ahmeteminsaglik.ws.business.abstracts.diabetic.DiabeticService;
 import com.ahmeteminsaglik.ws.business.abstracts.timer.PatientTimerService;
-import com.ahmeteminsaglik.ws.business.abstracts.user.UserRoleService;
 import com.ahmeteminsaglik.ws.business.abstracts.user.UserService;
 import com.ahmeteminsaglik.ws.business.abstracts.util.DeleteService;
 import com.ahmeteminsaglik.ws.business.concretes.InitialData;
 import com.ahmeteminsaglik.ws.utility.result.Result;
 import com.ahmeteminsaglik.ws.utility.result.SuccessResult;
-import org.checkerframework.checker.units.qual.A;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +34,7 @@ public class DatabaseController {
     @Autowired
     private PatientTimerService patientTimerService;
     @Autowired
-    private UserRoleService userRoleService;
+    private AuthorityService authorityService;
 
     @GetMapping()
     public ResponseEntity<Result> resetAllData() {
@@ -63,8 +61,8 @@ public class DatabaseController {
         printLogDataStart(patientTimerService, patientTimerService.findAll().size());
         printLogDataCompleted(patientTimerService, patientTimerService.findAll().size());
 
-        printLogDataStart(userRoleService, userRoleService.findAll().size());
-        printLogDataCompleted(userRoleService, userRoleService.findAll().size());
+        printLogDataStart(authorityService, authorityService.findAll().size());
+        printLogDataCompleted(authorityService, authorityService.findAll().size());
     }
 
     private void createData() {

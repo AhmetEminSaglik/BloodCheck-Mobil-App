@@ -1,21 +1,21 @@
 package com.ahmeteminsaglik.ws.controller.user;
 
-import com.ahmeteminsaglik.ws.business.abstracts.login.LoginValidationService;
 import com.ahmeteminsaglik.ws.business.abstracts.user.UserService;
-import com.ahmeteminsaglik.ws.business.concretes.login.LoginCredentialsValidation;
 import com.ahmeteminsaglik.ws.model.LoginCredentials;
 import com.ahmeteminsaglik.ws.model.users.User;
 import com.ahmeteminsaglik.ws.utility.CustomUTCTime;
+import com.ahmeteminsaglik.ws.utility.JwtUtil;
 import com.ahmeteminsaglik.ws.utility.result.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
 import java.util.List;
 
 @RestController
@@ -25,7 +25,13 @@ public class UserController {
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
     @Autowired
     private UserService service;
+    @Autowired
+    private JwtUtil jwtUtil;
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     @GetMapping()
     public ResponseEntity<DataResult<List<User>>> findAllUserList() {
@@ -61,15 +67,24 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<DataResult<User>> login(@RequestBody LoginCredentials loginCreds) {
+        return ResponseEntity.ok(new ErrorDataResult<>(null,"Login islemi kisminda kalindi -( Spring Security & JWT - Ekleniyor )"));
+/*
         System.out.println("logine geldi");
         log.info("POST > login ");
-        LoginValidationService loginService = new LoginCredentialsValidation(service);
-//        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//        loginCreds.setPassword(passwordEncoder.encode(loginCreds.getPassword()));
-//        Base64.getDecoder().decode(loginCreds.getPassword());
-//        List<User> userList=service.findAll();
-//        passwordEncoder.matches()
-        DataResult<User> result = loginService.validateLoginCredentials(loginCreds.getUsername(), loginCreds.getPassword());
+
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginCreds.getUsername(), loginCreds.getPassword())
+        );
+
+        UserDetails userDetails = userDetailsService.loadUserByUsername(loginCreds.getUsername());
+        String token = jwtUtil.generateToken(userDetails.getUsername());
+        JwtAuthResponse response = new JwtAuthResponse();
+        response.setAccessToken(token);
+        response.setUser();
+
+//        LoginValidationService loginService = new LoginCredentialsValidation(service);
+//        DataResult<User> result = loginService.validateLoginCredentials(loginCreds.getUsername(), loginCreds.getPassword());
+
         if (result.getData() == null) {
             log.info("Login is failed : Data is not found.");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(result);
@@ -77,6 +92,7 @@ public class UserController {
             log.info("Login process is completed.");
             return ResponseEntity.status(HttpStatus.OK).body(result);
         }
+*/
     }
 
     @DeleteMapping()

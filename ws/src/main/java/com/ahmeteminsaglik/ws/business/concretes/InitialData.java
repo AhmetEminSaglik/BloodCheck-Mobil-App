@@ -5,7 +5,6 @@ import com.ahmeteminsaglik.ws.business.abstracts.diabetic.DiabeticService;
 import com.ahmeteminsaglik.ws.business.abstracts.firebase.notification.FcmService;
 import com.ahmeteminsaglik.ws.business.abstracts.firebase.token.FcmTokenService;
 import com.ahmeteminsaglik.ws.business.abstracts.timer.PatientTimerService;
-import com.ahmeteminsaglik.ws.business.abstracts.user.UserRoleService;
 import com.ahmeteminsaglik.ws.business.abstracts.user.UserService;
 import com.ahmeteminsaglik.ws.controller.bloodresult.BloodResultController;
 import com.ahmeteminsaglik.ws.controller.timer.PatientTimerController;
@@ -13,13 +12,13 @@ import com.ahmeteminsaglik.ws.controller.user.PatientController;
 import com.ahmeteminsaglik.ws.model.bloodresult.BloodResult;
 import com.ahmeteminsaglik.ws.model.diabetic.Diabetic;
 import com.ahmeteminsaglik.ws.model.enums.EnumDiabeticType;
-import com.ahmeteminsaglik.ws.model.enums.EnumUserRole;
+import com.ahmeteminsaglik.ws.model.enums.EnumAuthority;
 import com.ahmeteminsaglik.ws.model.timer.PatientTimer;
 import com.ahmeteminsaglik.ws.model.users.Admin;
 import com.ahmeteminsaglik.ws.model.users.Doctor;
 import com.ahmeteminsaglik.ws.model.users.Patient;
 import com.ahmeteminsaglik.ws.model.users.User;
-import com.ahmeteminsaglik.ws.model.users.role.UserRole;
+import com.ahmeteminsaglik.ws.model.users.role.Authority;
 import com.ahmeteminsaglik.ws.utility.CustomLog;
 import com.ahmeteminsaglik.ws.utility.CustomUTCTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +44,7 @@ public class InitialData {
     @Autowired
     private UserService userService;
     @Autowired
-    private UserRoleService roleService;
+    private AuthorityService roleService;
     @Autowired
     private DiabeticService diabeticService;
     @Autowired
@@ -90,7 +89,7 @@ public class InitialData {
     public void saveInitializedData() {
         if (!isDataSavedBefore()) {
             saveDiabeticTypeData();
-            saveUserRoleData();
+            saveAuthorityData();
             saveUserData(getAdminList());
             saveUserData(getDoctorList());
             savePatient(getPatientList());
@@ -168,8 +167,8 @@ public class InitialData {
         list.forEach(e -> diabeticService.save(e));
     }
 
-    private void saveUserRoleData() {
-        List<UserRole> list = roleService.saveAll(getStandartUserRoleList());
+    private void saveAuthorityData() {
+        List<Authority> list = roleService.saveAll(getStandartAuthorityList());
         list.forEach(System.out::println);
     }
 
@@ -203,11 +202,11 @@ public class InitialData {
         }
     }
 
-    private List<UserRole> getStandartUserRoleList() {
-        List<UserRole> list = new ArrayList<>();
-        list.add(new UserRole(1, EnumUserRole.ADMIN.getName()));
-        list.add(new UserRole(2, EnumUserRole.DOCTOR.getName()));
-        list.add(new UserRole(3, EnumUserRole.PATIENT.getName()));
+    private List<Authority> getStandartAuthorityList() {
+        List<Authority> list = new ArrayList<>();
+        list.add(new Authority(1, EnumAuthority.ROLE_ADMIN));
+        list.add(new Authority(2, EnumAuthority.ROLE_DOCTOR));
+        list.add(new Authority(3, EnumAuthority.ROLE_PATIENT));
         return list;
     }
 
@@ -227,7 +226,7 @@ public class InitialData {
         admin.setLastname("SAGLIK");
         admin.setUsername("AES");
         admin.setPassword("pass");
-        admin.setRoleId(EnumUserRole.ADMIN.getId());
+        admin.setRoleId(EnumAuthority.ROLE_ADMIN.getId());
         list.add(admin);
 
         return list;
@@ -255,7 +254,7 @@ public class InitialData {
             } else {
                 user.setSpecialization("Endocrinology");
             }
-            user.setRoleId(EnumUserRole.DOCTOR.getId());
+            user.setRoleId(EnumAuthority.ROLE_DOCTOR.getId());
             list.add(user);
         }
         return list;
@@ -273,7 +272,7 @@ public class InitialData {
             int doctor_id = (i - 1) / 4 + doctorIdStartingIndex + 1;
             Doctor personnel = (Doctor) userService.findById(doctor_id);
             user.setDoctorId(personnel.getId());
-            user.setRoleId(EnumUserRole.PATIENT.getId());
+            user.setRoleId(EnumAuthority.ROLE_PATIENT.getId());
             list.add(user);
         }
         return list;

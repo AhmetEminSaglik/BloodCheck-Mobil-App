@@ -1,38 +1,8 @@
 package com.ahmeteminsaglik.ws.business.concretes;
 
-import com.ahmeteminsaglik.ws.business.abstracts.bloodresult.BloodResultService;
-import com.ahmeteminsaglik.ws.business.abstracts.diabetic.DiabeticService;
-import com.ahmeteminsaglik.ws.business.abstracts.firebase.notification.FcmService;
-import com.ahmeteminsaglik.ws.business.abstracts.firebase.token.FcmTokenService;
-import com.ahmeteminsaglik.ws.business.abstracts.timer.PatientTimerService;
-import com.ahmeteminsaglik.ws.business.abstracts.user.UserRoleService;
-import com.ahmeteminsaglik.ws.business.abstracts.user.UserService;
-import com.ahmeteminsaglik.ws.controller.bloodresult.BloodResultController;
-import com.ahmeteminsaglik.ws.controller.timer.PatientTimerController;
-import com.ahmeteminsaglik.ws.controller.user.PatientController;
-import com.ahmeteminsaglik.ws.model.bloodresult.BloodResult;
-import com.ahmeteminsaglik.ws.model.diabetic.Diabetic;
-import com.ahmeteminsaglik.ws.model.enums.EnumDiabeticType;
-import com.ahmeteminsaglik.ws.model.enums.EnumUserRole;
-import com.ahmeteminsaglik.ws.model.timer.PatientTimer;
-import com.ahmeteminsaglik.ws.model.users.Admin;
-import com.ahmeteminsaglik.ws.model.users.Doctor;
-import com.ahmeteminsaglik.ws.model.users.Patient;
-import com.ahmeteminsaglik.ws.model.users.User;
-import com.ahmeteminsaglik.ws.model.users.role.UserRole;
-import com.ahmeteminsaglik.ws.utility.CustomLog;
-import com.ahmeteminsaglik.ws.utility.CustomUTCTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
 
 @Component
 public class InitialDataLoader implements CommandLineRunner {
