@@ -1,18 +1,18 @@
 package com.ahmeteminsaglik.ws.model;
 
-import com.ahmeteminsaglik.ws.model.users.User;
+import com.ahmeteminsaglik.ws.model.dto.UserDto;
 
 public class JwtAuthResponse {
     private String accessToken;
-    private User user;
+    private UserDto userDto;
     private String tokenType = "Bearer";
 
     public JwtAuthResponse() {
     }
 
-    public JwtAuthResponse(String accessToken, User user, String tokenType) {
+    public JwtAuthResponse(String accessToken, UserDto userDto, String tokenType) {
         this.accessToken = accessToken;
-        this.user = user;
+        this.userDto = userDto;
         this.tokenType = tokenType;
     }
 
@@ -32,12 +32,12 @@ public class JwtAuthResponse {
         this.tokenType = tokenType;
     }
 
-    public User getUser() {
-        return user;
+    public UserDto getUserDto() {
+        return userDto;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserDto(UserDto userDto) {
+        this.userDto = userDto;
     }
 
     @Override

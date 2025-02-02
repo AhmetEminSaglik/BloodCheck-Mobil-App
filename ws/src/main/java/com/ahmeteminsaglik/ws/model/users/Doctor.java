@@ -1,7 +1,12 @@
 package com.ahmeteminsaglik.ws.model.users;
 
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @AllArgsConstructor
@@ -11,10 +16,10 @@ import lombok.*;
 @Setter
 public class Doctor extends User {
     @Column
-    String graduate = "";
+    private String graduate = "";
 
     @Column
-    String specialization = "";
+    private String specialization = "";
 
     public String getGraduate() {
         return graduate;
