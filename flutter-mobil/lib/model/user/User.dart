@@ -12,6 +12,7 @@ abstract class User {
   late String _lastname;
   late String _username;
   late String _password;
+  late String _token;
 
   User(
       {required int id,
@@ -19,13 +20,15 @@ abstract class User {
       required String name,
       required String lastname,
       required String username,
-      required String password}) {
+      required String password,
+      required String token}) {
     _id = id;
     _roleId = roleId;
     _name = name;
     _lastname = lastname;
     _username = username;
     _password = password;
+    _token = token;
   }
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -38,6 +41,18 @@ abstract class User {
       return Patient.fromJson(json);
     }
     throw UnknowUserRoleIdException(msg: "$roleId is an unknow User Role id");
+  }
+
+  factory User.fromJsonForLogin(Map<String, dynamic> json) {
+    User user = User.fromJson(json);
+    user.token = json["token"];
+    return user;
+  }
+
+  String get token => _token;
+
+  set token(String value) {
+    _token = value;
   }
 
   String get password => _password;

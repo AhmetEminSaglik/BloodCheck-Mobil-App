@@ -4,7 +4,8 @@ enum EnumUserProp {
   NAME(name: "name"),
   LASTNAME(name: "lastname"),
   USERNAME(name: "username"),
-  PASSWORD(name: "password");
+  PASSWORD(name: "password"),
+  TOKEN(name: "token");
 
   final String name;
 

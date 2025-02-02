@@ -10,7 +10,8 @@ class Patient extends User {
       required String name,
       required String lastname,
       required String username,
-      required String password,
+      String password = "",
+      String token = "",
       required int diabeticTypeId,
       required int doctorId})
       : super(
@@ -19,7 +20,8 @@ class Patient extends User {
             name: name,
             lastname: lastname,
             username: username,
-            password: password) {
+            password: password,
+            token: token) {
     _diabeticTypeId = diabeticTypeId;
     _doctorId = doctorId;
   }
@@ -31,10 +33,17 @@ class Patient extends User {
         name: json["name"] as String,
         lastname: json["lastname"] as String,
         username: json["username"] as String,
-        password: json["password"] as String,
+        // password: json["password"] as String,
         diabeticTypeId: json["diabeticTypeId"] as int,
         doctorId: json["doctorId"] as int);
   }
+
+  // factory Patient.fromJsonForLogin(Map<String, dynamic> json) {
+  //   Patient patient = Patient.fromJson(json);
+  //   User user=User.fromJsonForLogin(json);
+  //   patient.token = user.token;
+  //   return patient;
+  // }
 
   Map<String, dynamic> toJson() {
     return {
@@ -44,6 +53,7 @@ class Patient extends User {
       'lastname': lastname,
       'username': username,
       'password': password,
+      'token': token,
       'diabeticTypeId': _diabeticTypeId,
       'doctorId': _doctorId,
     };
@@ -57,6 +67,7 @@ class Patient extends User {
         ", lastname='$lastname'" +
         ", username='$username'" +
         ", password='$password'" +
+        ", token='$token'" +
         ", doctorId='$_doctorId'" +
         ", diabeticTypeId='$_diabeticTypeId'" +
         '}';

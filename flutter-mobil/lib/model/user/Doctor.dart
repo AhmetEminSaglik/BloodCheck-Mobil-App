@@ -8,7 +8,8 @@ class Doctor extends User {
       {required int id,
       required int roleId,
       required String username,
-      required String password,
+      String password = "",
+      String token = "",
       String name = "",
       String lastname = "",
       String specialization = "",
@@ -19,7 +20,8 @@ class Doctor extends User {
             name: name,
             lastname: lastname,
             username: username,
-            password: password) {
+            password: password,
+            token: token) {
     this._specialization = specialization;
     this._graduate = graduate;
   }
@@ -31,11 +33,18 @@ class Doctor extends User {
       name: json["name"] as String,
       lastname: json["lastname"] as String,
       username: json["username"] as String,
-      password: json["password"] as String,
+      // password: json["password"] as String,
       specialization: json["specialization"] as String,
       graduate: json["graduate"] as String,
     );
   }
+
+  // factory Doctor.fromJsonForLogin(Map<String, dynamic> json) {
+  //   Doctor doctor = Doctor.fromJson(json);
+  //   User user=User.fromJsonForLogin(json);
+  //   doctor.token = user.token;
+  //   return doctor;
+  // }
 
   Map<String, dynamic> toJson() {
     return {
@@ -45,6 +54,7 @@ class Doctor extends User {
       'lastname': lastname,
       'username': username,
       'password': password,
+      'token': token,
       'specialization': _specialization,
       'graduate': _graduate,
     };
@@ -58,6 +68,7 @@ class Doctor extends User {
         ", lastname=$lastname" +
         ", username=$username" +
         ", password=$password" +
+        ", token=$token" +
         ", specialization=$_specialization" +
         ", graduate=$_graduate" +
         '}';
