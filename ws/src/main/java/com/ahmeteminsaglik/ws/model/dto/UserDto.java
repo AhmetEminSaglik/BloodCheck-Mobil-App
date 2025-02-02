@@ -12,6 +12,7 @@ public class UserDto {
     private String lastname;
     private String username;
     private String token;
+    private int dia;
     private LocalDateTime createdAt = CustomUTCTime.getUTCTime();
 
     public UserDto(User user) {
