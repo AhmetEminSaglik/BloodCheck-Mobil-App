@@ -2,7 +2,7 @@ name: bloodcheck
 description: "Demo Medical blood check app."
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.2+7
+version: 1.0.3+8
 
 environment:
   sdk: ^3.5.0
