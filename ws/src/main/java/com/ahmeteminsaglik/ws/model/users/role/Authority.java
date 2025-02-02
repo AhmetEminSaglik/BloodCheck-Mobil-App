@@ -33,7 +33,7 @@ public class Authority implements GrantedAuthority {
 
     public Authority(int id, EnumAuthority enumAuthority) {
         this.id = id;
-        this.authority = authority.toString();
+        this.authority = enumAuthority.toString();
     }
 
     public int getId() {

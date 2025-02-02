@@ -3,8 +3,7 @@ package com.ahmeteminsaglik.ws.model.enums;
 public enum EnumAuthority {
     ROLE_ADMIN(1,"ADMIN"),
     ROLE_DOCTOR(2,"DOCTOR"),
-    ROLE_PATIENT(3,"PATIENT"),
-    ROLE_SUPER_ADMIN(4,"SUPER_ADMIN");
+    ROLE_PATIENT(3,"PATIENT");
     private final int id;
 
     private String name;
