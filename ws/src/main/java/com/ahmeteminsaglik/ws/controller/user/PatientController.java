@@ -6,6 +6,8 @@ import com.ahmeteminsaglik.ws.business.abstracts.user.PatientService;
 import com.ahmeteminsaglik.ws.business.abstracts.user.UserService;
 import com.ahmeteminsaglik.ws.business.concretes.signup.SignupUser;
 import com.ahmeteminsaglik.ws.controller.timer.PatientTimerController;
+import com.ahmeteminsaglik.ws.model.JwtAuthResponse;
+import com.ahmeteminsaglik.ws.model.dto.ModelMapper;
 import com.ahmeteminsaglik.ws.model.enums.EnumAuthority;
 import com.ahmeteminsaglik.ws.model.firebase.FcmData;
 import com.ahmeteminsaglik.ws.model.firebase.FcmMessage;
@@ -14,6 +16,7 @@ import com.ahmeteminsaglik.ws.model.timer.PatientTimer;
 import com.ahmeteminsaglik.ws.model.users.Doctor;
 import com.ahmeteminsaglik.ws.model.users.Patient;
 import com.ahmeteminsaglik.ws.model.users.User;
+import com.ahmeteminsaglik.ws.utility.JwtUtil;
 import com.ahmeteminsaglik.ws.utility.exception.response.FailedSendNotificationToDoctorException;
 import com.ahmeteminsaglik.ws.utility.result.DataResult;
 import com.ahmeteminsaglik.ws.utility.result.SuccessDataResult;
@@ -22,6 +25,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,6 +46,8 @@ public class PatientController {
     FcmTokenService tokenService;
     @Autowired
     PatientTimerController timerController;
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @PostMapping()
     public ResponseEntity<DataResult<User>> savePatient(@RequestBody Patient patient) {
@@ -122,12 +129,35 @@ public class PatientController {
     }
 
     @PutMapping()
-    public ResponseEntity<DataResult<Patient>> updatePatient(@RequestBody Patient patient) {
+    public ResponseEntity<DataResult<JwtAuthResponse>> updatePatient(@RequestBody Patient newUser) {
         log.info("PUT > updatePatient ");
-        patient = (Patient) userService.save(patient);
+
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        Patient existedUser = (Patient) userService.findById(newUser.getId());
+
+        if(newUser.getUsername()!=null&&!newUser.getUsername().isEmpty()){
+        existedUser.setUsername(newUser.getUsername());
+        }
+        if(newUser.getName()!=null&&!newUser.getName().isEmpty()){
+        existedUser.setName(newUser.getName());
+        }
+        if(newUser.getLastname()!=null&&!newUser.getLastname().isEmpty()){
+        existedUser.setLastname(newUser.getLastname());
+        }
+        if (newUser.getPassword() != null && !newUser.getPassword().isEmpty()) {
+            existedUser.setPassword("{bcrypt}" + passwordEncoder.encode(newUser.getPassword()));
+        }
+
+        newUser = (Patient) userService.save(existedUser);
         String msg = "Patient is updated";
-        DataResult<Patient> result = new SuccessDataResult<>(patient, msg);
-        return ResponseEntity.status(HttpStatus.OK).body(result);
+
+        JwtAuthResponse response = new JwtAuthResponse();
+        response.setAccessToken(jwtUtil.generateToken(newUser.getUsername()));
+        DataResult<JwtAuthResponse> dataResult = new SuccessDataResult<>(response, msg);
+        response.setUserDto(ModelMapper.convertToPatientDto(newUser));
+        response.getUserDto().setToken(response.getAccessToken());
+
+        return ResponseEntity.status(HttpStatus.OK).body(dataResult);
     }
 
     private void saveDefaultPatientTimer(long patientId) {

@@ -1,6 +1,7 @@
 package com.ahmeteminsaglik.ws.controller.user;
 
 import com.ahmeteminsaglik.ws.business.abstracts.user.UserService;
+import com.ahmeteminsaglik.ws.model.JwtAuthResponse;
 import com.ahmeteminsaglik.ws.model.users.User;
 import com.ahmeteminsaglik.ws.utility.CustomUTCTime;
 import com.ahmeteminsaglik.ws.utility.JwtUtil;
@@ -13,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -24,7 +27,7 @@ import java.util.List;
 public class UserController {
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
     @Autowired
-    private UserService service;
+    private UserService userService;
     @Autowired
     private JwtUtil jwtUtil;
     @Autowired
@@ -39,7 +42,7 @@ public class UserController {
     @GetMapping()
     public ResponseEntity<DataResult<List<User>>> findAllUserList() {
         log.info("GET > findAllUserList ");
-        DataResult<List<User>> dataResult = new SuccessDataResult<>(service.findAll(), "All users retrieved Successfully.");
+        DataResult<List<User>> dataResult = new SuccessDataResult<>(userService.findAll(), "All users retrieved Successfully.");
         log.info(dataResult.getMessage());
         return ResponseEntity.status(HttpStatus.OK).body(dataResult);
     }
@@ -50,7 +53,7 @@ public class UserController {
         log.info("GET > findByLastCreatedMinusMinutes ");
         log.info("(Param) min : " + min);
         LocalDateTime localDateTime = CustomUTCTime.getUTCTime().minusMinutes(min);
-        List<User> users = service.findAllByCreatedAtAfter(localDateTime);
+        List<User> users = userService.findAllByCreatedAtAfter(localDateTime);
         String msg = "Retrieved all users that created last in  (" + min + ") minutes (Size:" + users.size() + ")";
         DataResult<List<User>> dataResult = new SuccessDataResult<>(users, msg);
         log.info(msg);
@@ -63,7 +66,7 @@ public class UserController {
     public DataResult<User> findById(@PathVariable long id) {
         log.info("GET > findById ");
         log.info("(Param) id : " + id);
-        User user = service.findById(id);
+        User user = userService.findById(id);
         String msg = "User retrieved Successfully.";
         log.info(msg);
         return new SuccessDataResult<>(user, msg);
@@ -116,5 +119,28 @@ public class UserController {
         }
     }
 */
+
+    @PutMapping()
+    public <T extends User> ResponseEntity<DataResult<JwtAuthResponse>> updateUser(@RequestBody T newUser) {
+        log.info("PUT > updatePatient ");
+
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        T existedUser = (T) userService.findById(newUser.getId());
+        existedUser.setUsername(newUser.getUsername());
+        existedUser.setName(newUser.getName());
+        existedUser.setLastname(newUser.getLastname());
+        if (newUser.getPassword() != null && !newUser.getPassword().isEmpty()) {
+            existedUser.setPassword("{bcrypt}" + passwordEncoder.encode(newUser.getPassword()));
+        }
+        newUser = (T) userService.save(existedUser);
+        String msg = "Patient is updated";
+
+        JwtAuthResponse response = new JwtAuthResponse();
+        response.setAccessToken(jwtUtil.generateToken(newUser.getUsername()));
+        DataResult<JwtAuthResponse> dataResult = new SuccessDataResult<>(response, msg);
+
+        return ResponseEntity.status(HttpStatus.OK).body(dataResult);
+    }
+
 }
 
