@@ -1,11 +1,11 @@
 package com.ahmeteminsaglik.ws.controller.user;
 
 import com.ahmeteminsaglik.ws.business.abstracts.user.UserService;
-import com.ahmeteminsaglik.ws.model.LoginCredentials;
 import com.ahmeteminsaglik.ws.model.users.User;
 import com.ahmeteminsaglik.ws.utility.CustomUTCTime;
 import com.ahmeteminsaglik.ws.utility.JwtUtil;
-import com.ahmeteminsaglik.ws.utility.result.*;
+import com.ahmeteminsaglik.ws.utility.result.DataResult;
+import com.ahmeteminsaglik.ws.utility.result.SuccessDataResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +32,9 @@ public class UserController {
 
     @Autowired
     private UserDetailsService userDetailsService;
+//    @Autowired
+//    private AuthenticatedUser authenticatedUser;
+
 
     @GetMapping()
     public ResponseEntity<DataResult<List<User>>> findAllUserList() {
@@ -56,6 +59,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
+//    @PreAuthorize("(hasRole('PATIENT') and #id == authentication.principal.id) or hasRole('ADMIN')")
     public DataResult<User> findById(@PathVariable long id) {
         log.info("GET > findById ");
         log.info("(Param) id : " + id);
@@ -65,10 +69,10 @@ public class UserController {
         return new SuccessDataResult<>(user, msg);
     }
 
-    @PostMapping("/login")
+    /*@PostMapping("/login")
     public ResponseEntity<DataResult<User>> login(@RequestBody LoginCredentials loginCreds) {
         return ResponseEntity.ok(new ErrorDataResult<>(null,"Login islemi kisminda kalindi -( Spring Security & JWT - Ekleniyor )"));
-/*
+*//*
         System.out.println("logine geldi");
         log.info("POST > login ");
 
@@ -92,10 +96,10 @@ public class UserController {
             log.info("Login process is completed.");
             return ResponseEntity.status(HttpStatus.OK).body(result);
         }
-*/
-    }
+*//*
+    }*/
 
-    @DeleteMapping()
+    /*@DeleteMapping()
     public ResponseEntity<Result> deleteUser(@RequestBody LoginCredentials loginCreds) {
         log.info("DELETE > delete ");
         User user = login(loginCreds).getBody().getData();
@@ -111,5 +115,6 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
         }
     }
+*/
 }
 
