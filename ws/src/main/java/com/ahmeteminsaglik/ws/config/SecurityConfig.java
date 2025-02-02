@@ -4,7 +4,6 @@ import com.ahmeteminsaglik.ws.model.enums.EnumAuthority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -36,10 +35,14 @@ public class SecurityConfig {
         final String admin = EnumAuthority.ROLE_ADMIN.getName();
 
         http.authorizeHttpRequests(configurer ->
-                        configurer
-                                .requestMatchers("/login").permitAll()
-                                .requestMatchers(HttpMethod.GET, "/bloodresults/patient/**").hasAnyRole(patient)
-//                                .requestMatchers(HttpMethod.GET, "/users").hasAnyRole(employee)
+                                configurer
+                                        .requestMatchers("/login").permitAll()
+                                        .requestMatchers("/patients").hasRole(patient)
+                                        .requestMatchers("/patients/**").hasRole(patient)
+                                        .requestMatchers("/patients/*/doctors").hasRole(patient)
+//                                .requestMatchers(HttpMethod.GET, "/bloodresults/patient/**").hasAnyRole(patient)
+//                                .requestMatchers(HttpMethod.GET, "/users").hasAnyRole(patient)
+//                                .requestMatchers(HttpMethod.GET, "/users/**").hasAnyRole(patient)
 //                                .requestMatchers(HttpMethod.GET, "/users/**").hasAnyRole(employee)
 //                                .requestMatchers(HttpMethod.POST, "/users").hasAnyRole(manager)
 //                                .requestMatchers(HttpMethod.PUT, "/users/**").hasAnyRole(manager)
