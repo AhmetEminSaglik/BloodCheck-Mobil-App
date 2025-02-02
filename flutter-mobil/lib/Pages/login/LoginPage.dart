@@ -8,7 +8,7 @@ import 'package:bloodcheck/Pages/afterlogin/homepage/users/patient/HomePage.dart
 import 'package:bloodcheck/Product/CustomButton.dart';
 import 'package:bloodcheck/business/factory/UserFactory.dart';
 import 'package:bloodcheck/core/ResponsiveDesign.dart';
-import 'package:bloodcheck/httprequest/HttpRequestUser.dart';
+import 'package:bloodcheck/httprequest/HttpRequestLogin.dart';
 import 'package:bloodcheck/httprequest/ResponseEntity.dart';
 import 'package:bloodcheck/model/firebase/FcmData.dart';
 import 'package:bloodcheck/model/user/User.dart';
@@ -90,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
       await login(username: username, password: password)
           .then((value) => respEntity = value);
       if (respEntity != null && respEntity!.success) {
-        User user = UserFactory.createUser(respEntity!.data);
+        User user = UserFactory.createUserByLogin(respEntity!.data);
         // saveUserData(context, user);
         updateCubits(context);
         navigateToHomePage(context: context, roleId: user.roleId);
@@ -323,7 +323,7 @@ class _LoginButton extends StatelessWidget {
               context: context, msg: respEntity!.message);
         } else {
           // log.i("Gelen Data ${respEntity!.data}");
-          User user = UserFactory.createUser(respEntity!.data);
+          User user = UserFactory.createUserByLogin(respEntity!.data);
           saveUserData(context, user);
           navigateToHomePage(context: context, roleId: user.roleId);
         }
@@ -365,11 +365,11 @@ class _LoginButton extends StatelessWidget {
 
 Future<ResponseEntity?> login(
     {required String username, required String password}) async {
-  var request = HttpRequestUser();
+  var request = HttpRequestLogin();
   ResponseEntity? respEntity;
   await request.login(username, password).then((resp) async {
     Map<String, dynamic> jsonData = json.decode(resp.body);
-    respEntity = ResponseEntity.fromJson(jsonData);
+    respEntity = ResponseEntity.fromJsonForLogin(jsonData);
     return respEntity;
   });
   return respEntity;

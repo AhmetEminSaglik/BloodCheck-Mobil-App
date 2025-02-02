@@ -148,7 +148,7 @@ class _UpdateProfileButton extends StatelessWidget {
         String name = tfName.text;
         String lastname = tfLastname.text;
 
-        Patient doctor = Patient(
+        Patient patient = Patient(
           id: defaultPatient.id,
           roleId: defaultPatient.roleId,
           name: name.isNotEmpty ? name : defaultPatient.name,
@@ -162,12 +162,12 @@ class _UpdateProfileButton extends StatelessWidget {
 
         ResponseEntity? respEntity;
 
-        await request.update(doctor).then((value) => respEntity = value);
+        await request.update(patient).then((value) => respEntity = value);
 
         if (respEntity != null) {
           if (respEntity!.success) {
             context.read<ProfilUpdatedCubit>().setTrue();
-            await SharedPrefUtils.setLoginDataUser(doctor).then((value) {});
+            await SharedPrefUtils.setLoginDataUser(patient).then((value) {});
             Navigator.pop(
                 context,
                 MaterialPageRoute(

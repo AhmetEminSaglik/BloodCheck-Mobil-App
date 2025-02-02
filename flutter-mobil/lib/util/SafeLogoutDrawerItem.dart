@@ -27,7 +27,7 @@ class _SafeLogoutDrawerItemState extends State<SafeLogoutDrawerItem> {
 
 class SafeLogOut {
   static void clearSharedPref() {
-    SharedPrefUtils.deleteToken();
+    SharedPrefUtils.deleteFcmToken();
     SharedPrefUtils.sp.clear();
   }
 }

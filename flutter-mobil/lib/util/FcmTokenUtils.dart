@@ -20,7 +20,7 @@ class FcmTokenUtils {
   static Future<void> createToken() async {
     _token = (await FirebaseMessaging.instance.getToken())!;
     // FirebaseMessaging.instance.subscribeToTopic("Istanbul");
-    // FirebaseMessaging.instance.deleteToken();
+    // FirebaseMessaging.instance.deleteFcmToken();
     // log.i("Token : $_token");
   }
 
