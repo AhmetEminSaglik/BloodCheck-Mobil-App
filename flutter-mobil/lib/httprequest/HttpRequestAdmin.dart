@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:bloodcheck/business/factory/UserFactory.dart';
 import 'package:bloodcheck/model/user/Admin.dart';
 import 'package:bloodcheck/util/HttpUtil.dart';
+import 'package:bloodcheck/util/SharedPrefUtils.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 
@@ -18,7 +19,7 @@ class HttpRequestAdmin {
     Uri url = Uri.parse("$_baseUrl/$id");
     // // log.i("URL : $url");
 
-    var resp = await http.get(url);
+    var resp = await http.get(headers: HttpUtil.getHeaders(SharedPrefUtils.getToken()),url);
     Map<String, dynamic> jsonData = json.decode(resp.body);
     var respEntity = ResponseEntity.fromJson(jsonData);
     return UserFactory.createAdmin(respEntity.data);
@@ -29,7 +30,7 @@ class HttpRequestAdmin {
     // log.i("URL : $url");
     Map<String, dynamic> requestData = admin.toJson();
     var resp = await http.put(url,
-        headers: HttpUtil.header, body: jsonEncode(requestData));
+        headers: HttpUtil.getHeaders(SharedPrefUtils.getToken()), body: jsonEncode(requestData));
 
     Map<String, dynamic> jsonData = json.decode(resp.body);
     ResponseEntity respEntity = ResponseEntity.fromJson(jsonData);

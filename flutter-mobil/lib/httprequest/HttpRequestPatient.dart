@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:bloodcheck/httprequest/BaseHttpRequest.dart';
 import 'package:bloodcheck/model/specialitem/doctor/PatientTimer.dart';
+import 'package:bloodcheck/util/SharedPrefUtils.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 
@@ -20,7 +21,7 @@ class HttpRequestPatient {
   static Future<List<Patient>> getPatientList() async {
     Uri url = Uri.parse(_baseUrl);
     // log.i("URL : $url");
-    var resp = await http.get(url);
+    var resp = await http.get(headers: HttpUtil.getHeaders(SharedPrefUtils.getToken()),url);
     log.i(resp.body);
     Map<String, dynamic> jsonData = json.decode(resp.body);
     var respEntity = ResponseEntity.fromJson(jsonData);
@@ -34,15 +35,14 @@ class HttpRequestPatient {
     Map<String, dynamic> requestData = user.toJson();
     // log.i("to json  $requestData");
     var resp = await http.post(url,
-        headers: HttpUtil.header, body: jsonEncode(requestData));
+        headers: HttpUtil.getHeaders(SharedPrefUtils.getToken()), body: jsonEncode(requestData));
     return resp;
   }
 
   static Future<PatientTimer> retrievePatientTimer(int patientId) async {
     Uri url = Uri.parse(
         "${BaseHttpRequestConfig.baseUrl}/timers$_classUrl/$patientId");
-    // log.i("URL : $url");
-    var resp = await http.get(url);
+    var resp = await http.get(headers: HttpUtil.getHeaders(SharedPrefUtils.getToken()),url);
     log.i(resp.body);
     Map<String, dynamic> jsonData = json.decode(resp.body);
     var respEntity = ResponseEntity.fromJson(jsonData);
@@ -53,7 +53,7 @@ class HttpRequestPatient {
   static Future<Doctor> findResponsibleDoctorByPatientId(int patientId) async {
     Uri url = Uri.parse("$_baseUrl/$patientId/doctors");
     // log.i("URL : $url");
-    var resp = await http.get(url);
+    var resp = await http.get(headers: HttpUtil.getHeaders(SharedPrefUtils.getToken()),url);
     log.i(resp.body);
     Map<String, dynamic> jsonData = json.decode(resp.body);
     var respEntity = ResponseEntity.fromJson(jsonData);
@@ -64,7 +64,7 @@ class HttpRequestPatient {
   static Future<Patient> findPatientById(int patientId) async {
     Uri url = Uri.parse("$_baseUrl/$patientId");
     // log.i("URL : $url");
-    var resp = await http.get(url);
+    var resp = await http.get(headers: HttpUtil.getHeaders(SharedPrefUtils.getToken()),url);
     log.i(resp.body);
     Map<String, dynamic> jsonData = json.decode(resp.body);
     var respEntity = ResponseEntity.fromJson(jsonData);
@@ -73,13 +73,13 @@ class HttpRequestPatient {
 
   Future<ResponseEntity> update(Patient patient) async {
     Uri url = Uri.parse("$_baseUrl");
-    // log.i("URL : $url");
+    log.i("URL : $url");
     Map<String, dynamic> requestData = patient.toJson();
     var resp = await http.put(url,
-        headers: HttpUtil.header, body: jsonEncode(requestData));
+        headers: HttpUtil.getHeaders(SharedPrefUtils.getToken()), body: jsonEncode(requestData));
 
     Map<String, dynamic> jsonData = json.decode(resp.body);
-    ResponseEntity respEntity = ResponseEntity.fromJson(jsonData);
+    ResponseEntity respEntity = ResponseEntity.fromJsonForLogin(jsonData);
     return respEntity;
   }
 }

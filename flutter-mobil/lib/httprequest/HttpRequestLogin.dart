@@ -2,12 +2,14 @@ import 'dart:convert';
 
 import 'package:bloodcheck/httprequest/BaseHttpRequest.dart';
 import 'package:bloodcheck/util/HttpUtil.dart';
+import 'package:bloodcheck/util/SharedPrefUtils.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 
-class HttpRequestUser {
-  static const String _classUrl = "/users";
-  static final String _baseUrl = BaseHttpRequestConfig.baseUrl + _classUrl;
+class HttpRequestLogin {
+  // static const String _classUrl = "/users";
+  // static final String _baseUrl = BaseHttpRequestConfig.baseUrl + _classUrl;
+  static final String _baseUrl = BaseHttpRequestConfig.baseUrl;
   static var log = Logger(printer: PrettyPrinter(colors: false));
 
   Future<http.Response> login(String username, String password) async {
@@ -18,9 +20,9 @@ class HttpRequestUser {
       "username": username,
       "password": password,
     };
-
+    // SharedPrefUtils.clearToken();
     var resp = await http.post(url,
-        headers: HttpUtil.header, body: jsonEncode(requestData));
+        headers: HttpUtil.getHeaders(SharedPrefUtils.getToken()), body: jsonEncode(requestData));
     return resp;
   }
 }

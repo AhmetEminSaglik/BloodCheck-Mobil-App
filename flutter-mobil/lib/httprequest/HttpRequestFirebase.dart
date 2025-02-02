@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:bloodcheck/httprequest/BaseHttpRequest.dart';
 import 'package:bloodcheck/util/HttpUtil.dart';
+import 'package:bloodcheck/util/SharedPrefUtils.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 
@@ -12,7 +13,7 @@ class HttpRequestFirebase {
   static final String _baseUrl = BaseHttpRequestConfig.baseUrl + _classUrl;
   static var log = Logger(printer: PrettyPrinter(colors: false));
 
-  static void saveToken(FcmToken fcmToken) async {
+  static void saveFcmToken(FcmToken fcmToken) async {
     Uri url = Uri.parse(_baseUrl);
     log.i("URL : ${url}");
     // log.i("REQUEST TOKEN :  : ${fcmToken.token}");
@@ -22,7 +23,8 @@ class HttpRequestFirebase {
       "token": fcmToken.token,
     };
     var resp = await http.post(url,
-        headers: HttpUtil.header, body: jsonEncode(requestData));
+        headers: HttpUtil.getHeaders(SharedPrefUtils.getToken()),
+        body: jsonEncode(requestData));
     // log.i(" RESP Result : ${resp.body}");
   }
 
@@ -35,8 +37,12 @@ class HttpRequestFirebase {
       "userId": fcmToken.userId,
       "token": fcmToken.token,
     };
+
+    // SharedPrefUtils.clearToken();
+
     var resp = await http.delete(url,
-        headers: HttpUtil.header, body: jsonEncode(requestData));
+        headers: HttpUtil.getHeaders(SharedPrefUtils.getToken()),
+        body: jsonEncode(requestData));
     // log.i(" RESP Result : ${resp.body}");
   }
 }

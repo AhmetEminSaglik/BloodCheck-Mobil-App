@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:bloodcheck/util/SharedPrefUtils.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 
@@ -17,7 +18,7 @@ class HttpRequestBloodResult {
 
   static Future<List<BloodResult>> _sendBloodResultRequestToUrl(Uri url) async {
     // log.i("URL : $url");
-    var resp = await http.get(url);
+    var resp = await http.get(headers: HttpUtil.getHeaders(SharedPrefUtils.getToken()),url);
     Map<String, dynamic> jsonData = json.decode(resp.body);
     var respEntity = ResponseEntity.fromJson(jsonData);
     List<BloodResult> bloodResultList =
@@ -27,6 +28,8 @@ class HttpRequestBloodResult {
 
   static Future<List<BloodResult>> getDailyBloodResult(int patientId) async {
     Uri url = Uri.parse("$_baseUrl/patient/$patientId/daily");
+    log.i("--> URL : $url");
+
     return _sendBloodResultRequestToUrl(url);
   }
 
@@ -45,7 +48,7 @@ class HttpRequestBloodResult {
     // log.i("URL : $url");
     Map<String, dynamic> requestData = user.toJson();
     var resp = await http.post(url,
-        headers: HttpUtil.header, body: jsonEncode(requestData));
+        headers: HttpUtil.getHeaders(SharedPrefUtils.getToken()), body: jsonEncode(requestData));
     return resp;
   }
 }
