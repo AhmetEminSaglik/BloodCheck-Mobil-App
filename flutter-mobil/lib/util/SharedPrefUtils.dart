@@ -25,16 +25,22 @@ class SharedPrefUtils {
     _sp.setString(EnumUserProp.PASSWORD.name, user.password);
     _sp.setString(EnumUserProp.NAME.name, user.name);
     _sp.setString(EnumUserProp.LASTNAME.name, user.lastname);
-    saveToken();
+    // _sp.setString(EnumUserProp.TOKEN.name, user.token);
+
+    if (user.token?.isNotEmpty ?? false) {
+      updateToken(user.token);
+    }
+
+    saveFcmToken();
   }
 
-  static void saveToken() {
+  static void saveFcmToken() {
     FcmToken fcmToken = FcmToken(
         userId: SharedPrefUtils.getUserId(), token: FcmTokenUtils.getToken());
-    HttpRequestFirebase.saveToken(fcmToken);
+    HttpRequestFirebase.saveFcmToken(fcmToken);
   }
 
-  static void deleteToken() {
+  static void deleteFcmToken() {
     FcmToken fcmToken = FcmToken(
         userId: SharedPrefUtils.getUserId(), token: FcmTokenUtils.getToken());
     HttpRequestFirebase.deleteToken(fcmToken);
@@ -74,6 +80,19 @@ class SharedPrefUtils {
     return value ?? "";
     // return _sp.getString(EnumUserProp.LASTNAME.name);
   }
+
+  static String getToken() {
+    var value = _sp.getString(EnumUserProp.TOKEN.name);
+    return value ?? "";
+  }
+
+  static void updateToken(String token) {
+    _sp.setString(EnumUserProp.TOKEN.name, token);
+  }
+
+  // static void clearToken() {
+  //   updateToken("");
+  // }
 
   static get sp => _sp;
 }

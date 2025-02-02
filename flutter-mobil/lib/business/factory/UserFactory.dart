@@ -4,6 +4,7 @@ import '../../model/user/Patient.dart';
 import '../../model/user/User.dart';
 
 class UserFactory {
+
   static User createUser(Map<String, dynamic> json) {
     return User.fromJson(json);
   }
@@ -20,6 +21,23 @@ class UserFactory {
     return Patient.fromJson(json);
   }
 
+
+  static User createUserByLogin(Map<String, dynamic> json) {
+    return User.fromJsonForLogin(json);
+  }
+
+  /*static Admin createAdminByLogin(Map<String, dynamic> json) {
+    return Admin.fromJsonForLogin(json);
+  }
+
+  static Doctor createDoctorByLogin(Map<String, dynamic> json) {
+    return Doctor.fromJsonForLogin(json);
+  }
+
+  static Patient createPatientByLogin(Map<String, dynamic> json) {
+    return Patient.fromJsonForLogin(json);
+  }
+*/
   static List<User> createUserList(List<dynamic> json) {
     List<User> userList = json.map((data) => User.fromJson(data)).toList();
     return userList;
