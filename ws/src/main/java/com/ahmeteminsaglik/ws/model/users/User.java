@@ -46,6 +46,10 @@ public abstract class User implements UserDetails {
     @Column(name = "created_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime createdAt = CustomUTCTime.getUTCTime();
 
+    public void addAuthority(Authority authority) {
+        authorities.add(authority);
+    }
+
     public Long getId() {
         return id;
     }

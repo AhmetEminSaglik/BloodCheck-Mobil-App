@@ -1,18 +1,21 @@
 package com.ahmeteminsaglik.ws.business.concretes;
 
+import com.ahmeteminsaglik.ws.business.abstracts.auth.AuthorityService;
 import com.ahmeteminsaglik.ws.business.abstracts.bloodresult.BloodResultService;
 import com.ahmeteminsaglik.ws.business.abstracts.diabetic.DiabeticService;
 import com.ahmeteminsaglik.ws.business.abstracts.firebase.notification.FcmService;
 import com.ahmeteminsaglik.ws.business.abstracts.firebase.token.FcmTokenService;
 import com.ahmeteminsaglik.ws.business.abstracts.timer.PatientTimerService;
+import com.ahmeteminsaglik.ws.business.abstracts.user.DoctorService;
+import com.ahmeteminsaglik.ws.business.abstracts.user.PatientService;
 import com.ahmeteminsaglik.ws.business.abstracts.user.UserService;
 import com.ahmeteminsaglik.ws.controller.bloodresult.BloodResultController;
 import com.ahmeteminsaglik.ws.controller.timer.PatientTimerController;
 import com.ahmeteminsaglik.ws.controller.user.PatientController;
 import com.ahmeteminsaglik.ws.model.bloodresult.BloodResult;
 import com.ahmeteminsaglik.ws.model.diabetic.Diabetic;
-import com.ahmeteminsaglik.ws.model.enums.EnumDiabeticType;
 import com.ahmeteminsaglik.ws.model.enums.EnumAuthority;
+import com.ahmeteminsaglik.ws.model.enums.EnumDiabeticType;
 import com.ahmeteminsaglik.ws.model.timer.PatientTimer;
 import com.ahmeteminsaglik.ws.model.users.Admin;
 import com.ahmeteminsaglik.ws.model.users.Doctor;
@@ -22,6 +25,8 @@ import com.ahmeteminsaglik.ws.model.users.role.Authority;
 import com.ahmeteminsaglik.ws.utility.CustomLog;
 import com.ahmeteminsaglik.ws.utility.CustomUTCTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -44,6 +49,11 @@ public class InitialData {
     @Autowired
     private UserService userService;
     @Autowired
+    private PatientService patientService;
+    @Autowired
+    private DoctorService doctorService;
+
+    @Autowired
     private AuthorityService roleService;
     @Autowired
     private DiabeticService diabeticService;
@@ -57,6 +67,8 @@ public class InitialData {
     private FcmService fcmService;
     @Autowired
     BloodResultController bloodResultController;
+
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     private static CustomLog log = new CustomLog(InitialDataLoader.class);
     private static Random random = new Random();
@@ -93,6 +105,7 @@ public class InitialData {
             saveUserData(getAdminList());
             saveUserData(getDoctorList());
             savePatient(getPatientList());
+            addAuthoritiesToUsers();
             savePatientTimer();
 
             List<Patient> patientList = patientController.getPatientList().getBody().getData();
@@ -116,6 +129,7 @@ public class InitialData {
     private int getTotalMinuteOfPatientTimer(PatientTimer patientTimer) {
         return patientTimer.getHours() * 60 + patientTimer.getMinutes();
     }
+
     boolean isDataSavedBefore() {
         List<BloodResult> retrievedBloodResultList = bloodResultService.findAll();
         if (retrievedBloodResultList.size() > 1) {
@@ -162,14 +176,16 @@ public class InitialData {
             timerService.update(e);
         }
     }
+
     private void saveDiabeticTypeData() {
         List<Diabetic> list = getDiabeticTypeList();
         list.forEach(e -> diabeticService.save(e));
     }
 
     private void saveAuthorityData() {
-        List<Authority> list = roleService.saveAll(getStandartAuthorityList());
-        list.forEach(System.out::println);
+//        List<Authority> list = roleService.saveAll();
+//        list.forEach(System.out::println);
+        getStandartAuthorityList().forEach(e -> roleService.save(e));
     }
 
     private boolean isUserRegistered(String username) {
@@ -190,6 +206,7 @@ public class InitialData {
             }
         }
     }
+
     private void savePatient(List<Patient> list) {
         for (int i = 0; i < list.size(); i++) {
             String username = list.get(i).getUsername();
@@ -197,8 +214,35 @@ public class InitialData {
                 log.info(username + " data is already registered.");
             } else {
                 Patient patient = (Patient) patientController.savePatient(list.get(i)).getBody().getData();// userService.save(list.get(i));
-                log.info("Created Patient : "+patient);
+                log.info("Created Patient : " + patient);
             }
+        }
+    }
+
+    private void addAuthoritiesToUsers() {
+        Authority patientAuth = roleService.findByAuthority(EnumAuthority.ROLE_PATIENT);
+        Authority doctorAuth = roleService.findByAuthority(EnumAuthority.ROLE_DOCTOR);
+        Authority adminAuth = roleService.findByAuthority(EnumAuthority.ROLE_ADMIN);
+
+        User adminuser = userService.findById(1);
+        adminuser.addAuthority(patientAuth);
+        adminuser.addAuthority(doctorAuth);
+        adminuser.addAuthority(adminAuth);
+        userService.save(adminuser);
+
+        List<Patient> patientList = patientService.findAll();
+        for (int i = 0; i < patientList.size(); i++) {
+            Patient patient = patientList.get(i);
+            patient.addAuthority(patientAuth);
+            userService.save(patient);
+        }
+
+        List<Doctor> doctorList = doctorService.findAll();
+        for (int i = 0; i < doctorList.size(); i++) {
+            Doctor doctor = doctorList.get(i);
+            doctor.addAuthority(patientAuth);
+            doctor.addAuthority(doctorAuth);
+            userService.save(doctor);
         }
     }
 
@@ -225,7 +269,7 @@ public class InitialData {
         admin.setName("Ahmet Emin");
         admin.setLastname("SAGLIK");
         admin.setUsername("AES");
-        admin.setPassword("pass");
+        admin.setPassword(getPassword());
         admin.setRoleId(EnumAuthority.ROLE_ADMIN.getId());
         list.add(admin);
 
@@ -243,7 +287,7 @@ public class InitialData {
             user.setName(createName(i));
             user.setLastname(createName(i));
             user.setUsername("doctor" + i);
-            user.setPassword("pass");
+            user.setPassword(getPassword());
             if (i < 3) {
                 user.setGraduate("Karadeniz Teknik University");
             } else {
@@ -267,7 +311,7 @@ public class InitialData {
             user.setName(createName(i));
             user.setLastname(createName(i));
             user.setUsername("patient" + i);
-            user.setPassword("pass");
+            user.setPassword(getPassword());
             user.setDiabeticTypeId((i % 4 + 1));
             int doctor_id = (i - 1) / 4 + doctorIdStartingIndex + 1;
             Doctor personnel = (Doctor) userService.findById(doctor_id);
@@ -278,5 +322,7 @@ public class InitialData {
         return list;
     }
 
-
+    private String getPassword() {
+        return "{bcrypt}" + passwordEncoder.encode("pass");
+    }
 }

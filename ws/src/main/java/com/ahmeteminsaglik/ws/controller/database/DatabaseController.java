@@ -1,5 +1,6 @@
 package com.ahmeteminsaglik.ws.controller.database;
 
+import com.ahmeteminsaglik.ws.business.abstracts.auth.AuthorityService;
 import com.ahmeteminsaglik.ws.business.abstracts.bloodresult.BloodResultService;
 import com.ahmeteminsaglik.ws.business.abstracts.diabetic.DiabeticService;
 import com.ahmeteminsaglik.ws.business.abstracts.timer.PatientTimerService;
@@ -61,8 +62,8 @@ public class DatabaseController {
         printLogDataStart(patientTimerService, patientTimerService.findAll().size());
         printLogDataCompleted(patientTimerService, patientTimerService.findAll().size());
 
-        printLogDataStart(authorityService, authorityService.findAll().size());
-        printLogDataCompleted(authorityService, authorityService.findAll().size());
+//        printLogDataStart(authorityService, authorityService.findAll().size());
+//        printLogDataCompleted(authorityService, authorityService.findAll().size());
     }
 
     private void createData() {
