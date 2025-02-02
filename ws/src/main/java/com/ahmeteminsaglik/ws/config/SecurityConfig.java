@@ -40,16 +40,31 @@ public class SecurityConfig {
                                         .requestMatchers("/patients").hasRole(patient)
                                         .requestMatchers("/patients/**").hasRole(patient)
                                         .requestMatchers("/patients/*/doctors").hasRole(patient)
-//                                .requestMatchers(HttpMethod.GET, "/bloodresults/patient/**").hasAnyRole(patient)
-//                                .requestMatchers(HttpMethod.GET, "/users").hasAnyRole(patient)
-//                                .requestMatchers(HttpMethod.GET, "/users/**").hasAnyRole(patient)
-//                                .requestMatchers(HttpMethod.GET, "/users/**").hasAnyRole(employee)
-//                                .requestMatchers(HttpMethod.POST, "/users").hasAnyRole(manager)
-//                                .requestMatchers(HttpMethod.PUT, "/users/**").hasAnyRole(manager)
+                                        .requestMatchers("/users/time/minutes/*").hasRole(patient)
+                                        .requestMatchers("/bloodresults").hasRole(patient)
+                                        .requestMatchers("/bloodresults/**").hasRole(patient)
+                                        .requestMatchers("/timers").hasRole(patient)
+                                        .requestMatchers("/timers/**").hasRole(patient)
+                                        .requestMatchers("/firebase/**").hasRole(patient)
+                                        .requestMatchers("/doctors/*").hasRole(patient)
+
+                                        .requestMatchers("/doctors").hasRole(doctor)
+                                        .requestMatchers("/doctors/").hasRole(doctor)
+                                        .requestMatchers("/doctors/**").hasRole(doctor)
+
+
+                                        .requestMatchers("/admins").hasRole(admin)
+                                        .requestMatchers("/admins/**").hasRole(admin)
+
+                                        .requestMatchers("/**").hasRole(admin)
 //                                .requestMatchers(HttpMethod.DELETE, "/users").hasAnyRole(admin)
 
                 )
-                // JWT filter'ı ekliyoruz
+                /*.formLogin(formLogin ->
+                        formLogin
+                                .loginPage().permitAll())
+                */.logout(e -> e.permitAll())
+        // JWT filter'ı ekliyoruz
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         // use HTTP basic authentication
 //        http.httpBasic(Customizer.withDefaults());
