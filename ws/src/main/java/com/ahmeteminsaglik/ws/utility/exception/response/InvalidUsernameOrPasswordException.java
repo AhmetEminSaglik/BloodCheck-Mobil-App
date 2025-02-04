@@ -5,4 +5,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
 public class InvalidUsernameOrPasswordException extends RuntimeException {
+    public InvalidUsernameOrPasswordException() {
+        super("Username or password is invalid.");
+    }
 }

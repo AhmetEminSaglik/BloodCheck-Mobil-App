@@ -11,6 +11,8 @@ import com.ahmeteminsaglik.ws.utility.result.SuccessDataResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class SignupUser {
     private static final Logger log = LoggerFactory.getLogger(SignupUser.class);
@@ -19,6 +21,8 @@ public class SignupUser {
     public SignupUser(UserService service) {
         this.service = service;
     }
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
 
     public DataResult<User> signup(User user) {
         log.info("signup user process is started.");
@@ -30,6 +34,7 @@ public class SignupUser {
             log.info("ApiRequestException will be thrown.");
             throw new ApiRequestException(HttpStatus.CONFLICT, result.getMessage());
         }
+        user.setPassword("{bcrypt}" + passwordEncoder.encode(user.getPassword()));
         user = service.save(user);
         DataResult<User> dataResult = new SuccessDataResult<>(user, user.getClass().getSimpleName() + " is created successfully.");
         log.info(dataResult.getMessage());

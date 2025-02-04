@@ -3,12 +3,12 @@ package com.ahmeteminsaglik.ws.config;
 
 import com.ahmeteminsaglik.ws.business.abstracts.user.UserService;
 import com.ahmeteminsaglik.ws.model.users.User;
+import com.ahmeteminsaglik.ws.utility.exception.response.InvalidUsernameOrPasswordException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -26,11 +26,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws InvalidUsernameOrPasswordException {
 
         User user = userService.findByUsername(username);
         if (user == null) {
-            new UsernameNotFoundException("User not exists by Username");
+            throw new InvalidUsernameOrPasswordException();
         }
 
         Set<GrantedAuthority> authorities = user.getAuthorities().stream()

@@ -70,7 +70,7 @@ public class SecurityConfig {
 //        http.httpBasic(Customizer.withDefaults());
 
         // disable Cross Site Request Forgery (CSRF)
-        http.csrf(csrf -> csrf.disable());
+//        http.csrf(csrf -> csrf.disable());
         return http.build();
     }
 }
