@@ -1,5 +1,6 @@
 package com.ahmeteminsaglik.ws.controller.user;
 
+import com.ahmeteminsaglik.ws.business.abstracts.auth.AuthorityService;
 import com.ahmeteminsaglik.ws.business.abstracts.user.DoctorService;
 import com.ahmeteminsaglik.ws.business.abstracts.user.PatientService;
 import com.ahmeteminsaglik.ws.business.abstracts.user.UserService;
@@ -10,6 +11,7 @@ import com.ahmeteminsaglik.ws.model.enums.EnumAuthority;
 import com.ahmeteminsaglik.ws.model.users.Doctor;
 import com.ahmeteminsaglik.ws.model.users.Patient;
 import com.ahmeteminsaglik.ws.model.users.User;
+import com.ahmeteminsaglik.ws.model.users.role.Authority;
 import com.ahmeteminsaglik.ws.utility.JwtUtil;
 import com.ahmeteminsaglik.ws.utility.result.DataResult;
 import com.ahmeteminsaglik.ws.utility.result.SuccessDataResult;
@@ -40,13 +42,22 @@ public class DoctorController {
 
     @Autowired
     private JwtUtil jwtUtil;
+    @Autowired
+    private AuthorityService roleService;
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @PostMapping()
-    public ResponseEntity<DataResult<User>> saveDoctor(@RequestBody Doctor doctor) {
+    public ResponseEntity<DataResult<User>> saveDoctor(@RequestBody Doctor user) {
         log.info("POST > saveDoctor ");
-        doctor.setRoleId(EnumAuthority.ROLE_DOCTOR.getId());
+        user.setRoleId(EnumAuthority.ROLE_DOCTOR.getId());
         SignupUser signupUser = new SignupUser(userService);
-        DataResult<User> dataResult = signupUser.signup(doctor);
+
+        Authority doctorAuth = roleService.findByAuthority(EnumAuthority.ROLE_DOCTOR);
+        Authority patientAuth = roleService.findByAuthority(EnumAuthority.ROLE_PATIENT);
+        user.addAuthority(doctorAuth);
+        user.addAuthority(patientAuth);
+
+        DataResult<User> dataResult = signupUser.signup(user);
         log.info("Doctor signup successfully.");
         log.info(dataResult.getMessage());
         return ResponseEntity.status(HttpStatus.CREATED).body(dataResult);

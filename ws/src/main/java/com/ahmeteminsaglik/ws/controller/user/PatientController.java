@@ -1,5 +1,6 @@
 package com.ahmeteminsaglik.ws.controller.user;
 
+import com.ahmeteminsaglik.ws.business.abstracts.auth.AuthorityService;
 import com.ahmeteminsaglik.ws.business.abstracts.firebase.notification.FcmService;
 import com.ahmeteminsaglik.ws.business.abstracts.firebase.token.FcmTokenService;
 import com.ahmeteminsaglik.ws.business.abstracts.user.PatientService;
@@ -16,6 +17,7 @@ import com.ahmeteminsaglik.ws.model.timer.PatientTimer;
 import com.ahmeteminsaglik.ws.model.users.Doctor;
 import com.ahmeteminsaglik.ws.model.users.Patient;
 import com.ahmeteminsaglik.ws.model.users.User;
+import com.ahmeteminsaglik.ws.model.users.role.Authority;
 import com.ahmeteminsaglik.ws.utility.JwtUtil;
 import com.ahmeteminsaglik.ws.utility.exception.response.FailedSendNotificationToDoctorException;
 import com.ahmeteminsaglik.ws.utility.result.DataResult;
@@ -48,24 +50,33 @@ public class PatientController {
     PatientTimerController timerController;
     @Autowired
     private JwtUtil jwtUtil;
+    @Autowired
+    private AuthorityService roleService;
+
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
 
     @PostMapping()
-    public ResponseEntity<DataResult<User>> savePatient(@RequestBody Patient patient) {
+    public ResponseEntity<DataResult<User>> savePatient(@RequestBody Patient user) {
         log.info("POST > savePatient ");
-        patient.setRoleId(EnumAuthority.ROLE_PATIENT.getId());
+        user.setRoleId(EnumAuthority.ROLE_PATIENT.getId());
         SignupUser signupUser = new SignupUser(userService);
-        DataResult<User> dataResult = signupUser.signup(patient);
-        patient = (Patient) dataResult.getData();
+
+        Authority patientAuth = roleService.findByAuthority(EnumAuthority.ROLE_PATIENT);
+        user.addAuthority(patientAuth);
+
+        DataResult<User> dataResult = signupUser.signup(user);
+        user = (Patient) dataResult.getData();
         log.info("Patient is signup successfully.");
-        saveDefaultPatientTimer(patient.getId());
+        saveDefaultPatientTimer(user.getId());
         String token = "";
         try {
-            token = tokenService.findByUserId(patient.getDoctorId()).getToken();
+            token = tokenService.findByUserId(user.getDoctorId()).getToken();
             log.info("Token : " + token);
             if (token != null) {
                 FcmNotification fcmNotification = new FcmNotification();
                 String msgTitle = "New Patient Is Assigned";
-                String msgBody = patient.getName() + " " + patient.getLastname() + " is assigned to you.";
+                String msgBody = user.getName() + " " + user.getLastname() + " is assigned to you.";
                 fcmNotification.setBody(msgBody);
                 fcmNotification.setTitle(msgTitle);
 
@@ -80,7 +91,6 @@ public class PatientController {
             }
         } catch (Exception e) {
             log.error("Exception OCCURRED : " + e.getMessage());
-
             if (dataResult.isSuccess() && token.isEmpty()) {
                 String msg = FailedSendNotificationToDoctorException.customErrorMsg + " " + dataResult.getMessage();
                 dataResult = new SuccessDataResult<>(dataResult.getData(), msg);
@@ -132,17 +142,16 @@ public class PatientController {
     public ResponseEntity<DataResult<JwtAuthResponse>> updatePatient(@RequestBody Patient newUser) {
         log.info("PUT > updatePatient ");
 
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         Patient existedUser = (Patient) userService.findById(newUser.getId());
 
-        if(newUser.getUsername()!=null&&!newUser.getUsername().isEmpty()){
-        existedUser.setUsername(newUser.getUsername());
+        if (newUser.getUsername() != null && !newUser.getUsername().isEmpty()) {
+            existedUser.setUsername(newUser.getUsername());
         }
-        if(newUser.getName()!=null&&!newUser.getName().isEmpty()){
-        existedUser.setName(newUser.getName());
+        if (newUser.getName() != null && !newUser.getName().isEmpty()) {
+            existedUser.setName(newUser.getName());
         }
-        if(newUser.getLastname()!=null&&!newUser.getLastname().isEmpty()){
-        existedUser.setLastname(newUser.getLastname());
+        if (newUser.getLastname() != null && !newUser.getLastname().isEmpty()) {
+            existedUser.setLastname(newUser.getLastname());
         }
         if (newUser.getPassword() != null && !newUser.getPassword().isEmpty()) {
             existedUser.setPassword("{bcrypt}" + passwordEncoder.encode(newUser.getPassword()));

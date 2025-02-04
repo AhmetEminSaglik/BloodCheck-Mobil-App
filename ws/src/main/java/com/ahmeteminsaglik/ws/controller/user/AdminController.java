@@ -30,13 +30,15 @@ public class AdminController {
     @Autowired
     private JwtUtil jwtUtil;
 
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
     @PostMapping()
-    public ResponseEntity<DataResult<User>> saveAdmin(@RequestBody Admin admin) {
+    public ResponseEntity<DataResult<User>> saveAdmin(@RequestBody Admin user) {
         log.info("POST > saveAdmin ");
 //        log.info("(Param) admin: " + admin);
-        admin.setRoleId(EnumAuthority.ROLE_ADMIN.getId());
+        user.setRoleId(EnumAuthority.ROLE_ADMIN.getId());
         SignupUser signupUser = new SignupUser(userService);
-        DataResult<User> dataResult = signupUser.signup(admin);
+        DataResult<User> dataResult = signupUser.signup(user);
         log.info("Admin signup successfully.");
         log.info(dataResult.getMessage());
         return ResponseEntity.status(HttpStatus.CREATED).body(dataResult);
