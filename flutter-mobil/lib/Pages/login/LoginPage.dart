@@ -23,6 +23,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
 
+import '../../exceptions/BadCredentialsException.dart';
+
 var log = Logger(printer: PrettyPrinter(colors: false));
 
 class LoginPage extends StatefulWidget {
@@ -327,6 +329,9 @@ class _LoginButton extends StatelessWidget {
           saveUserData(context, user);
           navigateToHomePage(context: context, roleId: user.roleId);
         }
+      } on BadCredentialsException {
+        ScaffoldMessenger.of(context).showSnackBar(
+            CustomSnackBar.getSnackBar(BadCredentialsException.msg));
       } on SocketException {
         String msg = "Could not connect to server. Server could be down.";
         ScaffoldMessenger.of(context)

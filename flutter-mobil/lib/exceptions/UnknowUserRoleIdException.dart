@@ -3,8 +3,8 @@ class UnknowUserRoleIdException implements Exception {
 
   UnknowUserRoleIdException({required this.msg});
 
-  @override
+  /*@override
   String toString() {
     return "Unknow-User-Role-Type-Exception: $msg";
-  }
+  }*/
 }

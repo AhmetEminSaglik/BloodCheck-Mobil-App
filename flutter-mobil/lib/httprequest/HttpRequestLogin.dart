@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:bloodcheck/exceptions/BadCredentialsException.dart';
 import 'package:bloodcheck/httprequest/BaseHttpRequest.dart';
 import 'package:bloodcheck/util/HttpUtil.dart';
 import 'package:bloodcheck/util/SharedPrefUtils.dart';
@@ -23,6 +24,8 @@ class HttpRequestLogin {
     // SharedPrefUtils.clearToken();
     var resp = await http.post(url,
         headers: HttpUtil.getHeaders(SharedPrefUtils.getToken()), body: jsonEncode(requestData));
+    throw BadCredentialsException();
+
     return resp;
   }
 }
