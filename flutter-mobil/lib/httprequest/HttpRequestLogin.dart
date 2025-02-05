@@ -23,9 +23,12 @@ class HttpRequestLogin {
     };
     // SharedPrefUtils.clearToken();
     var resp = await http.post(url,
-        headers: HttpUtil.getHeaders(SharedPrefUtils.getToken()), body: jsonEncode(requestData));
-    throw BadCredentialsException();
+        headers: HttpUtil.getHeaders(SharedPrefUtils.getToken()),
+        body: jsonEncode(requestData));
 
+    if (resp.statusCode == 400) {
+      throw BadCredentialsException();
+    }
     return resp;
   }
 }
