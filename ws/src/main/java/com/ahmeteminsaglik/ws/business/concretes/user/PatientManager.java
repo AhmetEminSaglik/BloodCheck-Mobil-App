@@ -12,14 +12,15 @@ import java.util.List;
 
 @Service
 public class PatientManager implements PatientService {
-//private static CustomLog log = new CustomLog(PatientManager.class);
-private static final Logger log = LoggerFactory.getLogger(PatientManager.class);
+    //private static CustomLog log = new CustomLog(PatientManager.class);
+    private static final Logger log = LoggerFactory.getLogger(PatientManager.class);
+
+    //    @Autowired
+    private final PatientRepository repository;
 
     @Autowired
-    PatientRepository repository;
-
-    public PatientManager() {
-        log.info("PatientManager > PatientRepository : " + repository);
+    public PatientManager(PatientRepository repository) {
+        this.repository = repository;
     }
 
     @Override

@@ -11,8 +11,13 @@ import java.util.List;
 
 @Service
 public class DiabeticManager implements DiabeticService {
+    //    @Autowired
+    private final DiabeticRepository repository;
+
     @Autowired
-    DiabeticRepository repository;
+    public DiabeticManager(DiabeticRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public Diabetic save(Diabetic diabetic) {

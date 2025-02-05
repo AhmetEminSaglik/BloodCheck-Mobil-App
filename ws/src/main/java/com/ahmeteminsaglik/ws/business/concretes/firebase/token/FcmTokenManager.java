@@ -11,10 +11,15 @@ import java.util.List;
 
 @Service
 public class FcmTokenManager implements FcmTokenService {
-    private static CustomLog log = new CustomLog(FcmTokenManager.class);
+    private static final CustomLog log = new CustomLog(FcmTokenManager.class);
+
+    //    @Autowired
+    private final TokenRepository repository;
 
     @Autowired
-    TokenRepository repository;
+    public FcmTokenManager(TokenRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public FcmToken save(FcmToken fcmToken) {

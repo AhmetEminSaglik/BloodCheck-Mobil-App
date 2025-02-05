@@ -14,8 +14,13 @@ import java.util.List;
 public class DoctorManager implements DoctorService {
     private static final Logger log = LoggerFactory.getLogger(PatientManager.class);
 
+    //    @Autowired
+    private final DoctorRepository repository;
+
     @Autowired
-    DoctorRepository repository;
+    public DoctorManager(DoctorRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public List<Doctor> findAll() {

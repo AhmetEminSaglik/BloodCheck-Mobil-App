@@ -1,10 +1,8 @@
 package com.ahmeteminsaglik.ws.utility.result;
 
-import com.ahmeteminsaglik.ws.utility.result.Result;
-
 public class DataResult<T> extends Result {
 
-    private T data;
+    private final T data;
 
     public DataResult(T data, boolean success, String message) {
         super(success, message);

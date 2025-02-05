@@ -20,12 +20,15 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ApiRequestException.class)
     public ResponseEntity<ErrorDataResult<NullValue>> handleCustomException(ApiRequestException ex) {
         log.error("ApiRequestException is handled: " + ex.getMessage());
+        ex.printStackTrace();
         return ResponseEntity.status(ex.getHttpStatus())
                 .body(new ErrorDataResult<>(ex.getMessage()));
     }
+
     @ExceptionHandler(InvalidUsernameOrPasswordException.class)
     public ResponseEntity<ErrorDataResult<String>> handleExceptionInvalidUsernameOrPasswordException(InvalidUsernameOrPasswordException ex) {
         log.error("Exception is handled: " + ex.getMessage());
+        ex.printStackTrace();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ErrorDataResult<>(ex.getMessage()));
     }
@@ -33,6 +36,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(UsernameNotFoundException.class)
     public ResponseEntity<ErrorDataResult<String>> handleExceptionUsernameNotFoundException(UsernameNotFoundException ex) {
         log.error("Exception is handled: " + ex.getMessage());
+        ex.printStackTrace();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ErrorDataResult<>(ex.getMessage()));
     }
@@ -40,6 +44,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<ErrorDataResult<NullValue>> handleExceptionBadCredentialsException(BadCredentialsException ex) {
         log.error("Exception is handled: " + ex.getMessage());
+        ex.printStackTrace();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ErrorDataResult<>(ex.getMessage()));
     }
@@ -47,6 +52,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorDataResult<NullValue>> handleException(Exception ex) {
         log.error("Exception is handled: " + ex.getMessage());
+        ex.printStackTrace();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ErrorDataResult<>(ex.getMessage()));
     }

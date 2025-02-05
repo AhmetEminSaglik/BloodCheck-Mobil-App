@@ -32,19 +32,26 @@ import java.util.List;
 public class DoctorController {
     private static final Logger log = LoggerFactory.getLogger(DoctorController.class);
 
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private DoctorService doctorService;
-    @Autowired
-    private PatientService patientService;
-
-    @Autowired
-    private JwtUtil jwtUtil;
-    @Autowired
-    private AuthorityService roleService;
+    //    @Autowired
+    private final UserService userService;
+    //    @Autowired
+    private final DoctorService doctorService;
+    //    @Autowired
+    private final PatientService patientService;
+    //    @Autowired
+    private final JwtUtil jwtUtil;
+    //    @Autowired
+    private final AuthorityService roleService;
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+    @Autowired
+    public DoctorController(UserService userService, DoctorService doctorService, PatientService patientService, JwtUtil jwtUtil, AuthorityService roleService) {
+        this.userService = userService;
+        this.doctorService = doctorService;
+        this.patientService = patientService;
+        this.jwtUtil = jwtUtil;
+        this.roleService = roleService;
+    }
 
     @PostMapping()
     public ResponseEntity<DataResult<User>> saveDoctor(@RequestBody Doctor user) {
@@ -102,13 +109,13 @@ public class DoctorController {
         Doctor existedUser = (Doctor) userService.findById(newUser.getId());
         String msg = "Doctor is updated";
 
-        if(newUser.getUsername()!=null&&!newUser.getUsername().isEmpty()){
+        if (newUser.getUsername() != null && !newUser.getUsername().isEmpty()) {
             existedUser.setUsername(newUser.getUsername());
         }
-        if(newUser.getName()!=null&&!newUser.getName().isEmpty()){
+        if (newUser.getName() != null && !newUser.getName().isEmpty()) {
             existedUser.setName(newUser.getName());
         }
-        if(newUser.getLastname()!=null&&!newUser.getLastname().isEmpty()){
+        if (newUser.getLastname() != null && !newUser.getLastname().isEmpty()) {
             existedUser.setLastname(newUser.getLastname());
         }
         if (newUser.getPassword() != null && !newUser.getPassword().isEmpty()) {

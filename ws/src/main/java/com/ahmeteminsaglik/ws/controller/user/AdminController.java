@@ -6,7 +6,6 @@ import com.ahmeteminsaglik.ws.model.JwtAuthResponse;
 import com.ahmeteminsaglik.ws.model.dto.ModelMapper;
 import com.ahmeteminsaglik.ws.model.enums.EnumAuthority;
 import com.ahmeteminsaglik.ws.model.users.Admin;
-import com.ahmeteminsaglik.ws.model.users.Doctor;
 import com.ahmeteminsaglik.ws.model.users.User;
 import com.ahmeteminsaglik.ws.utility.JwtUtil;
 import com.ahmeteminsaglik.ws.utility.result.DataResult;
@@ -25,11 +24,16 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 public class AdminController {
     private static final Logger log = LoggerFactory.getLogger(AdminController.class);
-    @Autowired
-    private UserService userService;
-    private JwtUtil jwtUtil;
-
+    //    @Autowired
+    private final UserService userService;
+    private final JwtUtil jwtUtil;
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+    @Autowired
+    public AdminController(UserService userService, JwtUtil jwtUtil) {
+        this.userService = userService;
+        this.jwtUtil = jwtUtil;
+    }
 
     @PostMapping()
     public ResponseEntity<DataResult<User>> saveAdmin(@RequestBody Admin user) {
@@ -58,15 +62,15 @@ public class AdminController {
         log.info("PUT > updateAdmin ");
         String msg = "Admin is updated";
 
-        Doctor existedUser = (Doctor) userService.findById(newUser.getId());
+        Admin existedUser = (Admin) userService.findById(newUser.getId());
 
-        if(newUser.getUsername()!=null&&!newUser.getUsername().isEmpty()){
+        if (newUser.getUsername() != null && !newUser.getUsername().isEmpty()) {
             existedUser.setUsername(newUser.getUsername());
         }
-        if(newUser.getName()!=null&&!newUser.getName().isEmpty()){
+        if (newUser.getName() != null && !newUser.getName().isEmpty()) {
             existedUser.setName(newUser.getName());
         }
-        if(newUser.getLastname()!=null&&!newUser.getLastname().isEmpty()){
+        if (newUser.getLastname() != null && !newUser.getLastname().isEmpty()) {
             existedUser.setLastname(newUser.getLastname());
         }
         if (newUser.getPassword() != null && !newUser.getPassword().isEmpty()) {

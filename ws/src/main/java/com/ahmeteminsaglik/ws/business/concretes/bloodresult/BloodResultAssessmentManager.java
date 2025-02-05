@@ -26,19 +26,24 @@ import java.util.Map;
 
 @Service
 public class BloodResultAssessmentManager implements BloodResultAssessmentService {
-    private final String dangerous = "DANGEROUS:";
-    private String patientFullName = "";
-    //    private static CustomLog log = new CustomLog(BloodResultAssessmentManager.class);
-
     private static final Logger log = LoggerFactory.getLogger(BloodResultAssessmentManager.class);
+    private final String dangerous = "DANGEROUS:";
+    //    private static CustomLog log = new CustomLog(BloodResultAssessmentManager.class);
+    //    @Autowired
+    private final FcmService fcmService;
+    //    @Autowired
+    private final FcmTokenService fcmTokenService;
+    //    @Autowired
+    private final PatientService patientService;
+    private String patientFullName = "";
+    private final BloodResultBound bloodResultBound = new BloodResultBound();
 
-    private BloodResultBound bloodResultBound = new BloodResultBound();
     @Autowired
-    FcmService fcmService;
-    @Autowired
-    FcmTokenService fcmTokenService;
-    @Autowired
-    PatientService patientService;
+    public BloodResultAssessmentManager(FcmService fcmService, FcmTokenService fcmTokenService, PatientService patientService) {
+        this.fcmService = fcmService;
+        this.fcmTokenService = fcmTokenService;
+        this.patientService = patientService;
+    }
 
     @Override
     public void assessToSendFcmMsg(BloodResult bloodResult) {
@@ -53,23 +58,20 @@ public class BloodResultAssessmentManager implements BloodResultAssessmentServic
         try {
 
             FcmMessage fcmMessage = createFcmMessage(bloodResult.getPatientId(), subItemMap);
-            System.out.println("Gelen FCM Message : " + fcmMessage);
-            ;
-//            fcmMessage.getData().setPatientId(bloodResult.getPatientId());
+            //            fcmMessage.getData().setPatientId(bloodResult.getPatientId());
             Patient patient = patientService.findById(bloodResult.getPatientId());
 //            fcmMessage.setTo(fcmTokenService.findAllByUserId(patient.getId()).getLast().getToken());
 
             List<FcmToken> list = fcmTokenService.findAllByUserId(patient.getId());
-            if(!list.isEmpty()){
-            fcmMessage.setTo(list.get(list.size() - 1).getToken());
-            }else{
+            if (!list.isEmpty()) {
+                fcmMessage.setTo(list.get(list.size() - 1).getToken());
+            } else {
                 fcmMessage.setTo("");
             }
-            System.out.println("gelen token : " + fcmMessage.getTo());
             log.info("Token: " + fcmMessage.getTo());
-            log.info("fcmMessage.getTo().isBlank() : "+fcmMessage.getTo().isBlank());
+            log.info("fcmMessage.getTo().isBlank() : " + fcmMessage.getTo().isBlank());
             if (!fcmMessage.getTo().isBlank()) {
-            sendMsgToPatient(fcmMessage);
+                sendMsgToPatient(fcmMessage);
             }
             patientFullName = " " + patient.getName() + " " + patient.getLastname();
             log.info("-----");

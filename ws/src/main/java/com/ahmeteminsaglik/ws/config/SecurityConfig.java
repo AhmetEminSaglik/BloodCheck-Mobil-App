@@ -64,7 +64,7 @@ public class SecurityConfig {
                         formLogin
                                 .loginPage().permitAll())
                 */.logout(e -> e.permitAll())
-        // JWT filter'ı ekliyoruz
+                // JWT filter'ı ekliyoruz
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         // use HTTP basic authentication
 //        http.httpBasic(Customizer.withDefaults());

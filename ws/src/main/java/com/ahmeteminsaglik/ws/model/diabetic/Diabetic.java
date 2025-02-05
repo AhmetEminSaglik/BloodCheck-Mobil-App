@@ -11,10 +11,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Table(name = "diabetic_types")
 public class Diabetic {
+    @Column
+    String name;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private long id;
-    @Column
-    String name;
+
+    public Diabetic(long id,String name) {
+        this.name = name;
+        this.id = id;
+    }
 }

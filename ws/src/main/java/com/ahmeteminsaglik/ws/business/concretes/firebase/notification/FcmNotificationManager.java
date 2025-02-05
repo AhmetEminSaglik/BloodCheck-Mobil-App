@@ -18,9 +18,9 @@ import java.io.FileInputStream;
 
 @Service
 public class FcmNotificationManager implements FcmNotificationService {
-    private static CustomLog log = new CustomLog(FcmNotificationManager.class);
-    private static String path = "src/main/resources/service-key.json";
     static boolean isFirebaseInitialized = false;
+    private static final CustomLog log = new CustomLog(FcmNotificationManager.class);
+    private static final String path = "src/main/resources/service-key.json";
 
     public FcmNotificationManager() {
         init();
@@ -42,9 +42,10 @@ public class FcmNotificationManager implements FcmNotificationService {
             log.error(e.getMessage());
         }
     }
+
     @Override
     public ResponseEntity<String> sendNotification(FcmMessage fcmMessage/*@RequestBody FcmMessage fcmMessage*/) {
-         try {
+        try {
             Message message = FcmToMessageMapper.map(fcmMessage);
             FirebaseMessaging.getInstance().send(message);
             return ResponseEntity.status(HttpStatus.OK).body("Success");

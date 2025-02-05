@@ -18,6 +18,7 @@ public class CustomLog {
     public void warn(String text) {
         log.warn(prefix + text);
     }
+
     public void error(String text) {
         log.error(prefix + text);
     }

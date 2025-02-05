@@ -14,10 +14,16 @@ import java.awt.*;
 
 @Service
 public class FcmManager implements FcmService {
+    //    @Autowired
+    private final FcmMsgService msgService;
+    //    @Autowired
+    private final FcmNotificationService notificationService;
+
     @Autowired
-    FcmMsgService msgService;
-    @Autowired
-    FcmNotificationService notificationService;
+    public FcmManager(FcmMsgService msgService, FcmNotificationService notificationService) {
+        this.msgService = msgService;
+        this.notificationService = notificationService;
+    }
 
     @Override
     public String generateTextWithHtmlColor(String notificationTitle, Color color) {
@@ -26,7 +32,7 @@ public class FcmManager implements FcmService {
 
     @Override
     public FcmMessage generateFcmMsg(String token, FcmNotification notification, FcmData data) {
-        return msgService.generateFcmMsg(token,notification,data);
+        return msgService.generateFcmMsg(token, notification, data);
     }
 
     @Override

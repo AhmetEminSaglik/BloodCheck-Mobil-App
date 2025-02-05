@@ -28,14 +28,22 @@ import java.util.Map;
 public class BloodResultController {
     private static final Logger log = LoggerFactory.getLogger(BloodResultController.class);
 
+    //    @Autowired
+    private final BloodResultService service;
+    //    @Autowired
+    private final BloodResultParseService parseService;
+    //    @Autowired
+    private final BloodResultAssessmentService assessmentService;
+    //    @Autowired
+    private final FcmService fcmService;
+
     @Autowired
-    BloodResultService service;
-    @Autowired
-    BloodResultParseService parseService;
-    @Autowired
-    BloodResultAssessmentService assessmentService;
-    @Autowired
-    FcmService fcmService;
+    public BloodResultController(BloodResultService service, BloodResultParseService parseService, BloodResultAssessmentService assessmentService, FcmService fcmService) {
+        this.service = service;
+        this.parseService = parseService;
+        this.assessmentService = assessmentService;
+        this.fcmService = fcmService;
+    }
 
     @GetMapping
     public ResponseEntity<DataResult<List<BloodResult>>> findAllBloodResult() {

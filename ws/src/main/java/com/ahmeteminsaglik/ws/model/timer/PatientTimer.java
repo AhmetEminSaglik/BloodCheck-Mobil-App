@@ -24,6 +24,11 @@ public class PatientTimer {
     @NonNull
     private long patientId;
 
+    public PatientTimer(int minutes, long patientId) {
+        this.minutes = minutes;
+        this.patientId = patientId;
+    }
+
     @Override
     public String toString() {
         return "PatientTimer{" +
@@ -32,11 +37,6 @@ public class PatientTimer {
                 ", minutes=" + minutes +
                 ", patientId=" + patientId +
                 '}';
-    }
-
-    public PatientTimer(int minutes, long patientId) {
-        this.minutes = minutes;
-        this.patientId = patientId;
     }
 
     public long getId() {

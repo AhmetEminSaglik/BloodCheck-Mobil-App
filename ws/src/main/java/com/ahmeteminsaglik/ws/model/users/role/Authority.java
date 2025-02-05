@@ -16,13 +16,13 @@ public class Authority implements GrantedAuthority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-//    @Column(name = "username")
+    //    @Column(name = "username")
 //    private String username;
     @Column(name = "authority")
     private String authority;
 
     @ManyToMany(mappedBy = "authorities")
-    private Set<User> users = new HashSet<>();
+    private final Set<User> users = new HashSet<>();
 
     public Authority() {
     }

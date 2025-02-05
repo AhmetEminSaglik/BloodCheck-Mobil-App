@@ -7,8 +7,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class InitialDataLoader implements CommandLineRunner {
 
+    //    @Autowired
+    private final InitialData initialData;
+
     @Autowired
-    InitialData initialData;
+    public InitialDataLoader(InitialData initialData) {
+        this.initialData = initialData;
+    }
 
     @Override
     public void run(String... args) throws Exception {

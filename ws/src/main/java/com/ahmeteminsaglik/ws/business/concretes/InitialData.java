@@ -40,39 +40,52 @@ public class InitialData {
     static String[] femaleName = {"Mary", "Patricia", "Jennifer", "Linda", "Elizabeth", "Barbara", "Susan", "Jessica", "Sarah", "Karen", "Lisa", "Nancy", "Betty", "Margaret", "Sandra", "Ashley", "Kimberly", "Emily", "Donna", "Michelle", "Carol", "Amanda"};
     static int doctorIdStartingIndex = 1;
     static int totalDoctorNumber = 5;
-
-
-    @Autowired
-    BloodResultService bloodResultService;
-    @Autowired
-    private PatientController patientController;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private PatientService patientService;
-    @Autowired
-    private DoctorService doctorService;
-
-    @Autowired
-    private AuthorityService roleService;
-    @Autowired
-    private DiabeticService diabeticService;
-    @Autowired
-    private PatientTimerController timerController;
-    @Autowired
-    PatientTimerService timerService;
-    @Autowired
-    private FcmTokenService fcmTokenService;
-    @Autowired
-    private FcmService fcmService;
-    @Autowired
-    BloodResultController bloodResultController;
-
+    private static final CustomLog log = new CustomLog(InitialDataLoader.class);
+    private static final Random random = new Random();
+    //    @Autowired
+    private final BloodResultService bloodResultService;
+    //    @Autowired
+    private final PatientController patientController;
+    //    @Autowired
+    private final UserService userService;
+    //    @Autowired
+    private final PatientService patientService;
+    //    @Autowired
+    private final DoctorService doctorService;
+    //    @Autowired
+    private final AuthorityService roleService;
+    //    @Autowired
+    private final DiabeticService diabeticService;
+    //    @Autowired
+    private final PatientTimerController timerController;
+    //    @Autowired
+    private final PatientTimerService timerService;
+    //    @Autowired
+    private final FcmTokenService fcmTokenService;
+    //    @Autowired
+    private final FcmService fcmService;
+    //    @Autowired
+    private final BloodResultController bloodResultController;
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    @Autowired
+    public InitialData(BloodResultService bloodResultService, PatientController patientController, UserService userService, PatientService patientService, DoctorService doctorService, AuthorityService roleService, DiabeticService diabeticService, PatientTimerController timerController, PatientTimerService timerService, FcmTokenService fcmTokenService, FcmService fcmService, BloodResultController bloodResultController) {
+        this.bloodResultService = bloodResultService;
+        this.patientController = patientController;
+        this.userService = userService;
+        this.patientService = patientService;
+        this.doctorService = doctorService;
+        this.roleService = roleService;
+        this.diabeticService = diabeticService;
+        this.timerController = timerController;
+        this.timerService = timerService;
+        this.fcmTokenService = fcmTokenService;
+        this.fcmService = fcmService;
+        this.bloodResultController = bloodResultController;
+    }
 
-    private static CustomLog log = new CustomLog(InitialDataLoader.class);
-    private static Random random = new Random();
-
+    private static String createName(int i) {
+        return i % 2 == 0 ? maleName[random.nextInt(maleName.length)] : femaleName[random.nextInt(femaleName.length)];
+    }
 
     void saveBloodResultDataForPatient(PatientTimer patientTimer, int maxMinutes) {
         int sensorTestTime = getTotalMinuteOfPatientTimer(patientTimer);
@@ -133,12 +146,8 @@ public class InitialData {
 
     boolean isDataSavedBefore() {
         List<BloodResult> retrievedBloodResultList = bloodResultService.findAll();
-        if (retrievedBloodResultList.size() > 1) {
-            return true;
-        }
-        return false;
+        return retrievedBloodResultList.size() > 1;
     }
-
 
     private void savePatientTimer() {
         List<Patient> patientList = patientController.getPatientList().getBody().getData();
@@ -191,9 +200,7 @@ public class InitialData {
 
     private boolean isUserRegistered(String username) {
         User user = userService.findByUsername(username);
-        if (user == null)
-            return false;
-        return true;
+        return user != null;
     }
 
     private void saveUserData(List<User> list) {
@@ -217,7 +224,7 @@ public class InitialData {
 //                Patient patient = (Patient) patientController.savePatient(list.get(i)).getBody().getData();// userService.save(list.get(i));
                 Patient patient = (Patient) patientController.savePatient(list.get(i)).getBody().getData();// userService.save(list.get(i));
 //                Patient patient = (Patient) userService.save(list.get(i))
-                        ;// userService.save(list.get(i));
+                // userService.save(list.get(i));
                 log.info("Created Patient : " + patient);
             }
         }
@@ -278,10 +285,6 @@ public class InitialData {
         list.add(admin);
 
         return list;
-    }
-
-    private static String createName(int i) {
-        return i % 2 == 0 ? maleName[random.nextInt(maleName.length)] : femaleName[random.nextInt(femaleName.length)];
     }
 
     private List<User> getDoctorList() {

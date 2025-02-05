@@ -8,13 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
 import java.util.List;
 
 @Service
 public class BloodResultManager implements BloodResultService {
+    private final BloodResultRepository repository;
+
     @Autowired
-    BloodResultRepository repository;
+    public BloodResultManager(BloodResultRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public BloodResult save(BloodResult BloodResult) {

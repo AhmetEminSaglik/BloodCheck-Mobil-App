@@ -1,7 +1,7 @@
 package com.ahmeteminsaglik.ws.utility.result;
 
 public class Result {
-    private boolean success;
+    private final boolean success;
     private String message;
 
     public Result(boolean success) {

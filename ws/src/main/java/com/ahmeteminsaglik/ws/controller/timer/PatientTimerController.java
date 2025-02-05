@@ -26,14 +26,21 @@ import java.util.Objects;
 public class PatientTimerController {
     private static final Logger log = LoggerFactory.getLogger(PatientTimerController.class);
 
-    @Autowired
-    PatientTimerService service;
+    //    @Autowired
+    private final PatientTimerService service;
     //    @Autowired
 //    FcmTokenService fcmTokenService;
+//    @Autowired
+    private final FcmTokenController fcmTokenController;
+    //    @Autowired
+    private final FcmService fcmService;
+
     @Autowired
-    FcmTokenController fcmTokenController;
-    @Autowired
-    FcmService fcmService;
+    public PatientTimerController(PatientTimerService service, FcmTokenController fcmTokenController, FcmService fcmService) {
+        this.service = service;
+        this.fcmTokenController = fcmTokenController;
+        this.fcmService = fcmService;
+    }
 
     @PostMapping()
     public ResponseEntity<DataResult<PatientTimer>> savePatientTimer(@RequestBody PatientTimer patientTimer) {
@@ -87,7 +94,7 @@ public class PatientTimerController {
     public ResponseEntity<DataResult<List<PatientTimer>>> findAllPatientTimers() {
         log.info("PUT > findAllPatientTimers ");
         List<PatientTimer> list = service.findAll();
-        String msg = "All patientTimers are retrieved (Size:"+list.size()+").";
+        String msg = "All patientTimers are retrieved (Size:" + list.size() + ").";
         DataResult<List<PatientTimer>> result = new SuccessDataResult<>(list, msg);
         log.info(msg);
         return ResponseEntity.status(HttpStatus.OK).body(result);
@@ -119,7 +126,7 @@ public class PatientTimerController {
         FcmNotification notification = new FcmNotification();
         notification.setTitle(msgTitle);
         notification.setBody(msgBody);
-        log.info("Notification is created: "+notification);
+        log.info("Notification is created: " + notification);
         return notification;
     }
 

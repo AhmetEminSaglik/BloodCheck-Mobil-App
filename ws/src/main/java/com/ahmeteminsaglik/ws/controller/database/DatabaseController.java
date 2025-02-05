@@ -23,19 +23,29 @@ import org.springframework.web.bind.annotation.RestController;
 public class DatabaseController {
     private static final Logger log = LoggerFactory.getLogger(DatabaseController.class);
 
-    @Autowired
-    private InitialData initialData;
+    //    @Autowired
+    private final InitialData initialData;
+
+    //    @Autowired
+    private final UserService userService;
+    //    @Autowired
+    private final BloodResultService bloodResultService;
+    //    @Autowired
+    private final DiabeticService diabeticService;
+    //    @Autowired
+    private final PatientTimerService patientTimerService;
+    //    @Autowired
+    private final AuthorityService authorityService;
 
     @Autowired
-    private UserService userService;
-    @Autowired
-    private BloodResultService bloodResultService;
-    @Autowired
-    private DiabeticService diabeticService;
-    @Autowired
-    private PatientTimerService patientTimerService;
-    @Autowired
-    private AuthorityService authorityService;
+    public DatabaseController(InitialData initialData, UserService userService, BloodResultService bloodResultService, DiabeticService diabeticService, PatientTimerService patientTimerService, AuthorityService authorityService) {
+        this.initialData = initialData;
+        this.userService = userService;
+        this.bloodResultService = bloodResultService;
+        this.diabeticService = diabeticService;
+        this.patientTimerService = patientTimerService;
+        this.authorityService = authorityService;
+    }
 
     @GetMapping()
     public ResponseEntity<Result> resetAllData() {

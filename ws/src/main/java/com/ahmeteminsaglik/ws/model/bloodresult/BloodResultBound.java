@@ -25,8 +25,7 @@ public class BloodResultBound {
     }
 
 
-
-   public HashMap<String, ItemRangeValue> getRangeMap() {
+    public HashMap<String, ItemRangeValue> getRangeMap() {
         return rangeMap;
     }
 

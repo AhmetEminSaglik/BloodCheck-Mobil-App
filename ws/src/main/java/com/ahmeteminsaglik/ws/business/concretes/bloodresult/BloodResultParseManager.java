@@ -7,15 +7,13 @@ import com.ahmeteminsaglik.ws.utility.CustomUTCTime;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class BloodResultParseManager implements BloodResultParseService {
 
-    private static CustomLog log = new CustomLog(BloodResultParseManager.class);
+    private static final CustomLog log = new CustomLog(BloodResultParseManager.class);
 
     @Override
     public List<BloodResult> parseToDaily(List<BloodResult> list) {
@@ -24,7 +22,7 @@ public class BloodResultParseManager implements BloodResultParseService {
 
     @Override
     public List<BloodResult> parseToWeekly(List<BloodResult> list) {
-        return getSelectedDataToShow(list, 60*2);
+        return getSelectedDataToShow(list, 60 * 2);
     }
 
     @Override

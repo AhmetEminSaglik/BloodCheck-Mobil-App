@@ -1,16 +1,19 @@
 package com.ahmeteminsaglik.ws.business.concretes.login;
 
-import com.ahmeteminsaglik.ws.business.abstracts.user.UserService;
-import com.ahmeteminsaglik.ws.business.abstracts.login.LoginValidationService;
 import com.ahmeteminsaglik.ws.business.abstracts.login.LoginCredentialsValidationService;
-import com.ahmeteminsaglik.ws.model.users.User;
+import com.ahmeteminsaglik.ws.business.abstracts.login.LoginValidationService;
+import com.ahmeteminsaglik.ws.business.abstracts.user.UserService;
 import com.ahmeteminsaglik.ws.model.enums.EnumInputName;
+import com.ahmeteminsaglik.ws.model.users.User;
 import com.ahmeteminsaglik.ws.utility.CustomLog;
-import com.ahmeteminsaglik.ws.utility.result.*;
+import com.ahmeteminsaglik.ws.utility.result.DataResult;
+import com.ahmeteminsaglik.ws.utility.result.ErrorDataResult;
+import com.ahmeteminsaglik.ws.utility.result.Result;
+import com.ahmeteminsaglik.ws.utility.result.SuccessDataResult;
 import com.ahmeteminsaglik.ws.utility.validator.LengthValidator;
 
 public class LoginCredentialsValidation implements LoginValidationService, LoginCredentialsValidationService {
-    private static CustomLog log = new CustomLog(LoginCredentialsValidation.class);
+    private static final CustomLog log = new CustomLog(LoginCredentialsValidation.class);
     private final UserService userService;
     private final int usernameMinLength = 3;
     private final int usernameMaxLength = 10;

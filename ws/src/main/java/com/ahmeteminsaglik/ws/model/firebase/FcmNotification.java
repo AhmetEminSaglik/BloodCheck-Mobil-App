@@ -1,8 +1,8 @@
 package com.ahmeteminsaglik.ws.model.firebase;
 
 public class FcmNotification {
-    private String title="";
-    private String body="";
+    private String title = "";
+    private String body = "";
 
     public String getTitle() {
         return title;

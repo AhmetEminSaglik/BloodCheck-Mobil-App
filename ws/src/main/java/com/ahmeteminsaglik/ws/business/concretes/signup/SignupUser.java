@@ -18,13 +18,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SignupUser {
     private static final Logger log = LoggerFactory.getLogger(SignupUser.class);
     private final UserService service;
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Autowired
     public SignupUser(UserService service) {
         this.service = service;
     }
-    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
 
     public DataResult<User> signup(User user) {
         log.info("signup user process is started.");

@@ -26,18 +26,26 @@ import java.util.List;
 @CrossOrigin
 public class UserController {
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private JwtUtil jwtUtil;
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    //    @Autowired
+    private final UserService userService;
+    //    @Autowired
+    private final JwtUtil jwtUtil;
+    //    @Autowired
+    private final AuthenticationManager authenticationManager;
 
-    @Autowired
-    private UserDetailsService userDetailsService;
+    //    @Autowired
+    private final UserDetailsService userDetailsService;
 //    @Autowired
 //    private AuthenticatedUser authenticatedUser;
 
+
+    @Autowired
+    public UserController(UserService userService, JwtUtil jwtUtil, AuthenticationManager authenticationManager, UserDetailsService userDetailsService) {
+        this.userService = userService;
+        this.jwtUtil = jwtUtil;
+        this.authenticationManager = authenticationManager;
+        this.userDetailsService = userDetailsService;
+    }
 
     @GetMapping()
     public ResponseEntity<DataResult<List<User>>> findAllUserList() {

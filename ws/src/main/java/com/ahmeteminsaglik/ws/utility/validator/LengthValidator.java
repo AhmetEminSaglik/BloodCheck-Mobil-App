@@ -7,7 +7,7 @@ import com.ahmeteminsaglik.ws.utility.result.Result;
 import com.ahmeteminsaglik.ws.utility.result.SuccessResult;
 
 public class LengthValidator {
-    private static CustomLog log = new CustomLog(LengthValidator.class);
+    private static final CustomLog log = new CustomLog(LengthValidator.class);
 
     public static Result isLengthValid(EnumInputName enumInputName, String input, int minLength, int maxLength) {
         final String inputName = enumInputName.getName();

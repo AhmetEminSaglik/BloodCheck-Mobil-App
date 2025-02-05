@@ -6,8 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.time.ZoneId;
 
 @Entity
 @NoArgsConstructor
@@ -16,7 +14,7 @@ import java.time.ZoneId;
 public class Sensor {
 
     //Todo  Sensors will be created after decided how to process
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column

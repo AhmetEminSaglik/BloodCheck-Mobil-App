@@ -2,9 +2,10 @@ package com.ahmeteminsaglik.ws.model.dto;
 
 import com.ahmeteminsaglik.ws.model.users.Patient;
 
-public class PatientDto extends UserDto{
+public class PatientDto extends UserDto {
     private long doctorId;
     private int diabeticTypeId;
+
     public PatientDto(Patient patient) {
         super(patient);
         this.doctorId = patient.getDoctorId();

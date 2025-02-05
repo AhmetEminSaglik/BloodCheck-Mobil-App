@@ -11,8 +11,13 @@ import java.util.List;
 
 @Service
 public class PatientTimerManager implements PatientTimerService {
+    //    @Autowired
+    private final PatientTimerRepository repository;
+
     @Autowired
-    PatientTimerRepository repository;
+    public PatientTimerManager(PatientTimerRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public PatientTimer save(PatientTimer patientTimer) {

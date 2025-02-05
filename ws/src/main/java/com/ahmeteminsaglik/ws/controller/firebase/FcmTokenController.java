@@ -1,7 +1,6 @@
 package com.ahmeteminsaglik.ws.controller.firebase;
 
 import com.ahmeteminsaglik.ws.business.abstracts.firebase.token.FcmTokenService;
-import com.ahmeteminsaglik.ws.controller.bloodresult.BloodResultController;
 import com.ahmeteminsaglik.ws.model.firebase.FcmToken;
 import com.ahmeteminsaglik.ws.utility.result.DataResult;
 import com.ahmeteminsaglik.ws.utility.result.SuccessDataResult;
@@ -18,10 +17,15 @@ import org.springframework.web.bind.annotation.*;
 public class FcmTokenController {
     private static final Logger log = LoggerFactory.getLogger(FcmTokenController.class);
 
-    @Autowired
-    FcmTokenService service;
+    //    @Autowired
+    private final FcmTokenService service;
 //    private static CustomLog log = new CustomLog(FcmTokenController.class);
 
+
+    @Autowired
+    public FcmTokenController(FcmTokenService service) {
+        this.service = service;
+    }
 
     @PostMapping
     public ResponseEntity<DataResult<FcmToken>> save(@RequestBody FcmToken newFcmToken) {
@@ -30,10 +34,10 @@ public class FcmTokenController {
         log.info("(Param) fcmToken : " + newFcmToken);
         FcmToken fcmToken = service.findByUserIdAndToken(newFcmToken.getUserId(), newFcmToken.getToken());
         DataResult<FcmToken> dataResult;
-        log.info("Found fcmToken : " + newFcmToken);
-        if (fcmToken == null ||  !fcmToken.equals(newFcmToken) ) {
+        log.info("Found fcmToken : " );
+        if (fcmToken == null || !fcmToken.equals(newFcmToken)) {
             fcmToken = service.save(newFcmToken);
-            log.info("fcmToken is saved  : " + newFcmToken);
+            log.info("fcmToken is saved  : " );
             String msg = "FcmToken is saved.";
             dataResult = new SuccessDataResult<>(fcmToken, msg);
         } else {
@@ -73,7 +77,7 @@ public class FcmTokenController {
     public ResponseEntity<DataResult<FcmToken>> delete(@RequestBody FcmToken newFcmToken) {
         log.info("DELETE > delete ");
         log.info("(Param) newFcmToken: " + newFcmToken);
-        FcmToken fcmToken = service.findByUserIdAndToken(newFcmToken.getUserId(),newFcmToken.getToken());
+        FcmToken fcmToken = service.findByUserIdAndToken(newFcmToken.getUserId(), newFcmToken.getToken());
         String msg;
         if (fcmToken != null) {
             service.delete(fcmToken);

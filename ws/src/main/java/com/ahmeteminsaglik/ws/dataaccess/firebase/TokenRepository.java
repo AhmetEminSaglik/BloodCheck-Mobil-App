@@ -7,7 +7,10 @@ import java.util.List;
 
 public interface TokenRepository extends JpaRepository<FcmToken, Long> {
     FcmToken findByUserId(long patientId);
+
     FcmToken findByToken(String token);
+
     FcmToken findByUserIdAndToken(long patientId, String token);
+
     List<FcmToken> findAllByUserId(long patientId);
 }

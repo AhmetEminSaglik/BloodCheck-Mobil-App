@@ -38,23 +38,33 @@ import java.util.List;
 @CrossOrigin
 public class PatientController {
     private static final Logger log = LoggerFactory.getLogger(PatientController.class);
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private PatientService patientService;
-    @Autowired
-    FcmService fcmService;
-    @Autowired
-    FcmTokenService tokenService;
-    @Autowired
-    PatientTimerController timerController;
-    @Autowired
-    private JwtUtil jwtUtil;
-    @Autowired
-    private AuthorityService roleService;
+    //    @Autowired
+    private final UserService userService;
+    //    @Autowired
+    private final PatientService patientService;
+    //    @Autowired
+    private final FcmService fcmService;
+    //    @Autowired
+    private final FcmTokenService tokenService;
+    //    @Autowired
+    private final PatientTimerController timerController;
+    //    @Autowired
+    private final JwtUtil jwtUtil;
+    //    @Autowired
+    private final AuthorityService roleService;
 
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
+    @Autowired
+    public PatientController(UserService userService, PatientService patientService, FcmService fcmService, FcmTokenService tokenService, PatientTimerController timerController, JwtUtil jwtUtil, AuthorityService roleService) {
+        this.userService = userService;
+        this.patientService = patientService;
+        this.fcmService = fcmService;
+        this.tokenService = tokenService;
+        this.timerController = timerController;
+        this.jwtUtil = jwtUtil;
+        this.roleService = roleService;
+    }
 
     @PostMapping()
     public ResponseEntity<DataResult<User>> savePatient(@RequestBody Patient user) {

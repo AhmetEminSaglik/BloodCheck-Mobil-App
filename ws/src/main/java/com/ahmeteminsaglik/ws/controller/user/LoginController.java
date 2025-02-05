@@ -24,19 +24,26 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 public class LoginController {
     private static final Logger log = LoggerFactory.getLogger(LoginController.class);
-    @Autowired
-    private UserService service;
-    @Autowired
-    private JwtUtil jwtUtil;
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    //    @Autowired
+    private final UserService service;
+    //    @Autowired
+    private final JwtUtil jwtUtil;
+    //    @Autowired
+    private final AuthenticationManager authenticationManager;
+    //    @Autowired
+    private final UserService userService;
+    //    @Autowired
+    private final UserDetailsService userDetailsService;
 
     @Autowired
-    private UserService userService;
-    @Autowired
-    private UserDetailsService userDetailsService;
-
-    /*@GetMapping("/login")
+    public LoginController(UserService service, JwtUtil jwtUtil, AuthenticationManager authenticationManager, UserService userService, UserDetailsService userDetailsService) {
+        this.service = service;
+        this.jwtUtil = jwtUtil;
+        this.authenticationManager = authenticationManager;
+        this.userService = userService;
+        this.userDetailsService = userDetailsService;
+    }
+/*@GetMapping("/login")
     public ResponseEntity<DataResult<String>> login() {
         log.info("GET > findAllUserList ");
         DataResult<List<User>> dataResult = new SuccessDataResult<>("You should send Username and password here.");
