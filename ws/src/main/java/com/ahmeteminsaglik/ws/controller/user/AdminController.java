@@ -27,7 +27,6 @@ public class AdminController {
     private static final Logger log = LoggerFactory.getLogger(AdminController.class);
     @Autowired
     private UserService userService;
-    @Autowired
     private JwtUtil jwtUtil;
 
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -44,14 +43,6 @@ public class AdminController {
         return ResponseEntity.status(HttpStatus.CREATED).body(dataResult);
     }
 
-    /*
-    *    @GetMapping("/{id}")
-    public ResponseEntity<DataResult<Doctor>> findById(@PathVariable long id) {
-        Doctor personnel = (Doctor) userService.findById(id);
-        DataResult<Doctor> dataResult = new SuccessDataResult<>(personnel, "Doctor retrieved Successfully.");
-        return ResponseEntity.ok().body(dataResult);
-    }
-    * */
     @GetMapping("/{id}")
     public ResponseEntity<DataResult<Admin>> findById(@PathVariable long id) {
         log.info("GET > findById ");
@@ -67,7 +58,6 @@ public class AdminController {
         log.info("PUT > updateAdmin ");
         String msg = "Admin is updated";
 
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         Doctor existedUser = (Doctor) userService.findById(newUser.getId());
 
         if(newUser.getUsername()!=null&&!newUser.getUsername().isEmpty()){

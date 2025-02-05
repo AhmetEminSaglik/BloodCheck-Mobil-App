@@ -105,6 +105,7 @@ public class InitialData {
             saveUserData(getAdminList());
             saveUserData(getDoctorList());
             savePatient(getPatientList());
+//            saveUserData(getPatientList());
             addAuthoritiesToUsers();
             savePatientTimer();
 
@@ -213,7 +214,10 @@ public class InitialData {
             if (isUserRegistered(username)) {
                 log.info(username + " data is already registered.");
             } else {
+//                Patient patient = (Patient) patientController.savePatient(list.get(i)).getBody().getData();// userService.save(list.get(i));
                 Patient patient = (Patient) patientController.savePatient(list.get(i)).getBody().getData();// userService.save(list.get(i));
+//                Patient patient = (Patient) userService.save(list.get(i))
+                        ;// userService.save(list.get(i));
                 log.info("Created Patient : " + patient);
             }
         }
@@ -288,6 +292,7 @@ public class InitialData {
             user.setLastname(createName(i));
             user.setUsername("doctor" + i);
             user.setPassword(getPassword());
+
             if (i < 3) {
                 user.setGraduate("Karadeniz Teknik University");
             } else {
@@ -311,7 +316,8 @@ public class InitialData {
             user.setName(createName(i));
             user.setLastname(createName(i));
             user.setUsername("patient" + i);
-            user.setPassword(getPassword());
+//            user.setPassword(getPassword());
+            user.setPassword("pass");
             user.setDiabeticTypeId((i % 4 + 1));
             int doctor_id = (i - 1) / 4 + doctorIdStartingIndex + 1;
             Doctor personnel = (Doctor) userService.findById(doctor_id);

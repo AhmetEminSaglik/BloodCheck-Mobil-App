@@ -99,7 +99,6 @@ public class DoctorController {
     @PutMapping()
     public ResponseEntity<DataResult<JwtAuthResponse>> updateDoctor(@RequestBody Doctor newUser) {
         log.info("PUT > updateDoctor ");
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         Doctor existedUser = (Doctor) userService.findById(newUser.getId());
         String msg = "Doctor is updated";
 
@@ -126,5 +125,4 @@ public class DoctorController {
 
         return ResponseEntity.status(HttpStatus.OK).body(dataResult);
     }
-
 }

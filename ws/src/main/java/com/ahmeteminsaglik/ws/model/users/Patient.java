@@ -1,7 +1,10 @@
 package com.ahmeteminsaglik.ws.model.users;
 
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Entity
 @AllArgsConstructor
@@ -15,7 +18,7 @@ public class Patient extends User {
 
     @Override
     public String toString() {
-        return "Patient{" +
+        return "Patient{" + super.toString() +
                 "doctorId=" + doctorId +
                 ", diabeticTypeId=" + diabeticTypeId +
                 '}';

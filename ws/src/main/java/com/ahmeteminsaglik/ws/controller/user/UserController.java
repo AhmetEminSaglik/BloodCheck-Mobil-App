@@ -130,6 +130,7 @@ public class UserController {
         existedUser.setName(newUser.getName());
         existedUser.setLastname(newUser.getLastname());
         if (newUser.getPassword() != null && !newUser.getPassword().isEmpty()) {
+            log.info("Password : " + newUser.getPassword());
             existedUser.setPassword("{bcrypt}" + passwordEncoder.encode(newUser.getPassword()));
         }
         newUser = (T) userService.save(existedUser);
@@ -141,6 +142,4 @@ public class UserController {
 
         return ResponseEntity.status(HttpStatus.OK).body(dataResult);
     }
-
 }
-

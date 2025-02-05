@@ -44,14 +44,10 @@ public class GlobalExceptionHandler {
                 .body(new ErrorDataResult<>(ex.getMessage()));
     }
 
-
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorDataResult<NullValue>> handleException(Exception ex) {
         log.error("Exception is handled: " + ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ErrorDataResult<>(ex.getMessage()));
     }
-
-
-
 }

@@ -10,6 +10,7 @@ import com.ahmeteminsaglik.ws.utility.result.Result;
 import com.ahmeteminsaglik.ws.utility.result.SuccessDataResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,6 +19,7 @@ public class SignupUser {
     private static final Logger log = LoggerFactory.getLogger(SignupUser.class);
     private final UserService service;
 
+    @Autowired
     public SignupUser(UserService service) {
         this.service = service;
     }
