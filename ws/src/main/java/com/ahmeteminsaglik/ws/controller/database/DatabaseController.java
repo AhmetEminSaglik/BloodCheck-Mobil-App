@@ -6,7 +6,7 @@ import com.ahmeteminsaglik.ws.business.abstracts.diabetic.DiabeticService;
 import com.ahmeteminsaglik.ws.business.abstracts.timer.PatientTimerService;
 import com.ahmeteminsaglik.ws.business.abstracts.user.UserService;
 import com.ahmeteminsaglik.ws.business.abstracts.util.DeleteService;
-import com.ahmeteminsaglik.ws.business.concretes.InitialData;
+import com.ahmeteminsaglik.ws.business.concretes.InitialDataLoader;
 import com.ahmeteminsaglik.ws.utility.result.Result;
 import com.ahmeteminsaglik.ws.utility.result.SuccessResult;
 import org.slf4j.Logger;
@@ -23,23 +23,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class DatabaseController {
     private static final Logger log = LoggerFactory.getLogger(DatabaseController.class);
 
-    //    @Autowired
-    private final InitialData initialData;
-
-    //    @Autowired
+    private final InitialDataLoader initialDataLoader;
     private final UserService userService;
-    //    @Autowired
     private final BloodResultService bloodResultService;
-    //    @Autowired
     private final DiabeticService diabeticService;
-    //    @Autowired
     private final PatientTimerService patientTimerService;
-    //    @Autowired
     private final AuthorityService authorityService;
 
     @Autowired
-    public DatabaseController(InitialData initialData, UserService userService, BloodResultService bloodResultService, DiabeticService diabeticService, PatientTimerService patientTimerService, AuthorityService authorityService) {
-        this.initialData = initialData;
+    public DatabaseController(InitialDataLoader initialDataLoader, UserService userService, BloodResultService bloodResultService, DiabeticService diabeticService, PatientTimerService patientTimerService, AuthorityService authorityService) {
+        this.initialDataLoader = initialDataLoader;
         this.userService = userService;
         this.bloodResultService = bloodResultService;
         this.diabeticService = diabeticService;
@@ -72,12 +65,10 @@ public class DatabaseController {
         printLogDataStart(patientTimerService, patientTimerService.findAll().size());
         printLogDataCompleted(patientTimerService, patientTimerService.findAll().size());
 
-//        printLogDataStart(authorityService, authorityService.findAll().size());
-//        printLogDataCompleted(authorityService, authorityService.findAll().size());
     }
 
     private void createData() {
-        initialData.saveInitializedData();
+        initialDataLoader.saveInitializedData();
     }
 
     private void printLogDataStart(DeleteService deleteService, int dataSize) {

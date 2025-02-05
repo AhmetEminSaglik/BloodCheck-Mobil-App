@@ -9,11 +9,7 @@ import java.util.List;
 public interface AuthorityService {
     Authority save(Authority authority);
 
-//    List<Authority> saveAll(List<Authority> list);
-
     List<Authority> findAll();
 
     Authority findByAuthority(EnumAuthority enumAuthority);
-
-//    Authority findById(int id);
 }

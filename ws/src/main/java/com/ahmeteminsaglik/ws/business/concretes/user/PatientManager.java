@@ -12,10 +12,8 @@ import java.util.List;
 
 @Service
 public class PatientManager implements PatientService {
-    //private static CustomLog log = new CustomLog(PatientManager.class);
     private static final Logger log = LoggerFactory.getLogger(PatientManager.class);
 
-    //    @Autowired
     private final PatientRepository repository;
 
     @Autowired
@@ -30,12 +28,7 @@ public class PatientManager implements PatientService {
 
     @Override
     public Patient findById(long patientId) {
-//        List<Long> list = repository.findDoctorIdById(patientId);
-//        System.out.println("List Size : " + list.size());
-//        list.forEach(e -> {
-//            System.out.println("patient Id ile gelen Doctor : ");
-//        });
-        return repository.findById(patientId);//.get(0);
+        return repository.findById(patientId);
     }
 
     @Override

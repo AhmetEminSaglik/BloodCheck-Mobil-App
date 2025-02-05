@@ -28,13 +28,9 @@ import java.util.Map;
 public class BloodResultController {
     private static final Logger log = LoggerFactory.getLogger(BloodResultController.class);
 
-    //    @Autowired
     private final BloodResultService service;
-    //    @Autowired
     private final BloodResultParseService parseService;
-    //    @Autowired
     private final BloodResultAssessmentService assessmentService;
-    //    @Autowired
     private final FcmService fcmService;
 
     @Autowired
@@ -86,10 +82,8 @@ public class BloodResultController {
         if (min > sixMonth) {
             throw new InvalidRequestedBloodResultDateException(min);
         }
-//        LocalDateTime time = CustomUTCTime.getUTCTime().minusMinutes(min);
         LocalDateTime time = CustomUTCTime.getUTCTime().minusMinutes(min);
         List<BloodResult> list = service.findAllByPatientIdAndCreatedAtAfter(patientId, time);
-//        LocalDateTime tenDaysAgo = now.minusDays(10);
         String msg = "BloodResult List belongs to Patient ID " + patientId + " is retrieved. Size : " + list.size() + '.';
         log.info(msg);
         DataResult<List<BloodResult>> dataResult = new SuccessDataResult<>(list, msg);

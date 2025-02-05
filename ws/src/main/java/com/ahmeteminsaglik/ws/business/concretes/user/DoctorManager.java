@@ -14,7 +14,6 @@ import java.util.List;
 public class DoctorManager implements DoctorService {
     private static final Logger log = LoggerFactory.getLogger(PatientManager.class);
 
-    //    @Autowired
     private final DoctorRepository repository;
 
     @Autowired

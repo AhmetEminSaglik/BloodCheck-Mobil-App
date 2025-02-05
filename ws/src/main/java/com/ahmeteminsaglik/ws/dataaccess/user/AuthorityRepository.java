@@ -5,7 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
-//public interface UserRoleRepository extends JpaRepository<UserRole, Integer> {
 public interface AuthorityRepository extends JpaRepository<Authority, Integer> {
     @Modifying
     @Query(value = "ALTER TABLE user_roles AUTO_INCREMENT = 1", nativeQuery = true)

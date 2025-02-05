@@ -12,7 +12,6 @@ import java.util.List;
 
 @Service
 public class UserManager implements UserService {
-    //    @Autowired
     private final UserRepository userRepository;
 
     @Autowired
@@ -20,7 +19,6 @@ public class UserManager implements UserService {
         this.userRepository = userRepository;
     }
 
-    //    PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     @Override
     public User save(User user) {
         return userRepository.save(user);

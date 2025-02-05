@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 public class AdminController {
     private static final Logger log = LoggerFactory.getLogger(AdminController.class);
-    //    @Autowired
     private final UserService userService;
     private final JwtUtil jwtUtil;
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -38,7 +37,6 @@ public class AdminController {
     @PostMapping()
     public ResponseEntity<DataResult<User>> saveAdmin(@RequestBody Admin user) {
         log.info("POST > saveAdmin ");
-//        log.info("(Param) admin: " + admin);
         user.setRoleId(EnumAuthority.ROLE_ADMIN.getId());
         SignupUser signupUser = new SignupUser(userService);
         DataResult<User> dataResult = signupUser.signup(user);

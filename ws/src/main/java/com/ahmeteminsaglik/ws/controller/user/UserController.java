@@ -26,18 +26,10 @@ import java.util.List;
 @CrossOrigin
 public class UserController {
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
-    //    @Autowired
     private final UserService userService;
-    //    @Autowired
     private final JwtUtil jwtUtil;
-    //    @Autowired
     private final AuthenticationManager authenticationManager;
-
-    //    @Autowired
     private final UserDetailsService userDetailsService;
-//    @Autowired
-//    private AuthenticatedUser authenticatedUser;
-
 
     @Autowired
     public UserController(UserService userService, JwtUtil jwtUtil, AuthenticationManager authenticationManager, UserDetailsService userDetailsService) {
@@ -79,54 +71,6 @@ public class UserController {
         log.info(msg);
         return new SuccessDataResult<>(user, msg);
     }
-
-    /*@PostMapping("/login")
-    public ResponseEntity<DataResult<User>> login(@RequestBody LoginCredentials loginCreds) {
-        return ResponseEntity.ok(new ErrorDataResult<>(null,"Login islemi kisminda kalindi -( Spring Security & JWT - Ekleniyor )"));
-*//*
-        System.out.println("logine geldi");
-        log.info("POST > login ");
-
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginCreds.getUsername(), loginCreds.getPassword())
-        );
-
-        UserDetails userDetails = userDetailsService.loadUserByUsername(loginCreds.getUsername());
-        String token = jwtUtil.generateToken(userDetails.getUsername());
-        JwtAuthResponse response = new JwtAuthResponse();
-        response.setAccessToken(token);
-        response.setUser();
-
-//        LoginValidationService loginService = new LoginCredentialsValidation(service);
-//        DataResult<User> result = loginService.validateLoginCredentials(loginCreds.getUsername(), loginCreds.getPassword());
-
-        if (result.getData() == null) {
-            log.info("Login is failed : Data is not found.");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(result);
-        } else {
-            log.info("Login process is completed.");
-            return ResponseEntity.status(HttpStatus.OK).body(result);
-        }
-*//*
-    }*/
-
-    /*@DeleteMapping()
-    public ResponseEntity<Result> deleteUser(@RequestBody LoginCredentials loginCreds) {
-        log.info("DELETE > delete ");
-        User user = login(loginCreds).getBody().getData();
-        Result result;
-        if (user != null) {
-            service.delete(user);
-            result = new SuccessResult("Account is deleted Successfully.");
-            log.info(result.getMessage());
-            return ResponseEntity.status(HttpStatus.OK).body(result);
-        } else {
-            result = new ErrorResult("Account is not found.");
-            log.info(result.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
-        }
-    }
-*/
 
     @PutMapping()
     public <T extends User> ResponseEntity<DataResult<JwtAuthResponse>> updateUser(@RequestBody T newUser) {

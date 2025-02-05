@@ -14,13 +14,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthServiceImpl implements AuthService {
 
-    //    @Autowired
     private final AuthenticationManager authenticationManager;
-
-    //    @Autowired
     private final JwtUtil jwtUtil;
-
-    //    @Autowired
     private final UserDetailsService userDetailsService;
 
     @Autowired

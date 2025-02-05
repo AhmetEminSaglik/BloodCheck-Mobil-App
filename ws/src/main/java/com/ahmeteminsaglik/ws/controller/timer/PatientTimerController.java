@@ -26,13 +26,8 @@ import java.util.Objects;
 public class PatientTimerController {
     private static final Logger log = LoggerFactory.getLogger(PatientTimerController.class);
 
-    //    @Autowired
     private final PatientTimerService service;
-    //    @Autowired
-//    FcmTokenService fcmTokenService;
-//    @Autowired
     private final FcmTokenController fcmTokenController;
-    //    @Autowired
     private final FcmService fcmService;
 
     @Autowired
@@ -112,12 +107,6 @@ public class PatientTimerController {
         FcmMessage fcmMessage = createFcmMessage(patientId, notification, data);
         fcmService.sendNotification(fcmMessage);
         log.info("FcmMessage is send.");
-  /*      try {
-            FcmMessage fcmMessage = createFcmMessage(patientId, notification, data);
-        fcmService.sendNotification(fcmMessage);
-        }catch ( Exception e){
-            log.error("Exception OCCURRED : "+e.getMessage());
-        }*/
 
     }
 
@@ -144,13 +133,8 @@ public class PatientTimerController {
     }
 
     private FcmMessage createFcmMessage(long patientId, FcmNotification notification, FcmData data) {
-//        log.info("patient Timer > sendFcmMessage  > createFcmMessage Patient Id : " + patientId);
         FcmMessage fcmMessage = new FcmMessage();
 
-//        fcmTokenController.
-//        log.info(" TOKEN : Alicak " + fcmTokenService.findByUserId(patientId).getToken());
-//        log.info(" fcmTokenService  " + fcmTokenService);
-//        String token = fcmTokenService.findByUserId(patientId).getToken();
         log.info("FcmMessage will be created.");
         String token = Objects.requireNonNull(fcmTokenController.findTokenByUserId(patientId).getBody()).getData().getToken();
         fcmMessage.setTo(token);

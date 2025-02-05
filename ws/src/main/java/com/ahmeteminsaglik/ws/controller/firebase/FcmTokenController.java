@@ -17,10 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class FcmTokenController {
     private static final Logger log = LoggerFactory.getLogger(FcmTokenController.class);
 
-    //    @Autowired
     private final FcmTokenService service;
-//    private static CustomLog log = new CustomLog(FcmTokenController.class);
-
 
     @Autowired
     public FcmTokenController(FcmTokenService service) {
@@ -29,7 +26,6 @@ public class FcmTokenController {
 
     @PostMapping
     public ResponseEntity<DataResult<FcmToken>> save(@RequestBody FcmToken newFcmToken) {
-//        FcmToken fcmToken = service.findByUserId(newFcmToken.getUserId());
         log.info("POST > save ");
         log.info("(Param) fcmToken : " + newFcmToken);
         FcmToken fcmToken = service.findByUserIdAndToken(newFcmToken.getUserId(), newFcmToken.getToken());
@@ -47,18 +43,7 @@ public class FcmTokenController {
             String msg = "FcmToken is updated.";
             dataResult = new SuccessDataResult<>(fcmToken, msg);
         }
-        /*if (fcmToken == null) {
-            log.info("SAVE REQUEST TOKEN : " + newFcmToken);
-            fcmToken = service.save(newFcmToken);
-            String msg = "FcmToken is saved.";
-            dataResult = new SuccessDataResult(fcmToken, msg);
-        } else {
-            fcmToken.setToken(newFcmToken.getToken());
-            log.info("UPDATE REQUEST TOKEN : " + fcmToken);
-            service.save(fcmToken);
-            String msg = "FcmToken is updated.";
-            dataResult = new SuccessDataResult(fcmToken, msg);
-        }*/
+
         return ResponseEntity.status(HttpStatus.CREATED).body((dataResult));
     }
 
@@ -89,10 +74,4 @@ public class FcmTokenController {
         DataResult<FcmToken> dataResult = new SuccessDataResult<>(fcmToken, msg);
         return ResponseEntity.status(HttpStatus.OK).body(dataResult);
     }
-//    @PostMapping()
-//    public  ResponseEntity<DataResult<FcmMessage>> sendFcmMessage(@RequestBody FcmMessage fcmMessage,@RequestParam long patientId){
-//
-//    }
-
-
 }

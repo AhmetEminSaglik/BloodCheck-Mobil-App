@@ -32,15 +32,10 @@ import java.util.List;
 public class DoctorController {
     private static final Logger log = LoggerFactory.getLogger(DoctorController.class);
 
-    //    @Autowired
     private final UserService userService;
-    //    @Autowired
     private final DoctorService doctorService;
-    //    @Autowired
     private final PatientService patientService;
-    //    @Autowired
     private final JwtUtil jwtUtil;
-    //    @Autowired
     private final AuthorityService roleService;
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 

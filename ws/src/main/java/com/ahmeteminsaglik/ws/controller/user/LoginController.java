@@ -24,15 +24,10 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 public class LoginController {
     private static final Logger log = LoggerFactory.getLogger(LoginController.class);
-    //    @Autowired
     private final UserService service;
-    //    @Autowired
     private final JwtUtil jwtUtil;
-    //    @Autowired
     private final AuthenticationManager authenticationManager;
-    //    @Autowired
     private final UserService userService;
-    //    @Autowired
     private final UserDetailsService userDetailsService;
 
     @Autowired
@@ -43,17 +38,6 @@ public class LoginController {
         this.userService = userService;
         this.userDetailsService = userDetailsService;
     }
-/*@GetMapping("/login")
-    public ResponseEntity<DataResult<String>> login() {
-        log.info("GET > findAllUserList ");
-        DataResult<List<User>> dataResult = new SuccessDataResult<>("You should send Username and password here.");
-        return ResponseEntity.status(HttpStatus.OK).body(new SuccessDataResult<>("dataResult"));
-    }*/
-
-/*    @GetMapping("/login")
-    public String loginPage() {
-        return "login.html";
-    }*/
 
     @PostMapping("/login")
     public ResponseEntity<DataResult<JwtAuthResponse>> login(@RequestBody LoginCredentials loginCreds) {
@@ -87,11 +71,6 @@ public class LoginController {
         }
         return userDto;
     }
-
-    /*@PostMapping("/token")
-    public ResponseEntity<DataResult<User>> login(@RequestBody String token) {
-        return ResponseEntity.ok(new ErrorDataResult<>(null, ""));
-    }*/
 
 }
 

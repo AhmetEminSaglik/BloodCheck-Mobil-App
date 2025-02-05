@@ -28,12 +28,8 @@ import java.util.Map;
 public class BloodResultAssessmentManager implements BloodResultAssessmentService {
     private static final Logger log = LoggerFactory.getLogger(BloodResultAssessmentManager.class);
     private final String dangerous = "DANGEROUS:";
-    //    private static CustomLog log = new CustomLog(BloodResultAssessmentManager.class);
-    //    @Autowired
     private final FcmService fcmService;
-    //    @Autowired
     private final FcmTokenService fcmTokenService;
-    //    @Autowired
     private final PatientService patientService;
     private String patientFullName = "";
     private final BloodResultBound bloodResultBound = new BloodResultBound();
@@ -54,13 +50,10 @@ public class BloodResultAssessmentManager implements BloodResultAssessmentServic
         subItemMap.put(EnumBloodResultContent.CALCIUM.getName(), bloodResult.getCalcium());
         subItemMap.put(EnumBloodResultContent.MAGNESIUM.getName(), bloodResult.getMagnesium());
 
-//        sendFcmMessage(bloodResult.getPatientId(), subItemMap);
         try {
 
             FcmMessage fcmMessage = createFcmMessage(bloodResult.getPatientId(), subItemMap);
-            //            fcmMessage.getData().setPatientId(bloodResult.getPatientId());
             Patient patient = patientService.findById(bloodResult.getPatientId());
-//            fcmMessage.setTo(fcmTokenService.findAllByUserId(patient.getId()).getLast().getToken());
 
             List<FcmToken> list = fcmTokenService.findAllByUserId(patient.getId());
             if (!list.isEmpty()) {
@@ -74,7 +67,6 @@ public class BloodResultAssessmentManager implements BloodResultAssessmentServic
                 sendMsgToPatient(fcmMessage);
             }
             patientFullName = " " + patient.getName() + " " + patient.getLastname();
-            log.info("-----");
             sendMsgToDoctorOfPatient(bloodResult.getPatientId(), fcmMessage);
         } catch (Exception e) {
             log.error("ERROR OCCURRED : " + e.getMessage());
@@ -87,7 +79,6 @@ public class BloodResultAssessmentManager implements BloodResultAssessmentServic
 
     private void sendMsgToDoctorOfPatient(long patientId, FcmMessage fcmMessage) {
         long doctorId = patientService.findById(patientId).getDoctorId();
-//        String token = fcmTokenService.findByUserId(doctorId).getToken();
         List<FcmToken> list = fcmTokenService.findAllByUserId(doctorId);
         if (list.isEmpty()) {
             log.info("Doctor has not been login before. Could not send Notification to Doctor");
@@ -104,10 +95,8 @@ public class BloodResultAssessmentManager implements BloodResultAssessmentServic
 
             String body = "Patient's blood result values are out of normal bounds.";
 
-//            body = fcmService.generateTextWithHtmlColor(body,Color.);
             FcmNotification notification = fcmMessage.getNotification();
             notification.setTitle(notification.getTitle() + ": " + patientFullName);
-//            notification.setBody("Patient's blood result values are out of normal bounds.");
             notification.setBody(body);
         }
         fcmService.sendNotification(fcmMessage);
@@ -158,13 +147,11 @@ public class BloodResultAssessmentManager implements BloodResultAssessmentServic
             log.info("Token List (must be>0) :" + list.size());
             token = list.get(list.size() - 1).getToken();
         }
-//        System.out.println("gelen First " + fcmTokenService.findAllByUserId(patientId).getLast());
         FcmNotification notification = new FcmNotification();
 
         FcmData data = new FcmData();
         if (msgTitle.toString().contains(dangerous)) {
             data.setShowNotification(true);
-//            notification.setTitle(fcmService.generateTextWithHtmlColor("DANGEROUS",Color.RED));
             notification.setTitle("DANGEROUS");
             notification.setBody("Your blood results are out of normal.\nYour doctor is informed.");
             data.setMsgTitle(msgTitle.toString());

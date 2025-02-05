@@ -5,7 +5,6 @@ import com.ahmeteminsaglik.ws.model.enums.EnumBloodResultContent;
 import java.util.HashMap;
 
 public class BloodResultBound {
-    //    final List<ItemRangeValue> list = new ArrayList<>();
     private final HashMap<String, ItemRangeValue> rangeMap = new HashMap<>();
 
     private final ItemRangeValue bloodSugarRange = new ItemRangeValue(20, 100);
@@ -18,10 +17,6 @@ public class BloodResultBound {
         rangeMap.putIfAbsent(EnumBloodResultContent.BLOOD_PRESSURE.getName(), bloodPressureRange);
         rangeMap.putIfAbsent(EnumBloodResultContent.CALCIUM.getName(), calciumRange);
         rangeMap.putIfAbsent(EnumBloodResultContent.MAGNESIUM.getName(), magnesiumRange);
-//        list.add(bloodSugar);
-//        list.add(bloodPressure);
-//        list.add(magnesium);
-//        list.add(calcium);
     }
 
 

@@ -12,8 +12,6 @@ public interface BloodResultRepository extends JpaRepository<BloodResult, Long> 
 
     List<BloodResult> findAllPatientByOrderByIdDesc();
 
-
-    //    List<BloodResult> findAllByPatientIdAndCreatedAtAfterOrderByIdDesc(int patientId, LocalDateTime time);
     List<BloodResult> findAllByPatientIdAndCreatedAtAfterOrderByIdDesc(
             int patientId, LocalDateTime time);
 

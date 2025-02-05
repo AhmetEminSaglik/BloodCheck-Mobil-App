@@ -13,7 +13,6 @@ import java.util.List;
 public class FcmTokenManager implements FcmTokenService {
     private static final CustomLog log = new CustomLog(FcmTokenManager.class);
 
-    //    @Autowired
     private final TokenRepository repository;
 
     @Autowired

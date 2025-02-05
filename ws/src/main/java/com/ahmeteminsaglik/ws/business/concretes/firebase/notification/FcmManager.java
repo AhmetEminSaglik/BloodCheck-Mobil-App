@@ -14,9 +14,7 @@ import java.awt.*;
 
 @Service
 public class FcmManager implements FcmService {
-    //    @Autowired
     private final FcmMsgService msgService;
-    //    @Autowired
     private final FcmNotificationService notificationService;
 
     @Autowired

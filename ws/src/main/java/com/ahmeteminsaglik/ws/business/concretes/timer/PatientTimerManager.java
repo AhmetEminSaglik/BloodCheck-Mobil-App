@@ -11,7 +11,6 @@ import java.util.List;
 
 @Service
 public class PatientTimerManager implements PatientTimerService {
-    //    @Autowired
     private final PatientTimerRepository repository;
 
     @Autowired

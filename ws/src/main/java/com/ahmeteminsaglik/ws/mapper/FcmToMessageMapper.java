@@ -40,7 +40,6 @@ public class FcmToMessageMapper {
         data.put("showNotification", Boolean.toString(fcmData.isShowNotification()));
         System.out.println("-----> eklenen reasonCode " + fcmData.getReasonCode());
         System.out.println("-----> eklenen reasonSend " + fcmData.getReasonSend());
-        // Burada FcmData sınıfınızdaki tüm alanları Message'ın data haritasına ekleyin
         return data;
     }
 }
