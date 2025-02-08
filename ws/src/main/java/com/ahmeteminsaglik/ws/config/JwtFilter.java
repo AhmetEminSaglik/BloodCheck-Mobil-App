@@ -36,7 +36,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
         String requestURI = request.getRequestURI();
 
-        if (requestURI.equals("/login")) {
+        if (requestURI.equals(request.getContextPath() + "/login")) {
             filterChain.doFilter(request, response);
             return;
         }
