@@ -14,7 +14,7 @@ const Login = ({ setIsAuthenticated }) => {
     e.preventDefault();
     setErrorMessage(''); 
     try {
-      var url=`${ApiUrl.getUsersUrl()}/login`;
+      var url=`${ApiUrl.getLoginUrl()}`;
       const response = await axios.post(url, {
         username,
         password,

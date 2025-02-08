@@ -4,7 +4,7 @@ class ApiUrl {
     // static remotehost = "http://172.17.0.1:8081/";
     // static remotehost = "http://ws-bloodcheck:8081/";
     // static remotehost = "http://my-network:8081/";
-    static remotehost = "http://178.18.241.162:8081/";
+    static remotehost = "https://bloodcheck.ahmeteminsaglik.com/api/1.0/";
     // static BASE_URL=this.localhost;
     static BASE_URL=this.remotehost;
 
@@ -18,6 +18,10 @@ class ApiUrl {
 
     static getUsersUrl() {
         return `${this.BASE_URL}users`;
+    }
+    
+    static getLoginUrl() {
+        return `${this.BASE_URL}login`;
     }
 }
 
