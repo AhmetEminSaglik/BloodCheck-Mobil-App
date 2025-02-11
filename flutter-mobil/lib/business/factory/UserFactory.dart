@@ -22,9 +22,9 @@ class UserFactory {
   }
 
 
-  static User createUserByLogin(Map<String, dynamic> json) {
-    return User.fromJsonForLogin(json);
-  }
+  // static User createUserByLogin(Map<String, dynamic> json) {
+  //   return User.fromJsonForLogin(json);
+  // }
 
   /*static Admin createAdminByLogin(Map<String, dynamic> json) {
     return Admin.fromJsonForLogin(json);

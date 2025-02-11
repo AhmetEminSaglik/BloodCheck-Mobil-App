@@ -92,7 +92,8 @@ class _LoginPageState extends State<LoginPage> {
       await login(username: username, password: password)
           .then((value) => respEntity = value);
       if (respEntity != null && respEntity!.success) {
-        User user = UserFactory.createUserByLogin(respEntity!.data);
+        // User user = UserFactory.createUserByLogin(respEntity!.data);
+        User user = UserFactory.createUser(respEntity!.data);
         // saveUserData(context, user);
         updateCubits(context);
         navigateToHomePage(context: context, roleId: user.roleId);
@@ -325,7 +326,8 @@ class _LoginButton extends StatelessWidget {
               context: context, msg: respEntity!.message);
         } else {
           // log.i("Gelen Data ${respEntity!.data}");
-          User user = UserFactory.createUserByLogin(respEntity!.data);
+          // User user = UserFactory.createUserByLogin(respEntity!.data);
+          User user = UserFactory.createUser(respEntity!.data);
           saveUserData(context, user);
           navigateToHomePage(context: context, roleId: user.roleId);
         }
@@ -374,7 +376,10 @@ Future<ResponseEntity?> login(
   ResponseEntity? respEntity;
   await request.login(username, password).then((resp) async {
     Map<String, dynamic> jsonData = json.decode(resp.body);
-    respEntity = ResponseEntity.fromJsonForLogin(jsonData);
+    // respEntity = ResponseEntity.fromJsonForLogin(jsonData);
+    respEntity = ResponseEntity.fromJson(jsonData);
+    String token = jsonData["data"]["accessToken"];
+    SharedPrefUtils.updateToken(token);
     return respEntity;
   });
   return respEntity;

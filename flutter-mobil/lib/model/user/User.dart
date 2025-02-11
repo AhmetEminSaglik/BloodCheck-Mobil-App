@@ -32,6 +32,7 @@ abstract class User {
   }
 
   factory User.fromJson(Map<String, dynamic> json) {
+    json=json["userDto"];
     int roleId = json["roleId"];
     if (roleId == EnumUserRole.ADMIN.roleId) {
       return Admin.fromJson(json);
