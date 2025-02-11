@@ -43,13 +43,13 @@ public class LoginController {
     public ResponseEntity<DataResult<JwtAuthResponse>> login(@RequestBody LoginCredentials loginCreds) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginCreds.getUsername(), loginCreds.getPassword()));
         UserDetails userDetails = userDetailsService.loadUserByUsername(loginCreds.getUsername());
-        JwtAuthResponse response = new JwtAuthResponse();
-        response.setAccessToken(jwtUtil.generateToken(userDetails.getUsername()));
+
         User user = userService.findByUsername(userDetails.getUsername());
 
-        UserDto dto = convertToUserDto(user);
-        response.setUserDto(dto);
-        dto.setToken(response.getAccessToken());
+        UserDto userDto = convertToUserDto(user);
+        String token = jwtUtil.generateToken(userDto.getUsername());
+        JwtAuthResponse response = new JwtAuthResponse(userDto,token);
+//        dto.setToken(response.getAccessToken());
         return ResponseEntity.ok(new SuccessDataResult<>(response, "Successfully logged in."));
     }
 

@@ -7,22 +7,21 @@ public class JwtAuthResponse {
     private UserDto userDto;
     private String tokenType = "Bearer";
 
-    public JwtAuthResponse() {
-    }
+//    public JwtAuthResponse() {
+//    }
 
-    public JwtAuthResponse(String accessToken, UserDto userDto, String tokenType) {
+    public JwtAuthResponse( UserDto userDto,String accessToken) {
         this.accessToken = accessToken;
         this.userDto = userDto;
-        this.tokenType = tokenType;
     }
 
     public String getAccessToken() {
         return accessToken;
     }
-
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
+//
+//    public void setAccessToken(String accessToken) {
+//        this.accessToken = accessToken;
+//    }
 
     public String getTokenType() {
         return tokenType;

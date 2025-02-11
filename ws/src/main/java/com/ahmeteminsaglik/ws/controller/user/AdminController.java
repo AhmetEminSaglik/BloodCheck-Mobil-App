@@ -4,6 +4,7 @@ import com.ahmeteminsaglik.ws.business.abstracts.user.UserService;
 import com.ahmeteminsaglik.ws.business.concretes.signup.SignupUser;
 import com.ahmeteminsaglik.ws.model.JwtAuthResponse;
 import com.ahmeteminsaglik.ws.model.dto.ModelMapper;
+import com.ahmeteminsaglik.ws.model.dto.UserDto;
 import com.ahmeteminsaglik.ws.model.enums.EnumAuthority;
 import com.ahmeteminsaglik.ws.model.users.Admin;
 import com.ahmeteminsaglik.ws.model.users.User;
@@ -77,11 +78,13 @@ public class AdminController {
 
         newUser = (Admin) userService.save(existedUser);
 
-        JwtAuthResponse response = new JwtAuthResponse();
-        response.setAccessToken(jwtUtil.generateToken(newUser.getUsername()));
+        UserDto userDto = ModelMapper.convertToUserDto(newUser);
+        String token = jwtUtil.generateToken(newUser.getUsername());
+        JwtAuthResponse response = new JwtAuthResponse(userDto,token);
+
         DataResult<JwtAuthResponse> dataResult = new SuccessDataResult<>(response, msg);
         response.setUserDto(ModelMapper.convertToUserDto(newUser));
-        response.getUserDto().setToken(response.getAccessToken());
+//        response.getUserDto().setToken(response.getAccessToken());
 
         return ResponseEntity.status(HttpStatus.OK).body(dataResult);
     }

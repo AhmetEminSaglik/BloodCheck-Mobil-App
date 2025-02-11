@@ -2,6 +2,8 @@ package com.ahmeteminsaglik.ws.controller.user;
 
 import com.ahmeteminsaglik.ws.business.abstracts.user.UserService;
 import com.ahmeteminsaglik.ws.model.JwtAuthResponse;
+import com.ahmeteminsaglik.ws.model.dto.ModelMapper;
+import com.ahmeteminsaglik.ws.model.dto.UserDto;
 import com.ahmeteminsaglik.ws.model.users.User;
 import com.ahmeteminsaglik.ws.utility.CustomUTCTime;
 import com.ahmeteminsaglik.ws.utility.JwtUtil;
@@ -88,8 +90,12 @@ public class UserController {
         newUser = (T) userService.save(existedUser);
         String msg = "Patient is updated";
 
-        JwtAuthResponse response = new JwtAuthResponse();
-        response.setAccessToken(jwtUtil.generateToken(newUser.getUsername()));
+//        JwtAuthResponse response = new JwtAuthResponse();
+//        response.setAccessToken(jwtUtil.generateToken(newUser.getUsername()));
+        UserDto userDto = ModelMapper.convertToUserDto(newUser);
+        String token = jwtUtil.generateToken(newUser.getUsername());
+        JwtAuthResponse response = new JwtAuthResponse(userDto,token);
+
         DataResult<JwtAuthResponse> dataResult = new SuccessDataResult<>(response, msg);
 
         return ResponseEntity.status(HttpStatus.OK).body(dataResult);

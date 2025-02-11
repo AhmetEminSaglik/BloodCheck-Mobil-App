@@ -9,6 +9,7 @@ import com.ahmeteminsaglik.ws.business.concretes.signup.SignupUser;
 import com.ahmeteminsaglik.ws.controller.timer.PatientTimerController;
 import com.ahmeteminsaglik.ws.model.JwtAuthResponse;
 import com.ahmeteminsaglik.ws.model.dto.ModelMapper;
+import com.ahmeteminsaglik.ws.model.dto.UserDto;
 import com.ahmeteminsaglik.ws.model.enums.EnumAuthority;
 import com.ahmeteminsaglik.ws.model.firebase.FcmData;
 import com.ahmeteminsaglik.ws.model.firebase.FcmMessage;
@@ -162,11 +163,13 @@ public class PatientController {
         newUser = (Patient) userService.save(existedUser);
         String msg = "Patient is updated";
 
-        JwtAuthResponse response = new JwtAuthResponse();
-        response.setAccessToken(jwtUtil.generateToken(newUser.getUsername()));
+        UserDto userDto = ModelMapper.convertToUserDto(newUser);
+        String token = jwtUtil.generateToken(newUser.getUsername());
+        JwtAuthResponse response = new JwtAuthResponse(userDto,token);
+
         DataResult<JwtAuthResponse> dataResult = new SuccessDataResult<>(response, msg);
         response.setUserDto(ModelMapper.convertToPatientDto(newUser));
-        response.getUserDto().setToken(response.getAccessToken());
+//        response.getUserDto().setToken(response.getAccessToken());
 
         return ResponseEntity.status(HttpStatus.OK).body(dataResult);
     }

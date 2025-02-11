@@ -11,7 +11,7 @@ public class UserDto {
     private String name;
     private String lastname;
     private String username;
-    private String token;
+//    private String token;
     private int dia;
     private LocalDateTime createdAt = CustomUTCTime.getUTCTime();
 
@@ -20,7 +20,7 @@ public class UserDto {
         this.roleId = user.getRoleId();
         this.name = user.getName();
         this.lastname = user.getLastname();
-        this.token = user.getToken();
+//        this.token = user.getToken();
         this.createdAt = user.getCreatedAt();
         this.username = user.getUsername();
     }
@@ -70,14 +70,14 @@ public class UserDto {
         return this;
     }
 
-    public String getToken() {
-        return token;
-    }
+//    public String getToken() {
+//        return token;
+//    }
 
-    public UserDto setToken(String token) {
-        this.token = token;
-        return this;
-    }
+//    public UserDto setToken(String token) {
+//        this.token = token;
+//        return this;
+//    }
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
@@ -95,7 +95,7 @@ public class UserDto {
                 ", name='" + name + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", username='" + username + '\'' +
-                ", token='" + token + '\'' +
+//                ", f='" + token + '\'' +
                 ", createdAt=" + createdAt +
                 '}';
     }
