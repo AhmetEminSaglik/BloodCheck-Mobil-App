@@ -25,6 +25,7 @@ import com.ahmeteminsaglik.ws.model.users.role.Authority;
 import com.ahmeteminsaglik.ws.utility.CustomLog;
 import com.ahmeteminsaglik.ws.utility.CustomUTCTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -38,8 +39,13 @@ import java.util.Random;
 @Component
 public class InitialDataLoader implements CommandLineRunner {
 
+    @Value("${app.admin.password}")
+    private String adminPassword;
+
     static String[] maleName = {"James", "Robert", "John", "Michael", "David", "William", "Richard", "Joseph", "Thomas", "Charles", "Christopher", "Daniel", "Matthew", "Anthony", "Mark", "Donald", "Steven", "Paul", "Andrew", "Joshua"};
     static String[] femaleName = {"Mary", "Patricia", "Jennifer", "Linda", "Elizabeth", "Barbara", "Susan", "Jessica", "Sarah", "Karen", "Lisa", "Nancy", "Betty", "Margaret", "Sandra", "Ashley", "Kimberly", "Emily", "Donna", "Michelle", "Carol", "Amanda"};
+
+
     static int doctorIdStartingIndex = 1;
     static int totalDoctorNumber = 5;
     private static final CustomLog log = new CustomLog(InitialDataLoader.class);
@@ -274,7 +280,7 @@ public class InitialDataLoader implements CommandLineRunner {
         admin.setName("Ahmet Emin");
         admin.setLastname("SAGLIK");
         admin.setUsername("AES");
-        admin.setPassword(getPassword());
+        admin.setPassword(getEncodedPassword(adminPassword));
         admin.setRoleId(EnumAuthority.ROLE_ADMIN.getId());
         list.add(admin);
 
@@ -288,7 +294,7 @@ public class InitialDataLoader implements CommandLineRunner {
             user.setName(createName(i));
             user.setLastname(createName(i));
             user.setUsername("doctor" + i);
-            user.setPassword(getPassword());
+            user.setPassword(getEncodedPassword());
 
             if (i < 3) {
                 user.setGraduate("Karadeniz Teknik University");
@@ -325,7 +331,11 @@ public class InitialDataLoader implements CommandLineRunner {
         return list;
     }
 
-    private String getPassword() {
+    private String getEncodedPassword() {
         return "{bcrypt}" + passwordEncoder.encode("pass");
+    }
+
+    private String getEncodedPassword(String password) {
+        return "{bcrypt}" + passwordEncoder.encode(password);
     }
 }
