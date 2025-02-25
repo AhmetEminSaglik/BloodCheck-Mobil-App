@@ -65,20 +65,20 @@ public class HomeController {
                             a { text-decoration: none; color: #1565c0; font-weight: bold; }
                             .role { font-size: 0.9em; color: gray; }
                             .notes-container {
-                                text-align: center;
-                                margin-bottom: 20px;
+                                    display: flex;
+                                    justify-content: center
                             }
                             .notes {
                                 text-align: left;
-                                margin-left: auto;
-                                margin-right: auto;
                                 width: 80%;
+                                max-width: 600px
                             }
                         </style>
                     </head>
                     <body>
                         <h1>Welcome to the Bloodcheck API</h1>
                         <p>Explore the available endpoints below:</p>
+                            <hr>
                         <div class="notes-container">
                             <div class="notes">
                                 <h3 style="color:red">Important Notes</h3>
