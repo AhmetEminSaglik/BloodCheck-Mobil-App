@@ -30,17 +30,25 @@ public class UserManager implements UserService {
     }
 
     public List<User> findAll() {
-        return userRepository.findAllByOrderByIdAsc();
+        List<User> users = userRepository.findAllByOrderByIdAsc();
+        hideAdminData(users);
+        return users;
     }
 
     @Override
     public List<User> findAllByRoleId(int roleId) {
-        return userRepository.findAllByRoleIdOrderByIdDesc(roleId);
+//        return userRepository.findAllByRoleIdOrderByIdDesc(roleId);
+        List<User> users = userRepository.findAllByRoleIdOrderByIdDesc(roleId);
+        hideAdminData(users);
+        return users;
     }
 
     @Override
     public List<User> findAllByCreatedAtAfter(LocalDateTime localDateTime) {
-        return userRepository.findAllByCreatedAtAfter(localDateTime);
+//        return userRepository.findAllByCreatedAtAfter(localDateTime);
+        List<User> users = userRepository.findAllByCreatedAtAfter(localDateTime);
+        hideAdminData(users);
+        return users;
     }
 
     @Override
@@ -57,7 +65,9 @@ public class UserManager implements UserService {
 
     @Override
     public User findById(long id) {
-        return userRepository.findById(id).get();
+        User user = userRepository.findById(id).get();
+        hideAdminData(user);
+        return user;
     }
 
     @Override
@@ -72,6 +82,9 @@ public class UserManager implements UserService {
 
     @Override
     public List<User> findAllByCreatedTimeAfter(LocalDateTime time) {
-        return userRepository.findAllByCreatedAtAfter(time);
+//        return userRepository.findAllByCreatedAtAfter(time);
+        List<User> users = userRepository.findAllByCreatedAtAfter(time);
+        hideAdminData(users);
+        return users;
     }
 }

@@ -20,7 +20,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("")
+@RequestMapping("/login")
 @CrossOrigin
 public class LoginController {
     private static final Logger log = LoggerFactory.getLogger(LoginController.class);
@@ -39,7 +39,7 @@ public class LoginController {
         this.userDetailsService = userDetailsService;
     }
 
-    @PostMapping("/login")
+    @PostMapping()
     public ResponseEntity<DataResult<JwtAuthResponse>> login(@RequestBody LoginCredentials loginCreds) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginCreds.getUsername(), loginCreds.getPassword()));
         UserDetails userDetails = userDetailsService.loadUserByUsername(loginCreds.getUsername());

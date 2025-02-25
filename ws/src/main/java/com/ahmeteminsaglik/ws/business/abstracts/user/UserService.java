@@ -6,7 +6,7 @@ import com.ahmeteminsaglik.ws.model.users.User;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public interface UserService extends DeleteService {
+public interface UserService extends DeleteService, AdminDataFilter {
     User save(User u);
 
     List<User> saveAll(List<User> list);

@@ -1,13 +1,10 @@
 package com.ahmeteminsaglik.ws.controller.user;
 
 import com.ahmeteminsaglik.ws.business.abstracts.user.UserService;
-import com.ahmeteminsaglik.ws.business.concretes.signup.SignupUser;
 import com.ahmeteminsaglik.ws.model.JwtAuthResponse;
 import com.ahmeteminsaglik.ws.model.dto.ModelMapper;
 import com.ahmeteminsaglik.ws.model.dto.UserDto;
-import com.ahmeteminsaglik.ws.model.enums.EnumAuthority;
 import com.ahmeteminsaglik.ws.model.users.Admin;
-import com.ahmeteminsaglik.ws.model.users.User;
 import com.ahmeteminsaglik.ws.utility.JwtUtil;
 import com.ahmeteminsaglik.ws.utility.result.DataResult;
 import com.ahmeteminsaglik.ws.utility.result.SuccessDataResult;
@@ -35,7 +32,7 @@ public class AdminController {
         this.jwtUtil = jwtUtil;
     }
 
-    @PostMapping()
+    /*@PostMapping()
     public ResponseEntity<DataResult<User>> saveAdmin(@RequestBody Admin user) {
         log.info("POST > saveAdmin ");
         user.setRoleId(EnumAuthority.ROLE_ADMIN.getId());
@@ -44,7 +41,7 @@ public class AdminController {
         log.info("Admin signup successfully.");
         log.info(dataResult.getMessage());
         return ResponseEntity.status(HttpStatus.CREATED).body(dataResult);
-    }
+    }*/
 
     @GetMapping("/{id}")
     public ResponseEntity<DataResult<Admin>> findById(@PathVariable long id) {
