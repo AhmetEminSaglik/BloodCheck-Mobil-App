@@ -88,7 +88,8 @@ public class HomeController {
                                 <li> Login Credentials:
                                     <ul class="show-points"> 
                                         <li>5 doctors, 20 patients are registered. A username can be selected such as doctor1 or patient15</li>
-                                        <li>Example Login Request (JSON format): { "username":"patient15","password":"pass" }</li>
+                                        <li>Example Login Request (JSON format):<br> 
+                                        { "username":"patient15","password":"pass" }</li>
                                      </ul> 
                                 </li>
                                 <li> Patients can only access endpoints with Patient role permissions.</li>
