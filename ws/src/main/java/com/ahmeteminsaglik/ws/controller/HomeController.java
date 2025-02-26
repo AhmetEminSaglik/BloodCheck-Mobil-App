@@ -79,6 +79,9 @@ public class HomeController {
                         <h1>Welcome to the Bloodcheck API</h1>
                         <p>Explore the available endpoints below:</p>
                             <hr>
+                            <p style="color:green;font-size:20px">Bloodcheck App Google Play Link:</p>
+                            <p><a href="https://play.google.com/store/apps/details?id=com.ahmeteminsaglik.bloodcheck">https://play.google.com/store/apps/details?id=com.ahmeteminsaglik.bloodcheck</a></p>
+                            <hr>
                         <div class="notes-container">
                             <div class="notes">
                                 <h3 style="color:red">Important Notes</h3>

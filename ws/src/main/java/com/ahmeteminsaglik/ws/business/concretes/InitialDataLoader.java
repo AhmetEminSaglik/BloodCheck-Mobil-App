@@ -6,6 +6,7 @@ import com.ahmeteminsaglik.ws.business.abstracts.diabetic.DiabeticService;
 import com.ahmeteminsaglik.ws.business.abstracts.firebase.notification.FcmService;
 import com.ahmeteminsaglik.ws.business.abstracts.firebase.token.FcmTokenService;
 import com.ahmeteminsaglik.ws.business.abstracts.timer.PatientTimerService;
+import com.ahmeteminsaglik.ws.business.abstracts.user.AdminService;
 import com.ahmeteminsaglik.ws.business.abstracts.user.DoctorService;
 import com.ahmeteminsaglik.ws.business.abstracts.user.PatientService;
 import com.ahmeteminsaglik.ws.business.abstracts.user.UserService;
@@ -54,6 +55,7 @@ public class InitialDataLoader implements CommandLineRunner {
     private final BloodResultService bloodResultService;
     private final PatientController patientController;
     private final UserService userService;
+    private final AdminService adminService;
     private final PatientService patientService;
     private final DoctorService doctorService;
     private final AuthorityService roleService;
@@ -66,7 +68,8 @@ public class InitialDataLoader implements CommandLineRunner {
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Autowired
-    public InitialDataLoader(BloodResultService bloodResultService, PatientController patientController, UserService userService, PatientService patientService, DoctorService doctorService, AuthorityService roleService, DiabeticService diabeticService, PatientTimerController timerController, PatientTimerService timerService, FcmTokenService fcmTokenService, FcmService fcmService, BloodResultController bloodResultController) {
+    public InitialDataLoader(AdminService adminService, BloodResultService bloodResultService, PatientController patientController, UserService userService, PatientService patientService, DoctorService doctorService, AuthorityService roleService, DiabeticService diabeticService, PatientTimerController timerController, PatientTimerService timerService, FcmTokenService fcmTokenService, FcmService fcmService, BloodResultController bloodResultController) {
+        this.adminService = adminService;
         this.bloodResultService = bloodResultService;
         this.patientController = patientController;
         this.userService = userService;
@@ -86,6 +89,7 @@ public class InitialDataLoader implements CommandLineRunner {
     public void run(String... args) throws Exception {
         saveInitializedData();
     }
+
     private static String createName(int i) {
         return i % 2 == 0 ? maleName[random.nextInt(maleName.length)] : femaleName[random.nextInt(femaleName.length)];
     }
@@ -235,7 +239,7 @@ public class InitialDataLoader implements CommandLineRunner {
         Authority doctorAuth = roleService.findByAuthority(EnumAuthority.ROLE_DOCTOR);
         Authority adminAuth = roleService.findByAuthority(EnumAuthority.ROLE_ADMIN);
 
-        User adminuser = userService.findById(1);
+        User adminuser = adminService.findById(1);
         adminuser.addAuthority(patientAuth);
         adminuser.addAuthority(doctorAuth);
         adminuser.addAuthority(adminAuth);
