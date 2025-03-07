@@ -1,51 +1,92 @@
 version: '3.8'
+
 services:
-
-  db-mysql:
-    image: mysql
+  mysql-db:
+    image: ${IMAGE_MYSQL}
+    container_name: mysql-db
     environment:
-      MYSQL_DATABASE: 'bloodcheck'
-      MYSQL_ALLOW_EMPTY_PASSWORD: 1
-#      MYSQL_ROOT_PASSWORD: 'Root.123'
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     ports:
-      - '3306:3306'
+      - "${MYSQL_PORT}"
     networks:
-      - db-network
-#    expose:
-#      - '3306'
+      - my-network
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "-u", "${DB_USERNAME}", "-p${DB_PASSWORD}", "ping" ]
+      interval: 30s
+      retries: 3
+      timeout: 10s
+      start_period: 10s
+    restart: always
 
-  app:
-    image:  ahmeteminsaglik/ws-bloodcheck:1.2
+  server:
+    image: ${IMAGE_SERVER}
+    container_name: test-server
+    environment:
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+    ports:
+      - "${SERVER_PORT}"
+    networks:
+      - my-network
     depends_on:
-      - db-mysql
-    networks:
-      - db-network
+      mysql-db:
+        condition: service_healthy
+    restart: always
 
-#    environment:
-#      SPRING_DATASOURCE_URL: jdbc:mysql://db-mysql:3306/bloodcheck
-#      SPRING_DATASOURCE_USERNAME: root
-#      SPRING_DATASOURCE_PASSWORD: Root.123
+  ws-bloodcheck:
+    image: ${IMAGE_BLOODCHECK_WS}
+    container_name: ws-bloodcheck
+    environment:
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+    ports:
+      - "${WS_BLOODCHECK_PORT}"
+    networks:
+      - my-network
+#    healthcheck:
+#      test: [ "CMD", "curl", "-f", "${BLOODCHECK_APP_URL}" ]  # WS servisi için healthcheck endpoint
+#      interval: 30s
+#      retries: 3
+#      timeout: 10s
+#      start_period: 10s
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+    restart: always
+
+  react-app:
+    image: ${IMAGE_BLOODCHECK_REACT}
+    container_name: react-app
+    ports:
+      - "${REACT_BLOODCHECK_PORT}"
+    networks:
+      - my-network
+#    depends_on:
+#      ws-bloodcheck:
+#        condition: service_healthy
+    restart: always
+
+  vaadinDemo:
+    image: ${IMAGE_VAADIN_DEMO}
+    container_name: vaadin-demo
+    ports:
+      - "${VAADIN_DEMO_PORT}"
+    environment:
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+    networks:
+      - my-network
+    depends_on:
+      - mysql-db
+    restart: always
 
 networks:
-  db-network:
+  my-network:
     driver: bridge
 
+volumes:
+  mysql-data:
 
-#version: '3.8'
-#
-#services:
-#  bloodcheck:
-#    build:
-#      context: .
-#      dockerfile: Dockerfile
-#    ports:
-#      - "8080:8080"
-#    environment:
-#      SPRING_SECURITY_USER_NAME: "aes"
-#      SPRING_SECURITY_USER_PASSWORD: "aes"
-#    networks:
-#      - bloodcheck-network
-#
-#networks:
-#  bloodcheck-network:
-#    driver: bridge

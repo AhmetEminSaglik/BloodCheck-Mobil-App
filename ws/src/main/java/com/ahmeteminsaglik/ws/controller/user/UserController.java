@@ -77,7 +77,6 @@ public class UserController {
     @PutMapping()
     public <T extends User> ResponseEntity<DataResult<JwtAuthResponse>> updateUser(@RequestBody T newUser) {
         log.info("PUT > updatePatient ");
-
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         T existedUser = (T) userService.findById(newUser.getId());
         existedUser.setUsername(newUser.getUsername());
