@@ -1,4 +1,4 @@
-import 'package:auto_orientation/auto_orientation.dart';
+import 'package:flutter/services.dart';
 import 'package:bloodcheck/Pages/afterlogin/homepage/appbar/AppBarCubit.dart';
 import 'package:bloodcheck/Pages/afterlogin/homepage/drawer/DrawerCubit.dart';
 import 'package:bloodcheck/Pages/afterlogin/profile/ProfilUpdatedCubit.dart';
@@ -18,7 +18,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await FcmTokenUtils.createToken();
-  AutoOrientation.portraitAutoMode();
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await FirebaseMessaging.instance.getInitialMessage();
   await FirebaseMessaging.instance.requestPermission();
   runApp(const MyApp());

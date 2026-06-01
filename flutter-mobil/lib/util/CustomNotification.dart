@@ -13,8 +13,10 @@ class CustomNotificationUtil {
     var iosSetup = const DarwinInitializationSettings();
     var instalationSetup =
         InitializationSettings(android: androidSetup, iOS: iosSetup);
-    await _flp.initialize(instalationSetup,
-        onDidReceiveNotificationResponse: _selectNotification);
+    await _flp.initialize(
+      settings: instalationSetup,
+      onDidReceiveNotificationResponse: _selectNotification,
+    );
   }
 
   static Future<void> _selectNotification(
@@ -38,7 +40,11 @@ class CustomNotificationUtil {
     var iosNotificationDetail = const DarwinNotificationDetails();
     var notificationDetail = NotificationDetails(
         android: androidNotificationDetail, iOS: iosNotificationDetail);
-    await _flp.show(0, title, msg, notificationDetail,
+    await _flp.show(
+        id: 0,
+        title: title,
+        body: msg,
+        notificationDetails: notificationDetail,
         payload: "Burayi ANLAMADIM ???");
   }
 }

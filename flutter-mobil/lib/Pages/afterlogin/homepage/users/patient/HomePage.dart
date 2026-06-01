@@ -8,8 +8,8 @@ import 'package:bloodcheck/util/FcmTokenUtils.dart';
 import 'package:bloodcheck/util/ProductColor.dart';
 import 'package:bloodcheck/util/SharedPrefUtils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_background/flutter_background.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'package:logger/logger.dart';
 
 class HomePage extends StatefulWidget {
@@ -30,7 +30,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     enableBackgroundExecution();
     prepareDrawer();
@@ -42,21 +41,12 @@ class _HomePageState extends State<HomePage> {
     _patientDrawer = PatientDrawer(patientId: userId);
     mainDrawer =
         MainDrawer(drawerList: [_adminDrawer, _doctorDrawer, _patientDrawer]);
-    // log.i("Drawer's are prepared");
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarUtil
-          .getAppBar() /*AppBar(
-        // backgroundColor: ProductColor.appBarBackgroundColor,
-        title:
-            BlocBuilder<AppBarCubit, Widget>(builder: (builder, titleWidget) {
-          return titleWidget;
-        }),
-      )*/
-      ,
+      appBar: AppBarUtil.getAppBar(),
       drawer: mainDrawer,
       backgroundColor: ProductColor.bodyBackground,
       body: CustomScrollView(
@@ -75,27 +65,23 @@ class _HomePageState extends State<HomePage> {
 }
 
 void enableBackgroundExecution() async {
-  const androidConfig = FlutterBackgroundAndroidConfig(
-    notificationTitle: "flutter_background example app",
-    notificationText:
-        "Background notification for keeping the example app running in the background",
-    notificationImportance: AndroidNotificationImportance.high,
-    notificationIcon: AndroidResource(
-        name: 'background_icon',
-        defType: 'drawable'), // Default is ic_launcher from folder mipmap
+  // flutter_background kaldırıldı — flutter_foreground_task kullanıyoruz
+  FlutterForegroundTask.init(
+    androidNotificationOptions: AndroidNotificationOptions(
+      channelId: 'bloodcheck_bg_channel',
+      channelName: 'BloodCheck Background',
+      channelDescription: 'BloodCheck arka plan servisi',
+      onlyAlertOnce: true,
+    ),
+    iosNotificationOptions: const IOSNotificationOptions(
+      showNotification: false,
+      playSound: false,
+    ),
+    foregroundTaskOptions: ForegroundTaskOptions(
+      eventAction: ForegroundTaskEventAction.repeat(5000),
+      autoRunOnBoot: false,
+      allowWakeLock: true,
+    ),
   );
-  bool success =
-      await FlutterBackground.initialize(androidConfig: androidConfig);
-  if (FlutterBackground.isBackgroundExecutionEnabled) {
-    FcmTokenUtils.listenBackground();
-  }
+  FcmTokenUtils.listenBackground();
 }
-
-/*Future<void> requestPermission() async {
-  // final PermissionStatus status = await Permission.foregroundService.request();
-  if (status.isGranted) {
-    // İzin verildi, arka planda çalışabilirsiniz.
-  } else {
-    // İzin verilmedi, kullanıcıya açıklama yapabilirsiniz.
-  }
-}*/

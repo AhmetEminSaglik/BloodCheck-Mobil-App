@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:auto_orientation/auto_orientation.dart';
+import 'package:flutter/services.dart';
 import 'package:bloodcheck/Pages/CustomWidgets/CheckBoxVisibleBloodResultContent.dart';
 import 'package:bloodcheck/Pages/CustomWidgets/linechart/BaseLineChart.dart';
 import 'package:bloodcheck/Pages/CustomWidgets/linechart/LineChart6Monthly.dart';
@@ -350,13 +350,19 @@ class _HomePagePatientState extends State<HomePagePatient> {
 
   void goToDetailedPage() {
     activatedBaseLineChart.aspectRadio = bigLineChartAspectRadio;
-    AutoOrientation.landscapeAutoMode();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
     Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => DetailLineChartPage(
                   baseLineChart: activatedBaseLineChart,
-                ))).then((value) => AutoOrientation.portraitAutoMode());
+                ))).then((value) => SystemChrome.setPreferredOrientations([
+          DeviceOrientation.portraitUp,
+          DeviceOrientation.portraitDown,
+        ]));
   }
 
   void scanQRCode() async {
