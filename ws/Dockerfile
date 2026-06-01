@@ -1,4 +1,4 @@
-FROM openjdk:17-jdk-slim
+FROM maven:3.9.8-eclipse-temurin-21 AS builder
 WORKDIR /app
 COPY target/ws-bloodcheck-1.0.jar /app/bloodcheck.jar
 COPY src/main/resources/service-key.json /app/src/main/resources/service-key.json
