@@ -1,32 +1,40 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios'; 
-import './Login.css'; 
+import axios from 'axios';
+import './Login.css';
 import ApiUrl from '../ApiURL/ApiURL';
 
 const Login = ({ setIsAuthenticated }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState(''); 
-  const navigate = useNavigate(); 
+  const [errorMessage, setErrorMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrorMessage(''); 
+    setErrorMessage('');
     try {
-      var url=`${ApiUrl.getLoginUrl()}`;
+      var url = `${ApiUrl.getLoginUrl()}`;
       const response = await axios.post(url, {
         username,
         password,
       });
 
       if (response.status === 200) {
+        const data = response.data.data;
+
+        localStorage.setItem("token", data.accessToken);
+        localStorage.setItem("user", JSON.stringify(data.userDto));
+
         setIsAuthenticated(true);
-        navigate('/delete-account', { state: { username, password } });
+
+        navigate('/delete-account', {
+          state: { username, password }
+        });
       }
     } catch (error) {
       console.error('Login error:', error);
-      setErrorMessage('Invalid Username or password.'); 
+      setErrorMessage('Invalid Username or password.');
     }
   };
 
@@ -51,7 +59,7 @@ const Login = ({ setIsAuthenticated }) => {
           />
           <button type="submit" className="login-button">Login</button>
         </form>
-        {errorMessage && <p className="login-error-message">{errorMessage}</p>} 
+        {errorMessage && <p className="login-error-message">{errorMessage}</p>}
       </div>
     </div>
   );

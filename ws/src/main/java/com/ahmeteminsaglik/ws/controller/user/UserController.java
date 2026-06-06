@@ -2,6 +2,7 @@ package com.ahmeteminsaglik.ws.controller.user;
 
 import com.ahmeteminsaglik.ws.business.abstracts.user.UserService;
 import com.ahmeteminsaglik.ws.model.JwtAuthResponse;
+import com.ahmeteminsaglik.ws.model.LoginCredentials;
 import com.ahmeteminsaglik.ws.model.dto.ModelMapper;
 import com.ahmeteminsaglik.ws.model.dto.UserDto;
 import com.ahmeteminsaglik.ws.model.users.User;
@@ -98,5 +99,19 @@ public class UserController {
         DataResult<JwtAuthResponse> dataResult = new SuccessDataResult<>(response, msg);
 
         return ResponseEntity.status(HttpStatus.OK).body(dataResult);
+    }
+
+    @DeleteMapping()
+    public ResponseEntity<?> deleteUser(@RequestBody LoginCredentials creds) {
+
+        User user = userService.findByUsername(creds.getUsername());
+
+        if (user == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        userService.delete(user);
+
+        return ResponseEntity.ok().build();
     }
 }

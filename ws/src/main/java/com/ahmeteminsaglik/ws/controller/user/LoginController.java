@@ -24,15 +24,13 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 public class LoginController {
     private static final Logger log = LoggerFactory.getLogger(LoginController.class);
-    private final UserService service;
     private final JwtUtil jwtUtil;
     private final AuthenticationManager authenticationManager;
     private final UserService userService;
     private final UserDetailsService userDetailsService;
 
     @Autowired
-    public LoginController(UserService service, JwtUtil jwtUtil, AuthenticationManager authenticationManager, UserService userService, UserDetailsService userDetailsService) {
-        this.service = service;
+    public LoginController(JwtUtil jwtUtil, AuthenticationManager authenticationManager, UserService userService, UserDetailsService userDetailsService) {
         this.jwtUtil = jwtUtil;
         this.authenticationManager = authenticationManager;
         this.userService = userService;
