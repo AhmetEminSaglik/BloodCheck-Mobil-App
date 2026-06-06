@@ -23,6 +23,7 @@ class _DataManipulatorState extends State<DataManipulatorPage> {
           Container(height: 30),
           _getBtnResetAllData(),
           _getBtnGoWebUrlAddData(),
+          _getBtnGoWebDeleteAccountPage(),
         ],
       ),
     );
@@ -49,9 +50,26 @@ class _DataManipulatorState extends State<DataManipulatorPage> {
     );
   }
 
-
   void _launchURL() async {
-    const url = '${BaseHttpRequestConfig.remoteIp}3000/blood-results/add';
+    const url = '${BaseHttpRequestConfig.remoteFrontendIp}/blood-results/add';
+    final Uri uri = Uri.parse(url);
+    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+      throw 'Could not launch $url';
+    }
+  }
+
+  _getBtnGoWebDeleteAccountPage() {
+    return Padding(
+      padding:const EdgeInsets.all(15.0),
+      child: new CustomButton(
+          action: _launchDeleteAccountPage,
+          text: "Go To Delete Account Page"),
+    );
+  }
+
+
+  void _launchDeleteAccountPage() async {
+    const url = '${BaseHttpRequestConfig.remoteFrontendIp}/login';
     final Uri uri = Uri.parse(url);
     if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
       throw 'Could not launch $url';

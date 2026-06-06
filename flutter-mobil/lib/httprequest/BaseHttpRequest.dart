@@ -3,6 +3,7 @@ class BaseHttpRequestConfig {
   // static const String _port = "8081";
   // static const String remoteIp = "http://remoteIp:";
   static const String remoteIp = "https://bloodcheck.aesaglik.com/api/1.0";
+  static const String remoteFrontendIp = "https://bloodcheck.aesaglik.com/";
   // static const String _host ="$remoteIp:$_port";
   static const String _host ="$remoteIp";
   // static const String _host =_localhost;
