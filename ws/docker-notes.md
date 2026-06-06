@@ -14,10 +14,10 @@ docker push ahmeteminsaglik/react:3.0
 
 ```bash
 rmdir /s /q dist
-docker rmi ahmeteminsaglik/react:3.0
+docker rmi ahmeteminsaglik/react-bloodcheck:3.0
 npm run build
-docker build -t ahmeteminsaglik/react:3.0 .
-docker push ahmeteminsaglik/react:3.0
+docker build -t ahmeteminsaglik/react-bloodcheck:3.0 .
+docker push ahmeteminsaglik/react-bloodcheck:3.0
 ```
 
 backend parent:
