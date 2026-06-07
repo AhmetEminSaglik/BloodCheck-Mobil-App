@@ -5,8 +5,8 @@ class ApiUrl {
     // static remotehost = "http://ws-bloodcheck:8081/";
     // static remotehost = "http://my-network:8081/";
     static remotehost = "https://bloodcheck.aesaglik.com/api/1.0/";
-    static BASE_URL=this.localhost;
-    // static BASE_URL=this.remotehost;
+    // static BASE_URL=this.localhost;
+    static BASE_URL=this.remotehost;
 
     static getBloodResultsUrl() {
         return `${this.BASE_URL}bloodresults`;
