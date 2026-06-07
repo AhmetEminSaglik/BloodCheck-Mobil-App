@@ -62,6 +62,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(configurer ->
                         configurer
                                 .requestMatchers("/").permitAll()
+                                .requestMatchers("/db").permitAll()
                                 .requestMatchers("/login").permitAll()
                                 .requestMatchers("/patients").hasRole(patient)
                                 .requestMatchers("/patients/**").hasRole(patient)
